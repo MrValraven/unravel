@@ -7,7 +7,7 @@
   img {
     opacity: 0;
     animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0.25s 1 both;
-    width: 70%;
+    width: 40%;
     align-self: center;
   }
 
@@ -43,5 +43,13 @@
   100% {
     opacity: 1;
     transform: translateY(0px);
+  }
+}
+
+@media (max-width: 800px) {
+  .reminder {
+    img {
+      width: 70%;
+    }
   }
 }

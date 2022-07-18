@@ -10,11 +10,7 @@ const Home = () => {
     <div className="home">
       <div className="header">
         <h1>Questionr</h1>
-        <p>
-          The uncomplicated way of
-          <br />
-          making new friends
-        </p>
+        <p>The uncomplicated way of making new friends</p>
       </div>
       <img src={HeroImage} alt="" />
       <button onClick={() => navigate("/reminder")}>Get started</button>

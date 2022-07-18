@@ -7,14 +7,31 @@
   align-items: center;
   justify-content: space-around;
 
+  h1 {
+    font-size: 100px;
+    text-transform: uppercase;
+  }
+
   p {
-    font-size: 18px;
+    font-size: 24px;
   }
 
   footer {
     margin-top: 50px;
     a {
       color: darken(#b8c1ec, 20%);
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .home {
+    h1 {
+      font-size: 45px;
+    }
+
+    p {
+      font-size: 18px;
     }
   }
 }
