@@ -10,10 +10,24 @@ const Home = () => {
     <div className="home">
       <div className="header">
         <h1>Questionr</h1>
-        <p>The uncomplicated way of meeting someone new</p>
+        <p>
+          The uncomplicated way of
+          <br />
+          making new friends
+        </p>
       </div>
       <img src={HeroImage} alt="" />
       <button onClick={() => navigate("/reminder")}>Get started</button>
+      <footer>
+        Made with 💞 by{" "}
+        <a
+          href="https:\\tiagocostadev.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Tiago Costa
+        </a>
+      </footer>
     </div>
   );
 };
