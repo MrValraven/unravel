@@ -1,0 +1,53 @@
+.questions {
+  height: 100vh;
+  padding: 2rem 15px;
+  text-align: center;
+
+  .questionsContainer {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      .counterNumber {
+        opacity: 0;
+        animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0.1s 1 both;
+      }
+
+      hr {
+        height: 1px;
+        width: 35%;
+        opacity: 0.5;
+        border: 1px solid #b8c1ec;
+      }
+    }
+
+    p {
+      font-size: 24px;
+      opacity: 0;
+      animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s 1 both;
+    }
+
+    button {
+      align-self: center;
+    }
+  }
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}

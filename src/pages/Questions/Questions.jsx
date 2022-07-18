@@ -29,14 +29,20 @@ const Questions = () => {
   }, []);
 
   return (
-    <div>
-      <h2>
-        {questionsCounter + 1} / {questions.length}
-      </h2>
+    <div className="questions">
       {!endOfQuestions ? (
-        <div>
-          {" "}
-          <p>{questions[questionsCounter]}</p>
+        <div className="questionsContainer">
+          <div className="header">
+            <hr />
+            <h2>
+              <span className="counterNumber" key={questionsCounter}>
+                {questionsCounter + 1}
+              </span>{" "}
+              / {questions.length}
+            </h2>{" "}
+            <hr />
+          </div>
+          <p key={questionsCounter}>{questions[questionsCounter]}</p>
           <button onClick={handleIncrement}>Next question</button>
         </div>
       ) : (
