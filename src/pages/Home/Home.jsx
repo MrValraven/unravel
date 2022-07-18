@@ -19,7 +19,7 @@ const Home = () => {
       <img src={HeroImage} alt="" />
       <button onClick={() => navigate("/reminder")}>Get started</button>
       <footer>
-        Made with 💞 by{" "}
+        Made with ✨ by{" "}
         <a
           href="https:\\tiagocostadev.com"
           rel="noopener noreferrer"
