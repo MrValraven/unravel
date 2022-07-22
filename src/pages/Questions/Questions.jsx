@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./styles.scss";
 
 import questionsData from "../../data/questions.json";
+import thirtysixData from "../../data/thirtysix.json";
+import datingexpansionData from "../../data/datingexpansion.json";
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -24,6 +26,18 @@ const Questions = () => {
     setQuestionsCounter(0);
   };
 
+  const switchTo36 = () => {
+    setEndOfQuestions(false);
+    setQuestionsCounter(0);
+    setQuestions(thirtysixData);
+  };
+
+  const switchToDating = () => {
+    setEndOfQuestions(false);
+    setQuestionsCounter(0);
+    setQuestions(datingexpansionData);
+  };
+
   useEffect(() => {
     setQuestions(questionsData);
   }, []);
@@ -42,13 +56,21 @@ const Questions = () => {
             </h2>{" "}
             <hr />
           </div>
-          <p key={questionsCounter}>{questions[questionsCounter]}</p>
+          <p key={questionsCounter}>
+            {questions[0]?.question
+              ? questions[questionsCounter]?.question
+              : questions[questionsCounter]}
+          </p>
           <button onClick={handleIncrement}>Next question</button>
         </div>
       ) : (
         <div>
           <p>No more questions</p>
           <button onClick={resetQuestions}>Reset questions</button>
+          <button onClick={switchTo36}>
+            Play 36 Questions to fall in love
+          </button>
+          <button onClick={switchToDating}>Play Dating Expansion pack</button>
         </div>
       )}
     </div>

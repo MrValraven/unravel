@@ -1,0 +1,153 @@
+[
+  {
+    "question": "Just by looking at me, what do you think I do for a living?",
+    "level": "1"
+  },
+  { "question": "What do you think my drink of choice is?", "level": "1" },
+  { "question": "What do you think I was like in high school?", "level": "1" },
+  {
+    "question": "Do you think I'm still on good terms with my exes? Why or why not?",
+    "level": "1"
+  },
+  {
+    "question": "What was the first thing you noticed about me when we met in person?",
+    "level": "1"
+  },
+  {
+    "question": "What do you think my type is? Describe in detail?",
+    "level": "1"
+  },
+  {
+    "question": "How many relationships do you think I've been in? How many times do you think I've been in love? Explain",
+    "level": "1"
+  },
+  {
+    "question": "What about me intrigued you besides my physical appearance?",
+    "level": "2"
+  },
+  {
+    "question": "What was the worst date you've ever been on and why?",
+    "level": "2"
+  },
+  {
+    "question": "What dating advice would you give to your younger self?",
+    "level": "2"
+  },
+  {
+    "question": "What are your top 3 most important qualities in a romantic partner?",
+    "level": "2"
+  },
+  {
+    "question": "What about you has felt repeatedly misunderstood by others, if anything?",
+    "level": "2"
+  },
+  {
+    "question": "How emotionally available do you current feel? Explain.",
+    "level": "2"
+  },
+  {
+    "question": "What have you tolerated from others in past that you no longer have space for?",
+    "level": "2"
+  },
+  { "question": "What are you overthinking right now?", "level": "2" },
+  {
+    "question": "Who in your life do you feel most yourself around? Why?",
+    "level": "2"
+  },
+  {
+    "question": "What is something new you've learned about yourself recently?",
+    "level": "2"
+  },
+  {
+    "question": "Describe your worst heartbreak. What did it teach you?",
+    "level": "2"
+  },
+  {
+    "question": "How has your view on love evolved over time, if at all?",
+    "level": "2"
+  },
+  { "question": "What's the hardest part about dating you?", "level": "2" },
+  {
+    "question": "Share something you typically wouldn't on a first date",
+    "level": "2"
+  },
+  {
+    "question": "Have you ever considered an open relationship? Why or why not?",
+    "level": "2"
+  },
+  { "question": "How do you define 'dating?'", "level": "2" },
+  { "question": "What are you feeling a lot of lately?", "level": "2" },
+  {
+    "question": "What part of your job energizes you the most? What part leaves you the most drained?",
+    "level": "2"
+  },
+  {
+    "question": "What do your friends know about me, if anything?",
+    "level": "2"
+  },
+  {
+    "question": "What has being single taught you about yourself?",
+    "level": "2"
+  },
+  { "question": "What's a non-negotiable in your life?", "level": "2" },
+  {
+    "question": "Which one of your parents' personality traits do you want to keep? Which one do you want to let go of?",
+    "level": "2"
+  },
+  {
+    "question": "What did the people who raised you teach you about love? Has that shaped your views on love today?",
+    "level": "2"
+  },
+  { "question": "I know i really like someone when ______", "level": "2" },
+  {
+    "question": "Do you have any unconventional opinions when it comes to romantic relationships",
+    "level": "2"
+  },
+  {
+    "question": "What are your top 2 relationship deal breakers?",
+    "level": "2"
+  },
+  {
+    "question": "Has sex ever been a deal breaker in your past relationships? Explain.",
+    "level": "2"
+  },
+  {
+    "question": "When's the last time you ghosted someone and why?",
+    "level": "2"
+  },
+
+  {
+    "question": "Look through each other's social media and pick your favorite photo",
+    "level": "3"
+  },
+  {
+    "question": "Ask literally anything. Permission to go there.",
+    "level": "3"
+  },
+  {
+    "question": "On a scale of 1-10 how 'emotionally available' do i seem?",
+    "level": "3"
+  },
+  {
+    "question": "Based on what you've learned about me what do you think I'm looking for romantically?",
+    "level": "3"
+  },
+  {
+    "question": "What part of my personality isn't showcased online?",
+    "level": "3"
+  },
+  {
+    "question": "What do you find most attractive about me that isn't physical?",
+    "level": "3"
+  },
+  {
+    "question": "Id you were to write my dating profile bio what would it say?",
+    "level": "3"
+  },
+  {
+    "question": "What mannerisms of mine stood out the most to youm if any?",
+    "level": "3"
+  },
+  { "question": "How would you describe our date in one word?", "level": "3" },
+  { "question": "What song should I listen to on my way home?", "level": "3" }
+]
