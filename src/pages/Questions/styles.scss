@@ -9,6 +9,12 @@
     flex-direction: column;
     justify-content: space-around;
 
+    .questionsDisplay {
+      max-width: 540px;
+      text-align: center;
+      margin: 0 auto;
+    }
+
     .header {
       display: flex;
       align-items: center;

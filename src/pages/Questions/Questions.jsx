@@ -56,7 +56,7 @@ const Questions = () => {
             </h2>{" "}
             <hr />
           </div>
-          <p key={questionsCounter}>
+          <p className="questionsDisplay" key={questionsCounter}>
             {questions[0]?.question
               ? questions[questionsCounter]?.question
               : questions[questionsCounter]}
