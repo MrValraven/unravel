@@ -44,6 +44,18 @@
       align-self: center;
     }
   }
+
+  .modes {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+
+    div p {
+      margin-top: 10px;
+    }
+  }
 }
 
 @keyframes fadeUp {

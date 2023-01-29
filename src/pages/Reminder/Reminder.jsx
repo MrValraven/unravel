@@ -14,10 +14,10 @@ const Reminder = () => {
       <ul>
         <li>
           Start off with a compliment about their work, their energy or a
-          platonic physical compliment
+          platonic physical compliment.
         </li>
-        <li>Keep things light and playful</li>
-        <li>Steer conversation toward emotions</li>
+        <li>Keep things light and playful.</li>
+        <li>Steer conversation toward emotions.</li>
       </ul>
       <button onClick={() => navigate("/questions")}>Start game</button>
     </div>

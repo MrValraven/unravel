@@ -7,7 +7,7 @@ import datingexpansionData from "../../data/datingexpansion.json";
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
-  const [endOfQuestions, setEndOfQuestions] = useState(false);
+  const [endOfQuestions, setEndOfQuestions] = useState(true);
   const [questionsCounter, setQuestionsCounter] = useState(0);
 
   const handleIncrement = () => {
@@ -64,13 +64,32 @@ const Questions = () => {
           <button onClick={handleIncrement}>Next question</button>
         </div>
       ) : (
-        <div>
-          <p>No more questions</p>
-          <button onClick={resetQuestions}>Reset questions</button>
-          <button onClick={switchTo36}>
-            Play 36 Questions to fall in love
-          </button>
-          <button onClick={switchToDating}>Play Dating Expansion pack</button>
+        <div className="modes">
+          <p>Choose a mode</p>
+          <div>
+            <button onClick={resetQuestions}>Play Unravel</button>
+            <p>
+              Unravel. A set of questions designed to help you make new friends
+              and develop better connections.
+            </p>
+          </div>
+          <div>
+            <button onClick={switchTo36}>
+              Play NYTimes' 36 Questions to fall in love
+            </button>
+            <p>
+              A series of personal questions used by the psychologist Arthur
+              Aron to explore the idea of fostering closeness through mutual
+              vulnerability.
+            </p>
+          </div>
+          <div>
+            <button onClick={switchToDating}>Play Dating Expansion pack</button>
+            <p>
+              A series of questions designed to deepen your bond and create
+              meaningful conversations with your date.
+            </p>
+          </div>
         </div>
       )}
     </div>
