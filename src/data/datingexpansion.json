@@ -6,11 +6,19 @@
   { "question": "What do you think my drink of choice is?", "level": "1" },
   { "question": "What do you think I was like in high school?", "level": "1" },
   {
-    "question": "Do you think I'm still on good terms with my exes? Why or why not?",
+    "question": "What social issue is most important to you and why?",
     "level": "1"
   },
   {
     "question": "What was the first thing you noticed about me when we met in person?",
+    "level": "1"
+  },
+  {
+    "question": "What's your love language?",
+    "level": "1"
+  },
+  {
+    "question": "What's your favorite activity to do together?",
     "level": "1"
   },
   {
@@ -38,6 +46,10 @@
     "level": "2"
   },
   {
+    "question": "What's your worst habit?",
+    "level": "2"
+  },
+  {
     "question": "What about you has felt repeatedly misunderstood by others, if anything?",
     "level": "2"
   },
@@ -49,7 +61,12 @@
     "question": "What have you tolerated from others in past that you no longer have space for?",
     "level": "2"
   },
+  {
+    "question": "Share a happy memory",
+    "level": "2"
+  },
   { "question": "What are you overthinking right now?", "level": "2" },
+  { "question": "What calms you down when you're stressed or upset?", "level": "2" },
   {
     "question": "Who in your life do you feel most yourself around? Why?",
     "level": "2"
@@ -63,10 +80,15 @@
     "level": "2"
   },
   {
+    "question": "Is there anyone you look up to?",
+    "level": "2"
+  },
+  {
     "question": "How has your view on love evolved over time, if at all?",
     "level": "2"
   },
   { "question": "What's the hardest part about dating you?", "level": "2" },
+  { "question": "Do you have any goals you'd like to accomplish this year?", "level": "2" },
   {
     "question": "Share something you typically wouldn't on a first date",
     "level": "2"
