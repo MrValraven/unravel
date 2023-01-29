@@ -69,8 +69,8 @@ const Questions = () => {
           <div>
             <button onClick={resetQuestions}>Play Unravel</button>
             <p>
-              Unravel. A set of questions designed to help you make new friends
-              and develop better connections.
+              Unravel. A series of questions designed to help you make new
+              friends and develop better connections.
             </p>
           </div>
           <div>
