@@ -1,5 +1,5 @@
 .questions {
-  height: 100vh;
+  min-height: 100vh;
   padding: 2rem 15px;
   text-align: center;
 
@@ -52,7 +52,31 @@
     justify-content: center;
     align-items: center;
 
-    div p {
+    .mode {
+      
+      button {
+        position: relative;
+      }
+
+      .newModeTag {
+        position: absolute;
+        right: -15px;
+        top: -20px;
+        padding: 5px 15px;
+        border-radius: 6px;
+        background-color: rgb(255, 204, 29, 1);
+        box-shadow: 0 0 10px 0 rgba(0,0,0, 0.2), 0 0 20px 0 rgba(255, 204, 29, 0.9), 0 0 60px 1px rgba(255, 204, 29, 0.3);
+
+        p {
+          color: #232946;
+          text-transform: uppercase;
+          font-weight: bold;
+        }
+      }
+    }
+
+
+    div .modeDescription {
       margin-top: 10px;
     }
   }

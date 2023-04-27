@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./styles.scss";
 
 import questionsData from "../../data/questions.json";
+import tunasData from "../../data/tunas.json";
 import thirtysixData from "../../data/thirtysix.json";
 import datingexpansionData from "../../data/datingexpansion.json";
 
@@ -24,6 +25,12 @@ const Questions = () => {
   const resetQuestions = () => {
     setEndOfQuestions(false);
     setQuestionsCounter(0);
+  };
+
+  const switchToTunas = () => {
+    setEndOfQuestions(false);
+    setQuestionsCounter(0);
+    setQuestions(tunasData);
   };
 
   const switchTo36 = () => {
@@ -68,16 +75,29 @@ const Questions = () => {
           <p>Choose a mode</p>
           <div>
             <button onClick={resetQuestions}>Play Unravel</button>
-            <p>
+            <p className="modeDescription">
               Unravel. A series of questions designed to help you make new
               friends and develop better connections.
+            </p>
+          </div>
+          <div className="mode">
+            <button onClick={switchToTunas}>
+              Play Portuguese Tunas Edition
+              <div className="newModeTag">
+                <p>New</p>
+              </div>
+            </button>
+            <p className="modeDescription">
+              A series of questions that highlight the academic spirit of each
+              Tuna and the great moments and adventures that come from being
+              part of one.
             </p>
           </div>
           <div>
             <button onClick={switchTo36}>
               Play NYTimes' 36 Questions to fall in love
             </button>
-            <p>
+            <p className="modeDescription">
               A series of personal questions used by the psychologist Arthur
               Aron to explore the idea of fostering closeness through mutual
               vulnerability.
@@ -85,7 +105,7 @@ const Questions = () => {
           </div>
           <div>
             <button onClick={switchToDating}>Play Dating Expansion pack</button>
-            <p>
+            <p className="modeDescription">
               A series of questions designed to deepen your bond and create
               meaningful conversations with your date.
             </p>
