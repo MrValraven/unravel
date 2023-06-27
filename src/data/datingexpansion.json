@@ -3,9 +3,15 @@
     "question": "Just by looking at me, what do you think I do for a living?",
     "level": "1"
   },
-  { "question": "What do you think my drink of choice is?", "level": "1" },
+  { "question": "What do you think my drink of choice is?",
+   "level": "1" 
+  },
   {
-    "question": "What social issue is most important to you and why?",
+    "question": "What's your love language?",
+    "level": "1"
+  },
+  {
+    "question": "What's your favorite activity to do together with someone?",
     "level": "1"
   },
   {
@@ -13,13 +19,10 @@
     "level": "1"
   },
   {
-    "question": "What's your love language?",
+    "question": "What social issue is most important to you and why?",
     "level": "1"
   },
-  {
-    "question": "What's your favorite activity to do together?",
-    "level": "1"
-  },
+  { "question": "What do you think I was like in high school?", "level": "1" },
   {
     "question": "What do you think my type is? Describe in detail.",
     "level": "1"
@@ -28,7 +31,6 @@
     "question": "What about me intrigued you besides my physical appearance?",
     "level": "2"
   },
-  { "question": "What do you think I was like in high school?", "level": "1" },
   {
     "question": "What was the worst date you've ever been on and why?",
     "level": "2"
@@ -82,7 +84,6 @@
     "level": "2"
   },
   { "question": "What are you overthinking right now?", "level": "2" },
-  { "question": "What calms you down when you're stressed or upset?", "level": "2" },
   {
     "question": "Who in your life do you feel most yourself around? Why?",
     "level": "2"
@@ -95,6 +96,7 @@
     "question": "Is there anyone you look up to?",
     "level": "2"
   },
+  { "question": "What calms you down when you're stressed or upset?", "level": "2" },
   {
     "question": "How has your view on love evolved over time, if at all?",
     "level": "2"

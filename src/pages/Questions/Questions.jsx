@@ -104,7 +104,7 @@ const Questions = () => {
             </p>
           </div>
           <div>
-            <button onClick={switchToDating}>Play Dating Expansion pack</button>
+            <button onClick={switchToDating}>Play First Date pack</button>
             <p className="modeDescription">
               A series of questions designed to deepen your bond and create
               meaningful conversations with your date.
