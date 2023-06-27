@@ -4,7 +4,6 @@
     "level": "1"
   },
   { "question": "What do you think my drink of choice is?", "level": "1" },
-  { "question": "What do you think I was like in high school?", "level": "1" },
   {
     "question": "What social issue is most important to you and why?",
     "level": "1"
@@ -26,19 +25,32 @@
     "level": "1"
   },
   {
-    "question": "How many relationships do you think I've been in? How many times do you think I've been in love? Explain.",
-    "level": "1"
-  },
-  {
     "question": "What about me intrigued you besides my physical appearance?",
     "level": "2"
   },
+  { "question": "What do you think I was like in high school?", "level": "1" },
   {
     "question": "What was the worst date you've ever been on and why?",
     "level": "2"
   },
   {
+    "question": "What assumptions did you have of me before we met?",
+    "level": "2"
+  },
+  {
+    "question": "What activity do you love so much that you lose track of time?",
+    "level": "2"
+  },
+  {
     "question": "What dating advice would you give to your younger self?",
+    "level": "2"
+  },
+  {
+    "question": "What's something that surprises people about you when they first hear it?",
+    "level": "2"
+  },
+  {
+    "question": "What is one thing you believed early on in your carreer, but think differently now?",
     "level": "2"
   },
   {
@@ -50,11 +62,15 @@
     "level": "2"
   },
   {
+    "question": "What's something simple that makes you smile?",
+    "level": "2"
+  },
+  {
     "question": "What about you has felt repeatedly misunderstood by others, if anything?",
     "level": "2"
   },
   {
-    "question": "How emotionally available do you current feel? Explain.",
+    "question": "Am I what you expected?",
     "level": "2"
   },
   {
@@ -76,10 +92,6 @@
     "level": "2"
   },
   {
-    "question": "Describe your worst heartbreak. What did it teach you?",
-    "level": "2"
-  },
-  {
     "question": "Is there anyone you look up to?",
     "level": "2"
   },
@@ -90,14 +102,9 @@
   { "question": "What's the hardest part about dating you?", "level": "2" },
   { "question": "Do you have any goals you'd like to accomplish this year?", "level": "2" },
   {
-    "question": "Share something you typically wouldn't on a first date",
-    "level": "2"
-  },
-  {
     "question": "Have you ever considered an open relationship? Why or why not?",
     "level": "2"
   },
-  { "question": "How do you define 'dating?'", "level": "2" },
   { "question": "What are you feeling a lot of lately?", "level": "2" },
   {
     "question": "What part of your job energizes you the most? What part leaves you the most drained?",
@@ -130,28 +137,7 @@
     "level": "2"
   },
   {
-    "question": "Has sex ever been a deal breaker in your past relationships? Explain.",
-    "level": "2"
-  },
-  {
-    "question": "When's the last time you ghosted someone and why?",
-    "level": "2"
-  },
-
-  {
     "question": "Look through each other's social media and pick your favorite photo",
-    "level": "3"
-  },
-  {
-    "question": "Ask literally anything. Permission to go there.",
-    "level": "3"
-  },
-  {
-    "question": "On a scale of 1-10 how 'emotionally available' do i seem?",
-    "level": "3"
-  },
-  {
-    "question": "Based on what you've learned about me what do you think I'm looking for romantically?",
     "level": "3"
   },
   {
