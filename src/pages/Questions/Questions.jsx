@@ -71,9 +71,7 @@ const Questions = () => {
             <hr />
           </div>
           <p className="questionsDisplay" key={questionsCounter}>
-            {questions[0]?.question
-              ? questions[questionsCounter]?.question
-              : questions[questionsCounter]}
+            {questions[questionsCounter]}
           </p>
           <button onClick={handleIncrement}>Next question</button>
         </div>
