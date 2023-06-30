@@ -5,6 +5,7 @@ import questionsData from "../../data/questions.json";
 import tunasData from "../../data/tunas.json";
 import thirtysixData from "../../data/thirtysix.json";
 import datingexpansionData from "../../data/datingexpansion.json";
+import spicyData from "../../data/spicy.json";
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -43,6 +44,12 @@ const Questions = () => {
     setEndOfQuestions(false);
     setQuestionsCounter(0);
     setQuestions(datingexpansionData);
+  };
+
+  const switchToSpicy = () => {
+    setEndOfQuestions(false);
+    setQuestionsCounter(0);
+    setQuestions(spicyData);
   };
 
   useEffect(() => {
@@ -88,11 +95,20 @@ const Questions = () => {
             </p>
           </div>
           <div className="mode">
-            <button onClick={switchToTunas}>
-              Play Portuguese Tunas Edition
+            <button onClick={switchToSpicy}>
+              Play Flames of Desire
               <div className="newModeTag">
                 <p>New</p>
               </div>
+            </button>
+            <p className="modeDescription">
+              Experience intense connections with daring questions, igniting
+              desires and deepening bonds.
+            </p>
+          </div>
+          <div className="mode">
+            <button onClick={switchToTunas}>
+              Play Portuguese Tunas Edition
             </button>
             <p className="modeDescription">
               A series of questions that highlight the academic spirit of each
