@@ -3,7 +3,7 @@ import "./styles.scss";
 
 import questionsData from "../../data/questions.json";
 import tunasData from "../../data/tunas.json";
-import thirtySixData from "../../data/thirtySix.json";
+import thirtySixData from "../../data/thirtysix.json";
 import firstDateData from "../../data/firstDate.json";
 import spicyData from "../../data/spicy.json";
 import polyamoryData from "../../data/polyamory.json";
