@@ -3,9 +3,10 @@ import "./styles.scss";
 
 import questionsData from "../../data/questions.json";
 import tunasData from "../../data/tunas.json";
-import thirtysixData from "../../data/thirtysix.json";
-import datingexpansionData from "../../data/datingexpansion.json";
+import thirtySixData from "../../data/thirtySix.json";
+import firstDateData from "../../data/firstDate.json";
 import spicyData from "../../data/spicy.json";
+import polyamoryData from "../../data/polyamory.json";
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -28,28 +29,9 @@ const Questions = () => {
     setQuestionsCounter(0);
   };
 
-  const switchToTunas = () => {
-    setEndOfQuestions(false);
-    setQuestionsCounter(0);
-    setQuestions(tunasData);
-  };
-
-  const switchTo36 = () => {
-    setEndOfQuestions(false);
-    setQuestionsCounter(0);
-    setQuestions(thirtysixData);
-  };
-
-  const switchToDating = () => {
-    setEndOfQuestions(false);
-    setQuestionsCounter(0);
-    setQuestions(datingexpansionData);
-  };
-
-  const switchToSpicy = () => {
-    setEndOfQuestions(false);
-    setQuestionsCounter(0);
-    setQuestions(spicyData);
+  const switchToMode = (modeData) => {
+    resetQuestions();
+    setQuestions(modeData);
   };
 
   useEffect(() => {
@@ -86,14 +68,16 @@ const Questions = () => {
             </p>
           </div>
           <div>
-            <button onClick={switchToDating}>Play First Date pack</button>
+            <button onClick={switchToMode(firstDateData)}>
+              Play First Date pack
+            </button>
             <p className="modeDescription">
               A series of questions designed to deepen your bond and create
               meaningful conversations with your date.
             </p>
           </div>
           <div className="mode">
-            <button onClick={switchToSpicy}>
+            <button onClick={switchToMode(spicyData)}>
               Play Flames of Desire
               <div className="newModeTag">
                 <p>New</p>
@@ -105,7 +89,19 @@ const Questions = () => {
             </p>
           </div>
           <div className="mode">
-            <button onClick={switchToTunas}>
+            <button onClick={switchToMode(polyamoryData)}>
+              Play Polyamorous Passions
+              <div className="newModeTag">
+                <p>New</p>
+              </div>
+            </button>
+            <p className="modeDescription">
+              Embrace boundless love and explore the dynamics of polyamory in
+              this captivating game mode.
+            </p>
+          </div>
+          <div className="mode">
+            <button onClick={switchToMode(tunasData)}>
               Play Portuguese Tunas Edition
             </button>
             <p className="modeDescription">
@@ -115,7 +111,7 @@ const Questions = () => {
             </p>
           </div>
           <div>
-            <button onClick={switchTo36}>
+            <button onClick={switchToMode(thirtySixData)}>
               Play NYTimes' 36 Questions to fall in love
             </button>
             <p className="modeDescription">
