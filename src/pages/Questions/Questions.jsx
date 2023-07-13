@@ -68,7 +68,7 @@ const Questions = () => {
             </p>
           </div>
           <div>
-            <button onClick={switchToMode(firstDateData)}>
+            <button onClick={() => switchToMode(firstDateData)}>
               Play First Date pack
             </button>
             <p className="modeDescription">
@@ -77,7 +77,7 @@ const Questions = () => {
             </p>
           </div>
           <div className="mode">
-            <button onClick={switchToMode(spicyData)}>
+            <button onClick={() => switchToMode(spicyData)}>
               Play Flames of Desire
               <div className="newModeTag">
                 <p>New</p>
@@ -89,7 +89,7 @@ const Questions = () => {
             </p>
           </div>
           <div className="mode">
-            <button onClick={switchToMode(polyamoryData)}>
+            <button onClick={() => switchToMode(polyamoryData)}>
               Play Polyamorous Passions
               <div className="newModeTag">
                 <p>New</p>
@@ -101,7 +101,7 @@ const Questions = () => {
             </p>
           </div>
           <div className="mode">
-            <button onClick={switchToMode(tunasData)}>
+            <button onClick={() => switchToMode(tunasData)}>
               Play Portuguese Tunas Edition
             </button>
             <p className="modeDescription">
@@ -111,7 +111,7 @@ const Questions = () => {
             </p>
           </div>
           <div>
-            <button onClick={switchToMode(thirtySixData)}>
+            <button onClick={() => switchToMode(thirtySixData)}>
               Play NYTimes' 36 Questions to fall in love
             </button>
             <p className="modeDescription">
