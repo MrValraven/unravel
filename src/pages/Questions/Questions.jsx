@@ -3,8 +3,8 @@ import "./styles.scss";
 
 import questionsData from "../../data/questions.json";
 import tunasData from "../../data/tunas.json";
-import thirtySixData from "../../data/thirtysix.json";
 import firstDateData from "../../data/firstDate.json";
+import advancedDating from "../../data/advancedDating.json";
 import spicyData from "../../data/spicy.json";
 import polyamoryData from "../../data/polyamory.json";
 
@@ -77,11 +77,20 @@ const Questions = () => {
             </p>
           </div>
           <div className="mode">
-            <button onClick={() => switchToMode(spicyData)}>
-              Play Flames of Desire
+            <button onClick={() => switchToMode(advancedDating)}>
+              Beyond the Surface
               <div className="newModeTag">
                 <p>New</p>
               </div>
+            </button>
+            <p className="modeDescription">
+              Take your romance to the next level through heartfelt inquiries
+              that reveal genuine affection and understanding.
+            </p>
+          </div>
+          <div className="mode">
+            <button onClick={() => switchToMode(spicyData)}>
+              Play Flames of Desire
             </button>
             <p className="modeDescription">
               Experience intense connections with daring questions, igniting
@@ -91,9 +100,6 @@ const Questions = () => {
           <div className="mode">
             <button onClick={() => switchToMode(polyamoryData)}>
               Play Polyamorous Passions
-              <div className="newModeTag">
-                <p>New</p>
-              </div>
             </button>
             <p className="modeDescription">
               Embrace boundless love and explore the dynamics of polyamory in
@@ -108,16 +114,6 @@ const Questions = () => {
               A series of questions that highlight the academic spirit of each
               Tuna and the great moments and adventures that come from being
               part of one.
-            </p>
-          </div>
-          <div>
-            <button onClick={() => switchToMode(thirtySixData)}>
-              Play NYTimes' 36 Questions to fall in love
-            </button>
-            <p className="modeDescription">
-              A series of personal questions used by the psychologist Arthur
-              Aron to explore the idea of fostering closeness through mutual
-              vulnerability.
             </p>
           </div>
         </div>
