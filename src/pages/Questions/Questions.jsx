@@ -100,7 +100,7 @@ const Questions = () => {
           </div>
           <div className="mode">
             <button onClick={() => switchToMode(neurospicy)}>
-              Neurospicy
+              Neurospicy Delight
               <div className="newModeTag">
                 <p>New</p>
               </div>
