@@ -7,6 +7,8 @@ import firstDateData from "../../data/firstDate.json";
 import advancedDating from "../../data/advancedDating.json";
 import spicyData from "../../data/spicy.json";
 import polyamoryData from "../../data/polyamory.json";
+import silly from '../../data/silly.json';
+import neurospicy from '../../data/neurospicy.json';
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -79,13 +81,32 @@ const Questions = () => {
           <div className="mode">
             <button onClick={() => switchToMode(advancedDating)}>
               Beyond the Surface
+            </button>
+            <p className="modeDescription">
+              Take your romance to the next level through heartfelt inquiries
+              that reveal genuine affection and understanding.
+            </p>
+          </div>
+          <div className="mode">
+            <button onClick={() => switchToMode(silly)}>
+              Silly Goose Pack
               <div className="newModeTag">
                 <p>New</p>
               </div>
             </button>
             <p className="modeDescription">
-              Take your romance to the next level through heartfelt inquiries
-              that reveal genuine affection and understanding.
+              Unleash laughter and fun with whimsical questions that promise lighthearted moments and quirky connections.
+            </p>
+          </div>
+          <div className="mode">
+            <button onClick={() => switchToMode(neurospicy)}>
+              Neurospicy
+              <div className="newModeTag">
+                <p>New</p>
+              </div>
+            </button>
+            <p className="modeDescription">
+              Explore the magic of neurodiversity with a collection of whimsical and inclusive questions designed to foster laughter, connection, and understanding among individuals with diverse minds.
             </p>
           </div>
           <div className="mode">
