@@ -9,6 +9,7 @@ import spicyData from "../../data/spicy.json";
 import polyamoryData from "../../data/polyamory.json";
 import silly from '../../data/silly.json';
 import neurospicy from '../../data/neurospicy.json';
+import queer from '../../data/queer.json';
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -96,6 +97,17 @@ const Questions = () => {
             </button>
             <p className="modeDescription">
               Unleash laughter and fun with whimsical questions that promise lighthearted moments and quirky connections.
+            </p>
+          </div>
+          <div className="mode">
+            <button onClick={() => switchToMode(queer)}>
+              Queer Vibes
+              <div className="newModeTag">
+                <p>New</p>
+              </div>
+            </button>
+            <p className="modeDescription">
+              A vibrant set of casual questions for lighthearted and engaging LGBTQ+ conversations."
             </p>
           </div>
           <div className="mode">
