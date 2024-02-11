@@ -89,17 +89,6 @@ const Questions = () => {
             </p>
           </div>
           <div className="mode">
-            <button onClick={() => switchToMode(silly)}>
-              Silly Goose Pack
-              <div className="newModeTag">
-                <p>New</p>
-              </div>
-            </button>
-            <p className="modeDescription">
-              Unleash laughter and fun with whimsical questions that promise lighthearted moments and quirky connections.
-            </p>
-          </div>
-          <div className="mode">
             <button onClick={() => switchToMode(queer)}>
               Queer Vibes
               <div className="newModeTag">
@@ -108,6 +97,17 @@ const Questions = () => {
             </button>
             <p className="modeDescription">
               A vibrant set of casual questions for lighthearted and engaging LGBTQ+ conversations."
+            </p>
+          </div>
+          <div className="mode">
+            <button onClick={() => switchToMode(silly)}>
+              Silly Goose Pack
+              <div className="newModeTag">
+                <p>New</p>
+              </div>
+            </button>
+            <p className="modeDescription">
+              Unleash laughter and fun with whimsical questions that promise lighthearted moments and quirky connections.
             </p>
           </div>
           <div className="mode">
