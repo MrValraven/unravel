@@ -96,7 +96,7 @@ const Questions = () => {
               </div>
             </button>
             <p className="modeDescription">
-              A vibrant set of casual questions for lighthearted and engaging LGBTQ+ conversations."
+              A vibrant set of casual questions for lighthearted and engaging LGBTQ+ conversations.
             </p>
           </div>
           <div className="mode">
