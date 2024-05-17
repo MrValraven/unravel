@@ -10,6 +10,15 @@ import polyamoryData from "../../data/polyamory.json";
 import silly from '../../data/silly.json';
 import neurospicy from '../../data/neurospicy.json';
 import queer from '../../data/queer.json';
+import nelaData from '../../data/nela.json';
+import hedonisticData from '../../data/hedonist.json';
+
+const availableModes = [
+  {
+    title: 'Unravel',
+    description: 'des'
+  }
+]
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -130,6 +139,28 @@ const Questions = () => {
               desires and deepening bonds.
             </p>
           </div>
+          <div className="mode">
+            <button onClick={() => switchToMode(hedonisticData)}>
+              Play Hedonistic Societies Pack
+              <div className="newModeTag">
+                <p>New</p>
+              </div>
+            </button>
+            <p className="modeDescription">
+              Dive into the world of hedonistic pleasures, where every conversation unveils provocative insights and shared indulgences deepen connections.
+            </p>
+          </div>
+          {/* <div className="mode">
+            <button onClick={() => switchToMode(nelaData)}>
+              Play Nela's Thought provoking questions
+              <div className="newModeTag">
+                <p>New</p>
+              </div>
+            </button>
+            <p className="modeDescription">
+              Expand your mind by discussing diverse topics with your friends over a plethora of questions created by Psychologist Nela Adamčíková
+            </p>
+          </div> */}
           <div className="mode">
             <button onClick={() => switchToMode(polyamoryData)}>
               Play Polyamorous Passions
