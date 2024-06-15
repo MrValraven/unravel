@@ -12,18 +12,81 @@ import neurospicy from '../../data/neurospicy.json';
 import queer from '../../data/queer.json';
 import nelaData from '../../data/nela.json';
 import hedonisticData from '../../data/hedonist.json';
+import QuestionsMode from "./components/QuestionsMode";
 
 const availableModes = [
   {
-    title: 'Unravel',
-    description: 'des'
-  }
+    title: 'Play Unravel',
+    description: 'Unravel. A series of questions designed to help you make new friends and develop better connections.',
+    data: questionsData,
+    tagType: ""
+  },
+  {
+    title: 'Play First Date pack',
+    description: ' A series of questions designed to deepen your bond and create meaningful conversations with your date.',
+    data: firstDateData,
+    tagType: ""
+  },
+  {
+    title: 'Play Beyond the Surface',
+    description: 'Take your romance to the next level through heartfelt inquiries that reveal genuine affection and understanding.',
+    data: advancedDating,
+    tagType: ""
+  },
+  {
+    title: 'Queer Vibes',
+    description: ' A vibrant set of casual questions for lighthearted and engaging LGBTQ+ conversations.',
+    data: queer,
+    tagType: ""
+  },
+  {
+    title: 'Silly Goose Pack',
+    description: 'Unleash laughter and fun with whimsical questions that promise lighthearted moments and quirky connections.',
+    data: silly,
+    tagType: "beta"
+  },
+  {
+    title: 'Neurospicy Delight',
+    description: ' Explore the magic of neurodiversity with a collection of whimsical and inclusive questions designed to foster laughter, connection, and understanding among individuals with diverse minds.',
+    data: neurospicy,
+    tagType: "beta"
+  },
+  {
+    title: 'Play Flames of Desire',
+    description: 'Experience intense connections with daring questions, igniting desires and deepening bonds.',
+    data: spicyData,
+    tagType: ""
+  },
+  {
+    title: 'Play Hedonistic Societies pack',
+    description: 'Dive into the world of hedonistic pleasures, where every conversation unveils provocative insights and shared indulgences deepen connections.',
+    data: hedonisticData,
+    tagType: "new"
+  },
+  {
+    title: 'Play Polyamorous Passions',
+    description: ' Embrace boundless love and explore the dynamics of polyamory in this captivating game mode.',
+    data: polyamoryData,
+    tagType: ""
+  },
+  {
+    title: 'Play Portuguese tunas pack',
+    description: ' A series of questions that highlight the academic spirit of each Tuna and the great moments and adventures that come from being part of one.',
+    data: tunasData,
+    tagType: ""
+  },
 ]
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
   const [endOfQuestions, setEndOfQuestions] = useState(true);
   const [questionsCounter, setQuestionsCounter] = useState(0);
+  const [doesPreviousSessionExists, setDoesPreviousSessionExist] = useState(false);
+
+  const saveStateToLocalStorage = (mode, counter) => {
+    localStorage.setItem('mode', JSON.stringify(mode));
+    localStorage.setItem('questionsCounter', JSON.stringify(counter));
+  };
 
   const handleIncrement = () => {
     if (questionsCounter >= questions.length - 1) {
@@ -32,21 +95,41 @@ const Questions = () => {
     }
 
     setQuestionsCounter((previousValue) => {
-      return previousValue + 1;
+      const newCounterValue = previousValue + 1;
+      saveStateToLocalStorage(questions, newCounterValue);
+      return newCounterValue;
     });
   };
 
   const resetQuestions = () => {
     setEndOfQuestions(false);
     setQuestionsCounter(0);
+    saveStateToLocalStorage([], 0);
   };
 
   const switchToMode = (modeData) => {
     resetQuestions();
     setQuestions(modeData);
+    saveStateToLocalStorage(modeData, 0);
+  };
+
+  const resumeGame = () => {
+    const savedMode = JSON.parse(localStorage.getItem('mode'));
+    const savedCounter = JSON.parse(localStorage.getItem('questionsCounter'));
+
+    if (savedMode && typeof savedCounter === 'number') {
+      setQuestions(savedMode);
+      setQuestionsCounter(savedCounter);
+      setEndOfQuestions(savedCounter >= savedMode.length - 1);
+    }
   };
 
   useEffect(() => {
+    const savedMode = localStorage.getItem('mode');
+    const savedCounter = localStorage.getItem('questionsCounter');
+    console.log(savedMode)
+    console.log(questionsCounter)
+    setDoesPreviousSessionExist(savedMode !== null && savedCounter !== null)
     setQuestions(questionsData);
   }, []);
 
@@ -67,110 +150,21 @@ const Questions = () => {
           <p className="questionsDisplay" key={questionsCounter}>
             {questions[questionsCounter]}
           </p>
-          <button onClick={handleIncrement}>Next question</button>
+          <button onClick={handleIncrement}>{questionsCounter >= questions.length - 1 ? 'Explore other modes' : 'Next question'}</button>
         </div>
       ) : (
         <div className="modes">
-          <p>Choose a mode</p>
-          <div>
-            <button onClick={resetQuestions}>Play Unravel</button>
-            <p className="modeDescription">
-              Unravel. A series of questions designed to help you make new
-              friends and develop better connections.
-            </p>
-          </div>
-          <div>
-            <button onClick={() => switchToMode(firstDateData)}>
-              Play First Date pack
-            </button>
-            <p className="modeDescription">
-              A series of questions designed to deepen your bond and create
-              meaningful conversations with your date.
-            </p>
-          </div>
-          <div className="mode">
-            <button onClick={() => switchToMode(advancedDating)}>
-              Beyond the Surface
-            </button>
-            <p className="modeDescription">
-              Take your romance to the next level through heartfelt inquiries
-              that reveal genuine affection and understanding.
-            </p>
-          </div>
-          <div className="mode">
-            <button onClick={() => switchToMode(queer)}>
-              Queer Vibes
-            </button>
-            <p className="modeDescription">
-              A vibrant set of casual questions for lighthearted and engaging LGBTQ+ conversations.
-            </p>
-          </div>
-          <div className="mode">
-            <button onClick={() => switchToMode(silly)}>
-              Silly Goose Pack
-            </button>
-            <p className="modeDescription">
-              Unleash laughter and fun with whimsical questions that promise lighthearted moments and quirky connections.
-            </p>
-          </div>
-          <div className="mode">
-            <button onClick={() => switchToMode(neurospicy)}>
-              Neurospicy Delight
-            </button>
-            <p className="modeDescription">
-              Explore the magic of neurodiversity with a collection of whimsical and inclusive questions designed to foster laughter, connection, and understanding among individuals with diverse minds.
-            </p>
-          </div>
-          <div className="mode">
-            <button onClick={() => switchToMode(spicyData)}>
-              Play Flames of Desire
-            </button>
-            <p className="modeDescription">
-              Experience intense connections with daring questions, igniting
-              desires and deepening bonds.
-            </p>
-          </div>
-          <div className="mode">
-            <button onClick={() => switchToMode(hedonisticData)}>
-              Play Hedonistic Societies Pack
-              <div className="newModeTag">
-                <p>New</p>
-              </div>
-            </button>
-            <p className="modeDescription">
-              Dive into the world of hedonistic pleasures, where every conversation unveils provocative insights and shared indulgences deepen connections.
-            </p>
-          </div>
-          {/* <div className="mode">
-            <button onClick={() => switchToMode(nelaData)}>
-              Play Nela's Thought provoking questions
-              <div className="newModeTag">
-                <p>New</p>
-              </div>
-            </button>
-            <p className="modeDescription">
-              Expand your mind by discussing diverse topics with your friends over a plethora of questions created by Psychologist Nela Adamčíková
-            </p>
-          </div> */}
-          <div className="mode">
-            <button onClick={() => switchToMode(polyamoryData)}>
-              Play Polyamorous Passions
-            </button>
-            <p className="modeDescription">
-              Embrace boundless love and explore the dynamics of polyamory in
-              this captivating game mode.
-            </p>
-          </div>
-          <div className="mode">
-            <button onClick={() => switchToMode(tunasData)}>
-              Play Portuguese Tunas Edition
-            </button>
-            <p className="modeDescription">
-              A series of questions that highlight the academic spirit of each
-              Tuna and the great moments and adventures that come from being
-              part of one.
-            </p>
-          </div>
+          {doesPreviousSessionExists ?
+            <>
+              <h4>Resume your last session</h4>
+              <button onClick={resumeGame}>Resume session</button>
+            </> :
+            null
+          }
+          <h4>Choose a mode</h4>
+          {availableModes.map((mode) => (
+            <QuestionsMode switchToMode={switchToMode} key={mode.title} title={mode.title} description={mode.description} data={mode.data} tagType={mode.tagType} />
+          ))}
         </div>
       )}
     </div>
