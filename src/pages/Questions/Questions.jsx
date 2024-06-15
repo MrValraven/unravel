@@ -81,7 +81,7 @@ const Questions = () => {
   const [questions, setQuestions] = useState([]);
   const [endOfQuestions, setEndOfQuestions] = useState(true);
   const [questionsCounter, setQuestionsCounter] = useState(0);
-  const [doesPreviousSessionExists, setDoesPreviousSessionExist] = useState(false);
+  const [doesPreviousSessionExist, setDoesPreviousSessionExist] = useState(false);
 
   const saveStateToLocalStorage = (mode, counter) => {
     localStorage.setItem('mode', JSON.stringify(mode));
@@ -154,7 +154,7 @@ const Questions = () => {
         </div>
       ) : (
         <div className="modes">
-          {doesPreviousSessionExists ?
+          {doesPreviousSessionExist ?
             <>
               <h4>Resume your last session</h4>
               <button onClick={resumeGame}>Resume session</button>
