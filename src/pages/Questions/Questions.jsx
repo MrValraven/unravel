@@ -120,15 +120,13 @@ const Questions = () => {
     if (savedMode && typeof savedCounter === 'number') {
       setQuestions(savedMode);
       setQuestionsCounter(savedCounter);
-      setEndOfQuestions(savedCounter >= savedMode.length - 1);
+      setEndOfQuestions(savedCounter > savedMode.length - 1);
     }
   };
 
   useEffect(() => {
     const savedMode = localStorage.getItem('mode');
     const savedCounter = localStorage.getItem('questionsCounter');
-    console.log(savedMode)
-    console.log(questionsCounter)
     setDoesPreviousSessionExist(savedMode !== null && savedCounter !== null)
     setQuestions(questionsData);
   }, []);
