@@ -91,6 +91,7 @@ const Questions = () => {
   const handleIncrement = () => {
     if (questionsCounter >= questions.length - 1) {
       setEndOfQuestions(true);
+      saveStateToLocalStorage([], 0);
       return;
     }
 
