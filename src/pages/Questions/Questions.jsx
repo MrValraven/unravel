@@ -10,7 +10,6 @@ import polyamoryData from "../../data/polyamory.json";
 import silly from '../../data/silly.json';
 import neurospicy from '../../data/neurospicy.json';
 import queer from '../../data/queer.json';
-import nelaData from '../../data/nela.json';
 import hedonisticData from '../../data/hedonist.json';
 import QuestionsMode from "./components/QuestionsMode";
 
