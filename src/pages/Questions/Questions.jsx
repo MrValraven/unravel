@@ -11,6 +11,7 @@ import silly from '../../data/silly.json';
 import neurospicy from '../../data/neurospicy.json';
 import queer from '../../data/queer.json';
 import hedonisticData from '../../data/hedonist.json';
+import flintaData from '../../data/flinta.json';
 import QuestionsMode from "./components/QuestionsMode";
 
 const availableModes = [
@@ -31,6 +32,12 @@ const availableModes = [
     description: 'Take your romance to the next level through heartfelt inquiries that reveal genuine affection and understanding.',
     data: advancedDating,
     tagType: ""
+  },
+  {
+    title: "Play FLINTA* Harmony",
+    description: "Engage in deep and meaningful conversations that celebrate and explore the diverse experiences of FLINTA* individuals.",
+    data: flintaData,
+    tagType: "new"
   },
   {
     title: 'Queer Vibes',
