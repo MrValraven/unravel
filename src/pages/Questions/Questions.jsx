@@ -12,6 +12,7 @@ import neurospicy from '../../data/neurospicy.json';
 import queer from '../../data/queer.json';
 import hedonisticData from '../../data/hedonist.json';
 import flintaData from '../../data/flinta.json';
+import bairroData from '../../data/bairro.json';
 import QuestionsMode from "./components/QuestionsMode";
 
 const availableModes = [
@@ -37,6 +38,12 @@ const availableModes = [
     title: "Play FLINTA* Harmony",
     description: "Engage in deep and meaningful conversations that celebrate and explore the diverse experiences of FLINTA* individuals.",
     data: flintaData,
+    tagType: "new"
+  },
+  {
+    title: "Mingling at Bairro Alto",
+    description: "Engage in fun conversations when meeting cool individuals in Bairro Alto, Lisbon.",
+    data: bairroData,
     tagType: "new"
   },
   {
