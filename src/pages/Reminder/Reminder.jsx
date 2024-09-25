@@ -10,14 +10,13 @@ const Reminder = () => {
   return (
     <div className="reminder">
       <img src={ReminderImage} alt="" />
-      <h1>Reminder</h1>
+      <h1>What is Unravel?</h1>
       <ul>
         <li>
-          Start off with a compliment about their work, their energy or a
-          platonic physical compliment.
+          Unravel is a social game that helps people connect in an easy and carefree way.
         </li>
-        <li>Keep things light and playful.</li>
-        <li>Steer conversation toward emotions.</li>
+        <li>As the game unfolds, the questions and challenges allow users to gradually increase the level of familiarity and intimacy between them.</li>
+        <li>Each mode is tailored to a specific situation and the game is meant to display the questions always in the same order, but feel free to play the game as you like and enjoy the blissful feeling of making new connections :)</li>
       </ul>
       <button onClick={() => navigate("/questions")}>Start game</button>
     </div>
