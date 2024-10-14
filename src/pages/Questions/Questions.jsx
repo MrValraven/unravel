@@ -6,6 +6,7 @@ import tunasData from "../../data/tunas.json";
 import firstDateData from "../../data/firstDate.json";
 import advancedDating from "../../data/advancedDating.json";
 import spicyData from "../../data/spicy.json";
+import aftercareData from "../../data/aftercare.json";
 import polyamoryData from "../../data/polyamory.json";
 import silly from '../../data/silly.json';
 import neurospicy from '../../data/neurospicy.json';
@@ -35,21 +36,33 @@ const availableModes = [
     tagType: ""
   },
   {
-    title: "Play FLINTA* Harmony",
-    description: "Engage in deep and meaningful conversations that celebrate and explore the diverse experiences of FLINTA* individuals.",
-    data: flintaData,
-    tagType: "new"
-  },
-  {
     title: "Mingling at Bairro Alto",
     description: "Engage in fun conversations when meeting cool individuals in Bairro Alto, Lisbon.",
     data: bairroData,
     tagType: "new"
   },
   {
-    title: 'Queer Vibes',
-    description: ' A vibrant set of casual questions for lighthearted and engaging LGBTQ+ conversations.',
-    data: queer,
+    title: 'Play Flames of Desire',
+    description: 'Experience intense connections with daring questions, igniting desires and deepening bonds.',
+    data: spicyData,
+    tagType: ""
+  },
+  {
+    title: 'Play Aftercare Glow',
+    description: 'A set of thoughtful questions designed to enhance connection and nurture emotional well-being after your intimate moments.".',
+    data: aftercareData,
+    tagType: ""
+  },
+  {
+    title: 'Play Hedonistic Societies pack',
+    description: 'Dive into the world of hedonistic pleasures, where every conversation unveils provocative insights and shared indulgences deepen connections.',
+    data: hedonisticData,
+    tagType: "new"
+  },
+  {
+    title: 'Play Polyamorous Passions',
+    description: ' Embrace boundless love and explore the dynamics of polyamory in this captivating game mode.',
+    data: polyamoryData,
     tagType: ""
   },
   {
@@ -65,22 +78,16 @@ const availableModes = [
     tagType: "beta"
   },
   {
-    title: 'Play Flames of Desire',
-    description: 'Experience intense connections with daring questions, igniting desires and deepening bonds.',
-    data: spicyData,
-    tagType: ""
-  },
-  {
-    title: 'Play Hedonistic Societies pack',
-    description: 'Dive into the world of hedonistic pleasures, where every conversation unveils provocative insights and shared indulgences deepen connections.',
-    data: hedonisticData,
+    title: "Play FLINTA* Harmony",
+    description: "Engage in deep and meaningful conversations that celebrate and explore the diverse experiences of FLINTA* individuals.",
+    data: flintaData,
     tagType: "new"
   },
   {
-    title: 'Play Polyamorous Passions',
-    description: ' Embrace boundless love and explore the dynamics of polyamory in this captivating game mode.',
-    data: polyamoryData,
-    tagType: ""
+    title: 'Queer Vibes',
+    description: ' A vibrant set of casual questions for lighthearted and engaging LGBTQ+ conversations.',
+    data: queer,
+    tagType: "beta"
   },
   {
     title: 'Play Portuguese tunas pack',
