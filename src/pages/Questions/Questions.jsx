@@ -49,15 +49,15 @@ const availableModes = [
   },
   {
     title: 'Play Aftercare Glow',
-    description: 'A set of thoughtful questions designed to enhance connection and nurture emotional well-being after your intimate moments.".',
+    description: 'A set of thoughtful questions designed to enhance connection and nurture emotional well-being after your intimate moments.',
     data: aftercareData,
-    tagType: ""
+    tagType: "new"
   },
   {
     title: 'Play Hedonistic Societies pack',
     description: 'Dive into the world of hedonistic pleasures, where every conversation unveils provocative insights and shared indulgences deepen connections.',
     data: hedonisticData,
-    tagType: "new"
+    tagType: ""
   },
   {
     title: 'Play Polyamorous Passions',
