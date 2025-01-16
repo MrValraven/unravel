@@ -4,92 +4,108 @@ import "./styles.scss";
 
 import QuestionsMode from "./components/QuestionsMode";
 
+const getLastGameProgress = () => {
+  try {
+    const gameProgress = JSON.parse(localStorage.getItem('gameProgress'));
+    return gameProgress ?? {};
+  } catch (error) {
+    console.error(error);
+    return {};
+  }
+}
+
+const { savedMode, savedCounter } = getLastGameProgress();
+
 const Questions = () => {
-  const [questions, setQuestions] = useState([]);
-  const [endOfQuestions, setEndOfQuestions] = useState(true);
-  const [questionsCounter, setQuestionsCounter] = useState(0);
+  const [questions, setQuestions] = useState(savedMode || []);
+  const [isGameOngoing, setIsGameOngoing] = useState(false);
+  const [questionsCounter, setQuestionsCounter] = useState(savedCounter || 0);
   const [doesPreviousSessionExist, setDoesPreviousSessionExist] = useState(false);
 
   const saveStateToLocalStorage = (mode, counter) => {
-    localStorage.setItem('mode', JSON.stringify(mode));
-    localStorage.setItem('questionsCounter', JSON.stringify(counter));
-  };
+    if (mode === undefined || counter === undefined) return;
 
-  const handleIncrement = () => {
-    if (questionsCounter >= questions.length - 1) {
-      setEndOfQuestions(true);
-      saveStateToLocalStorage([], 0);
-      return;
+    const gameProgress = {
+      savedMode: mode,
+      savedCounter: counter
     }
 
-    setQuestionsCounter((previousValue) => {
-      const newCounterValue = previousValue + 1;
-      saveStateToLocalStorage(questions, newCounterValue);
-      return newCounterValue;
-    });
+    try {
+      localStorage.setItem('gameProgress', JSON.stringify(gameProgress));
+    } catch (error) {
+      console.error(error);
+      return;
+    }
   };
 
-  const resetQuestions = () => {
-    setEndOfQuestions(false);
-    setQuestionsCounter(0);
-    saveStateToLocalStorage([], 0);
+  const handleQuestionsCounterIncrement = () => {
+    setQuestionsCounter((previousQuestionsCounterValue) => previousQuestionsCounterValue + 1);
   };
 
-  const switchToMode = (modeData) => {
-    resetQuestions();
+  const switchToSelectedMode = (modeData) => {
     setQuestions(modeData);
-    saveStateToLocalStorage(modeData, 0);
+    setQuestionsCounter(0);
+    setIsGameOngoing(true);
   };
 
-  const resumeGame = () => {
-    const savedMode = JSON.parse(localStorage.getItem('mode'));
-    const savedCounter = JSON.parse(localStorage.getItem('questionsCounter'));
-
+  const resumeGameFromLastSession = () => {
     if (savedMode && typeof savedCounter === 'number') {
       setQuestions(savedMode);
       setQuestionsCounter(savedCounter);
-      setEndOfQuestions(savedCounter > savedMode.length - 1);
+      setIsGameOngoing(savedCounter < savedMode.length);
     }
   };
 
   useEffect(() => {
-    const savedMode = localStorage.getItem('mode');
-    const savedCounter = localStorage.getItem('questionsCounter');
-    setDoesPreviousSessionExist(savedMode !== null && savedCounter !== null)
-    setQuestions([]);
+    setDoesPreviousSessionExist(savedMode !== undefined && savedCounter !== undefined)
   }, []);
+
+  useEffect(() => {
+    if (questionsCounter > 0 && questionsCounter >= questions.length) {
+      setIsGameOngoing(false);
+      saveStateToLocalStorage([], 0);
+      setDoesPreviousSessionExist(false);
+      return;
+    }
+
+    saveStateToLocalStorage(questions, questionsCounter);
+  }, [questionsCounter])
 
   return (
     <div className="questions">
-      {!endOfQuestions ? (
+      {isGameOngoing ? (
         <div className="questionsContainer">
           <div className="header">
-            <hr />
-            <h2>
-              <span className="counterNumber" key={questionsCounter}>
-                {questionsCounter + 1}
-              </span>{" "}
-              / {questions.length}
-            </h2>{" "}
-            <hr />
+            // TODO: Implement current mode title, eg change questions state
+            {/* <h3 id="current-mode-title"></h3> */}
+            <div className="counter-header">
+              <hr />
+              <h2>
+                <span className="counterNumber" key={questionsCounter}>
+                  {questionsCounter + 1}
+                </span>{" "}
+                / {questions.length}
+              </h2>{" "}
+              <hr />
+            </div>
           </div>
           <p className="questionsDisplay" key={questionsCounter}>
             {questions[questionsCounter]}
           </p>
-          <button onClick={handleIncrement}>{questionsCounter >= questions.length - 1 ? 'Explore other modes' : 'Next question'}</button>
+          <button onClick={handleQuestionsCounterIncrement}>{questionsCounter >= questions.length - 1 ? 'Explore other modes' : 'Next question'}</button>
         </div>
       ) : (
         <div className="modes">
           {doesPreviousSessionExist ?
             <>
               <h4>Resume your last session</h4>
-              <button onClick={resumeGame}>Resume session</button>
+              <button onClick={resumeGameFromLastSession}>Resume session</button>
             </> :
             null
           }
           <h4>Choose a mode</h4>
           {availableModes.map((mode) => (
-            <QuestionsMode switchToMode={switchToMode} key={mode.title} title={mode.title} description={mode.description} data={mode.data} tagType={mode.tagType} />
+            <QuestionsMode switchToSelectedMode={switchToSelectedMode} key={mode.title} title={mode.title} description={mode.description} data={mode.data} tagType={mode.tagType} />
           ))}
         </div>
       )}

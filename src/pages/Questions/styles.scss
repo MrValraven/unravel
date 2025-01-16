@@ -9,6 +9,10 @@
     flex-direction: column;
     justify-content: space-around;
 
+    #current-mode-title {
+      margin: 0;
+    }
+
     .questionsDisplay {
       max-width: 540px;
       text-align: center;
@@ -16,10 +20,12 @@
     }
 
     .header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      .counter-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
 
       .counterNumber {
         opacity: 0;
