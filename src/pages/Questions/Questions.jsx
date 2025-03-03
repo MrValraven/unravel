@@ -76,8 +76,8 @@ const Questions = () => {
       {isGameOngoing ? (
         <div className="questionsContainer">
           <div className="header">
-            // TODO: Implement current mode title, eg change questions state
-            {/* <h3 id="current-mode-title"></h3> */}
+            
+            {/* TODO: Implement current mode title, eg change questions state <h3 id="current-mode-title"></h3> */}
             <div className="counter-header">
               <hr />
               <h2>
