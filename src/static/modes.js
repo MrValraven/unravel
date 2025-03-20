@@ -3,6 +3,7 @@ import tunasData from "../data/tunas.json";
 import firstDateData from "../data/firstDate.json";
 import advancedDating from "../data/advancedDating.json";
 import spicyData from "../data/spicy.json";
+import extraSpicyData from "../data/extraSpicy.json";
 import aftercareData from "../data/aftercare.json";
 import polyamoryData from "../data/polyamory.json";
 import silly from "../data/silly.json";
@@ -47,6 +48,13 @@ const availableModes = [
       "Experience intense connections with daring questions, igniting desires and deepening bonds.",
     data: spicyData,
     tagType: "",
+  },
+  {
+    title: "Play Inferno of Lust",
+    description:
+      "Step into the fire, where lust burns unchecked, and every desire is a spark waiting to ignite.",
+    data: extraSpicyData,
+    tagType: "new",
   },
   {
     title: "Play Aftercare Glow",
