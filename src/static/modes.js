@@ -12,6 +12,7 @@ import queer from "../data/queer.json";
 import hedonisticData from "../data/hedonist.json";
 import flintaData from "../data/flinta.json";
 import bairroData from "../data/bairro.json";
+import safeKinkData from "../data/safeKink.json";
 
 const availableModes = [
   {
@@ -55,6 +56,13 @@ const availableModes = [
       "Step into the fire, where lust burns unchecked, and every desire is a spark waiting to ignite.",
     data: extraSpicyData,
     tagType: "new",
+  },
+  {
+    title: "Play Safe Kink",
+    description:
+      "Approach the world of kink with care and consent, exploring desires while prioritizing safety and mutual respect.",
+    data: safeKinkData,
+    tagType: "beta",
   },
   {
     title: "Play Aftercare Glow",
