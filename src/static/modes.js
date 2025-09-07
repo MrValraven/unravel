@@ -13,6 +13,7 @@ import hedonisticData from "../data/hedonist.json";
 import flintaData from "../data/flinta.json";
 import bairroData from "../data/bairro.json";
 import safeKinkData from "../data/safeKink.json";
+import happyCouple from '../data/happyCouple.json';
 
 const availableModes = [
   {
@@ -35,6 +36,13 @@ const availableModes = [
       "Take your romance to the next level through heartfelt inquiries that reveal genuine affection and understanding.",
     data: advancedDating,
     tagType: "",
+  },
+  {
+    title: "Play Spark Flow",
+    description:
+      "A playful set of questions and challenges made for laughs, banter, and bonding.",
+    data: happyCouple,
+    tagType: "new",
   },
   {
     title: "Mingling at Bairro Alto",
