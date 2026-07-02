@@ -14,6 +14,7 @@ import flintaData from "../data/flinta.json";
 import bairroData from "../data/bairro.json";
 import safeKinkData from "../data/safeKink.json";
 import happyCouple from '../data/happyCouple.json';
+import dateNightData from "../data/dateNight.json";
 
 const availableModes = [
   {
@@ -29,6 +30,13 @@ const availableModes = [
       " A series of questions designed to deepen your bond and create meaningful conversations with your date.",
     data: firstDateData,
     tagType: "",
+  },
+  {
+    title: "Play Date Night pack",
+    description:
+      "A series of playful and heartfelt questions and challenges to spark connection and keep the spark alive on your date night.",
+    data: dateNightData,
+    tagType: "new",
   },
   {
     title: "Play Beyond the Surface",
