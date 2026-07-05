@@ -32,8 +32,8 @@ describe("Questions page", () => {
     expect(
       screen.getByRole("heading", { name: /Adults/ })
     ).toBeInTheDocument();
-    // Every mode renders as a button, plus the top-nav install icon button.
-    expect(screen.getAllByRole("button")).toHaveLength(18);
+    // Every enabled mode renders as a button, plus the top-nav install icon button.
+    expect(screen.getAllByRole("button")).toHaveLength(15);
   });
 
   it("shows how many questions each mode has", () => {

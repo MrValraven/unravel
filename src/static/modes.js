@@ -29,6 +29,8 @@ export const modeCategories = [
 
 // tagType: "" | "new" | "beta"   ·   nsfw: true prompts an 18+ confirmation.
 // category: "friends" | "dating" | "adults"  (see modeCategories above).
+// enabled: false keeps a mode out of the public app entirely — it is not shown
+//   and its question pack is not loaded. Omit it (or set true) to include a mode.
 const availableModes = [
   {
     title: "Unravel",
@@ -146,6 +148,7 @@ const availableModes = [
       "Explore the magic of neurodiversity with a collection of whimsical and inclusive questions designed to foster laughter, connection, and understanding among individuals with diverse minds.",
     tagType: "beta",
     category: "friends",
+    enabled: false,
   },
   {
     title: "FLINTA* Harmony",
@@ -154,6 +157,7 @@ const availableModes = [
       "Engage in deep and meaningful conversations that celebrate and explore the diverse experiences of FLINTA* individuals.",
     tagType: "new",
     category: "friends",
+    enabled: false,
   },
   {
     title: "Queer Vibes",
@@ -170,10 +174,15 @@ const availableModes = [
       "A series of questions that highlight the academic spirit of each Tuna and the great moments and adventures that come from being part of one.",
     tagType: "",
     category: "friends",
+    enabled: false,
   },
 ];
 
-export default availableModes.map((mode) => ({
-  ...mode,
-  data: loadPack(mode.file),
-}));
+// Modes flagged `enabled: false` are dropped here, before any pack is loaded,
+// so they never reach the app and their JSON is never pulled into the module.
+export default availableModes
+  .filter((mode) => mode.enabled !== false)
+  .map((mode) => ({
+    ...mode,
+    data: loadPack(mode.file),
+  }));
