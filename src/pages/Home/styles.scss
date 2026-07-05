@@ -2,7 +2,9 @@
 @use "../../styles/tokens" as *;
 
 .home {
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh; // dynamic viewport so mobile chrome doesn't add a phantom scroll
+  overflow: hidden; // single-screen view — lock to the viewport, never scroll
   padding: 2rem 20px 1.5rem;
   display: flex;
   flex-direction: column;

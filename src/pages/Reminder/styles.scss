@@ -3,8 +3,9 @@
 // Onboarding explainer, "Sheet" layout: a full-bleed illustration that fades
 // into the navy ground, with the copy + CTA riding in an elevated bottom sheet.
 .reminder {
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh; // dynamic viewport so mobile chrome doesn't add a phantom scroll
+  overflow: hidden; // single-screen view — lock to the viewport, never scroll
   max-width: 480px; // keep the phone-like column intentional on desktop
   margin: 0 auto;
   display: flex;
@@ -63,6 +64,8 @@
 
   ul {
     flex: 1; // push the CTA to the base of the sheet
+    min-height: 0; // on short screens shrink the list, not the CTA, off-screen
+    overflow: hidden; // clip surplus copy rather than growing past the viewport
     margin: 0;
     padding: 0;
     list-style: none;
