@@ -17,7 +17,7 @@ const Home = () => {
       <footer>
         Made with ✨ by{" "}
         <a
-          href="https:\\tiagocostadev.com"
+          href="https://tiagocostadev.com"
           rel="noopener noreferrer"
           target="_blank"
         >

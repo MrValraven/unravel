@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .home {
   height: 100vh;
   padding: 2rem 15px 1rem 15px;
@@ -19,7 +21,7 @@
   footer {
     margin-top: 50px;
     a {
-      color: darken(#b8c1ec, 20%);
+      color: color.adjust(#b8c1ec, $lightness: -20%);
     }
   }
 }

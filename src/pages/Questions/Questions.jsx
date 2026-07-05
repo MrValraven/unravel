@@ -1,83 +1,115 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import availableModes from "../../static/modes";
 import "./styles.scss";
 
 import QuestionsMode from "./components/QuestionsMode";
-
-const getLastGameProgress = () => {
-  try {
-    const gameProgress = JSON.parse(localStorage.getItem('gameProgress'));
-    return gameProgress ?? {};
-  } catch (error) {
-    console.error(error);
-    return {};
-  }
-}
-
-const { savedMode, savedCounter } = getLastGameProgress();
+import AgeGate from "./components/AgeGate";
+import {
+  saveGameProgress,
+  clearGameProgress,
+  getResumableSession,
+  isAgeConfirmed,
+  confirmAge,
+} from "./gameProgress";
 
 const Questions = () => {
-  const [questions, setQuestions] = useState(savedMode || []);
+  const [questions, setQuestions] = useState([]);
+  const [currentTitle, setCurrentTitle] = useState("");
+  const [questionsCounter, setQuestionsCounter] = useState(0);
   const [isGameOngoing, setIsGameOngoing] = useState(false);
-  const [questionsCounter, setQuestionsCounter] = useState(savedCounter || 0);
-  const [doesPreviousSessionExist, setDoesPreviousSessionExist] = useState(false);
+  const [savedSession, setSavedSession] = useState(null);
+  const [pendingMode, setPendingMode] = useState(null);
 
-  const saveStateToLocalStorage = (mode, counter) => {
-    if (mode === undefined || counter === undefined) return;
+  // Read any resumable session once, on mount, instead of at module load.
+  useEffect(() => {
+    setSavedSession(getResumableSession());
+  }, []);
 
-    const gameProgress = {
-      savedMode: mode,
-      savedCounter: counter
-    }
-
-    try {
-      localStorage.setItem('gameProgress', JSON.stringify(gameProgress));
-    } catch (error) {
-      console.error(error);
-      return;
-    }
-  };
-
-  const handleQuestionsCounterIncrement = () => {
-    setQuestionsCounter((previousQuestionsCounterValue) => previousQuestionsCounterValue + 1);
-  };
-
-  const switchToSelectedMode = (modeData) => {
-    setQuestions(modeData);
+  const startMode = (mode) => {
+    setQuestions(mode.data);
+    setCurrentTitle(mode.title);
     setQuestionsCounter(0);
     setIsGameOngoing(true);
   };
 
+  const switchToSelectedMode = (mode) => {
+    if (mode.nsfw && !isAgeConfirmed()) {
+      setPendingMode(mode);
+      return;
+    }
+    startMode(mode);
+  };
+
+  const handleAgeConfirm = () => {
+    confirmAge();
+    if (pendingMode) startMode(pendingMode);
+    setPendingMode(null);
+  };
+
+  const handleAgeCancel = () => setPendingMode(null);
+
   const resumeGameFromLastSession = () => {
-    if (savedMode && typeof savedCounter === 'number') {
-      setQuestions(savedMode);
-      setQuestionsCounter(savedCounter);
-      setIsGameOngoing(savedCounter < savedMode.length);
+    if (!savedSession) return;
+    setQuestions(savedSession.savedMode);
+    setCurrentTitle(savedSession.savedTitle);
+    setQuestionsCounter(savedSession.savedCounter);
+    setIsGameOngoing(true);
+  };
+
+  // Leave the pack but keep progress, so it reappears under "Resume".
+  const returnToModeSelection = () => {
+    setIsGameOngoing(false);
+    if (questions.length > 0 && questionsCounter < questions.length) {
+      setSavedSession({
+        savedMode: questions,
+        savedCounter: questionsCounter,
+        savedTitle: currentTitle,
+      });
     }
   };
 
-  useEffect(() => {
-    setDoesPreviousSessionExist(savedMode !== undefined && savedCounter !== undefined)
-  }, []);
+  const handleQuestionsCounterIncrement = () =>
+    setQuestionsCounter((previous) => previous + 1);
+
+  const handleQuestionsCounterDecrement = () =>
+    setQuestionsCounter((previous) => previous - 1);
 
   useEffect(() => {
-    if (questionsCounter > 0 && questionsCounter >= questions.length) {
+    if (!isGameOngoing) return;
+
+    if (questionsCounter >= questions.length) {
       setIsGameOngoing(false);
-      saveStateToLocalStorage([], 0);
-      setDoesPreviousSessionExist(false);
+      clearGameProgress();
+      setSavedSession(null);
       return;
     }
 
-    saveStateToLocalStorage(questions, questionsCounter);
-  }, [questionsCounter])
+    saveGameProgress(questions, questionsCounter, currentTitle);
+  }, [questionsCounter, isGameOngoing, questions, currentTitle]);
+
+  const isLastQuestion = questionsCounter >= questions.length - 1;
+  const progress =
+    questions.length > 0
+      ? Math.min(((questionsCounter + 1) / questions.length) * 100, 100)
+      : 0;
 
   return (
     <div className="questions">
+      {pendingMode && (
+        <AgeGate
+          title={pendingMode.title}
+          onConfirm={handleAgeConfirm}
+          onCancel={handleAgeCancel}
+        />
+      )}
+
       {isGameOngoing ? (
         <div className="questionsContainer">
           <div className="header">
-            
-            {/* TODO: Implement current mode title, eg change questions state <h3 id="current-mode-title"></h3> */}
+            {currentTitle && (
+              <h3 className="currentModeTitle">{currentTitle}</h3>
+            )}
             <div className="counter-header">
               <hr />
               <h2>
@@ -88,24 +120,61 @@ const Questions = () => {
               </h2>{" "}
               <hr />
             </div>
+            <div
+              className="progressBar"
+              role="progressbar"
+              aria-valuenow={questionsCounter + 1}
+              aria-valuemin={1}
+              aria-valuemax={questions.length}
+            >
+              <div className="progressFill" style={{ width: `${progress}%` }} />
+            </div>
           </div>
+
           <p className="questionsDisplay" key={questionsCounter}>
             {questions[questionsCounter]}
           </p>
-          <button onClick={handleQuestionsCounterIncrement}>{questionsCounter >= questions.length - 1 ? 'Explore other modes' : 'Next question'}</button>
+
+          <div className="actions">
+            {questionsCounter > 0 && (
+              <button
+                className="secondaryButton"
+                onClick={handleQuestionsCounterDecrement}
+              >
+                Previous question
+              </button>
+            )}
+            <button onClick={handleQuestionsCounterIncrement}>
+              {isLastQuestion ? "Explore other modes" : "Next question"}
+            </button>
+            <button className="linkButton" onClick={returnToModeSelection}>
+              Back to modes
+            </button>
+          </div>
         </div>
       ) : (
         <div className="modes">
-          {doesPreviousSessionExist ?
-            <>
+          <nav className="topNav">
+            <Link to="/">← Home</Link>
+          </nav>
+
+          {savedSession && (
+            <div className="resume">
               <h4>Resume your last session</h4>
+              {savedSession.savedTitle && (
+                <p className="resumeTitle">{savedSession.savedTitle}</p>
+              )}
               <button onClick={resumeGameFromLastSession}>Resume session</button>
-            </> :
-            null
-          }
+            </div>
+          )}
+
           <h4>Choose a mode</h4>
           {availableModes.map((mode) => (
-            <QuestionsMode switchToSelectedMode={switchToSelectedMode} key={mode.title} title={mode.title} description={mode.description} data={mode.data} tagType={mode.tagType} />
+            <QuestionsMode
+              key={mode.title}
+              mode={mode}
+              onSelect={switchToSelectedMode}
+            />
           ))}
         </div>
       )}
