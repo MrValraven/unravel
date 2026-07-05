@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import availableModes from "../../static/modes";
+import availableModes, { modeCategories } from "../../static/modes";
 import "./styles.scss";
 
 import QuestionsMode from "./components/QuestionsMode";
 import AgeGate from "./components/AgeGate";
+import InstallPrompt from "./components/InstallPrompt";
 import {
   saveGameProgress,
   clearGameProgress,
@@ -136,17 +137,19 @@ const Questions = () => {
           </p>
 
           <div className="actions">
-            {questionsCounter > 0 && (
-              <button
-                className="secondaryButton"
-                onClick={handleQuestionsCounterDecrement}
-              >
-                Previous question
+            <div className="actions__primary">
+              {questionsCounter > 0 && (
+                <button
+                  className="secondaryButton"
+                  onClick={handleQuestionsCounterDecrement}
+                >
+                  Previous question
+                </button>
+              )}
+              <button onClick={handleQuestionsCounterIncrement}>
+                {isLastQuestion ? "Explore other modes" : "Next question"}
               </button>
-            )}
-            <button onClick={handleQuestionsCounterIncrement}>
-              {isLastQuestion ? "Explore other modes" : "Next question"}
-            </button>
+            </div>
             <button className="linkButton" onClick={returnToModeSelection}>
               Back to modes
             </button>
@@ -156,26 +159,68 @@ const Questions = () => {
         <div className="modes">
           <nav className="topNav">
             <Link to="/">← Home</Link>
+            <InstallPrompt />
           </nav>
 
           {savedSession && (
             <div className="resume">
-              <h4>Resume your last session</h4>
-              {savedSession.savedTitle && (
-                <p className="resumeTitle">{savedSession.savedTitle}</p>
-              )}
+              <div className="resume__body">
+                <p className="resume__label">Resume your last session</p>
+                {savedSession.savedTitle && (
+                  <p className="resume__title">
+                    {savedSession.savedTitle}
+                    {savedSession.savedMode?.length > 0 && (
+                      <span className="resume__meta">
+                        {" · "}question {savedSession.savedCounter + 1} of{" "}
+                        {savedSession.savedMode.length}
+                      </span>
+                    )}
+                  </p>
+                )}
+              </div>
               <button onClick={resumeGameFromLastSession}>Resume session</button>
             </div>
           )}
 
-          <h4>Choose a mode</h4>
-          {availableModes.map((mode) => (
-            <QuestionsMode
-              key={mode.title}
-              mode={mode}
-              onSelect={switchToSelectedMode}
-            />
-          ))}
+          <header className="modesHeader">
+            <h1 className="modesTitle">Choose a mode</h1>
+            <p className="modesSubtitle">
+              Pick a deck of questions to get the conversation going.
+            </p>
+          </header>
+
+          {modeCategories.map((category) => {
+            const modesInCategory = availableModes.filter(
+              (mode) => mode.category === category.key
+            );
+            if (modesInCategory.length === 0) return null;
+
+            return (
+              <section
+                key={category.key}
+                className={`modeSection modeSection--${category.key}`}
+              >
+                <div className="modeSection__head">
+                  <h2 className="modeSection__title">{category.title}</h2>
+                  <span className="modeSection__count">
+                    {modesInCategory.length}
+                  </span>
+                </div>
+                {category.note && (
+                  <p className="modeSection__note">{category.note}</p>
+                )}
+                <div className="modeGrid">
+                  {modesInCategory.map((mode) => (
+                    <QuestionsMode
+                      key={mode.title}
+                      mode={mode}
+                      onSelect={switchToSelectedMode}
+                    />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
         </div>
       )}
     </div>

@@ -1,39 +1,84 @@
 @use "sass:color";
+@use "../../styles/tokens" as *;
 
 .home {
-  height: 100vh;
-  padding: 2rem 15px 1rem 15px;
-  text-align: center;
+  min-height: 100vh;
+  padding: 2rem 20px 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 40px;
+  text-align: center;
 
-  h1 {
-    font-size: 100px;
-    text-transform: uppercase;
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
   }
 
-  p {
-    font-size: 24px;
+  .hero__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(52px, 12vw, 110px);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    color: $heading;
+  }
+
+  .hero__tagline {
+    margin: 0;
+    max-width: 22ch;
+    font-size: clamp(18px, 2.4vw, 24px);
+    color: $text;
+  }
+
+  .hero__art img {
+    width: min(440px, 100%);
+    margin: 0 auto;
   }
 
   footer {
-    margin-top: 50px;
+    color: $text-dim;
+
     a {
       color: color.adjust(#b8c1ec, $lightness: -20%);
     }
   }
-}
 
-@media (max-width: 800px) {
-  .home {
-    h1 {
-      font-size: 45px;
+  // Desktop: two-column hero — copy on the left, illustration on the right.
+  @media (min-width: $bp-desktop) {
+    .hero {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 56px;
     }
 
-    p {
-      font-size: 18px;
+    .hero__copy {
+      align-items: flex-start;
+      text-align: left;
+      flex: 1 1 0;
+      max-width: 520px;
+    }
+
+    .hero__tagline {
+      max-width: 26ch;
+    }
+
+    .hero__art {
+      flex: 1 1 0;
+      display: flex;
+      justify-content: center;
     }
   }
 }

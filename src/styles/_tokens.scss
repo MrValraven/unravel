@@ -1,0 +1,34 @@
+// Shared design tokens so the three screens (Home, mode selection, in-game)
+// stay visually consistent instead of re-hardcoding the palette everywhere.
+// Import with: @use "<relative>/styles/tokens" as *;
+
+// ---- Palette (Unravel's existing brand) ----
+$bg: #232946;
+$bg-elevated: #2b3358;
+$heading: #fffffe;
+$text: #b8c1ec;
+$accent: #eebbc3;
+$new: #ffcc1d;
+$beta: #e555c7;
+
+// ---- Derived surfaces ----
+$surface: rgba(184, 193, 236, 0.045);
+$surface-hover: rgba(184, 193, 236, 0.09);
+$border: rgba(184, 193, 236, 0.16);
+$border-strong: rgba(184, 193, 236, 0.28);
+$text-dim: rgba(184, 193, 236, 0.62);
+
+// ---- Layout ----
+$bp-tablet: 640px;
+$bp-desktop: 960px;
+$radius: 16px;
+
+// ---- Motion ----
+$ease: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+// A subtle raised panel/card surface used across screens.
+@mixin surface {
+  border: 1px solid $border;
+  border-radius: $radius;
+  background: $surface;
+}

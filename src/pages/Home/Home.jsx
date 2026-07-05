@@ -8,12 +8,18 @@ const Home = () => {
   let navigate = useNavigate();
   return (
     <div className="home">
-      <div className="header">
-        <h1>Unravel</h1>
-        <p>The uncomplicated way of making new friends</p>
+      <div className="hero">
+        <div className="hero__copy">
+          <h1>Unravel</h1>
+          <p className="hero__tagline">
+            The uncomplicated way of making new friends
+          </p>
+          <button onClick={() => navigate("/reminder")}>Get started</button>
+        </div>
+        <div className="hero__art">
+          <img src={HeroImage} alt="" />
+        </div>
       </div>
-      <img src={HeroImage} alt="" />
-      <button onClick={() => navigate("/reminder")}>Get started</button>
       <footer>
         Made with ✨ by{" "}
         <a

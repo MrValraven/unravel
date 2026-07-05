@@ -15,7 +15,20 @@ const loadPack = (file) => {
   return data;
 };
 
+// The mode-selection screen groups cards under these sections, in this order.
+// A mode's `category` must match one of the keys below.
+export const modeCategories = [
+  { key: "friends", title: "Make Friends & Socialize" },
+  { key: "dating", title: "Dating & Romance" },
+  {
+    key: "adults",
+    title: "Adults · 18+",
+    note: "Selecting one of these asks you to confirm you're 18 or older.",
+  },
+];
+
 // tagType: "" | "new" | "beta"   ·   nsfw: true prompts an 18+ confirmation.
+// category: "friends" | "dating" | "adults"  (see modeCategories above).
 const availableModes = [
   {
     title: "Unravel",
@@ -23,6 +36,7 @@ const availableModes = [
     description:
       "A series of questions designed to help you make new friends and develop better connections.",
     tagType: "",
+    category: "friends",
   },
   {
     title: "First Date",
@@ -30,6 +44,7 @@ const availableModes = [
     description:
       "A series of questions designed to deepen your bond and create meaningful conversations with your date.",
     tagType: "",
+    category: "dating",
   },
   {
     title: "Date Night",
@@ -37,6 +52,7 @@ const availableModes = [
     description:
       "A series of playful and heartfelt questions and challenges to spark connection and keep the spark alive on your date night.",
     tagType: "new",
+    category: "dating",
   },
   {
     title: "Beyond the Surface",
@@ -44,6 +60,7 @@ const availableModes = [
     description:
       "Take your romance to the next level through heartfelt inquiries that reveal genuine affection and understanding.",
     tagType: "",
+    category: "dating",
   },
   {
     title: "Spark Flow",
@@ -51,6 +68,7 @@ const availableModes = [
     description:
       "A playful set of questions and challenges made for laughs, banter, and bonding.",
     tagType: "new",
+    category: "dating",
   },
   {
     title: "Mingling at Bairro Alto",
@@ -58,6 +76,7 @@ const availableModes = [
     description:
       "Engage in fun conversations when meeting cool individuals in Bairro Alto, Lisbon.",
     tagType: "new",
+    category: "friends",
   },
   {
     title: "Flames of Desire",
@@ -66,6 +85,7 @@ const availableModes = [
       "Experience intense connections with daring questions, igniting desires and deepening bonds.",
     tagType: "",
     nsfw: true,
+    category: "adults",
   },
   {
     title: "Inferno of Lust",
@@ -74,6 +94,7 @@ const availableModes = [
       "Step into the fire, where lust burns unchecked, and every desire is a spark waiting to ignite.",
     tagType: "new",
     nsfw: true,
+    category: "adults",
   },
   {
     title: "Safe Kink",
@@ -82,6 +103,7 @@ const availableModes = [
       "Approach the world of kink with care and consent, exploring desires while prioritizing safety and mutual respect.",
     tagType: "beta",
     nsfw: true,
+    category: "adults",
   },
   {
     title: "Aftercare Glow",
@@ -90,6 +112,7 @@ const availableModes = [
       "A set of thoughtful questions designed to enhance connection and nurture emotional well-being after your intimate moments.",
     tagType: "new",
     nsfw: true,
+    category: "adults",
   },
   {
     title: "Hedonistic Societies",
@@ -98,6 +121,7 @@ const availableModes = [
       "Dive into the world of hedonistic pleasures, where every conversation unveils provocative insights and shared indulgences deepen connections.",
     tagType: "",
     nsfw: true,
+    category: "adults",
   },
   {
     title: "Polyamorous Passions",
@@ -105,6 +129,7 @@ const availableModes = [
     description:
       "Embrace boundless love and explore the dynamics of polyamory in this captivating game mode.",
     tagType: "",
+    category: "dating",
   },
   {
     title: "Silly Goose",
@@ -112,6 +137,7 @@ const availableModes = [
     description:
       "Unleash laughter and fun with whimsical questions that promise lighthearted moments and quirky connections.",
     tagType: "beta",
+    category: "friends",
   },
   {
     title: "Neurospicy Delight",
@@ -119,6 +145,7 @@ const availableModes = [
     description:
       "Explore the magic of neurodiversity with a collection of whimsical and inclusive questions designed to foster laughter, connection, and understanding among individuals with diverse minds.",
     tagType: "beta",
+    category: "friends",
   },
   {
     title: "FLINTA* Harmony",
@@ -126,6 +153,7 @@ const availableModes = [
     description:
       "Engage in deep and meaningful conversations that celebrate and explore the diverse experiences of FLINTA* individuals.",
     tagType: "new",
+    category: "friends",
   },
   {
     title: "Queer Vibes",
@@ -133,6 +161,7 @@ const availableModes = [
     description:
       "A vibrant set of casual questions for lighthearted and engaging LGBTQ+ conversations.",
     tagType: "beta",
+    category: "friends",
   },
   {
     title: "Portuguese Tunas",
@@ -140,6 +169,7 @@ const availableModes = [
     description:
       "A series of questions that highlight the academic spirit of each Tuna and the great moments and adventures that come from being part of one.",
     tagType: "",
+    category: "friends",
   },
 ];
 

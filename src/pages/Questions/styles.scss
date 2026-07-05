@@ -1,10 +1,15 @@
+@use "../../styles/tokens" as *;
+
 .questions {
   min-height: 100vh;
   padding: 2rem 15px;
   text-align: center;
 
+  // ---- In-game view: a focused, centered panel ----
   .questionsContainer {
-    height: 90vh;
+    max-width: 640px;
+    margin: 0 auto;
+    min-height: 88vh;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -42,28 +47,28 @@
         .progressFill {
           height: 100%;
           border-radius: 999px;
-          background-color: #eebbc3;
-          transition: width 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+          background-color: $accent;
+          transition: width 0.4s $ease;
         }
       }
 
       .counterNumber {
         opacity: 0;
-        animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0.1s 1 both;
+        animation: fadeUp 1s $ease 0.1s 1 both;
       }
 
       hr {
         height: 1px;
         width: 35%;
         opacity: 0.5;
-        border: 1px solid #b8c1ec;
+        border: 1px solid $text;
       }
     }
 
     p {
       font-size: 24px;
       opacity: 0;
-      animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s 1 both;
+      animation: fadeUp 1s $ease 0.3s 1 both;
     }
 
     button {
@@ -74,12 +79,25 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+
+      // Previous / Next stack on mobile, sit side-by-side on wider screens.
+      .actions__primary {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+
+        @media (min-width: $bp-tablet) {
+          flex-direction: row;
+          justify-content: center;
+        }
+      }
     }
 
     .secondaryButton {
       background-color: transparent;
-      color: #b8c1ec;
+      color: $text;
       border: 1px solid rgba(184, 193, 236, 0.4);
       opacity: 0.6;
 
@@ -90,7 +108,7 @@
 
     .linkButton {
       background-color: transparent;
-      color: #b8c1ec;
+      color: $text;
       border: none;
       width: auto;
       padding: 6px 12px;
@@ -107,20 +125,52 @@
     }
   }
 
+  // ---- Mode selection: grouped, responsive card grid ----
   .modes {
     display: flex;
     flex-direction: column;
-    gap: 25px;
-    justify-content: center;
-    align-items: center;
+    gap: 22px;
+    max-width: 1120px;
+    margin: 0 auto;
+    text-align: left;
 
     .topNav {
-      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
       a {
-        color: #b8c1ec;
+        color: $text;
         text-decoration: none;
         opacity: 0.7;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      // A quiet, link-like trigger. These rules out-specify the global
+      // `.app button` pink pill so the icon stays subtle in the top nav.
+      .installButton {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        width: auto;
+        padding: 4px 6px;
+        background-color: transparent;
+        color: $text;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        text-transform: none;
+        letter-spacing: normal;
+        opacity: 0.7;
+        cursor: pointer;
+
+        svg {
+          font-size: 16px;
+        }
 
         &:hover {
           opacity: 1;
@@ -130,58 +180,268 @@
 
     .resume {
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid rgba(184, 193, 236, 0.2);
+      gap: 14px 22px;
+      padding: 18px 22px;
+      @include surface;
+      background: linear-gradient(
+        180deg,
+        rgba(238, 187, 195, 0.06),
+        rgba(184, 193, 236, 0.03)
+      );
 
-      .resumeTitle {
-        margin: 0;
+      .resume__body {
+        flex: 1 1 auto;
+        min-width: 180px;
+      }
+
+      .resume__label {
+        margin: 0 0 3px;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
+        font-size: 11px;
+        color: $text-dim;
+      }
+
+      .resume__title {
+        margin: 0;
+        color: $heading;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .resume__meta {
+        color: $text-dim;
+        font-weight: 400;
         font-size: 14px;
-        opacity: 0.7;
+      }
+
+      button {
+        // Override the global `.app button` fixed `min(300px, 100%)`: as a
+        // side-by-side CTA the button should size to its label, not sit as a
+        // wide slab hugging the left with dead space beside it.
+        flex: none;
+        width: auto;
+        padding: 13px 30px;
       }
     }
 
-    .mode {
-      button {
-        position: relative;
+    .modesHeader {
+      margin-top: 4px;
+
+      .modesTitle {
+        margin: 0 0 4px;
+        color: $heading;
+        font-size: clamp(24px, 3.4vw, 34px);
+        font-weight: 700;
+        letter-spacing: -0.5px;
       }
 
-      .modeTag {
-        position: absolute;
-        right: -15px;
-        top: -20px;
-        padding: 5px 15px;
-        border-radius: 6px;
+      .modesSubtitle {
+        margin: 0;
+        color: $text-dim;
+        font-size: 15px;
+      }
+    }
 
-        p {
-          color: #232946;
-          text-transform: uppercase;
-          font-weight: bold;
+    .modeSection {
+      &__head {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 16px;
+
+        &::after {
+          content: "";
+          flex: 1;
+          height: 1px;
+          background: $border;
         }
       }
 
-      .new {
-        background-color: rgb(255, 204, 29, 1);
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2),
-          0 0 20px 0 rgba(255, 204, 29, 0.9),
-          0 0 60px 1px rgba(255, 204, 29, 0.3);
+      &__title {
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 13px;
+        font-weight: 700;
+        color: $text;
       }
 
-      .beta {
-        background-color: #e555c7;
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2),
-          0 0 20px 0 rgba(229, 85, 199, 0.9),
-          0 0 60px 1px rgba(229, 85, 199, 0.3);
+      &__count {
+        font-size: 12px;
+        color: $text-dim;
+        font-variant-numeric: tabular-nums;
+      }
+
+      &__note {
+        margin: -6px 0 16px;
+        font-size: 12px;
+        color: $text-dim;
+      }
+
+      &--adults .modeSection__title {
+        color: $accent;
       }
     }
 
-    div .modeDescription {
-      margin-top: 10px;
+    .modeGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(258px, 100%), 1fr));
+      gap: 16px;
     }
+
+    // The whole card is one <button>; these rules out-specify the global
+    // `.app button` styling (pink pill) that would otherwise take over.
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      padding: 20px 20px 18px;
+      text-align: left;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+      color: $text;
+      cursor: pointer;
+      @include surface;
+      transition: transform 0.28s $ease, border-color 0.28s ease,
+        background 0.28s ease, box-shadow 0.28s ease;
+
+      &:hover,
+      &:focus-visible {
+        transform: translateY(-4px);
+        border-color: $accent;
+        background: $surface-hover;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+        outline: none;
+        letter-spacing: 0;
+      }
+
+      &:focus-visible {
+        box-shadow: 0 0 0 2px $accent, 0 14px 34px rgba(0, 0, 0, 0.35);
+      }
+
+      .card__top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .card__title {
+        color: $heading;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        text-wrap: balance;
+      }
+
+      .card__desc {
+        flex: 1;
+        color: $text;
+        opacity: 0.82;
+        font-size: 13.5px;
+        line-height: 1.45;
+      }
+
+      .card__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 2px;
+        min-height: 18px;
+      }
+
+      .card__count {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        color: $text-dim;
+      }
+
+      .card__age {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 9px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        color: $text-dim;
+        border: 1px solid $border-strong;
+        border-radius: 999px;
+      }
+
+      .card__start {
+        margin-left: auto;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: $accent;
+        opacity: 0;
+        transform: translateX(-6px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+      }
+
+      &:hover .card__start,
+      &:focus-visible .card__start {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .tag {
+      flex: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: $bg;
+      white-space: nowrap;
+
+      &--new {
+        background: $new;
+        box-shadow: 0 0 18px rgba(255, 204, 29, 0.45);
+      }
+
+      &--beta {
+        background: $beta;
+        color: $heading;
+        box-shadow: 0 0 18px rgba(229, 85, 199, 0.4);
+      }
+    }
+  }
+
+  @media (max-width: 560px) {
+    .modes .resume {
+      flex-direction: column;
+      align-items: flex-start;
+
+      // Stacked on its own line, a content-width button leaves an awkward gap
+      // on the right; stretch it full-width to balance with the text above.
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .questions .card {
+    transition: none;
+  }
+  .questions .card:hover,
+  .questions .card:focus-visible {
+    transform: none;
+  }
+  .questions .card__start {
+    transition: none;
   }
 }
 
