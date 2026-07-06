@@ -9,7 +9,10 @@ export default defineConfig({
     react(),
     basicSsl(),
     VitePWA({
-      registerType: "autoUpdate",
+      // "prompt": a freshly deployed service worker installs but waits, so the
+      // Home screen can surface a user-triggered "New version available" button
+      // (see src/pages/Home/useAppUpdate.js) instead of silently auto-updating.
+      registerType: "prompt",
       injectRegister: "auto",
       includeAssets: ["logo.svg", "apple-touch-icon.png", "image.jpg"],
       workbox: {

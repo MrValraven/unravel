@@ -44,6 +44,32 @@
     color: $text;
   }
 
+  // Secondary to the primary pink "Get started" CTA: a quiet, self-sized pill
+  // that only appears when a new version is waiting. Overrides the global
+  // button styling (pink fill, fixed 300px width) from App.scss.
+  .hero__update {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: auto;
+    padding: 9px 16px;
+    background: $surface;
+    color: $text;
+    border: 1px solid $border-strong;
+    border-radius: 999px;
+    font-size: 12px;
+
+    svg {
+      font-size: 15px;
+      color: $accent;
+    }
+
+    &:hover {
+      background: $surface-hover;
+    }
+  }
+
   .hero__art img {
     width: min(440px, 100%);
     margin: 0 auto;
