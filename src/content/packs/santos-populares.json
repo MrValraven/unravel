@@ -1,0 +1,224 @@
+{
+  "id": "santos-populares",
+  "cards": [
+    {
+      "id": "santos-populares-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Sardine on bread or a bifana: what's your arraial order?",
+        "pt": "Sardinha no pão ou bifana: qual é o teu pedido no arraial?"
+      }
+    },
+    {
+      "id": "santos-populares-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Santo António in Lisbon or São João in Porto: which night is yours, and why?",
+        "pt": "Santo António em Lisboa ou São João no Porto: qual é a tua noite e porquê?"
+      }
+    },
+    {
+      "id": "santos-populares-003",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which neighborhood would you parade for in the Marchas Populares?",
+        "pt": "Por que bairro desfilavas nas Marchas Populares?"
+      }
+    },
+    {
+      "id": "santos-populares-004",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Write a four-line quadra for a manjerico, dedicate it to someone at the table and read it out loud.",
+        "pt": "Escreve uma quadra para um manjerico, dedica-a a alguém da mesa e lê-a em voz alta."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "santos-populares-005",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which pimba song do you pretend to hate but know every word of?",
+        "pt": "Qual é a música pimba que finges detestar mas sabes de cor?"
+      }
+    },
+    {
+      "id": "santos-populares-006",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone names the best arraial they've ever been to.",
+        "pt": "Digam qual foi o melhor arraial onde já estiveram."
+      }
+    },
+    {
+      "id": "santos-populares-007",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Plastic hammer or leek: how do you greet strangers on the night of São João?",
+        "pt": "Martelinho ou alho-porro: como cumprimentas desconhecidos na noite de São João?"
+      }
+    },
+    {
+      "id": "santos-populares-008",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Hum the start of a Santos Populares song. Whoever guesses it first gets a toast from the table.",
+        "pt": "Trauteia o início de uma música dos Santos. Quem adivinhar primeiro recebe um brinde da mesa."
+      },
+      "timerSeconds": 30
+    },
+    {
+      "id": "santos-populares-009",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What does an arraial need to have for you to stay until the very end?",
+        "pt": "O que é que um arraial tem de ter para ficares até ao fim?"
+      }
+    },
+    {
+      "id": "santos-populares-010",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you could make one wish during the São João fireworks, what would it be?",
+        "pt": "Se pudesses pedir um desejo durante o fogo de artifício do São João, qual seria?"
+      }
+    },
+    {
+      "id": "santos-populares-011",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone rates grilled sardines from one to ten and defends their score.",
+        "pt": "Deem uma nota de um a dez às sardinhas assadas e defendam-na."
+      }
+    },
+    {
+      "id": "santos-populares-012",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Santo António is the matchmaking saint. Which two people you know would you set up, and why?",
+        "pt": "O Santo António é o santo casamenteiro. Que duas pessoas que conheces juntavas e porquê?"
+      }
+    },
+    {
+      "id": "santos-populares-013",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's your best story from a night that ended with the sun coming up over the city?",
+        "pt": "Qual é a tua melhor história de uma noite que acabou com o sol a nascer sobre a cidade?"
+      }
+    },
+    {
+      "id": "santos-populares-014",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone shares a smell or a sound that means June to them.",
+        "pt": "Partilhem um cheiro ou um som que, para vocês, significa junho."
+      }
+    },
+    {
+      "id": "santos-populares-015",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Who taught you to dance at a bailarico, or who would you like to learn from?",
+        "pt": "Quem te ensinou a dançar num bailarico, ou com quem gostavas de aprender?"
+      }
+    },
+    {
+      "id": "santos-populares-016",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Lead the table in a one-minute marcha around the room. Arches are optional.",
+        "pt": "Lidera a mesa numa marcha de um minuto pela sala. Os arcos são opcionais."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "santos-populares-017",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you threw your own arraial, what would be on the grill and on the playlist?",
+        "pt": "Se fizesses o teu próprio arraial, o que ia para a grelha e para a playlist?"
+      }
+    },
+    {
+      "id": "santos-populares-018",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which tradition from these festivals would you take with you if you moved abroad?",
+        "pt": "Que tradição destas festas levavas contigo se fosses viver para o estrangeiro?"
+      }
+    },
+    {
+      "id": "santos-populares-019",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Pick a Lisbon or Porto neighborhood for each person at the table based on their vibe, and explain your choices.",
+        "pt": "Escolhe um bairro de Lisboa ou do Porto para cada pessoa da mesa de acordo com a sua vibe e explica as tuas escolhas."
+      }
+    },
+    {
+      "id": "santos-populares-020",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's the most Portuguese thing you've done this June?",
+        "pt": "Qual foi a coisa mais portuguesa que fizeste neste mês de junho?"
+      }
+    },
+    {
+      "id": "santos-populares-021",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone shares their favorite memory of a summer night from when they were a kid.",
+        "pt": "Partilhem a vossa memória favorita de uma noite de verão de quando eram crianças."
+      }
+    },
+    {
+      "id": "santos-populares-022",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Who have you lost touch with that you'd love to bump into at an arraial this year?",
+        "pt": "Com quem perdeste o contacto e adoravas cruzar-te num arraial este ano?"
+      }
+    },
+    {
+      "id": "santos-populares-023",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What does your neighborhood mean to you, and who made it feel like home?",
+        "pt": "O que significa para ti o teu bairro e quem fez com que o sentisses como a tua casa?"
+      }
+    },
+    {
+      "id": "santos-populares-024",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which June night from your past would you relive exactly as it was?",
+        "pt": "Que noite de junho do teu passado gostavas de reviver tal e qual como foi?"
+      }
+    }
+  ]
+}

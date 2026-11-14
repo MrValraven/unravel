@@ -1,0 +1,91 @@
+@use "../../../styles/tokens" as *;
+
+.player-names {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+}
+
+.player-names__list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  list-style: none;
+}
+
+.player-names__row {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  padding-bottom: $space-2;
+  overflow: hidden;
+  animation: player-row-in $duration $ease-out both;
+}
+
+.player-names__row--leaving {
+  animation: player-row-out $duration $ease-in both;
+}
+
+.player-names__input {
+  flex: 1;
+  min-width: 0;
+  min-height: $tap-target;
+  padding: $space-2 $space-4;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-sm;
+  background: $color-surface;
+  color: $color-heading;
+  font-size: 1rem;
+  transition: border-color $duration-fast ease;
+
+  &::placeholder {
+    color: $color-text-dim;
+  }
+
+  &:focus-visible {
+    border-color: $color-accent;
+    outline-offset: 1px;
+  }
+}
+
+.player-names__add {
+  margin-left: -$space-3;
+}
+
+.player-names__rule {
+  margin-top: $space-2;
+  color: $color-text-dim;
+  font-size: 0.875rem;
+}
+
+.player-names__full {
+  color: $color-text-dim;
+  font-size: 0.875rem;
+  animation: player-row-in $duration $ease-out both;
+}
+
+@keyframes player-row-in {
+  from {
+    max-height: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    max-height: 64px;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes player-row-out {
+  from {
+    max-height: 64px;
+    opacity: 1;
+  }
+  to {
+    max-height: 0;
+    padding-bottom: 0;
+    opacity: 0;
+  }
+}

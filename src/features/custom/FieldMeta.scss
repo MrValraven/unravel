@@ -1,0 +1,50 @@
+@use "../../styles/tokens" as *;
+
+.field-problem {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-2;
+  color: $color-accent;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.4;
+  animation: field-problem-in $duration $ease-out both;
+}
+
+.field-problem__icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+// Faded out, the count keeps its place in the accessibility tree for aria-describedby.
+.character-count {
+  flex-shrink: 0;
+  color: $color-text-dim;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(2px);
+  transition:
+    opacity $duration-fast ease,
+    transform $duration $ease-out,
+    color $duration-fast ease;
+  pointer-events: none;
+}
+
+.character-count--visible {
+  opacity: 1;
+  transform: none;
+}
+
+.character-count--over {
+  color: $color-accent;
+  font-weight: 700;
+}
+
+@keyframes field-problem-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}

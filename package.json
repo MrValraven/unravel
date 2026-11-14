@@ -1,42 +1,60 @@
 {
   "name": "unravel",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.11"
+  },
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "dev:https": "HTTPS=1 vite --host",
+    "build": "tsc --noEmit -p . && vite build",
+    "postbuild": "tsx scripts/prerender-decks.ts",
     "preview": "vite preview",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p tsconfig.scripts.json",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "e2e": "playwright test",
+    "content:export": "tsx scripts/packs-to-csv.ts",
+    "content:import": "tsx scripts/csv-to-packs.ts",
+    "og:images": "tsx scripts/generate-og-images.ts"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@fontsource-variable/figtree": "^5.3.0",
+    "@fontsource/young-serif": "^5.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "react-icons": "^5.7.0",
-    "react-router-dom": "^6.3.0",
+    "react-router": "^7.18.5",
     "sass": "^1.53.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^9.17.0",
+    "@playwright/test": "1.61.1",
     "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.1.0",
+    "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.5.2",
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-basic-ssl": "^2.3.0",
     "@vitejs/plugin-react": "^6.0.3",
     "eslint": "^9.17.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
-    "jsdom": "^25.0.1",
+    "jsdom": "^31.0.1",
     "prettier": "^3.4.2",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.2",
     "vite": "^8.1.3",
-    "vite-plugin-pwa": "^1.0.3",
-    "vitest": "^3.0.5"
+    "vite-plugin-pwa": "^2.0.0",
+    "vitest": "^5.1.0"
   }
 }

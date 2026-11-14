@@ -1,0 +1,95 @@
+{
+  "id": "safe-kink",
+  "cards": [
+    {
+      "id": "safe-kink-001",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What are your kinks, and which might you like to explore with me?",
+        "pt": "Quais são os teus kinks, e quais é que gostavas de explorar comigo?"
+      }
+    },
+    {
+      "id": "safe-kink-002",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How do you like to feel when you play?",
+        "pt": "Como é que gostas de te sentir durante uma sessão?"
+      }
+    },
+    {
+      "id": "safe-kink-003",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What are your soft and hard limits?",
+        "pt": "Quais são os teus limites flexíveis e os teus limites inegociáveis?"
+      }
+    },
+    {
+      "id": "safe-kink-004",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Is kink sexual to you? If so, how?",
+        "pt": "O kink é sexual para ti? Se sim, de que forma?"
+      }
+    },
+    {
+      "id": "safe-kink-005",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What aftercare do you need after a scene?",
+        "pt": "De que aftercare precisas depois de uma cena?"
+      }
+    },
+    {
+      "id": "safe-kink-006",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "How can you tell me that you're having a good/bad time?",
+        "pt": "Como é que me vais dizer se está a correr bem ou mal para ti?"
+      }
+    },
+    {
+      "id": "safe-kink-007",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Do you prefer the traffic light system (green, yellow, red), a number scale, a safe word or other system?",
+        "pt": "Preferes o sistema do semáforo (verde, amarelo, vermelho), uma escala numérica, uma palavra de segurança ou outro sistema?"
+      }
+    },
+    {
+      "id": "safe-kink-008",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What will we do if something goes wrong?",
+        "pt": "O que é que fazemos se alguma coisa correr mal?"
+      }
+    },
+    {
+      "id": "safe-kink-009",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What names do you like being called?",
+        "pt": "Que nomes gostas que te chamem?"
+      }
+    },
+    {
+      "id": "safe-kink-010",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Do you hope to have a one off play date or to build a long term dynamic?",
+        "pt": "Procuras uma sessão pontual ou queres construir uma dinâmica a longo prazo?"
+      }
+    }
+  ]
+}

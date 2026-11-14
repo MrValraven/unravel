@@ -1,0 +1,40 @@
+@use "../../styles/tokens" as *;
+
+.unavailable-notice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-4;
+  padding-top: $space-7;
+  text-align: center;
+  animation: unavailable-notice-in $duration-slow $ease-out both;
+}
+
+.unavailable-notice__mark {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  border: 1px solid $color-border;
+  border-radius: $radius-pill;
+  background: $color-surface;
+  color: $color-accent;
+}
+
+.unavailable-notice__title {
+  max-width: 20ch;
+  font-family: $font-card;
+  font-size: 1.625rem;
+  font-weight: 400;
+}
+
+.unavailable-notice__body {
+  max-width: 38ch;
+}
+
+@keyframes unavailable-notice-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}

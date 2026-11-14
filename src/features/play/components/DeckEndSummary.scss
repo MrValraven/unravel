@@ -1,0 +1,50 @@
+@use "../../../styles/tokens" as *;
+
+.deck-end-summary {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: $space-2;
+  width: 100%;
+  padding: 0;
+  list-style: none;
+  animation: deck-end-summary-in $duration-slow $ease-out 200ms both;
+}
+
+.deck-end-summary__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: $space-4 $space-2;
+  @include surface;
+  text-align: center;
+}
+
+.deck-end-summary__number {
+  color: $color-heading;
+  // Young Serif only draws oldstyle figures ("10" reads like "1o"), so numbers use the UI face.
+  font-family: $font-ui;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.deck-end-summary__label {
+  color: $color-text;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+}
+
+@keyframes deck-end-summary-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

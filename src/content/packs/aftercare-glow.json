@@ -1,0 +1,77 @@
+{
+  "id": "aftercare-glow",
+  "cards": [
+    {
+      "id": "aftercare-glow-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What felt the best to you?",
+        "pt": "O que é que te soube melhor?"
+      }
+    },
+    {
+      "id": "aftercare-glow-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What would you like more of?",
+        "pt": "De que é que gostavas de ter mais?"
+      }
+    },
+    {
+      "id": "aftercare-glow-003",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How can I help you feel even more pleasure?",
+        "pt": "Como é que te posso ajudar a sentir ainda mais prazer?"
+      }
+    },
+    {
+      "id": "aftercare-glow-004",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Is there anything you don't want to do again?",
+        "pt": "Há alguma coisa que não queiras voltar a fazer?"
+      }
+    },
+    {
+      "id": "aftercare-glow-005",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What turned you on the most?",
+        "pt": "O que é que te excitou mais?"
+      }
+    },
+    {
+      "id": "aftercare-glow-006",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What would you like less of?",
+        "pt": "De que é que gostavas de ter menos?"
+      }
+    },
+    {
+      "id": "aftercare-glow-007",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Is there anything new you want to try next time?",
+        "pt": "Há alguma coisa nova que queiras experimentar da próxima vez?"
+      }
+    },
+    {
+      "id": "aftercare-glow-008",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What do you like to do after sex?",
+        "pt": "O que é que gostas de fazer depois do sexo?"
+      }
+    }
+  ]
+}

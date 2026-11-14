@@ -1,0 +1,118 @@
+@use "../../../styles/tokens" as *;
+
+.finder-results {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.finder-results__title {
+  font-family: $font-card;
+  font-size: clamp(1.75rem, 6vw, 2.25rem);
+  font-weight: 400;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.finder-results__intro {
+  margin-top: -$space-2;
+}
+
+.finder-results__list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    @include motion-safe {
+      animation: finder-suggestion-in $duration-slow $ease-out both;
+
+      @for $index from 2 through 3 {
+        &:nth-child(#{$index}) {
+          animation-delay: ($index - 1) * 80ms;
+        }
+      }
+    }
+  }
+}
+
+.finder-results__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-top: $space-2;
+}
+
+.finder-suggestion {
+  @include surface;
+  @include deck-tone;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-4;
+}
+
+.finder-suggestion__identity {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.finder-suggestion__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-sm;
+  background: $color-surface-hover;
+  color: var(--deck-tone);
+}
+
+.finder-suggestion__text {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  min-width: 0;
+}
+
+.finder-suggestion__title {
+  font-size: 1.1875rem;
+}
+
+.finder-suggestion__description {
+  font-size: 0.9375rem;
+}
+
+// Labels stay on one line; when both no longer fit side by side (longer pt
+// labels on phones) each button takes a full row.
+.finder-suggestion__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+
+  > * {
+    flex: 1 1 max-content;
+    white-space: nowrap;
+  }
+
+  @media (min-width: $bp-tablet) {
+    justify-content: flex-end;
+
+    > * {
+      flex: 0 0 auto;
+    }
+  }
+}
+
+@keyframes finder-suggestion-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}

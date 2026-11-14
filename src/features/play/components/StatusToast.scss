@@ -1,0 +1,46 @@
+@use "../../../styles/tokens" as *;
+
+.status-toast {
+  position: fixed;
+  // Top of the screen, over the header, clear of the card controls.
+  inset: max($space-3, calc(env(safe-area-inset-top) + #{$space-2})) 0 auto;
+  z-index: $z-banner;
+  display: flex;
+  justify-content: center;
+  padding-inline: $gutter;
+  pointer-events: none;
+}
+
+.status-toast__pill {
+  max-width: 420px;
+  padding: $space-3 $space-5;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-pill;
+  background: $color-bg-elevated;
+  color: $color-heading;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-12px);
+  transition:
+    opacity $duration ease,
+    transform $duration $ease-out,
+    visibility 0s linear $duration;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.status-toast[data-visible="true"] .status-toast__pill {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity $duration ease,
+    transform $duration $ease-out,
+    visibility 0s;
+}

@@ -1,0 +1,121 @@
+@use "../../../styles/tokens" as *;
+
+// Built on currentColor so the same timer reads on the accent card and on the page.
+.countdown {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-2 $space-3;
+}
+
+.countdown__ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+
+  svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+}
+
+.countdown__track,
+.countdown__progress {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+}
+
+.countdown__track {
+  opacity: 0.22;
+}
+
+.countdown__progress {
+  stroke-linecap: round;
+
+  @include motion-safe {
+    transition: stroke-dashoffset 220ms linear;
+  }
+}
+
+.countdown__clock {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown__button {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  min-height: $tap-target;
+  padding: $space-2 $space-4;
+  border: 1.5px solid currentColor;
+  border-radius: $radius-pill;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition:
+    background-color $duration-fast ease,
+    transform $duration-fast $ease-out;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: color-mix(in srgb, currentColor 12%, transparent);
+    }
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.countdown__status {
+  font-weight: 700;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.countdown--finished {
+  .countdown__ring {
+    @include motion-safe {
+      animation: countdown-done 600ms $ease-out both;
+    }
+  }
+
+  .countdown__status {
+    animation: countdown-status-in $duration $ease-out both;
+  }
+}
+
+@keyframes countdown-done {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes countdown-status-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

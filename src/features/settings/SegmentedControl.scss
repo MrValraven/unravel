@@ -1,0 +1,55 @@
+@use "../../styles/tokens" as *;
+
+$segmented-inset: 4px;
+
+.segmented {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(var(--segment-count), minmax(0, 1fr));
+  padding: $segmented-inset;
+  border: 1px solid $color-border;
+  border-radius: $radius-pill;
+  background: $color-surface;
+}
+
+// Sits under the selected option and glides between options.
+.segmented__highlight {
+  position: absolute;
+  top: $segmented-inset;
+  bottom: $segmented-inset;
+  left: $segmented-inset;
+  z-index: -1;
+  width: calc((100% - 2 * #{$segmented-inset}) / var(--segment-count));
+  border-radius: $radius-pill;
+  background: $color-accent;
+  transform: translateX(calc(100% * var(--segment-index)));
+
+  @include motion-safe {
+    transition: transform $duration $ease-out;
+  }
+}
+
+.segmented__option {
+  min-height: $tap-target;
+  min-width: 0;
+  padding: $space-2;
+  border: 0;
+  border-radius: $radius-pill;
+  background: none;
+  color: $color-text;
+  font-weight: 600;
+  line-height: 1.2;
+  hyphens: auto;
+  transition: color $duration-fast ease;
+
+  @media (hover: hover) {
+    &:hover:not(.segmented__option--selected) {
+      color: $color-heading;
+    }
+  }
+}
+
+.segmented__option--selected {
+  color: $color-on-accent;
+}

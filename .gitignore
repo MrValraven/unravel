@@ -27,3 +27,10 @@ coverage
 
 docs
 marketing
+
+# Playwright output and TypeScript build info
+playwright-report
+test-results
+*.tsbuildinfo
+# Content CSV exports (npm run content:export)
+content-export/

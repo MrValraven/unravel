@@ -1,0 +1,224 @@
+{
+  "id": "new-year",
+  "cards": [
+    {
+      "id": "new-year-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the best thing that happened to you in the past year that nobody has asked you about?",
+        "pt": "Qual foi a melhor coisa que te aconteceu no ano que passou e sobre a qual ninguém te perguntou?"
+      }
+    },
+    {
+      "id": "new-year-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Twelve raisins for twelve wishes: what are you asking for with the first one?",
+        "pt": "Doze passas, doze desejos: o que pedes com a primeira?"
+      }
+    },
+    {
+      "id": "new-year-003",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the strangest place you've been when the clock struck midnight on New Year's Eve?",
+        "pt": "Qual foi o sítio mais estranho onde já estiveste quando deu a meia-noite na passagem de ano?"
+      }
+    },
+    {
+      "id": "new-year-004",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone sums up the past year in three words.",
+        "pt": "Resumam em três palavras o ano que passou."
+      }
+    },
+    {
+      "id": "new-year-005",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which song was the soundtrack of your past year?",
+        "pt": "Que música foi, para ti, a banda sonora do ano que passou?"
+      }
+    },
+    {
+      "id": "new-year-006",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Give a one-minute awards speech for the most underrated moment of your year.",
+        "pt": "Faz um discurso de agradecimento de um minuto pelo momento mais subestimado do teu ano."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "new-year-007",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's a habit from the past year that you're taking into the year ahead?",
+        "pt": "Que hábito do ano que passou vais levar contigo para o ano que aí vem?"
+      }
+    },
+    {
+      "id": "new-year-008",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Resolutions: do you make them, break them or skip them altogether?",
+        "pt": "Resoluções: fazes, quebras ou nem te dás ao trabalho?"
+      }
+    },
+    {
+      "id": "new-year-009",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Make a toast to the year that's ending, then one to the year that's starting.",
+        "pt": "Faz um brinde ao ano que está a acabar e depois outro ao ano que está a começar."
+      }
+    },
+    {
+      "id": "new-year-010",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Blue underwear, jumping off a chair or banging pots: which New Year tradition do you swear by?",
+        "pt": "Cuecas azuis, saltar de uma cadeira ou bater em tachos: em que tradição de Ano Novo confias mais?"
+      }
+    },
+    {
+      "id": "new-year-011",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone shares the best meal they had in the past year.",
+        "pt": "Partilhem a melhor refeição que comeram no ano que passou."
+      }
+    },
+    {
+      "id": "new-year-012",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's something you finally left behind in the past year?",
+        "pt": "O que é que finalmente deixaste para trás no ano que passou?"
+      }
+    },
+    {
+      "id": "new-year-013",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Who surprised you the most in the past year, in a good way?",
+        "pt": "Quem te surpreendeu mais no ano que passou, pela positiva?"
+      }
+    },
+    {
+      "id": "new-year-014",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone names one thing they're proud of from the past year, however small.",
+        "pt": "Digam uma coisa do ano que passou de que se orgulham, por mais pequena que seja."
+      }
+    },
+    {
+      "id": "new-year-015",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Write a short note for yourself to open next New Year's Eve. Read one line of it out loud.",
+        "pt": "Escreve um bilhete curto para abrires na próxima passagem de ano. Lê uma frase em voz alta."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "new-year-016",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's one place you want to see for the first time in the year ahead?",
+        "pt": "Que lugar queres conhecer pela primeira vez no ano que aí vem?"
+      }
+    },
+    {
+      "id": "new-year-017",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What would you like to do more of in the year ahead, and what would you like to do less of?",
+        "pt": "O que queres fazer mais no ano que aí vem e o que queres fazer menos?"
+      }
+    },
+    {
+      "id": "new-year-018",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If the past year were a chapter of your life, what would it be called?",
+        "pt": "Se o ano que passou fosse um capítulo da tua vida, que título teria?"
+      }
+    },
+    {
+      "id": "new-year-019",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "In 30 seconds, name as many highlights of the past year as you can. The table keeps count.",
+        "pt": "Em 30 segundos, diz o máximo de pontos altos do ano que passou que conseguires. A mesa conta."
+      },
+      "timerSeconds": 30
+    },
+    {
+      "id": "new-year-020",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's a lesson the past year taught you the hard way?",
+        "pt": "Que lição te ensinou o ano que passou da maneira mais difícil?"
+      }
+    },
+    {
+      "id": "new-year-021",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone predicts one thing that will happen in the year ahead to the person on their left.",
+        "pt": "Prevejam uma coisa que vai acontecer no ano que aí vem à pessoa à vossa esquerda."
+      }
+    },
+    {
+      "id": "new-year-022",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Who do you want to be a year from now?",
+        "pt": "Quem queres ser daqui a um ano?"
+      }
+    },
+    {
+      "id": "new-year-023",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Who do you wish you had thanked in the past year, and what would you say to them now?",
+        "pt": "A quem gostavas de ter agradecido no ano que passou e o que lhe dirias agora?"
+      }
+    },
+    {
+      "id": "new-year-024",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's one fear you'd like to leave behind with the old year?",
+        "pt": "Que medo gostavas de deixar para trás com o ano velho?"
+      }
+    }
+  ]
+}

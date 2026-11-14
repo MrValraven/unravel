@@ -1,0 +1,194 @@
+{
+  "id": "hedonistic-societies",
+  "cards": [
+    {
+      "id": "hedonistic-societies-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's your favorite comfort food that never fails to bring you pleasure?",
+        "pt": "Qual é a tua comida de conforto preferida, aquela que te dá sempre prazer?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-002",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Share a song, movie, or book that always lifts your spirits and brings you joy.",
+        "pt": "Partilhem uma música, um filme ou um livro que vos levante sempre o ânimo e vos encha de alegria."
+      }
+    },
+    {
+      "id": "hedonistic-societies-003",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's a simple pleasure in life that you think many people overlook?",
+        "pt": "Qual é um pequeno prazer da vida que achas que muita gente deixa passar?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-004",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What role does spontaneity play in your pursuit of pleasure? Are you more likely to plan or embrace the unexpected?",
+        "pt": "Que papel tem a espontaneidade na tua procura do prazer? És mais de planear ou de te deixares levar pelo inesperado?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-005",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you could create a holiday solely dedicated to celebrating pleasure, what traditions or activities would it include?",
+        "pt": "Se pudesses criar um feriado só para celebrar o prazer, que tradições ou atividades teria?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-006",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Do you believe that pleasure and pain are two sides of the same coin? Why or why not?",
+        "pt": "Achas que o prazer e a dor são duas faces da mesma moeda? Porquê?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-007",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "How do you define 'quality time' when it comes to spending it with loved ones or friends?",
+        "pt": "Para ti, o que é “tempo de qualidade” com as pessoas que amas ou com os amigos?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-008",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's your favorite way to unwind after a long, stressful day?",
+        "pt": "Qual é a tua maneira preferida de descontrair depois de um dia longo e stressante?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-009",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Describe a hobby or activity that brings you immense satisfaction and contentment.",
+        "pt": "Descreve um passatempo ou uma atividade que te dá uma satisfação e uma tranquilidade enormes."
+      }
+    },
+    {
+      "id": "hedonistic-societies-010",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's your opinion on the intersection of hedonism and sexuality? How do they complement or conflict with each other?",
+        "pt": "O que pensas do cruzamento entre hedonismo e sexualidade? Em que é que se complementam ou entram em conflito?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-011",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's the most daring or risqué thing you've ever done in pursuit of pleasure?",
+        "pt": "Qual foi a coisa mais ousada ou atrevida que já fizeste em busca de prazer?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-012",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Share a memory of a time when you felt truly uninhibited and free to explore your desires without judgment.",
+        "pt": "Partilhem uma memória de uma altura em que não havia inibições nem julgamentos e puderam explorar os vossos desejos em total liberdade."
+      }
+    },
+    {
+      "id": "hedonistic-societies-013",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How do you think gender norms and stereotypes influence individuals' experiences of pleasure and sexuality?",
+        "pt": "De que forma achas que as normas e os estereótipos de género influenciam a maneira como cada pessoa vive o prazer e a sexualidade?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-014",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Describe your most memorable experience with aphrodisiacs or other substances known for enhancing pleasure.",
+        "pt": "Descreve a tua experiência mais memorável com afrodisíacos ou outras substâncias conhecidas por intensificar o prazer."
+      }
+    },
+    {
+      "id": "hedonistic-societies-015",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How do you think cultural taboos around pleasure and sexuality impact individuals' ability to explore their desires?",
+        "pt": "De que forma achas que os tabus culturais à volta do prazer e da sexualidade afetam a capacidade de cada pessoa explorar os seus desejos?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-016",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's the most spontaneous or impulsive sexual encounter you've ever had? What made it memorable?",
+        "pt": "Qual foi o encontro sexual mais espontâneo ou impulsivo que já tiveste? O que é que o tornou memorável?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-017",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you could design your own erotic party or event, what would it look like and what activities would take place?",
+        "pt": "Se pudesses organizar a tua própria festa ou evento erótico, como seria e que atividades iam acontecer?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-018",
+      "type": "everyone",
+      "level": 3,
+      "text": {
+        "en": "Share a sensual or erotic experience that awakened a new level of pleasure or desire within you.",
+        "pt": "Partilhem uma experiência sensual ou erótica que vos despertou um novo nível de prazer ou de desejo."
+      }
+    },
+    {
+      "id": "hedonistic-societies-019",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's your opinion on the concept of 'sexual liberation' and its impact on society?",
+        "pt": "O que pensas da ideia de “libertação sexual” e do impacto que teve na sociedade?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-020",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you could create your own hedonistic society, what rules or principles would govern it?",
+        "pt": "Se pudesses criar a tua própria sociedade hedonista, que regras ou princípios a iam governar?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-021",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Describe your most intense or mind-blowing sexual experience. What made it so unforgettable?",
+        "pt": "Descreve a tua experiência sexual mais intensa ou alucinante. O que é que a tornou tão inesquecível?"
+      }
+    }
+  ]
+}

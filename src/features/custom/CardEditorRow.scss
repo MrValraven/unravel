@@ -1,0 +1,214 @@
+@use "../../styles/tokens" as *;
+
+.card-editor {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  list-style: none;
+
+  &[data-state="entering"] {
+    animation: card-editor-in $duration-slow $ease-out both;
+  }
+
+  &[data-state="leaving"] {
+    pointer-events: none;
+    animation: card-editor-out $duration-fast $ease-in both;
+  }
+}
+
+// Number and tools sit above the card, so the card face holds only what gets played.
+.card-editor__strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+  padding-left: $space-1;
+}
+
+.card-editor__label {
+  color: $color-text-dim;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.card-editor__tools {
+  display: flex;
+  align-items: center;
+  margin-right: -$space-2;
+}
+
+.card-editor__tool {
+  color: $color-text-dim;
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.3;
+  }
+
+  &:disabled:hover {
+    background: none;
+  }
+}
+
+.card-editor__tool--delete {
+  @media (hover: hover) {
+    &:hover {
+      color: $color-accent;
+    }
+  }
+}
+
+.card-editor__tools-divider {
+  width: 1px;
+  height: 20px;
+  margin-inline: $space-1;
+  background: $color-border;
+}
+
+// The card itself: a raised face with Unravel's card corners, text set in the card face.
+.card-editor__face {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-3 $space-3 $space-2 $space-3;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  background:
+    radial-gradient(
+      120% 90% at 0% 0%,
+      color-mix(in srgb, $color-heading 5%, transparent),
+      transparent 60%
+    ),
+    $color-bg-elevated;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, $color-heading 7%, transparent),
+    0 1px 2px rgba(0, 0, 0, 0.18),
+    0 12px 28px -14px rgba(0, 0, 0, 0.5);
+  transition:
+    border-color $duration-fast ease,
+    box-shadow $duration-fast ease;
+
+  // The card's type marks, borrowed from the play card: a stitched frame for challenges,
+  // a striped band for everyone cards. Both fade as the type changes.
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity $duration $ease-out;
+  }
+
+  &::before {
+    inset: 0 0 auto;
+    height: 8px;
+    border-radius: $radius-lg $radius-lg 0 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      color-mix(in srgb, $color-heading 14%, transparent) 0 5px,
+      transparent 5px 10px
+    );
+  }
+
+  &::after {
+    inset: 5px;
+    border: 1.5px dashed color-mix(in srgb, $color-heading 16%, transparent);
+    border-radius: calc(#{$radius-lg} - 5px);
+  }
+
+  &[data-card-type="everyone"]::before,
+  &[data-card-type="challenge"]::after {
+    opacity: 1;
+  }
+
+  &[data-card-type="everyone"] {
+    padding-top: $space-4;
+  }
+
+  &:focus-within {
+    border-color: color-mix(in srgb, $color-accent 40%, transparent);
+  }
+
+  // The text field draws no box of its own, so the card shows the keyboard focus.
+  &:has(.card-editor__text:focus-visible) {
+    @include focus-ring;
+    outline-offset: 2px;
+  }
+
+  &[data-invalid] {
+    border-color: $color-accent;
+  }
+
+  @media (min-width: $bp-tablet) {
+    gap: $space-4;
+    padding: $space-4 $space-5 $space-3;
+
+    &[data-card-type="everyone"] {
+      padding-top: $space-5;
+    }
+  }
+}
+
+.card-editor__text {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: calc(2lh + #{$space-2});
+  padding: $space-1 $space-1 0;
+  overflow: hidden;
+  border: 0;
+  background: none;
+  color: $color-heading;
+  font-family: $font-card;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  resize: none;
+  scroll-margin-block: 96px 120px;
+  overflow-wrap: anywhere;
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: $color-text-dim;
+    opacity: 0.85;
+  }
+
+  @media (min-width: $bp-tablet) {
+    font-size: 1.375rem;
+  }
+}
+
+// Problem on the left, count on the right; the count keeps its spot even while faded.
+.card-editor__meta {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-3;
+  min-height: 1.25rem;
+  padding-inline: $space-1;
+
+  .character-count {
+    margin-left: auto;
+  }
+}
+
+@keyframes card-editor-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+@keyframes card-editor-out {
+  to {
+    opacity: 0;
+    transform: translateX(-16px) scale(0.98);
+  }
+}

@@ -1,0 +1,49 @@
+@use "../../../styles/tokens" as *;
+
+// Shared by every section heading on the picker.
+.deck-section-title {
+  font-size: 1.25rem;
+}
+
+.deck-section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.deck-section__title {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+
+  &::before {
+    content: "";
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: $radius-pill;
+    background: var(--category-color);
+  }
+}
+
+.deck-section__note {
+  color: $color-text-dim;
+  font-size: 0.875rem;
+}
+
+.deck-section__list {
+  display: grid;
+  gap: $space-3;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: $bp-tablet) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+// Cards in one row share its height.
+.deck-section__list > li,
+.your-decks__list > li:not(.your-decks__hint) {
+  display: grid;
+}

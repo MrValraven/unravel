@@ -1,0 +1,55 @@
+@use "../../../styles/tokens" as *;
+
+.check-in__prompts {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: 0;
+  list-style: none;
+  counter-reset: check-in-prompt;
+}
+
+.check-in__prompt {
+  position: relative;
+  padding: $space-4 $space-4 $space-4 56px;
+  @include surface;
+  color: $color-heading;
+  font-family: $font-card;
+  font-size: 1.1875rem;
+  line-height: 1.4;
+  counter-increment: check-in-prompt;
+  animation: check-in-prompt-in $duration-slow $ease-out both;
+  animation-delay: calc(var(--prompt-index, 0) * 90ms);
+
+  &::before {
+    content: counter(check-in-prompt);
+    position: absolute;
+    top: $space-4;
+    left: $space-4;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--deck-accent);
+    color: $color-on-accent;
+    font-family: $font-ui;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+}
+
+.check-in__timer {
+  color: $color-heading;
+}
+
+@keyframes check-in-prompt-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,198 @@
+@use "../styles/tokens" as *;
+
+.dialog {
+  position: fixed;
+  inset: 0;
+  z-index: $z-dialog;
+  display: grid;
+  place-items: center;
+  padding: $space-4;
+}
+
+.dialog__backdrop {
+  position: absolute;
+  inset: 0;
+  background: $color-backdrop;
+  backdrop-filter: blur(2px);
+  animation: dialog-fade-in $duration ease both;
+}
+
+.dialog__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  width: 100%;
+  max-width: 440px;
+  max-height: calc(100dvh - #{2 * $space-4});
+  // The content area scrolls on its own; the panel only scrolls when the header and
+  // footer alone are taller than the screen (landscape phone at the largest text size).
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: $space-5;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  background: $color-bg-elevated;
+  color: $color-text;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  animation: dialog-pop-in $duration $ease-out both;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.dialog__header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-start;
+  gap: $space-3;
+}
+
+// Room for the focus ring (2px outline, 3px offset) so the scroll edge never clips it.
+$dialog-focus-room: $space-2;
+
+.dialog__content {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  gap: $space-4;
+  margin: (-$dialog-focus-room) (-$dialog-focus-room);
+  padding: $dialog-focus-room;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+// Sheets keep a little scroll room for their body; centered confirm dialogs
+// size to their text.
+.dialog--sheet .dialog__content {
+  min-height: 4.5rem;
+}
+
+// The description sits closer to the title than the body does.
+.dialog__content--described {
+  margin-top: -($dialog-focus-room + $space-2);
+}
+
+.dialog__title {
+  flex: 1;
+  padding-top: $space-2;
+  font-family: $font-card;
+  font-size: 1.375rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.dialog__close {
+  margin: (-$space-2) (-$space-2) 0 0;
+}
+
+.dialog__footer {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column-reverse;
+  gap: $space-2;
+  margin-top: $space-1;
+
+  > * {
+    width: 100%;
+  }
+
+  @media (min-width: $bp-tablet) {
+    flex-direction: row;
+    justify-content: flex-end;
+
+    > * {
+      width: auto;
+    }
+  }
+}
+
+// Exit: shorter and accelerating, so closing feels lighter than opening.
+.dialog[data-state="closing"] {
+  .dialog__backdrop {
+    animation: dialog-fade-out $duration-fast ease both;
+  }
+
+  .dialog__panel {
+    animation: dialog-pop-out $duration-fast $ease-in both;
+  }
+}
+
+// A hairline marks the sheet footer as a fixed bar while the content scrolls above it.
+.dialog--sheet .dialog__footer {
+  margin-top: 0;
+  padding-top: $space-4;
+  border-top: 1px solid $color-border;
+}
+
+// Sheet: docked to the bottom edge on phones.
+@media (max-width: #{$bp-tablet - 1px}) {
+  .dialog--sheet {
+    align-items: end;
+    padding: 0;
+
+    .dialog__panel {
+      max-width: none;
+      max-height: calc(100dvh - #{$space-7});
+      padding-bottom: max($space-5, env(safe-area-inset-bottom));
+      border-bottom: 0;
+      border-radius: $radius-lg $radius-lg 0 0;
+      animation-name: dialog-sheet-in;
+
+      // Decorative grab handle.
+      &::before {
+        content: "";
+        align-self: center;
+        flex-shrink: 0;
+        width: 40px;
+        height: 4px;
+        margin: (-$space-2) 0 (-$space-2);
+        border-radius: $radius-pill;
+        background: $color-border-strong;
+      }
+    }
+
+    &[data-state="closing"] .dialog__panel {
+      animation-name: dialog-sheet-out;
+    }
+  }
+}
+
+@keyframes dialog-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}
+
+@keyframes dialog-pop-out {
+  to {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+}
+
+@keyframes dialog-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes dialog-sheet-out {
+  to {
+    transform: translateY(100%);
+  }
+}

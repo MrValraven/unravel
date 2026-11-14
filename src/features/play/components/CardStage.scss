@@ -1,0 +1,235 @@
+@use "../../../styles/tokens" as *;
+
+// A soft overshoot when a short drag lets go of the card.
+$ease-spring-back: cubic-bezier(0.2, 0.9, 0.3, 1.2);
+// Starts at twice the average speed (slope 2), matching EXIT_EASING_START_SLOPE in useCardGestures.
+$ease-card-exit: cubic-bezier(0.3, 0.6, 0.6, 1);
+
+// The cards still to come peek out below the current one, and thin out as the deck runs down.
+.card-stage {
+  position: relative;
+  isolation: isolate;
+  padding-bottom: 14px;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: $radius-lg;
+    background: color-mix(
+      in srgb,
+      var(--deck-accent, #{$accent}) 45%,
+      var(--color-bg)
+    );
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity $duration ease;
+  }
+
+  &::before {
+    z-index: 1;
+    inset: 12px 10px 7px;
+  }
+
+  &::after {
+    inset: 24px 22px 0;
+    background: color-mix(
+      in srgb,
+      var(--deck-accent, #{$accent}) 28%,
+      var(--color-bg)
+    );
+  }
+
+  &[data-cards-behind="1"]::before,
+  &[data-cards-behind="2"]::before,
+  &[data-cards-behind="2"]::after {
+    opacity: 1;
+  }
+
+  &::after {
+    z-index: 0;
+  }
+}
+
+// The card follows the finger on the GPU: translate, rotate, scale and opacity only.
+// useCardGestures writes --drag-x (px) and --drag-progress (0 to 1 at the commit
+// distance) on .card-stage once per frame, and sets data-drag-phase there.
+.card-stage__gesture {
+  position: relative;
+  z-index: 2;
+  touch-action: pan-y;
+  cursor: grab;
+  translate: calc(var(--drag-x, 0) * 1px) 0;
+  transform-origin: 50% 100%;
+
+  // Focus lands here by script when play begins, and the card region needs no ring.
+  &:focus {
+    outline: none;
+  }
+
+  // A deeper shadow fades in under the lifted card. Opacity keeps it on the compositor.
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    border-radius: $radius-lg;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.38);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @include motion-safe {
+    rotate: clamp(-12deg, calc(var(--drag-x, 0) * 0.04deg), 12deg);
+
+    &::after {
+      transition: opacity $duration-fast ease;
+    }
+  }
+}
+
+// The card underneath: the real next or previous card, set back and dimmed,
+// coming forward as the drag nears the commit distance. It sits exactly where
+// the current card rests, so on a swipe it simply becomes the current card.
+.card-stage__underlay {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 auto;
+  pointer-events: none;
+  opacity: clamp(0, calc(var(--drag-progress, 0) * 4), 1);
+
+  // The dimming tints toward the page, so it reads in both themes.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: $radius-lg;
+    background: var(--color-bg);
+    opacity: calc((1 - var(--drag-progress, 0)) * 0.45);
+  }
+
+  @include motion-safe {
+    scale: calc(0.94 + var(--drag-progress, 0) * 0.06);
+    translate: 0 calc((1 - var(--drag-progress, 0)) * 10px);
+    transform-origin: 50% 50%;
+  }
+}
+
+// Past the last card: the plain stack with a short line, on the left where a drag right uncovers it.
+.card-stage__underlay--end {
+  bottom: 14px;
+  display: grid;
+  place-items: center start;
+  padding-inline: $space-5;
+  border-radius: $radius-lg;
+  background: color-mix(
+    in srgb,
+    var(--deck-accent, #{$accent}) 45%,
+    var(--color-bg)
+  );
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.card-stage__end-line {
+  color: $color-on-accent;
+  font-family: $font-card;
+  font-size: 1.375rem;
+}
+
+// Table mode in landscape fills the stage height, so the underlay does too.
+.play-screen--table .card-stage__underlay {
+  @media (orientation: landscape) and (min-width: 560px) {
+    bottom: 14px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.card-stage[data-drag-phase] {
+  .card-stage__gesture,
+  .card-stage__underlay {
+    will-change: translate, rotate, scale, opacity;
+  }
+}
+
+.card-stage[data-drag-phase="dragging"] .card-stage__gesture {
+  cursor: grabbing;
+}
+
+.card-stage[data-drag-phase="dragging"],
+.card-stage[data-drag-phase="leaving"] {
+  .card-stage__gesture::after {
+    opacity: 1;
+  }
+}
+
+.card-stage[data-drag-phase="settling"] {
+  .card-stage__gesture {
+    transition: translate $duration $ease-spring-back;
+  }
+
+  .card-stage__underlay,
+  .card-stage__underlay::after {
+    transition: opacity $duration $ease-out;
+  }
+}
+
+.card-stage[data-drag-phase="leaving"] {
+  .card-stage__gesture {
+    transition: translate var(--exit-duration, #{$duration}) $ease-card-exit;
+  }
+
+  .card-stage__underlay,
+  .card-stage__underlay::after {
+    transition: opacity var(--exit-duration, #{$duration}) $ease-out;
+  }
+}
+
+@include motion-safe {
+  .card-stage[data-drag-phase="dragging"],
+  .card-stage[data-drag-phase="leaving"] {
+    .card-stage__gesture {
+      scale: 1.02;
+    }
+  }
+
+  .card-stage[data-drag-phase="dragging"] .card-stage__gesture {
+    transition: scale $duration-fast $ease-out;
+  }
+
+  .card-stage[data-drag-phase="settling"] {
+    .card-stage__gesture {
+      transition:
+        translate $duration $ease-spring-back,
+        rotate $duration $ease-spring-back,
+        scale $duration $ease-out;
+    }
+
+    .card-stage__underlay {
+      transition:
+        opacity $duration $ease-out,
+        scale $duration $ease-out,
+        translate $duration $ease-out;
+    }
+  }
+
+  .card-stage[data-drag-phase="leaving"] {
+    .card-stage__gesture {
+      transition:
+        translate var(--exit-duration, #{$duration}) $ease-card-exit,
+        rotate var(--exit-duration, #{$duration}) $ease-card-exit;
+    }
+
+    .card-stage__underlay {
+      transition:
+        opacity var(--exit-duration, #{$duration}) $ease-out,
+        scale var(--exit-duration, #{$duration}) $ease-out,
+        translate var(--exit-duration, #{$duration}) $ease-out;
+    }
+  }
+}
+
+// A card that arrived by swipe was already on screen as the underlay, so it does not deal in again.
+.card-stage[data-swipe-arrival] .card-stage__gesture > .play-card {
+  animation: none !important;
+}

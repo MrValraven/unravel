@@ -1,0 +1,306 @@
+<!doctype html>
+<!--
+  Share image template for scripts/generate-og-images.ts.
+  The script opens this file from disk, calls window.renderOgImage(data) and
+  takes a 1200x630 screenshot. Fonts load straight from node_modules.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Unravel share image</title>
+    <style>
+      @font-face {
+        font-family: "Young Serif";
+        font-weight: 400;
+        src: url("../node_modules/@fontsource/young-serif/files/young-serif-latin-ext-400-normal.woff2")
+          format("woff2");
+        unicode-range:
+          U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+          U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+          U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      @font-face {
+        font-family: "Young Serif";
+        font-weight: 400;
+        src: url("../node_modules/@fontsource/young-serif/files/young-serif-latin-400-normal.woff2")
+          format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "Figtree Variable";
+        font-weight: 300 900;
+        src: url("../node_modules/@fontsource-variable/figtree/files/figtree-latin-ext-wght-normal.woff2")
+          format("woff2-variations");
+        unicode-range:
+          U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+          U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+          U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      @font-face {
+        font-family: "Figtree Variable";
+        font-weight: 300 900;
+        src: url("../node_modules/@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2")
+          format("woff2-variations");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+
+      :root {
+        --navy: #232946;
+        --heading: #fffffe;
+        --text: #b8c1ec;
+        --text-dim: #9aa3cf;
+        --accent: #eebbc3;
+        --second-accent: #b8c1ec;
+        --third-accent: #eebbc3;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: var(--navy);
+      }
+
+      .canvas {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        font-family: "Figtree Variable", system-ui, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(
+            circle at 82% 50%,
+            color-mix(in srgb, var(--accent) 22%, transparent) 0%,
+            transparent 58%
+          ),
+          var(--navy);
+      }
+
+      .copy {
+        position: absolute;
+        top: 72px;
+        left: 80px;
+        bottom: 72px;
+        width: 580px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .eyebrow {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .title {
+        margin-top: 20px;
+        font-family: "Young Serif", Georgia, serif;
+        font-weight: 400;
+        font-size: 84px;
+        line-height: 1.04;
+        color: var(--heading);
+        text-wrap: balance;
+      }
+
+      .description {
+        margin-top: 24px;
+        font-size: 28px;
+        line-height: 1.4;
+        color: var(--text);
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+      }
+
+      .facts {
+        margin-top: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .fact {
+        padding: 10px 20px;
+        border: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+        border-radius: 999px;
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--heading);
+      }
+
+      .stack {
+        position: absolute;
+        top: 70px;
+        left: 760px;
+        width: 360px;
+        height: 490px;
+      }
+
+      .card {
+        position: absolute;
+        inset: 0;
+        border-radius: 28px;
+      }
+
+      .card--third {
+        background: var(--third-accent);
+        transform: translate(-46px, 14px) rotate(-11deg);
+        opacity: 0.85;
+      }
+
+      .card--second {
+        background: var(--second-accent);
+        transform: translate(-22px, 6px) rotate(-5deg);
+      }
+
+      .card--front {
+        display: flex;
+        flex-direction: column;
+        padding: 36px 34px;
+        background: var(--heading);
+        border-top: 16px solid var(--accent);
+        transform: rotate(3deg);
+        color: var(--navy);
+      }
+
+      .card-label {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #5b6390;
+      }
+
+      .card-text {
+        margin-top: 22px;
+        font-family: "Young Serif", Georgia, serif;
+        font-size: 34px;
+        line-height: 1.25;
+        color: var(--navy);
+      }
+
+      .card-badge {
+        margin: auto;
+        font-family: "Young Serif", Georgia, serif;
+        font-size: 120px;
+        line-height: 1;
+        color: var(--navy);
+      }
+
+      .card-mark {
+        margin-top: auto;
+        font-family: "Young Serif", Georgia, serif;
+        font-size: 24px;
+        color: var(--navy);
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="canvas">
+      <section class="copy">
+        <p class="eyebrow" id="eyebrow"></p>
+        <h1 class="title" id="title"></h1>
+        <p class="description" id="description"></p>
+        <div class="facts" id="facts"></div>
+      </section>
+      <div class="stack">
+        <div class="card card--third"></div>
+        <div class="card card--second"></div>
+        <div class="card card--front">
+          <p class="card-label" id="card-label"></p>
+          <p class="card-text" id="card-text"></p>
+          <p class="card-badge" id="card-badge"></p>
+          <p class="card-mark">Unravel</p>
+        </div>
+      </div>
+    </main>
+    <script>
+      const fontLoads = [
+        '400 84px "Young Serif"',
+        '400 22px "Figtree Variable"',
+        '700 22px "Figtree Variable"',
+      ];
+
+      /** Shrinks the font until the text fits in maximumLines lines of lineHeight. */
+      const shrinkToFit = (
+        element,
+        startSize,
+        minimumSize,
+        lineHeight,
+        maximumLines
+      ) => {
+        let fontSize = startSize;
+        element.style.fontSize = `${fontSize}px`;
+        const exceedsLines = () =>
+          element.scrollHeight > fontSize * lineHeight * maximumLines + 4;
+        while (exceedsLines() && fontSize > minimumSize) {
+          fontSize -= 2;
+          element.style.fontSize = `${fontSize}px`;
+        }
+      };
+
+      /**
+       * data: { eyebrow, title, description, facts: string[], accent, secondAccent,
+       *         thirdAccent, cardLabel, cardText, cardBadge }
+       */
+      window.renderOgImage = async (data) => {
+        const root = document.documentElement;
+        root.style.setProperty("--accent", data.accent);
+        root.style.setProperty("--second-accent", data.secondAccent);
+        root.style.setProperty("--third-accent", data.thirdAccent);
+
+        document.getElementById("eyebrow").textContent = data.eyebrow;
+        document.getElementById("title").textContent = data.title;
+        document.getElementById("description").textContent = data.description;
+
+        const facts = document.getElementById("facts");
+        facts.replaceChildren(
+          ...data.facts.map((fact) => {
+            const factElement = document.createElement("span");
+            factElement.className = "fact";
+            factElement.textContent = fact;
+            return factElement;
+          })
+        );
+
+        const cardLabel = document.getElementById("card-label");
+        const cardText = document.getElementById("card-text");
+        const cardBadge = document.getElementById("card-badge");
+        cardLabel.textContent = data.cardLabel;
+        cardText.textContent = data.cardText;
+        cardBadge.textContent = data.cardBadge;
+        cardText.hidden = data.cardText === "";
+        cardBadge.hidden = data.cardBadge === "";
+
+        await Promise.all(fontLoads.map((font) => document.fonts.load(font)));
+        await document.fonts.ready;
+
+        shrinkToFit(document.getElementById("title"), 84, 52, 1.04, 2);
+        if (!cardText.hidden) {
+          shrinkToFit(cardText, 34, 24, 1.25, 7);
+        }
+      };
+    </script>
+  </body>
+</html>

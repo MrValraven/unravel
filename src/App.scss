@@ -1,26 +1,63 @@
+@use "styles/tokens" as *;
+
 .app {
-  max-width: 1280px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
 
-  img {
-    max-width: 500px;
+  > main {
+    flex: 1;
   }
-  button {
-    appearance: none;
-    background-color: #eebbc3;
-    color: #232946;
-    border-radius: 12px;
-    padding: 15px;
-    width: min(300px, 100%);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
 
-    &:hover {
-      letter-spacing: 2px;
+// ---- Suspense fallback: three soft dots, shown only when a page is slow ----
+.page-loading {
+  display: grid;
+  place-items: center;
+  min-height: 70dvh;
+  animation: page-loading-appear $duration-slow ease 300ms both;
+}
+
+.page-loading__dots {
+  display: flex;
+  gap: $space-2;
+
+  > span {
+    width: 8px;
+    height: 8px;
+    border-radius: $radius-pill;
+    background: $color-accent;
+    opacity: 0.35;
+
+    @include motion-safe {
+      animation: page-loading-breathe 1.2s ease-in-out infinite;
+
+      &:nth-child(2) {
+        animation-delay: 160ms;
+      }
+
+      &:nth-child(3) {
+        animation-delay: 320ms;
+      }
     }
+  }
+}
+
+@keyframes page-loading-appear {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes page-loading-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: none;
   }
 }

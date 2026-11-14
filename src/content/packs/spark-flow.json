@@ -1,0 +1,309 @@
+{
+  "id": "spark-flow",
+  "cards": [
+    {
+      "id": "spark-flow-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What’s the weirdest thing you believed as a kid?",
+        "pt": "Qual foi a coisa mais estranha em que acreditavas em criança?"
+      }
+    },
+    {
+      "id": "spark-flow-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If we had a theme song, what would it be?",
+        "pt": "Se tivéssemos uma música-tema, qual seria?"
+      }
+    },
+    {
+      "id": "spark-flow-003",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What food would you marry if you could?",
+        "pt": "Com que comida te casavas, se pudesses?"
+      }
+    },
+    {
+      "id": "spark-flow-004",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What would our couple nickname be?",
+        "pt": "Qual seria a nossa alcunha de casal?"
+      }
+    },
+    {
+      "id": "spark-flow-005",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What’s one thing I do that makes you laugh even when you don’t want to?",
+        "pt": "Que coisa é que eu faço que te faz rir mesmo quando não queres?"
+      }
+    },
+    {
+      "id": "spark-flow-006",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If we had a time machine, where would we mess things up first?",
+        "pt": "Se tivéssemos uma máquina do tempo, onde é que íamos estragar tudo primeiro?"
+      }
+    },
+    {
+      "id": "spark-flow-007",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What would you do if you found a tiny dragon in your pocket right now?",
+        "pt": "O que fazias se encontrasses agora um dragão minúsculo no bolso?"
+      }
+    },
+    {
+      "id": "spark-flow-008",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What would office gossip be about you?",
+        "pt": "Que coscuvilhices é que se contavam sobre ti no escritório?"
+      }
+    },
+    {
+      "id": "spark-flow-009",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the cheesiest pickup line you like?",
+        "pt": "Qual é a frase de engate mais pirosa de que gostas?"
+      }
+    },
+    {
+      "id": "spark-flow-010",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If we had to enter a talent show together, what ridiculous act would we do?",
+        "pt": "Se tivéssemos de entrar juntos num concurso de talentos, que número ridículo é que fazíamos?"
+      }
+    },
+    {
+      "id": "spark-flow-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which animal do you think is our spirit animal couple hybrid?",
+        "pt": "Se juntássemos os nossos animais espirituais num só, que bicho é que saía?"
+      }
+    },
+    {
+      "id": "spark-flow-012",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If we were super villains, what dumb crime would we commit?",
+        "pt": "Se fôssemos supervilões, que crime parvo é que cometíamos?"
+      }
+    },
+    {
+      "id": "spark-flow-013",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which fictional world would we totally get kicked out of?",
+        "pt": "De que mundo de ficção é que nos expulsavam de certeza?"
+      }
+    },
+    {
+      "id": "spark-flow-014",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you had to cook me something using only vending machine snacks, what would you make?",
+        "pt": "Se tivesses de me cozinhar alguma coisa só com snacks da máquina de venda automática, o que fazias?"
+      }
+    },
+    {
+      "id": "spark-flow-015",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If we had a fan club, what would they call themselves?",
+        "pt": "Se tivéssemos um clube de fãs, que nome é que eles davam a si próprios?"
+      }
+    },
+    {
+      "id": "spark-flow-016",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What would be our special move in a couples’ video game?",
+        "pt": "Qual seria o nosso golpe especial num videojogo de casal?"
+      }
+    },
+    {
+      "id": "spark-flow-017",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Create a signature dance move together",
+        "pt": "Inventem a dois um passo de dança só vosso"
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "spark-flow-018",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you could instantly give me a useless superpower, what would it be?",
+        "pt": "Se pudesses dar-me já um superpoder inútil, qual seria?"
+      }
+    },
+    {
+      "id": "spark-flow-019",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If we were action movie heroes, what would be our cheesy one-liner before saving the day?",
+        "pt": "Se fôssemos heróis de um filme de ação, qual seria a nossa frase pirosa de marca antes de salvarmos o dia?"
+      }
+    },
+    {
+      "id": "spark-flow-020",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If we accidentally started a cult, what would its main rule be?",
+        "pt": "Se criássemos uma seita sem querer, qual seria a regra principal?"
+      }
+    },
+    {
+      "id": "spark-flow-021",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which mythical creature would totally crash our date nights?",
+        "pt": "Que criatura mitológica é que ia de certeza estragar as nossas noites a dois?"
+      }
+    },
+    {
+      "id": "spark-flow-022",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Enact a funny pose as if we were frozen as statues",
+        "pt": "Façam uma pose engraçada, como se fossem duas estátuas paradas no tempo"
+      },
+      "timerSeconds": 30
+    },
+    {
+      "id": "spark-flow-023",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What would be the most ridiculous reason for us to get banned from somewhere?",
+        "pt": "Qual seria a razão mais ridícula para nos proibirem a entrada num sítio?"
+      }
+    },
+    {
+      "id": "spark-flow-024",
+      "type": "challenge",
+      "level": 3,
+      "text": {
+        "en": "Do a fake commercial together for an imaginary product.",
+        "pt": "Façam a dois um anúncio de televisão a um produto imaginário."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "spark-flow-025",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Create a “royal wave” we would use if we were famous monarchs.",
+        "pt": "Criem o “aceno real” que usariam se fossem monarcas famosos."
+      },
+      "timerSeconds": 30
+    },
+    {
+      "id": "spark-flow-026",
+      "type": "challenge",
+      "level": 3,
+      "text": {
+        "en": "Do your best impression of two penguins walking together.",
+        "pt": "Façam a vossa melhor imitação de dois pinguins a caminhar lado a lado."
+      },
+      "timerSeconds": 30
+    },
+    {
+      "id": "spark-flow-027",
+      "type": "challenge",
+      "level": 3,
+      "text": {
+        "en": "Take turns making up ridiculous “news reports” about the other person.",
+        "pt": "À vez, inventem “notícias de última hora” ridículas sobre a outra pessoa."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "spark-flow-028",
+      "type": "challenge",
+      "level": 3,
+      "text": {
+        "en": "Act out an awkward first meeting between two secret agents.",
+        "pt": "Representem um primeiro encontro constrangedor entre dois agentes secretos."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "spark-flow-029",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If I had a warning label, what would it say?",
+        "pt": "Se eu tivesse um rótulo de aviso, o que é que dizia?"
+      }
+    },
+    {
+      "id": "spark-flow-030",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you lost me in a shopping mall, which shop would you look in first?",
+        "pt": "Se me perdesses num centro comercial, em que loja procuravas primeiro?"
+      }
+    },
+    {
+      "id": "spark-flow-031",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What’s something I do that is so “me”?",
+        "pt": "O que é que eu faço que é tão “eu”?"
+      }
+    },
+    {
+      "id": "spark-flow-032",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you found a pink sheep in Minecraft, what would you name them?",
+        "pt": "Se encontrasses uma ovelha cor-de-rosa no Minecraft, que nome lhe davas?"
+      }
+    },
+    {
+      "id": "spark-flow-033",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If we met during the Ancient Roman Empire, what would our first date be?",
+        "pt": "Se nos tivéssemos conhecido no tempo do Império Romano, como seria o nosso primeiro encontro?"
+      }
+    }
+  ]
+}

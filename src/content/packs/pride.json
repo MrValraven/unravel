@@ -1,0 +1,223 @@
+{
+  "id": "pride",
+  "cards": [
+    {
+      "id": "pride-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What was the first Pride you went to, and who were you with?",
+        "pt": "Qual foi o primeiro Pride a que foste e com quem estavas?"
+      }
+    },
+    {
+      "id": "pride-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you could design one float for this year's parade, what would be on it?",
+        "pt": "Se pudesses desenhar um carro alegórico para a marcha deste ano, o que teria?"
+      }
+    },
+    {
+      "id": "pride-003",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which queer icon would you most like to have a coffee with, and what would you order for them?",
+        "pt": "Com que ícone queer gostavas mais de tomar um café e o que pedias para essa pessoa?"
+      }
+    },
+    {
+      "id": "pride-004",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "You have one minute to teach the group a voguing move. Everyone copies it.",
+        "pt": "Tens um minuto para ensinar ao grupo um passo de voguing. Toda a gente imita."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "pride-005",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's on your Pride playlist this year?",
+        "pt": "O que está na tua playlist de Pride este ano?"
+      }
+    },
+    {
+      "id": "pride-006",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone names one queer film or series the whole table should watch this month.",
+        "pt": "Digam um filme ou uma série queer que a mesa toda devia ver este mês."
+      }
+    },
+    {
+      "id": "pride-007",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the best sign you've ever seen at a Pride march?",
+        "pt": "Qual foi o melhor cartaz que já viste numa marcha do Orgulho?"
+      }
+    },
+    {
+      "id": "pride-008",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Glitter, rainbow flag or a full costume: what's your Pride look?",
+        "pt": "Purpurina, bandeira arco-íris ou disfarce completo: qual é o teu visual de Pride?"
+      }
+    },
+    {
+      "id": "pride-009",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Strike your best pose for the parade photographers. Everyone else rates it from one to ten.",
+        "pt": "Faz a tua melhor pose para os fotógrafos da marcha. O resto do grupo dá-lhe uma nota de um a dez."
+      }
+    },
+    {
+      "id": "pride-010",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone shows or describes the most fabulous thing they own.",
+        "pt": "Mostrem ou descrevam a coisa mais fabulosa que têm."
+      }
+    },
+    {
+      "id": "pride-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If your friend group marched together, what would your group's name and color be?",
+        "pt": "Se o teu grupo de amigos desfilasse junto, qual seria o nome e a cor do grupo?"
+      }
+    },
+    {
+      "id": "pride-012",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Who was the first person who made you feel fully accepted as yourself?",
+        "pt": "Quem foi a primeira pessoa que te fez sentir aceite tal como és?"
+      }
+    },
+    {
+      "id": "pride-013",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which older queer person, famous or from your own life, made your path a little easier?",
+        "pt": "Que pessoa queer mais velha, famosa ou da tua vida, te facilitou um pouco o caminho?"
+      }
+    },
+    {
+      "id": "pride-014",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Make a protest sign out of whatever is on the table and read its slogan out loud.",
+        "pt": "Faz um cartaz de protesto com o que estiver em cima da mesa e lê o slogan em voz alta."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "pride-015",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How does Pride feel to you now compared with your first one?",
+        "pt": "Como sentes o Pride agora, comparado com o teu primeiro?"
+      }
+    },
+    {
+      "id": "pride-016",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's a queer bar, space or corner of your city that feels like home?",
+        "pt": "Que bar, espaço ou recanto queer da tua cidade te faz sentir em casa?"
+      }
+    },
+    {
+      "id": "pride-017",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone names one person in this group who makes them feel free to be themselves, and says why.",
+        "pt": "Cada pessoa diz o nome de alguém deste grupo com quem se sente livre para ser quem é, e porquê."
+      }
+    },
+    {
+      "id": "pride-018",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What would you like a straight friend to understand about Pride without you having to explain it?",
+        "pt": "O que gostavas que uma pessoa amiga hétero percebesse sobre o Pride sem teres de o explicar?"
+      }
+    },
+    {
+      "id": "pride-019",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone shares one small moment of queer joy from this past year.",
+        "pt": "Partilhem um pequeno momento de alegria queer deste último ano."
+      }
+    },
+    {
+      "id": "pride-020",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Send a message to a queer friend who isn't here tonight and tell them why you're glad they exist.",
+        "pt": "Manda uma mensagem a alguém queer que não esteja aqui esta noite e diz-lhe porque é que ficas feliz por essa pessoa existir."
+      }
+    },
+    {
+      "id": "pride-021",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's one thing you want to do for the community after June ends?",
+        "pt": "O que queres fazer pela comunidade depois de junho acabar?"
+      }
+    },
+    {
+      "id": "pride-022",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which part of yourself took the longest to feel proud of?",
+        "pt": "De que parte de ti demoraste mais tempo a ter orgulho?"
+      }
+    },
+    {
+      "id": "pride-023",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Who do you march for, besides yourself?",
+        "pt": "Por quem marchas, além de ti?"
+      }
+    },
+    {
+      "id": "pride-024",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What would you tell someone walking in their first Pride march?",
+        "pt": "O que dirias a alguém que vai desfilar no seu primeiro Pride?"
+      }
+    }
+  ]
+}

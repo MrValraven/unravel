@@ -1,0 +1,266 @@
+{
+  "id": "unravel",
+  "cards": [
+    {
+      "id": "unravel-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "How would you describe your personality? Are you the goofy life of the party kind of person or are you a serious and focused objective seeker?",
+        "pt": "Como descreverias a tua personalidade? És daquelas pessoas brincalhonas que animam qualquer festa ou alguém sério, focado e com objetivos bem definidos?"
+      }
+    },
+    {
+      "id": "unravel-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What’s your favorite book or show?",
+        "pt": "Qual é o teu livro ou a tua série preferida?"
+      }
+    },
+    {
+      "id": "unravel-003",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's something you're really passionate about?",
+        "pt": "O que é que te apaixona mesmo?"
+      }
+    },
+    {
+      "id": "unravel-004",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's your favorite type of cuisine?",
+        "pt": "Qual é o teu tipo de cozinha preferido?"
+      }
+    },
+    {
+      "id": "unravel-005",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What’s the coolest thing you learned this week?",
+        "pt": "Qual foi a coisa mais fixe que aprendeste esta semana?"
+      }
+    },
+    {
+      "id": "unravel-006",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What is one thing that you're a complete nerd about?",
+        "pt": "Há alguma coisa em que sejas totalmente nerd?"
+      }
+    },
+    {
+      "id": "unravel-007",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Is there a project you've started, but haven't finished?",
+        "pt": "Há algum projeto que tenhas começado e nunca tenhas acabado?"
+      }
+    },
+    {
+      "id": "unravel-008",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What stimulates your creativity?",
+        "pt": "O que é que estimula a tua criatividade?"
+      }
+    },
+    {
+      "id": "unravel-009",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What’s the most rebellious thing you did as a teenager?",
+        "pt": "Qual foi a coisa mais rebelde que fizeste na adolescência?"
+      }
+    },
+    {
+      "id": "unravel-010",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What’s your most uncommon interest?",
+        "pt": "Qual é o teu interesse mais invulgar?"
+      }
+    },
+    {
+      "id": "unravel-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What’s the weirdest dream you’ve ever had?",
+        "pt": "Qual foi o sonho mais estranho que já tiveste?"
+      }
+    },
+    {
+      "id": "unravel-012",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What do you value in relationships?",
+        "pt": "O que é que valorizas nas relações?"
+      }
+    },
+    {
+      "id": "unravel-013",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Do you have any personal milestones?",
+        "pt": "Há algum marco pessoal que tenha sido importante para ti?"
+      }
+    },
+    {
+      "id": "unravel-014",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What traits do you look for in a friend?",
+        "pt": "Que qualidades procuras numa amizade?"
+      }
+    },
+    {
+      "id": "unravel-015",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What do people misunderstand about you?",
+        "pt": "O que é que as pessoas costumam perceber mal sobre ti?"
+      }
+    },
+    {
+      "id": "unravel-016",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What’s something you’ve always wanted to do but haven’t yet?",
+        "pt": "O que é que sempre quiseste fazer mas ainda não fizeste?"
+      }
+    },
+    {
+      "id": "unravel-017",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What’s the most embarrassing way you’ve been injured?",
+        "pt": "Qual foi a forma mais embaraçosa como já te magoaste?"
+      }
+    },
+    {
+      "id": "unravel-018",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What event has made you a stronger person?",
+        "pt": "Que acontecimento te tornou uma pessoa mais forte?"
+      }
+    },
+    {
+      "id": "unravel-019",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you had to pick, which fictional character best represents you?",
+        "pt": "Se tivesses de escolher, que personagem de ficção te representa melhor?"
+      }
+    },
+    {
+      "id": "unravel-020",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What leaves you at ease or makes you feel at peace?",
+        "pt": "O que é que te traz calma ou te faz sentir em paz?"
+      }
+    },
+    {
+      "id": "unravel-021",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the best trip you’ve ever taken?",
+        "pt": "Qual foi a melhor viagem que já fizeste?"
+      }
+    },
+    {
+      "id": "unravel-022",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's one thing you would change about the world?",
+        "pt": "Se pudesses mudar uma coisa no mundo, o que seria?"
+      }
+    },
+    {
+      "id": "unravel-023",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If we learn from our mistakes, why are we always so afraid to make a mistake?",
+        "pt": "Se aprendemos com os erros, porque é que temos sempre tanto medo de errar?"
+      }
+    },
+    {
+      "id": "unravel-024",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What do you look out for in a partner?",
+        "pt": "Em que é que reparas quando procuras uma cara-metade?"
+      }
+    },
+    {
+      "id": "unravel-025",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What does barely anyone know about you, that you wish more people would?",
+        "pt": "O que é que quase ninguém sabe sobre ti e gostavas que mais pessoas soubessem?"
+      }
+    },
+    {
+      "id": "unravel-026",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's something you wish you were really good at?",
+        "pt": "Que coisa gostavas de saber fazer mesmo bem?"
+      }
+    },
+    {
+      "id": "unravel-027",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What’s the most frightening experience you’ve ever had?",
+        "pt": "Qual foi a experiência mais assustadora que já viveste?"
+      }
+    },
+    {
+      "id": "unravel-028",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's something you love about your hometown?",
+        "pt": "O que é que adoras na tua terra?"
+      }
+    },
+    {
+      "id": "unravel-029",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Did you have a time in life when everything changed?",
+        "pt": "Houve algum momento na tua vida em que tudo mudou?"
+      }
+    }
+  ]
+}

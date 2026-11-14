@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": ["node"]
+  },
+  "include": [
+    "scripts",
+    "src/content/types.ts",
+    "src/content/decks.ts",
+    "src/content/packs/*.json"
+  ],
+  "exclude": []
+}

@@ -1,0 +1,293 @@
+{
+  "id": "polyamorous-passions",
+  "cards": [
+    {
+      "id": "polyamorous-passions-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What inspired you to explore polyamory and pursue multiple loving connections?",
+        "pt": "O que te levou a explorar o poliamor e a procurar várias ligações amorosas?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "How do you approach communication and honesty within your polyamorous relationships?",
+        "pt": "Como lidas com a comunicação e a honestidade nas tuas relações poliamorosas?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-003",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What are some of the challenges you've faced in balancing the needs and schedules of multiple partners?",
+        "pt": "Quais foram alguns dos desafios que enfrentaste para equilibrar as necessidades e as agendas de vários parceiros?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-004",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Do you practice hierarchy in your relationships?",
+        "pt": "Praticas hierarquia nas tuas relações?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-005",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Do you have any guidelines or agreements in place regarding intimacy with other partners? How do you navigate those boundaries?",
+        "pt": "Tens regras ou acordos combinados sobre a intimidade com outros parceiros? Como geres esses limites?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-006",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What strategies do you employ to ensure everyone's emotional well-being and to manage jealousy within your polyamorous relationships?",
+        "pt": "Que estratégias usas para garantir o bem-estar emocional de toda a gente e gerir os ciúmes nas tuas relações poliamorosas?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-007",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What role does compersion play in your polyamorous relationships, and how do you cultivate it?",
+        "pt": "Que papel tem a compersão nas tuas relações poliamorosas e como é que a cultivas?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-008",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "How do you handle time management and prioritization when it comes to spending quality time with each of your partners?",
+        "pt": "Como geres o tempo e as prioridades para passares tempo de qualidade com cada um dos teus parceiros?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-009",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Have you experienced any misconceptions or judgments from others regarding your choice to practice polyamory? How do you address them?",
+        "pt": "Já te deparaste com preconceitos ou julgamentos dos outros por escolheres viver o poliamor? Como respondes a isso?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-010",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How do you navigate the process of introducing new partners to your existing polyamorous relationships?",
+        "pt": "Como geres o processo de apresentar novos parceiros às relações que já tens?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-011",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What are some of the ways you maintain individual autonomy and independence while still fostering deep connections within your polyamorous relationships?",
+        "pt": "De que formas manténs a tua autonomia e independência sem deixares de criar ligações profundas nas tuas relações poliamorosas?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-012",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Do you have any rituals or practices in place to ensure a sense of unity and inclusiveness among all your partners?",
+        "pt": "Tens algum ritual ou hábito para criar um sentimento de união e inclusão entre todos os teus parceiros?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-013",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "How do you handle situations where one partner requires more emotional support or attention than others?",
+        "pt": "Como lidas com situações em que um parceiro precisa de mais apoio emocional ou atenção do que os outros?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-014",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What are some of the positive aspects or rewards you have experienced as a result of practicing polyamory?",
+        "pt": "Quais são alguns dos aspetos positivos ou das recompensas que o poliamor te trouxe?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-015",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How do you approach discussing and addressing potential conflicts or misunderstandings within your polyamorous relationships?",
+        "pt": "Como abordas e resolves possíveis conflitos ou mal-entendidos nas tuas relações poliamorosas?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-016",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Have you encountered any societal or cultural challenges as a polyamorous individual? How do you navigate them?",
+        "pt": "Já enfrentaste desafios sociais ou culturais por seres uma pessoa poliamorosa? Como lidas com eles?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-017",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What is your view on hierarchy within polyamorous relationships? Do you embrace it or prefer a more egalitarian approach?",
+        "pt": "Qual é a tua posição sobre a hierarquia nas relações poliamorosas? Concordas com ela ou preferes uma abordagem mais igualitária?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-018",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How do you navigate the process of balancing and integrating your different partners into your broader social circles and family life?",
+        "pt": "Como equilibras e integras os teus diferentes parceiros no teu círculo social mais alargado e na vida familiar?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-019",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What are some ways you express love and affection to multiple partners simultaneously?",
+        "pt": "De que formas mostras amor e carinho a vários parceiros ao mesmo tempo?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-020",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "How do you approach long-term planning and envisioning a future that involves multiple partners?",
+        "pt": "Como encaras o planeamento a longo prazo e a ideia de um futuro com vários parceiros?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-021",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Are you “Kitchen Table” and is there an expectation that I have to have a good relationship with your partners? What happens if that isn’t possible?",
+        "pt": "És de poliamor “mesa de cozinha”? Esperas que eu tenha uma boa relação com os teus parceiros? E o que acontece se isso não for possível?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-022",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What advice would you give to someone new to polyamory or considering exploring polyamorous relationships for the first time?",
+        "pt": "Que conselho darias a alguém que está a começar no poliamor ou a pensar explorar relações poliamorosas pela primeira vez?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-023",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "What guidelines or agreements should we establish regarding safe sex practices?",
+        "pt": "Que regras ou acordos devemos estabelecer sobre práticas de sexo seguro?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-024",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "How will we handle introducing new partners to our friends, family, social circles. And what level of openness do we want to have in these situations?",
+        "pt": "Como vamos apresentar novos parceiros aos nossos amigos, à família e aos nossos círculos sociais? E que nível de abertura queremos ter nessas situações?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-025",
+      "type": "everyone",
+      "level": 3,
+      "text": {
+        "en": "In what ways will we emotionally support each other when we encounter feelings of jealousy and insecurity?",
+        "pt": "De que formas nos vamos apoiar emocionalmente quando surgirem ciúmes e inseguranças?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-026",
+      "type": "everyone",
+      "level": 3,
+      "text": {
+        "en": "What role(s), if any, will our new partners play in our children's lives, and how will we navigate these relationships to ensure the well-being of our children?",
+        "pt": "Que papel vão ter os nossos novos parceiros na vida dos nossos filhos, se é que vão ter algum, e como vamos gerir essas relações para garantir o bem-estar deles?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-027",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "What polyamory styles are we most interested in exploring: kitchen table polyamory, where all our partners interact, or parallel polyamory, which is very separate dating, or garden party which is in between them?",
+        "pt": "Que estilo de poliamor nos interessa mais explorar: poliamor de mesa de cozinha, em que todos os nossos parceiros convivem, poliamor paralelo, em que cada relação fica bem separada, ou poliamor de festa no jardim, que fica a meio caminho entre os dois?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-028",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "How will we regularly check in on each other to evaluate feelings, boundaries and the overall health of our relationship?",
+        "pt": "Como vamos fazer pontos de situação regulares para avaliar sentimentos, limites e a saúde geral da nossa relação?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-029",
+      "type": "everyone",
+      "level": 3,
+      "text": {
+        "en": "How will we navigate the potential for unequal levels of involvement and attachment, and what strategies will we employ to ensure fairness and balance?",
+        "pt": "Como vamos lidar com a possibilidade de níveis desiguais de envolvimento e apego, e que estratégias vamos usar para garantir justiça e equilíbrio?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-030",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "How do we envision our ideal polyamorous network and community, and what steps will we take to create and nurture these connections?",
+        "pt": "Como imaginamos a nossa rede e comunidade poliamorosa ideal, e que passos vamos dar para criar e cuidar dessas ligações?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-031",
+      "type": "everyone",
+      "level": 3,
+      "text": {
+        "en": "Are we open to the idea of cohabiting with other partners in the future and entangling finances and other legal matters, and what factors will impact that decision?",
+        "pt": "Admitimos a ideia de, no futuro, viver com outros parceiros e misturar finanças e outras questões legais? Que fatores vão pesar nessa decisão?"
+      }
+    },
+    {
+      "id": "polyamorous-passions-032",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "How will we balance our time and energy with each other and any new partners to ensure that all our needs are met?",
+        "pt": "Como vamos equilibrar o nosso tempo e energia entre nós e os novos parceiros, para que as necessidades de todos fiquem satisfeitas?"
+      }
+    }
+  ]
+}

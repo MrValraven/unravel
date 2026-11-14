@@ -1,0 +1,95 @@
+@use "../../../styles/tokens" as *;
+
+// Icon-only on phones so it fits a header; the label shows from tablet width.
+.install-prompt__trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  min-width: $tap-target;
+  min-height: $tap-target;
+  padding: 0 $space-3;
+  border: 0;
+  border-radius: $radius-pill;
+  background: none;
+  color: $color-text;
+  font-weight: 600;
+  transition:
+    background-color $duration-fast ease,
+    color $duration-fast ease;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $color-surface-hover;
+      color: $color-heading;
+    }
+  }
+}
+
+.install-prompt__trigger-label {
+  display: none;
+  white-space: nowrap;
+
+  @media (min-width: $bp-tablet) {
+    display: inline;
+  }
+}
+
+// Full labelled row, for lists such as Settings. The list can pass its own row class for padding and borders.
+.install-prompt__row {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  width: 100%;
+  text-align: left;
+}
+
+.install-prompt__row-icon {
+  flex-shrink: 0;
+  color: $color-accent;
+}
+
+.install-prompt__row-label {
+  flex: 1;
+  color: $color-heading;
+  font-weight: 600;
+}
+
+.install-prompt__steps {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: 0;
+  list-style: none;
+  counter-reset: install-step;
+}
+
+.install-prompt__step {
+  position: relative;
+  min-height: 28px;
+  padding-left: calc(28px + #{$space-3});
+  counter-increment: install-step;
+
+  &::before {
+    content: counter(install-step);
+    position: absolute;
+    top: -1px;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: $radius-pill;
+    background: $color-surface-hover;
+    color: $color-heading;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+}
+
+.install-prompt__menu-icon {
+  display: inline-block;
+  margin-inline: 2px;
+  vertical-align: -3px;
+  color: $color-heading;
+}

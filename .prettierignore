@@ -3,4 +3,10 @@ dev-dist
 coverage
 node_modules
 package-lock.json
-src/data
+playwright-report
+test-results
+docs
+content-drafts
+content-export
+src/content/packs
+.superpowers

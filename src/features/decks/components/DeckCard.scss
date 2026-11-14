@@ -1,0 +1,121 @@
+@use "../../../styles/tokens" as *;
+
+// A neutral card; the icon alone carries the deck's category tone.
+// Only the title is a button; its ::after overlay covers the card so the whole card is clickable.
+.deck-card {
+  @include surface;
+  @include deck-tone;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: $space-3;
+  width: 100%;
+  min-height: $tap-target;
+  padding: $space-4 $space-3 $space-4 $space-4;
+  overflow: hidden;
+  color: $color-text;
+  text-align: left;
+  transition:
+    background-color $duration-fast ease,
+    border-color $duration-fast ease,
+    transform $duration-fast $ease-out;
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $color-border-strong;
+      background: $color-surface-hover;
+
+      .deck-card__chevron {
+        color: $color-heading;
+      }
+    }
+  }
+
+  &:active {
+    transform: scale(0.985);
+  }
+
+  // The ring sits on the card while its button has focus. Browsers with :has
+  // drop it again after a mouse or touch press, so it shows for keyboard focus only.
+  &:focus-within {
+    @include focus-ring;
+  }
+
+  &:has(.deck-card__button:focus:not(:focus-visible)) {
+    outline: none;
+  }
+}
+
+.deck-card__button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  text-align: inherit;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.deck-card__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-sm;
+  background: $color-surface-hover;
+  color: var(--deck-tone);
+}
+
+.deck-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  min-width: 0;
+}
+
+.deck-card__title {
+  color: $color-heading;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.deck-card__description {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+
+  // Wider cards have room for a third line, so fewer descriptions get cut.
+  @media (min-width: $bp-desktop) {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+}
+
+.deck-card__chevron {
+  color: $color-text-dim;
+  transition:
+    color $duration-fast ease,
+    transform $duration-fast $ease-out;
+
+  @include motion-safe {
+    .deck-card:hover & {
+      transform: translateX(2px);
+    }
+  }
+}

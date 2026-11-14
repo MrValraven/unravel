@@ -1,0 +1,27 @@
+@use "../../../styles/tokens" as *;
+
+.deck-preview {
+  @include deck-tone;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.deck-preview__identity {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding-bottom: $space-4;
+  border-bottom: 1px solid $color-border;
+}
+
+.deck-preview__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-sm;
+  background: $color-surface-hover;
+  color: var(--deck-tone);
+}

@@ -1,0 +1,17 @@
+@use "../../../styles/tokens" as *;
+
+// Each step of the flow eases in when it replaces the one before.
+.play-phase {
+  animation: play-phase-in $duration-slow $ease-out both;
+}
+
+@keyframes play-phase-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

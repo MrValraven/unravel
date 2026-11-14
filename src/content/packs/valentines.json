@@ -1,0 +1,224 @@
+{
+  "id": "valentines",
+  "cards": [
+    {
+      "id": "valentines-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Valentine's Day: lovely tradition or overpriced dinner? Defend your answer.",
+        "pt": "Dia dos Namorados: tradição bonita ou jantar caro demais? Defende a tua resposta."
+      }
+    },
+    {
+      "id": "valentines-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the most romantic thing you've seen in a film that would fall apart in real life?",
+        "pt": "Qual é a coisa mais romântica que já viste num filme e que na vida real correria mal?"
+      }
+    },
+    {
+      "id": "valentines-003",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the best Valentine's card or gift you've ever received?",
+        "pt": "Qual foi o melhor postal ou presente de Dia dos Namorados que já recebeste?"
+      }
+    },
+    {
+      "id": "valentines-004",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which fictional couple do you secretly root for?",
+        "pt": "Por que casal fictício torces em segredo?"
+      }
+    },
+    {
+      "id": "valentines-005",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Hold eye contact for 30 seconds without laughing.",
+        "pt": "Mantenham o contacto visual durante 30 segundos sem se rirem."
+      },
+      "timerSeconds": 30
+    },
+    {
+      "id": "valentines-006",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Roses, chocolates or a handwritten note: which one wins you over?",
+        "pt": "Rosas, chocolates ou um bilhete escrito à mão: o que te conquista?"
+      }
+    },
+    {
+      "id": "valentines-007",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's your idea of a perfect low-key Valentine's evening?",
+        "pt": "Qual é a tua ideia de uma noite de Dia dos Namorados perfeita e descontraída?"
+      }
+    },
+    {
+      "id": "valentines-008",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Write a four-line love poem about the other person that includes the word 'pizza'.",
+        "pt": "Escreve um poema de amor de quatro versos sobre a outra pessoa com a palavra 'pizza'."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "valentines-009",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What small gesture feels more romantic to you than any grand one?",
+        "pt": "Que pequeno gesto te parece mais romântico do que qualquer grande gesto?"
+      }
+    },
+    {
+      "id": "valentines-010",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Pick a song for the other person and play the chorus.",
+        "pt": "Escolhe uma música para a outra pessoa e põe o refrão a tocar."
+      }
+    },
+    {
+      "id": "valentines-011",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which love song describes the way you like to be loved?",
+        "pt": "Que canção de amor descreve a forma como gostas que gostem de ti?"
+      }
+    },
+    {
+      "id": "valentines-012",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What did your younger self think love would look like?",
+        "pt": "Como é que o teu eu mais novo imaginava o amor?"
+      }
+    },
+    {
+      "id": "valentines-013",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How do you like to show someone you're into them?",
+        "pt": "Como gostas de mostrar a alguém que essa pessoa te interessa?"
+      }
+    },
+    {
+      "id": "valentines-014",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Plan a perfect Valentine's Day together in two minutes with a budget of ten euros.",
+        "pt": "Planeiem juntos um Dia dos Namorados perfeito em dois minutos com um orçamento de dez euros."
+      },
+      "timerSeconds": 120
+    },
+    {
+      "id": "valentines-015",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's the most spontaneous thing you've ever done for love?",
+        "pt": "Qual foi a coisa mais espontânea que já fizeste por amor?"
+      }
+    },
+    {
+      "id": "valentines-016",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's a lesson about love you learned from someone in your family?",
+        "pt": "Que lição sobre o amor aprendeste com alguém da tua família?"
+      }
+    },
+    {
+      "id": "valentines-017",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "When do you feel most attractive?",
+        "pt": "Quando é que te sentes mais atraente?"
+      }
+    },
+    {
+      "id": "valentines-018",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Tell the other person three things you like about them, starting with the smallest.",
+        "pt": "Diz à outra pessoa três coisas de que gostas nela, a começar pela mais pequena."
+      }
+    },
+    {
+      "id": "valentines-019",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's one thing you'd like the person you're with to just know without you having to say it?",
+        "pt": "Que coisa gostavas que a pessoa com quem estás soubesse sem precisares de a dizer?"
+      }
+    },
+    {
+      "id": "valentines-020",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's the most memorable date you've ever planned?",
+        "pt": "Qual foi o encontro mais memorável que já planeaste?"
+      }
+    },
+    {
+      "id": "valentines-021",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What makes you feel safe with someone?",
+        "pt": "O que te faz sentir em segurança com alguém?"
+      }
+    },
+    {
+      "id": "valentines-022",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What are you still learning about how to love well?",
+        "pt": "O que ainda estás a aprender sobre como amar bem?"
+      }
+    },
+    {
+      "id": "valentines-023",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's a fear about love that you rarely say out loud?",
+        "pt": "Que medo tens em relação ao amor que raramente dizes em voz alta?"
+      }
+    },
+    {
+      "id": "valentines-024",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What would you like someone to remember about loving you?",
+        "pt": "O que gostavas que alguém recordasse de te ter amado?"
+      }
+    }
+  ]
+}

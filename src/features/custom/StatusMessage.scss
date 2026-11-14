@@ -1,0 +1,58 @@
+@use "../../styles/tokens" as *;
+
+// Fixed above the bottom safe area; clicks pass through the empty region.
+// A page with its own bottom bar sets --status-message-bottom so the notice floats above it.
+.status-message {
+  position: fixed;
+  inset-inline: 0;
+  bottom: var(
+    --status-message-bottom,
+    max(#{$space-5}, env(safe-area-inset-bottom))
+  );
+  z-index: $z-banner;
+  display: flex;
+  justify-content: center;
+  @include page-gutter;
+  pointer-events: none;
+}
+
+.status-message__bubble {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-2;
+  max-width: 420px;
+  padding: $space-3 $space-4;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius;
+  background: $color-bg-elevated;
+  color: $color-heading;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+  animation: status-message-in $duration $ease-out both;
+
+  &[data-state="leaving"] {
+    animation: status-message-out $duration-fast $ease-in both;
+  }
+}
+
+.status-message__icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: $color-accent;
+}
+
+@keyframes status-message-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes status-message-out {
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

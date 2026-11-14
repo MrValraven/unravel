@@ -1,0 +1,59 @@
+@use "../../../styles/tokens" as *;
+
+.level-breakdown__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $space-2;
+}
+
+// The count sits on top (column-reverse), so packing to the end keeps every
+// count and meter on one line when a label wraps, as "Mais fundo" does at 320px.
+.level-breakdown__item {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: $space-1;
+  padding: $space-3;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  background: $color-surface;
+}
+
+.level-breakdown__item--empty {
+  opacity: 0.6;
+}
+
+.level-breakdown__label {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  color: $color-text;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.level-breakdown__meter {
+  display: flex;
+  gap: 3px;
+}
+
+.level-breakdown__pip {
+  width: 10px;
+  height: 4px;
+  border-radius: $radius-pill;
+  background: $color-border-strong;
+}
+
+.level-breakdown__pip--filled {
+  background: var(--deck-tone, #{$color-accent});
+}
+
+.level-breakdown__count {
+  margin: 0;
+  color: $color-heading;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}

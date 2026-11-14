@@ -1,0 +1,91 @@
+@use "../../styles/tokens" as *;
+
+.custom-deck-item {
+  @include surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  padding: $space-4;
+  list-style: none;
+  animation: custom-deck-item-in $duration $ease-out both;
+
+  &[data-state="leaving"] {
+    pointer-events: none;
+    animation: custom-deck-item-out $duration-fast $ease-in both;
+  }
+}
+
+.custom-deck-item__summary {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  min-width: 0;
+}
+
+.custom-deck-item__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-sm;
+  background: $color-surface-hover;
+  color: $color-accent;
+}
+
+.custom-deck-item__text {
+  min-width: 0;
+}
+
+.custom-deck-item__title {
+  font-size: 1.125rem;
+  overflow-wrap: anywhere;
+}
+
+.custom-deck-item__count {
+  color: $color-text-dim;
+  font-size: 0.9375rem;
+}
+
+// Phones: Start deck takes the first row and the other actions share rows as their labels fit,
+// so a long label moves to its own row instead of wrapping. One row once there is room.
+.custom-deck-item__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+
+  > .button {
+    flex: 1 1 auto;
+    padding-inline: $space-3;
+    white-space: nowrap;
+  }
+
+  > .button--primary {
+    flex-basis: 100%;
+  }
+
+  @media (min-width: $bp-tablet) {
+    > .button,
+    > .button--primary {
+      flex: 0 0 auto;
+    }
+
+    > .button--quiet {
+      margin-left: auto;
+    }
+  }
+}
+
+@keyframes custom-deck-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes custom-deck-item-out {
+  to {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}

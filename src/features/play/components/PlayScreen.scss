@@ -1,0 +1,259 @@
+@use "../../../styles/tokens" as *;
+
+// A dragged or departing card travels past the screen edge, which used to widen the
+// document mid-swipe. The phase wrapper spans the full screen width at every size, so
+// clipping it cuts the card exactly at the screen edge. The page column itself is
+// narrower than the screen on wide displays, and overflow-clip-margin cannot reach the
+// edge from there (Chromium takes no calc() in it, WebKit has no support). Clip leaves
+// vertical scroll and sticky positioning as they were.
+.play-phase:has(> .play-screen) {
+  overflow-x: clip;
+}
+
+.play-screen__layout {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.play-screen__controls {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  margin-top: $space-2;
+}
+
+.play-screen__hint {
+  max-height: 3em;
+  overflow: hidden;
+  color: $color-text-dim;
+  font-size: 0.875rem;
+  text-align: center;
+  transition:
+    opacity $duration ease,
+    max-height $duration $ease-out;
+
+  &[data-visible="false"] {
+    max-height: 0;
+    opacity: 0;
+  }
+}
+
+// The challenge timer as a ring and an icon button, its label kept for screen readers.
+@mixin compact-countdown {
+  .countdown {
+    flex-wrap: nowrap;
+    gap: $space-2;
+  }
+
+  .countdown__ring {
+    width: 44px;
+    height: 44px;
+  }
+
+  .countdown__button {
+    position: relative;
+    justify-content: center;
+    width: $tap-target;
+    padding: 0;
+
+    span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+}
+
+// Short portrait screens (iPhone SE, browsers with toolbars): everything tightens
+// so Next and the quiet ways out stay on screen next to a long card.
+.play-screen:not(.play-screen--table),
+.play-screen--table {
+  @media (orientation: portrait) and (max-height: 700px) {
+    padding-bottom: max($space-4, env(safe-area-inset-bottom));
+
+    .page-header {
+      min-height: 48px;
+      padding-top: max($space-2, env(safe-area-inset-top));
+      padding-bottom: $space-2;
+    }
+
+    .play-screen__layout {
+      gap: $space-2;
+    }
+
+    .play-screen__controls {
+      gap: $space-1;
+      margin-top: 0;
+    }
+
+    .play-card {
+      gap: $space-2;
+      min-height: min(40dvh, 320px);
+      padding: $space-4;
+    }
+
+    .play-card__face {
+      gap: $space-2;
+    }
+
+    .play-card__text {
+      font-size: clamp(1.125rem, 0.5rem + 2.6dvh, 1.5rem);
+    }
+
+    .play-card[data-text-length="long"] .play-card__text {
+      font-size: clamp(1rem, 0.25rem + 2.2dvh, 1.375rem);
+    }
+
+    .play-card__footer {
+      flex-wrap: nowrap;
+    }
+
+    @include compact-countdown;
+  }
+}
+
+// Table mode in landscape: the card fills the screen height on the left, and
+// the header, progress and controls share a column on the right. Nothing scrolls,
+// down to a 667 by 330 phone with browser bars.
+.play-screen--table {
+  @media (orientation: landscape) and (min-width: 560px) {
+    display: grid;
+    grid-template:
+      "stage header" auto
+      "stage toolbar" auto
+      "stage controls" minmax(0, 1fr)
+      / minmax(0, 1fr) clamp(208px, 32vw, 280px);
+    gap: $space-2 $space-5;
+    max-width: 1200px;
+    height: 100dvh;
+    padding-block: max($space-2, env(safe-area-inset-top))
+      max($space-2, env(safe-area-inset-bottom));
+    overflow: hidden;
+
+    .page-header {
+      grid-area: header;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      min-height: $tap-target;
+      padding-block: 0;
+    }
+
+    .play-screen__layout {
+      display: contents;
+    }
+
+    .play-screen__toolbar {
+      grid-area: toolbar;
+    }
+
+    .play-screen__stage {
+      display: flex;
+      grid-area: stage;
+      min-height: 0;
+    }
+
+    .card-stage,
+    .card-stage__gesture {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .play-screen__controls {
+      grid-area: controls;
+      justify-content: flex-end;
+      gap: $space-2;
+      margin-top: 0;
+    }
+
+    .play-controls__previous {
+      width: $tap-target;
+    }
+
+    .play-controls__previous,
+    .play-controls__next {
+      min-height: 48px;
+    }
+
+    .play-controls__next {
+      gap: $space-1;
+      padding-inline: $space-2;
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+
+    .play-screen__hint {
+      display: none;
+    }
+
+    // The two faces stack on the left, the timer, star and share run down the right edge.
+    .play-card {
+      display: grid;
+      flex: 1;
+      grid-template:
+        "across footer" minmax(0, 1fr)
+        "fold footer" auto
+        "face footer" minmax(0, 1fr) / minmax(0, 1fr) auto;
+      gap: $space-2 $space-3;
+      min-height: 0;
+      padding: $space-3 $space-4;
+    }
+
+    .play-card__face {
+      grid-area: face;
+      gap: $space-1;
+      min-height: 0;
+      overflow-y: auto;
+    }
+
+    .play-card__face--across {
+      grid-area: across;
+    }
+
+    .play-card__fold {
+      grid-area: fold;
+    }
+
+    .play-card__footer {
+      grid-area: footer;
+      flex-flow: column nowrap;
+      justify-content: space-between;
+    }
+
+    .play-card__actions {
+      flex-direction: column;
+      margin-left: 0;
+    }
+
+    @media (max-height: 520px) {
+      .play-card__badge {
+        padding: 3px $space-2;
+        font-size: 0.75rem;
+      }
+
+      .play-card__turn {
+        font-size: 0.8125rem;
+      }
+    }
+
+    .play-card__text {
+      font-size: clamp(1rem, 0.25rem + 4dvh, 1.875rem);
+      line-height: 1.25;
+    }
+
+    .play-card[data-text-length="long"] .play-card__text {
+      font-size: clamp(0.875rem, 0.25rem + 3dvh, 1.5rem);
+    }
+
+    @include compact-countdown;
+
+    .countdown {
+      flex-direction: column;
+    }
+  }
+}

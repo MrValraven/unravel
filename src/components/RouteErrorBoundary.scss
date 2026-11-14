@@ -1,0 +1,70 @@
+@use "../styles/tokens" as *;
+
+.route-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-4;
+  min-height: 100dvh;
+  padding-top: $space-7;
+  text-align: center;
+
+  @include motion-safe {
+    animation: route-error-in $duration-slow $ease-out both;
+  }
+}
+
+.route-error__mark {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  margin-bottom: $space-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-pill;
+  background:
+    radial-gradient(
+      circle,
+      color-mix(in srgb, var(--color-accent) 22%, transparent) 0%,
+      transparent 70%
+    ),
+    $color-surface;
+  color: $color-accent;
+}
+
+.route-error__title {
+  max-width: 20ch;
+  font-family: $font-card;
+  font-size: 1.75rem;
+  font-weight: 400;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.route-error__body {
+  max-width: 36ch;
+  color: $color-text;
+}
+
+.route-error__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $space-2;
+  margin-top: $space-3;
+}
+
+@keyframes route-error-in {
+  from {
+    opacity: 0;
+    transform: translateY($space-3);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

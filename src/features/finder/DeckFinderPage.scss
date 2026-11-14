@@ -1,0 +1,78 @@
+@use "../../styles/tokens" as *;
+
+.deck-finder__main {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  padding-top: $space-2;
+}
+
+.deck-finder__progress {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: $space-2 $space-3;
+}
+
+.deck-finder__step-label {
+  color: $color-text-dim;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.deck-finder__track {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  height: 4px;
+  overflow: hidden;
+  border-radius: $radius-pill;
+  background: $color-border;
+}
+
+.deck-finder__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: $color-accent;
+  transition: width $duration-slow $ease-out;
+}
+
+.deck-finder__previous {
+  grid-column: 2;
+  grid-row: 1;
+  padding-inline: $space-3;
+  font-size: 0.875rem;
+}
+
+// Each step slides in from the side it comes from.
+.deck-finder__stage {
+  animation: finder-step-fade $duration $ease-out both;
+
+  @include motion-safe {
+    animation-name: finder-step-forward;
+    animation-duration: $duration-slow;
+
+    &[data-direction="back"] {
+      animation-name: finder-step-back;
+    }
+  }
+}
+
+@keyframes finder-step-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes finder-step-forward {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
+@keyframes finder-step-back {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+}

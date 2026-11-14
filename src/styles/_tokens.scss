@@ -1,8 +1,15 @@
-// Shared design tokens so the three screens (Home, mode selection, in-game)
-// stay visually consistent instead of re-hardcoding the palette everywhere.
-// Import with: @use "<relative>/styles/tokens" as *;
+// Shared design tokens. Import with: @use "<relative>/styles/tokens" as *;
+//
+// Two layers:
+// 1. Brand constants ($bg, $text, $accent...) are plain hex values, safe for
+//    Sass colour maths. They never change at runtime.
+// 2. Theme colours ($color-*) read CSS custom properties defined in
+//    styles/global.scss, so they follow dim mode. Use these for anything
+//    visible on screen.
+// Type sizes are in rem: the root font size follows the player's text scale
+// setting (--text-scale), so rem-based text grows with it.
 
-// ---- Palette (Unravel's existing brand) ----
+// ---- Brand palette (constants) ----
 $bg: #232946;
 $bg-elevated: #2b3358;
 $heading: #fffffe;
@@ -11,24 +18,111 @@ $accent: #eebbc3;
 $new: #ffcc1d;
 $beta: #e555c7;
 
-// ---- Derived surfaces ----
+// ---- Derived surfaces (constants, default theme) ----
 $surface: rgba(184, 193, 236, 0.045);
 $surface-hover: rgba(184, 193, 236, 0.09);
 $border: rgba(184, 193, 236, 0.16);
 $border-strong: rgba(184, 193, 236, 0.28);
-$text-dim: rgba(184, 193, 236, 0.62);
+// Solid so secondary text keeps AA contrast (5.76:1 on $bg).
+$text-dim: #9aa3cf;
+
+// ---- Category tones (constants) ----
+// Three calm tones from the palette above, matching categoryAccents in
+// content/decks.ts. Navy text on each: 8.04:1, 8.48:1, 5.83:1; each tone on
+// $bg-elevated: 6.92:1, 7.30:1, 5.01:1.
+$category-friends: $text;
+$category-dating: $accent;
+$category-adults: #cf94bb;
+
+// Ink for the New and Beta tag pills: 11.39:1 on $new, 5.29:1 on $beta.
+$tag-ink: #161a2e;
+
+// ---- Theme colours (follow dim mode) ----
+$color-bg: var(--color-bg);
+$color-bg-elevated: var(--color-bg-elevated);
+$color-heading: var(--color-heading);
+$color-text: var(--color-text);
+$color-text-dim: var(--color-text-dim);
+$color-accent: var(--color-accent);
+$color-on-accent: var(--color-on-accent);
+$color-surface: var(--color-surface);
+$color-surface-hover: var(--color-surface-hover);
+$color-border: var(--color-border);
+$color-border-strong: var(--color-border-strong);
+$color-backdrop: var(--color-backdrop);
+$color-category-friends: var(--color-category-friends);
+$color-category-dating: var(--color-category-dating);
+$color-category-adults: var(--color-category-adults);
+
+// ---- Typography ----
+$font-ui: "Figtree Variable", system-ui, sans-serif;
+$font-card: "Young Serif", Georgia, serif;
+
+// ---- Spacing scale ----
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 24px;
+$space-6: 32px;
+$space-7: 48px;
+$space-8: 64px;
+$gutter: 16px;
 
 // ---- Layout ----
 $bp-tablet: 640px;
 $bp-desktop: 960px;
+$content-width: 640px;
+$tap-target: 44px;
+$radius-sm: 10px;
 $radius: 16px;
+$radius-lg: 24px;
+$radius-pill: 999px;
+
+// ---- Layers ----
+$z-banner: 50;
+$z-dialog: 100;
 
 // ---- Motion ----
 $ease: cubic-bezier(0.075, 0.82, 0.165, 1);
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+$duration-fast: 160ms;
+$duration: 260ms;
+$duration-slow: 420ms;
 
 // A subtle raised panel/card surface used across screens.
 @mixin surface {
-  border: 1px solid $border;
+  border: 1px solid $color-border;
   border-radius: $radius;
-  background: $surface;
+  background: $color-surface;
+}
+
+// Scopes a --deck-tone for an element that sets --deck-accent inline. Dim mode
+// mutes it toward the page by the same 12% as the dim category tones.
+@mixin deck-tone {
+  --deck-tone: var(--deck-accent);
+
+  :root[data-theme="dim"] & {
+    --deck-tone: color-mix(in srgb, var(--deck-accent) 88%, var(--color-bg));
+  }
+}
+
+// The shared keyboard focus ring.
+@mixin focus-ring {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+// Horizontal page padding that respects the phone's safe area.
+@mixin page-gutter {
+  padding-inline: max($gutter, env(safe-area-inset-left))
+    max($gutter, env(safe-area-inset-right));
+}
+
+// Wrap motion that should be skipped when the player asks for reduced motion.
+@mixin motion-safe {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
 }

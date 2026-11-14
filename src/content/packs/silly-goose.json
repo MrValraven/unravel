@@ -1,0 +1,151 @@
+{
+  "id": "silly-goose",
+  "cards": [
+    {
+      "id": "silly-goose-001",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Start the game off with a thumb war!",
+        "pt": "Comecem o jogo com uma luta de polegares!"
+      }
+    },
+    {
+      "id": "silly-goose-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the most absurd food combination you've tried to eat?",
+        "pt": "Qual é a combinação de comida mais absurda que já tentaste comer?"
+      }
+    },
+    {
+      "id": "silly-goose-003",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you could choose, what would be your stripper name?",
+        "pt": "Se pudesses escolher, qual seria o teu nome de stripper?"
+      }
+    },
+    {
+      "id": "silly-goose-004",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the weirdest nickname people have given you?",
+        "pt": "Qual é a alcunha mais estranha que já te deram?"
+      }
+    },
+    {
+      "id": "silly-goose-005",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If your life had a dance-off with aliens, what dance move would you use to represent humanity?",
+        "pt": "Se tivesses de enfrentar extraterrestres numa batalha de dança, que passo escolhias para representar a humanidade?"
+      }
+    },
+    {
+      "id": "silly-goose-006",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If your computer had a sassy personality, what would it say when you ask for help?",
+        "pt": "Se o teu computador fosse respondão, o que é que te dizia quando lhe pedisses ajuda?"
+      }
+    },
+    {
+      "id": "silly-goose-007",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If you were an addictive substance how would I be addicted to you? Would I inhale you, inject you, drink you? What are we doing here.",
+        "pt": "Se fosses uma substância viciante, como é que eu me viciava em ti? Inalava-te, injetava-te, bebia-te? Que conversa é esta."
+      }
+    },
+    {
+      "id": "silly-goose-008",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you were a planet, what other planets in the solar system would you declare war on?",
+        "pt": "Se fosses um planeta, a que outros planetas do sistema solar declaravas guerra?"
+      }
+    },
+    {
+      "id": "silly-goose-009",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Invent a gadget that translates pet language into human words. What's the first thing your pet says?",
+        "pt": "Inventa um aparelho que traduza a linguagem dos animais para palavras humanas. Qual é a primeira coisa que o teu bicho diz?"
+      }
+    },
+    {
+      "id": "silly-goose-010",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Share a made-up, ridiculous mantra that you'd repeat for good luck.",
+        "pt": "Partilhem um mantra inventado e ridículo que repetiriam para dar sorte."
+      }
+    },
+    {
+      "id": "silly-goose-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the most ridiculous movie or TV show you've ever watched, and why did you love it?",
+        "pt": "Qual foi o filme ou a série mais ridícula que já viste e porque é que adoraste?"
+      }
+    },
+    {
+      "id": "silly-goose-012",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you could be the mayor of a tiny, quirky island, what weird rules would you implement?",
+        "pt": "Se pudesses ser presidente da câmara de uma ilha minúscula e excêntrica, que regras estranhas inventavas?"
+      }
+    },
+    {
+      "id": "silly-goose-013",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you could attend a party with talking animals, which ones would you invite, and what would the party theme be?",
+        "pt": "Se pudesses ir a uma festa com animais que falam, quais é que convidavas e qual seria o tema da festa?"
+      }
+    },
+    {
+      "id": "silly-goose-014",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Do a staring contest. You are now aware you have eyes and can blink.",
+        "pt": "Façam um duelo de olhares. Agora estão conscientes de que têm olhos e de que conseguem pestanejar."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "silly-goose-015",
+      "type": "challenge",
+      "level": 3,
+      "text": {
+        "en": "Pick a snack, and attempt to eat it in the most synchronized and dramatic way possible. Bonus points for exaggerated chewing sounds.",
+        "pt": "Escolham um petisco e tentem comê-lo da forma mais sincronizada e dramática possível. Pontos extra por sons de mastigação exagerados."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "silly-goose-016",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you could have a robot sidekick with one absurd talent, what would it be?",
+        "pt": "Se pudesses ter um robô como fiel escudeiro com um único talento absurdo, qual seria?"
+      }
+    }
+  ]
+}

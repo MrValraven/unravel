@@ -1,0 +1,144 @@
+@use "../../../styles/tokens" as *;
+
+// Shared by the setup step and the boundaries check-in.
+.play-setup {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.play-setup__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-2;
+}
+
+// The deck's own colour: a small token of the card that is about to be dealt.
+.play-setup__icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: $space-2;
+  border-radius: $radius;
+  background: var(--deck-accent);
+  color: $color-on-accent;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.play-setup__title {
+  font-family: $font-card;
+
+  // Focused by script when the step appears, so screen readers start here; no ring needed.
+  &:focus {
+    outline: none;
+  }
+
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.play-setup__intro {
+  max-width: 34rem;
+}
+
+.play-setup__count {
+  color: $color-text-dim;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.play-setup__note {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-2;
+  padding: $space-3 $space-4;
+  @include surface;
+  color: $color-heading;
+  font-size: 0.9375rem;
+  animation: play-setup-note-in $duration $ease-out both;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 3px;
+    color: $color-accent;
+  }
+}
+
+.play-setup__form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.play-setup__section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.play-setup__section-title {
+  margin-bottom: $space-2;
+  padding: 0;
+  color: $color-heading;
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.play-setup__section-hint {
+  margin: (-$space-2) 0 $space-3;
+  color: $color-text-dim;
+  font-size: 0.875rem;
+}
+
+// A framed group inside the page gutter, like the note above it. The small
+// inner padding keeps each row's hover fill and focus ring off the frame.
+.play-setup__switches {
+  display: flex;
+  flex-direction: column;
+  padding: $space-1;
+  @include surface;
+
+  .setup-switch {
+    padding-inline: $space-3;
+    border-radius: $radius-sm;
+  }
+
+  .setup-switch__input {
+    border-radius: $radius-sm;
+  }
+}
+
+.play-setup__actions {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  margin-inline: -$gutter;
+  padding: $space-4 $gutter max($space-4, env(safe-area-inset-bottom));
+  background: linear-gradient(to bottom, transparent, $color-bg 28%);
+
+  @media (min-width: $bp-tablet) {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+
+    > .button {
+      min-width: 180px;
+    }
+  }
+}
+
+@keyframes play-setup-note-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

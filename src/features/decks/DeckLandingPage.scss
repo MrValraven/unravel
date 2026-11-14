@@ -1,0 +1,99 @@
+@use "../../styles/tokens" as *;
+
+.deck-landing {
+  @include deck-tone;
+}
+
+.deck-landing__main {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  padding-top: $space-2;
+}
+
+.deck-landing__hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-3;
+  padding: $space-6 $space-5 $space-5;
+  overflow: hidden;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  background: $color-surface;
+  animation: deck-landing-in $duration-slow $ease-out both;
+}
+
+.deck-landing__icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: $radius;
+  background: $color-surface-hover;
+  color: var(--deck-tone);
+}
+
+.deck-landing__eyebrow {
+  margin-top: $space-2;
+  color: $color-text-dim;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.deck-landing__title {
+  margin-top: -$space-2;
+  font-family: $font-card;
+  font-size: clamp(2rem, 7vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.deck-landing__description {
+  max-width: 34rem;
+  font-size: 1.0625rem;
+}
+
+.deck-landing__season {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-2;
+  padding: $space-3;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-sm;
+  font-size: 0.875rem;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: $color-text-dim;
+  }
+}
+
+.deck-landing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  width: 100%;
+  margin-top: $space-2;
+
+  > * {
+    flex: 1 1 12rem;
+  }
+
+  @media (min-width: $bp-tablet) {
+    > * {
+      flex: 0 0 auto;
+    }
+  }
+}
+
+@keyframes deck-landing-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

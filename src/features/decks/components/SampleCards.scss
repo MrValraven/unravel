@@ -1,0 +1,87 @@
+@use "../../../styles/tokens" as *;
+
+.sample-cards {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.sample-cards__title {
+  color: $color-text-dim;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.sample-cards__list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: 0;
+  list-style: none;
+}
+
+.sample-cards__card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-4;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  background: $color-surface;
+
+  @include motion-safe {
+    animation: sample-card-in $duration-slow $ease-out both;
+
+    @for $index from 2 through 5 {
+      &:nth-child(#{$index}) {
+        animation-delay: ($index - 1) * 60ms;
+      }
+    }
+  }
+}
+
+.sample-cards__type {
+  color: $color-text-dim;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sample-cards__text {
+  color: $color-heading;
+  font-family: $font-card;
+  font-size: 1.0625rem;
+  line-height: 1.4;
+}
+
+.sample-cards__locked {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-3;
+  padding: $space-4;
+  border: 1px dashed $color-border-strong;
+  border-radius: $radius;
+
+  @include motion-safe {
+    animation: sample-card-in $duration $ease-out both;
+  }
+}
+
+.sample-cards__lock-icon {
+  color: $color-text-dim;
+}
+
+@keyframes sample-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}

@@ -1,0 +1,14 @@
+@use "../../styles/tokens" as *;
+
+.deck-picker__main {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  padding-top: $space-2;
+}
+
+.deck-picker__intro {
+  max-width: 34rem;
+  margin-bottom: -$space-3;
+  font-size: 1.0625rem;
+}

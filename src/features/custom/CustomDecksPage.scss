@@ -1,0 +1,94 @@
+@use "../../styles/tokens" as *;
+
+.custom-decks__main {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  padding-top: $space-2;
+  // Room for the status notice above the bottom edge.
+  padding-bottom: $space-8;
+}
+
+.custom-decks__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-4;
+}
+
+.custom-decks__lead {
+  max-width: 46ch;
+  color: $color-text;
+}
+
+.custom-decks__create {
+  width: 100%;
+
+  @media (min-width: $bp-tablet) {
+    width: auto;
+  }
+
+  &[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.custom-decks__limit-note {
+  max-width: 46ch;
+  color: $color-text-dim;
+  font-size: 0.9375rem;
+}
+
+.custom-decks__list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: 0;
+}
+
+.custom-decks__empty {
+  @include surface;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-7 $space-5;
+  text-align: center;
+  animation: custom-decks-fade-in $duration-slow $ease-out both;
+}
+
+.custom-decks__empty-mark {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  margin-bottom: $space-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-pill;
+  background:
+    radial-gradient(
+      circle,
+      color-mix(in srgb, var(--color-accent) 20%, transparent) 0%,
+      transparent 70%
+    ),
+    $color-surface;
+  color: $color-accent;
+}
+
+.custom-decks__empty-title {
+  font-family: $font-card;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.custom-decks__empty-body {
+  max-width: 34ch;
+}
+
+@keyframes custom-decks-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}

@@ -1,0 +1,41 @@
+@use "../../../styles/tokens" as *;
+
+.deck-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-2;
+  color: $color-text-dim;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.deck-badges__count {
+  margin-right: $space-1;
+}
+
+.deck-badges__pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px $space-2;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-pill;
+  color: $color-heading;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+// New and Beta keep the original tag colours with a deep navy ink. Seasonal
+// and the 18+ marker stay as the neutral outline above.
+.deck-badges__pill--new {
+  border-color: transparent;
+  background: $new;
+  color: $tag-ink;
+}
+
+.deck-badges__pill--beta {
+  border-color: transparent;
+  background: $beta;
+  color: $tag-ink;
+}

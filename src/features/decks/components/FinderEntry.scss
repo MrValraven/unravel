@@ -1,0 +1,59 @@
+@use "../../../styles/tokens" as *;
+
+.finder-entry {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: $space-3;
+  min-height: $tap-target;
+  padding: $space-4;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  background: $color-surface;
+  color: $color-text;
+  text-decoration: none;
+  transition:
+    background-color $duration-fast ease,
+    border-color $duration-fast ease,
+    transform $duration-fast $ease-out;
+
+  @media (hover: hover) {
+    &:hover {
+      background: $color-surface-hover;
+    }
+  }
+
+  &:active {
+    transform: scale(0.985);
+  }
+}
+
+.finder-entry__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-pill;
+  background: $color-accent;
+  color: $color-on-accent;
+}
+
+.finder-entry__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.finder-entry__title {
+  color: $color-heading;
+  font-weight: 600;
+}
+
+.finder-entry__text {
+  font-size: 0.875rem;
+}
+
+.finder-entry__chevron {
+  color: $color-text-dim;
+}

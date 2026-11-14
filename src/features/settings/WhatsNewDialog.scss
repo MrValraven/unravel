@@ -1,0 +1,50 @@
+@use "../../styles/tokens" as *;
+
+.whats-new {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.whats-new__release {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.whats-new__version {
+  font-size: 1rem;
+}
+
+.whats-new__date {
+  margin-top: -$space-2;
+  color: $color-text-dim;
+  font-size: 0.875rem;
+}
+
+.whats-new__items {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  margin-top: $space-1;
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    padding-left: $space-5;
+    color: $color-text;
+    font-size: 0.9375rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0.55em;
+      left: $space-1;
+      width: 7px;
+      height: 7px;
+      border-radius: $radius-pill;
+      background: $color-accent;
+    }
+  }
+}

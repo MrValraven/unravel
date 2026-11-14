@@ -1,0 +1,91 @@
+@use "../styles/tokens" as *;
+
+// Floats above the page at the bottom edge, clear of the phone's home bar.
+.update-banner {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: $z-banner;
+  display: flex;
+  justify-content: center;
+  padding: 0 $gutter max($gutter, env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+
+.update-banner__panel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "icon message dismiss"
+    "action action action";
+  align-items: center;
+  column-gap: $space-3;
+  row-gap: $space-2;
+  width: 100%;
+  max-width: 520px;
+  padding: $space-3 $space-2 $space-3 $space-4;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  background: $color-bg-elevated;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  color: $color-heading;
+  pointer-events: auto;
+
+  // Closed: slid below the edge and out of the accessibility tree once the
+  // slide finishes (visibility flips after the transition).
+  transform: translateY(calc(100% + #{$space-6}));
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform $duration $ease-in,
+    opacity $duration ease,
+    visibility 0s linear $duration;
+
+  .update-banner[data-state="open"] & {
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    transition:
+      transform $duration-slow $ease-out,
+      opacity $duration ease,
+      visibility 0s linear 0s;
+  }
+
+  @media (min-width: 480px) {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-areas: "icon message action dismiss";
+  }
+}
+
+.update-banner__icon {
+  grid-area: icon;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-pill;
+  background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  color: $color-accent;
+}
+
+.update-banner__message {
+  grid-area: message;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.update-banner__action {
+  grid-area: action;
+  margin-right: $space-2;
+
+  @media (min-width: 480px) {
+    margin-right: 0;
+    padding-inline: $space-4;
+    font-size: 0.9375rem;
+  }
+}
+
+.update-banner__dismiss {
+  grid-area: dismiss;
+}

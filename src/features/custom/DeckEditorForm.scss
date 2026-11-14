@@ -1,0 +1,241 @@
+@use "../../styles/tokens" as *;
+
+// The editor fills the screen, so the save bar rests at the bottom even for a short deck.
+.page.deck-editor {
+  // The save bar's height: top border, padding, the Save button (its 20px icon or text line
+  // plus padding and border, at least a tap target) and the home indicator inset.
+  --deck-editor-bar-height: calc(
+    1px + 2 * #{$space-3} +
+      max(#{$tap-target}, 2 * #{$space-3} + 2px + max(1.2rem, 20px)) +
+      env(safe-area-inset-bottom)
+  );
+  // Status notices float just above the save bar so Save stays visible and tappable.
+  --status-message-bottom: calc(var(--deck-editor-bar-height) + #{$space-3});
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-bottom: 0;
+}
+
+.deck-editor__main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.deck-editor__form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: $space-5;
+  padding-top: $space-1;
+}
+
+.deck-editor__intro {
+  max-width: 46ch;
+  margin-bottom: -$space-2;
+  color: $color-text;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+// ---- Deck title: naming the deck, set large in the card face ----
+
+.deck-editor__field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.deck-editor__label {
+  color: $color-text-dim;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.deck-editor__title-input {
+  width: 100%;
+  min-width: 0;
+  padding: $space-1 0 $space-2;
+  border: 0;
+  border-bottom: 2px solid $color-border-strong;
+  border-radius: 0;
+  background: none;
+  color: $color-heading;
+  font-family: $font-card;
+  font-size: clamp(1.5rem, 1rem + 2.5vw, 2rem);
+  line-height: 1.25;
+  transition: border-color $duration-fast ease;
+  scroll-margin-top: $space-8;
+
+  // Faint, so the example name reads as a hint.
+  &::placeholder {
+    color: $color-text-dim;
+    opacity: 0.5;
+  }
+
+  // The accent underline is the focus indicator for every input method.
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    border-bottom-color: $color-accent;
+  }
+
+  &[aria-invalid="true"] {
+    border-bottom-color: $color-accent;
+  }
+}
+
+.deck-editor__field-meta {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+  min-height: 1.25rem;
+  padding-top: $space-1;
+
+  .character-count {
+    margin-left: auto;
+  }
+}
+
+// ---- Cards ----
+
+.deck-editor__cards {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.deck-editor__cards-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.deck-editor__cards-title {
+  font-size: 1.25rem;
+}
+
+.deck-editor__card-count {
+  color: $color-text-dim;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.deck-editor__card-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  padding: 0;
+}
+
+// An empty card waiting to be written: a dashed outline in the same corners as the cards.
+.deck-editor__add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-3;
+  width: 100%;
+  min-height: 72px;
+  margin-top: $space-1;
+  padding: $space-3 $space-4;
+  border: 1.5px dashed $color-border-strong;
+  border-radius: $radius-lg;
+  background: none;
+  color: $color-heading;
+  font-size: 1rem;
+  font-weight: 600;
+  scroll-margin-bottom: 120px;
+  transition:
+    background-color $duration-fast ease,
+    border-color $duration-fast ease,
+    transform $duration-fast $ease-out;
+
+  @media (hover: hover) {
+    &:hover:not([aria-disabled="true"]) {
+      border-color: color-mix(in srgb, $color-accent 60%, transparent);
+      background: $color-surface-hover;
+    }
+  }
+
+  &:active:not([aria-disabled="true"]) {
+    transform: scale(0.99);
+  }
+
+  &[aria-disabled="true"] {
+    opacity: 0.55;
+    cursor: default;
+  }
+}
+
+.deck-editor__add-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-pill;
+  background: color-mix(in srgb, $color-accent 18%, transparent);
+  color: $color-accent;
+}
+
+.deck-editor__limit-note {
+  color: $color-text-dim;
+  font-size: 0.9375rem;
+  text-align: center;
+  animation: deck-editor-fade-in $duration $ease-out both;
+}
+
+// ---- Save bar ----
+
+// Sticky, so the bar stays in the page flow when the iOS keyboard opens.
+.deck-editor__footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-top: auto;
+  margin-inline: (-$gutter);
+  padding: $space-3 $gutter calc(#{$space-3} + env(safe-area-inset-bottom));
+  border-top: 1px solid $color-border;
+  background: color-mix(in srgb, $color-bg 88%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  @media (min-width: $bp-tablet) {
+    justify-content: flex-end;
+  }
+}
+
+.deck-editor__cancel {
+  flex-shrink: 0;
+  padding-inline: $space-3;
+
+  @media (min-width: $bp-tablet) {
+    padding-inline: $space-4;
+  }
+}
+
+.deck-editor__save {
+  flex: 1;
+  min-width: 0;
+  padding-inline: $space-4;
+  white-space: nowrap;
+
+  @media (min-width: $bp-tablet) {
+    flex: 0 0 auto;
+    padding-inline: $space-6;
+  }
+}
+
+@keyframes deck-editor-fade-in {
+  from {
+    opacity: 0;
+  }
+}

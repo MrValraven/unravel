@@ -1,0 +1,101 @@
+@use "../../styles/tokens" as *;
+
+.imported-deck__main {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  padding-top: $space-2;
+  padding-bottom: $space-8;
+}
+
+.imported-deck__summary {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  animation: imported-deck-in $duration-slow $ease-out both;
+}
+
+.imported-deck__eyebrow {
+  color: $color-accent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.imported-deck__title {
+  font-family: $font-card;
+  font-size: 2rem;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+.imported-deck__count {
+  color: $color-text-dim;
+}
+
+.imported-deck__actions {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  margin-top: $space-3;
+
+  > .button[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  @media (min-width: $bp-tablet) {
+    flex-direction: row;
+  }
+}
+
+.imported-deck__limit-note,
+.imported-deck__note {
+  max-width: 46ch;
+  color: $color-text-dim;
+  font-size: 0.9375rem;
+}
+
+.imported-deck__limit-note {
+  color: $color-heading;
+}
+
+.imported-deck__cards {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: 0;
+}
+
+.imported-deck__card {
+  @include surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  padding: $space-3 $space-4;
+  list-style: none;
+}
+
+.imported-deck__card-type {
+  color: $color-text-dim;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.imported-deck__card-text {
+  color: $color-heading;
+  font-family: $font-card;
+  font-size: 1.0625rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+@keyframes imported-deck-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}

@@ -1,0 +1,71 @@
+@use "../../styles/tokens" as *;
+
+$switch-width: 48px;
+$switch-height: 28px;
+$thumb-size: 22px;
+
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+  width: 100%;
+  min-height: $tap-target;
+  padding: $space-3 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+.switch-row__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.switch-row__label {
+  color: $color-heading;
+  font-weight: 600;
+}
+
+.switch-row__description {
+  color: $color-text-dim;
+  font-size: 0.875rem;
+}
+
+.switch-row__track {
+  position: relative;
+  flex-shrink: 0;
+  width: $switch-width;
+  height: $switch-height;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-pill;
+  background: $color-surface-hover;
+  transition:
+    background-color $duration-fast ease,
+    border-color $duration-fast ease;
+}
+
+.switch-row__thumb {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  width: $thumb-size;
+  height: $thumb-size;
+  border-radius: $radius-pill;
+  background: $color-text;
+  transform: translateY(-50%);
+  transition:
+    transform $duration $ease-out,
+    background-color $duration-fast ease;
+}
+
+.switch-row__track--on {
+  border-color: $color-accent;
+  background: $color-accent;
+
+  .switch-row__thumb {
+    background: $color-on-accent;
+    transform: translate($switch-width - $thumb-size - 6px, -50%);
+  }
+}

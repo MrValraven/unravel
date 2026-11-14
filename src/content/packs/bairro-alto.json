@@ -1,0 +1,365 @@
+{
+  "id": "bairro-alto",
+  "cards": [
+    {
+      "id": "bairro-alto-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Just by looking at me, what do you think are my hobbies?",
+        "pt": "Só de olhares para mim, quais achas que são os meus hobbies?"
+      }
+    },
+    {
+      "id": "bairro-alto-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's your spirit vegetable?",
+        "pt": "Qual é o teu legume-totem?"
+      }
+    },
+    {
+      "id": "bairro-alto-003",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What is one thing you think men should learn about women?",
+        "pt": "Que coisa achas que os homens deviam aprender sobre as mulheres?"
+      }
+    },
+    {
+      "id": "bairro-alto-004",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you had to make money in an unethical way how would you do it?",
+        "pt": "Se tivesses de ganhar dinheiro de forma pouco ética, como é que o farias?"
+      }
+    },
+    {
+      "id": "bairro-alto-005",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you could only eat one colour of food for the rest of your life, what color are you choosing?",
+        "pt": "Se só pudesses comer comida de uma cor para o resto da vida, que cor escolhias?"
+      }
+    },
+    {
+      "id": "bairro-alto-006",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which of the seven deadly sins do you relate to the most?",
+        "pt": "Com qual dos sete pecados mortais te identificas mais?"
+      }
+    },
+    {
+      "id": "bairro-alto-007",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What are the 3 best compliments you’ve ever received?",
+        "pt": "Quais são os 3 melhores elogios que já recebeste?"
+      }
+    },
+    {
+      "id": "bairro-alto-008",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What do you think is the best vowel, and then what is your favorite one?",
+        "pt": "Qual achas que é a melhor vogal, e qual é a tua preferida?"
+      }
+    },
+    {
+      "id": "bairro-alto-009",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which of the muppets do you identify with the most?",
+        "pt": "Com qual dos Marretas te identificas mais?"
+      }
+    },
+    {
+      "id": "bairro-alto-010",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If the police stormed in right now and arrested me, what would you think they’re arresting me for?",
+        "pt": "Se a polícia entrasse aqui de rompante e me prendesse, porque é que achavas que me estavam a prender?"
+      }
+    },
+    {
+      "id": "bairro-alto-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Are you more of a planner or are you more of a spontaneous, lets see where the day takes us type of a person?",
+        "pt": "És mais de planear tudo ou mais de “logo se vê onde o dia nos leva”?"
+      }
+    },
+    {
+      "id": "bairro-alto-012",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Outside of work, what is something that you’re working on right now?",
+        "pt": "Fora do trabalho, que projeto tens em mãos neste momento?"
+      }
+    },
+    {
+      "id": "bairro-alto-013",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's something you thought would be easy until you tried it?",
+        "pt": "Que coisa achavas que era fácil até experimentares?"
+      }
+    },
+    {
+      "id": "bairro-alto-014",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Tell me about the stereotypical person from your hometown",
+        "pt": "Fala-me da pessoa típica da tua terra"
+      }
+    },
+    {
+      "id": "bairro-alto-015",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Rank these carbs: Rice, pasta, bread, noodles, potatoes.",
+        "pt": "Ordena estes hidratos: arroz, massa, pão, noodles, batata."
+      }
+    },
+    {
+      "id": "bairro-alto-016",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you could have a lifetime supply of anything, what would it be?",
+        "pt": "Se pudesses ter uma coisa à borla para o resto da vida, o que é que escolhias?"
+      }
+    },
+    {
+      "id": "bairro-alto-017",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you were going to be a utensil, would you be a fork, spoon or a knife? Why? Think about the energy and use.",
+        "pt": "Se fosses um talher, eras garfo, colher ou faca? Porquê? Pensa na energia e na utilidade."
+      }
+    },
+    {
+      "id": "bairro-alto-018",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What is one outfit you could have thrown away a long time ago but you still keep in your closet? What does it mean to you?",
+        "pt": "Que peça de roupa já devias ter deitado fora há muito tempo mas continuas a guardar no armário? O que é que significa para ti?"
+      }
+    },
+    {
+      "id": "bairro-alto-019",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What traits or abilities do you possess that would help you survive a zombie apocalypse?",
+        "pt": "Que qualidades ou capacidades tens que te ajudariam a sobreviver a um apocalipse zombie?"
+      }
+    },
+    {
+      "id": "bairro-alto-020",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the weirdest thing about where you grew up?",
+        "pt": "Qual é a coisa mais estranha do sítio onde cresceste?"
+      }
+    },
+    {
+      "id": "bairro-alto-021",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's your take on people who clap when the plane lands?",
+        "pt": "O que é que achas das pessoas que batem palmas quando o avião aterra?"
+      }
+    },
+    {
+      "id": "bairro-alto-022",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Is it better to always be late or always be early?",
+        "pt": "É melhor chegar sempre tarde ou chegar sempre cedo?"
+      }
+    },
+    {
+      "id": "bairro-alto-023",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's one secret you've never told anyone?",
+        "pt": "Que segredo nunca contaste a ninguém?"
+      }
+    },
+    {
+      "id": "bairro-alto-024",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's something that you’re proud of that has nothing to do with your job?",
+        "pt": "De que é que te orgulhas que não tenha nada a ver com o teu trabalho?"
+      }
+    },
+    {
+      "id": "bairro-alto-025",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What has been the most chaotic situation that you've been at or caused?",
+        "pt": "Qual foi a situação mais caótica em que já estiveste ou que provocaste?"
+      }
+    },
+    {
+      "id": "bairro-alto-026",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What is your most toxic trait that everyone loves about you?",
+        "pt": "Qual é o teu traço mais tóxico que toda a gente adora em ti?"
+      }
+    },
+    {
+      "id": "bairro-alto-027",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What is the most interesting thing about people in your line of work?",
+        "pt": "Qual é a coisa mais interessante nas pessoas da tua área?"
+      }
+    },
+    {
+      "id": "bairro-alto-028",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Is there any liquor that you can't drink anymore? Tell the story",
+        "pt": "Há alguma bebida que já não consigas nem cheirar? Conta a história"
+      }
+    },
+    {
+      "id": "bairro-alto-029",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "You’re invited onto Shark Tank or Dragon’s Den. What do you pitch?",
+        "pt": "Convidaram-te para o Shark Tank ou o Dragon's Den. Que ideia apresentas?"
+      }
+    },
+    {
+      "id": "bairro-alto-030",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What do you own that you’re pretty sure that no one else in your group owns?",
+        "pt": "O que é que tens que, de certeza, mais ninguém do teu grupo tem?"
+      }
+    },
+    {
+      "id": "bairro-alto-031",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's a weird belief you still stand by to this day?",
+        "pt": "Que crença estranha continuas a defender até hoje?"
+      }
+    },
+    {
+      "id": "bairro-alto-032",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If your sex life was an ice cream flavour, which one would it be and why?",
+        "pt": "Se a tua vida sexual fosse um sabor de gelado, qual seria e porquê?"
+      }
+    },
+    {
+      "id": "bairro-alto-033",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What role would you play in a heist crew?",
+        "pt": "Num grupo de assaltantes a preparar um golpe, que papel era o teu?"
+      }
+    },
+    {
+      "id": "bairro-alto-034",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What is the story behind your Instagram profile picture?",
+        "pt": "Qual é a história por trás da tua foto de perfil do Instagram?"
+      }
+    },
+    {
+      "id": "bairro-alto-035",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If your love life was a movie, what would the title be?",
+        "pt": "Se a tua vida amorosa fosse um filme, qual seria o título?"
+      }
+    },
+    {
+      "id": "bairro-alto-036",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Who are your people in Lisbon?",
+        "pt": "Quem é a tua malta em Lisboa?"
+      }
+    },
+    {
+      "id": "bairro-alto-037",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's the most shocking thing someone has ever said to you during sex?",
+        "pt": "Qual foi a coisa mais chocante que alguém já te disse durante o sexo?"
+      }
+    },
+    {
+      "id": "bairro-alto-038",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If tonight was to go perfect for you, what would that look like? Imagine it, and then tell the story",
+        "pt": "Se esta noite corresse na perfeição para ti, como seria? Imagina-a e depois conta a história"
+      }
+    },
+    {
+      "id": "bairro-alto-039",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Who is the best person you've met this year?",
+        "pt": "Quem é a melhor pessoa que conheceste este ano?"
+      }
+    },
+    {
+      "id": "bairro-alto-040",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What is the thing that makes the relationship with your best friend feel special to you?",
+        "pt": "O que é que torna tão especial a tua relação com o teu melhor amigo ou a tua melhor amiga?"
+      }
+    }
+  ]
+}

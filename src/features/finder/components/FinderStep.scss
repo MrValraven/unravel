@@ -1,0 +1,85 @@
+@use "../../../styles/tokens" as *;
+
+.finder-step {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.finder-step__question {
+  font-family: $font-card;
+  font-size: clamp(1.75rem, 6vw, 2.25rem);
+  font-weight: 400;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.finder-step__choices {
+  display: grid;
+  gap: $space-3;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: $bp-tablet) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.finder-step__choice {
+  @include surface;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: $space-3;
+  width: 100%;
+  min-height: 64px;
+  padding: $space-3 $space-4;
+  color: $color-heading;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  text-align: left;
+  transition:
+    background-color $duration-fast ease,
+    border-color $duration-fast ease,
+    transform $duration-fast $ease-out;
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $color-border-strong;
+      background: $color-surface-hover;
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.finder-step__choice--selected {
+  border-color: $color-accent;
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+}
+
+.finder-step__choice-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: $radius-pill;
+  background: $color-surface-hover;
+  color: $color-accent;
+}
+
+.finder-step__check {
+  color: $color-accent;
+  animation: finder-check-in $duration $ease-out both;
+}
+
+@keyframes finder-check-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
