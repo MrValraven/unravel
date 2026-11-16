@@ -1,6 +1,6 @@
 # Unravel
 
-**The uncomplicated way of making new friends.**
+**Good questions for friends, dates and partners.**
 
 Unravel is a card game for people. Pick a deck, gather a few people and read the cards aloud. Every deck starts with easy questions and slowly goes deeper, so a table of strangers can turn into friends and two people on a date can end up knowing each other a little better.
 
@@ -10,7 +10,7 @@ Unravel is a frontend-only app. It has no backend, no accounts and no server cal
 
 ## Features
 
-- **18 decks** in three groups: Make Friends and Socialize, Dating and Romance, and Adults (18+). Four of them are seasonal.
+- **19 decks** in three groups: Make Friends and Socialize, Dating and Romance, and Adults (18+). Five of them are seasonal.
 - **Three levels in every deck.** Cards rise from light to deep. Players can start at level 1, 2 or 3.
 - **Three card types.** Questions for one player, challenges (some with a countdown timer) and cards for everyone.
 - **Game setup.** Add player names and the app tracks whose turn it is, shuffle inside each level (levels stay in rising order), or turn on table mode to lay the card out for landscape.
@@ -19,13 +19,15 @@ Unravel is a frontend-only app. It has no backend, no accounts and no server cal
 - **Favourites.** Save the cards you love. With five or more, they become a deck of their own.
 - **Custom decks.** Write your own questions and challenges, then share the deck with a link.
 - **Deck finder.** A short quiz about who you are playing with and the mood you want, then a ranked list of decks.
+- **End-of-deck recap.** The game in one line (deck, level, cards and minutes) ready to share, plus a suggestion for the next deck.
 - **Card of the day.** One easy card, the same for everyone, that changes at midnight.
+- **Daily reminder.** On an installed app in Chrome for Android, a switch in Settings sends the card of the day as a notification about once a day.
 - **Share a card as an image.** A 1080 by 1920 picture of the card for stories and chats.
 - **English and European Portuguese.** English is the default. Portuguese (pt-PT) is used only when a player picks it in Settings.
-- **Dim mode and text size.** A softer low-light theme and three text sizes.
-- **Seasonal decks.** Pride, Santos Populares, New Year and Valentine's Day appear in their own time of year.
+- **Three themes and text size.** Night (the navy default), Dim (warmer and softer for low light) and Day (a light theme for daylight and outdoor play), plus three text sizes.
+- **Seasonal decks.** Pride, Santos Populares, Halloween, New Year and Valentine's Day appear in their own time of year.
 - **Deck pages for search.** Every deck has its own page with a title, description and link preview image.
-- **Installable and offline.** A progressive web app that works without a connection once it is installed.
+- **Installable and offline.** A progressive web app that works without a connection once it is installed. An install card on Home and at the end of a deck offers to add it to the home screen, and a small notice says when you are offline.
 - **Your nights.** A local stats panel with decks started and finished, cards seen and time played.
 
 ## Privacy
@@ -46,7 +48,7 @@ Unravel is a frontend-only app. It has no backend, no accounts and no server cal
 | Styling    | [Sass](https://sass-lang.com/) per component, shared tokens in `src/styles/_tokens.scss` |
 | Icons      | [react-icons](https://react-icons.github.io/react-icons/) 5.7 (Feather first)            |
 | Fonts      | Young Serif and Figtree Variable, bundled with Fontsource                                |
-| PWA        | [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) 2 (Workbox)                         |
+| PWA        | [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) 2, `injectManifest` with Workbox 7  |
 | Unit       | [Vitest](https://vitest.dev/) 5 with Testing Library and jsdom                           |
 | End to end | [Playwright](https://playwright.dev/) 1.61.1 with axe-core                               |
 | Hosting    | [Vercel](https://vercel.com/)                                                            |
@@ -71,7 +73,7 @@ To test installing the app on a phone over your local network, run `npm run dev:
 | `npm run dev`            | Starts the Vite dev server over plain http, reachable on your network     |
 | `npm run dev:https`      | Starts the dev server with a self-signed HTTPS certificate                |
 | `npm run build`          | Type-checks, then builds to `dist/` (the postbuild step runs right after) |
-| `npm run postbuild`      | Prerenders deck pages, `sitemap.xml` and `404.html` into `dist/`          |
+| `npm run postbuild`      | Prerenders deck and site pages, JSON-LD, `sitemap.xml` and `404.html`     |
 | `npm run preview`        | Serves the production build locally                                       |
 | `npm run lint`           | Lints with ESLint                                                         |
 | `npm run typecheck`      | Type-checks the app and the scripts                                       |
@@ -83,12 +85,14 @@ To test installing the app on a phone over your local network, run `npm run dev:
 | `npm run content:export` | Writes every deck pack to CSV in `content-export/`                        |
 | `npm run content:import` | Reads edited CSV files in `content-export/` back into deck packs          |
 | `npm run og:images`      | Renders the 1200 by 630 link preview images into `public/og/`             |
+| `npm run pwa:images`     | Renders install screenshots, iOS splash screens and shortcut icons        |
 
 ## Project structure
 
 ```
 src/
   main.tsx, App.tsx          Bootstrap and lazy-loaded routes
+  sw.ts                      Service worker (precache, app shell, daily reminder)
   content/
     types.ts                 Card, Deck and DeckMeta types
     decks.ts                 Registry of live decks, categories and season logic
@@ -100,9 +104,11 @@ src/
   storage/                   All localStorage access, one module per kind of data
   components/                Shared UI: Dialog, PageHeader, DeckIcon, UpdateBanner
   hooks/                     useHaptics, useDocumentTitle
-  styles/                    Tokens and global theme
+  styles/                    Tokens and the three themes (see DESIGN.md)
   features/
-    home/                    Home page, card of the day, resume card
+    home/                    Home page: hero, card of the day, install card and the
+                             landing sections (how it works, deck shelf, phone and
+                             privacy, FAQ)
     intro/                   "What is Unravel?" page
     decks/                   Deck picker, deck pages, install prompt
     finder/                  Deck finder
@@ -110,7 +116,7 @@ src/
     custom/                  Custom deck list, editor, import and share codec
     settings/                Settings, stats panel, What's new
     share/                   Share a card as an image
-scripts/                     CSV tools, link preview images, deck prerender
+scripts/                     CSV tools, link preview and install images, prerender
 content-drafts/              Unreleased draft packs, kept out of the bundle
 public/                      Icons, robots.txt and link preview images (og/)
 e2e/                         Playwright specs
@@ -165,19 +171,20 @@ Card rules:
 
 Import the pack in `src/content/decks.ts` and add a `buildDeck` call to the `decks` array. The order in the array is the order in the picker.
 
-| Field         | Meaning                                                                         |
-| ------------- | ------------------------------------------------------------------------------- |
-| `id`          | Same slug as the pack file                                                      |
-| `title`       | `{ en, pt }`                                                                    |
-| `description` | `{ en, pt }`                                                                    |
-| `category`    | `friends`, `dating` or `adults`                                                 |
-| `tag`         | `""`, `new`, `beta` or `seasonal`                                               |
-| `isAdult`     | `true` asks the player to confirm they are 18 or older                          |
-| `icon`        | One of the `DeckIconName` values in `types.ts`                                  |
-| `accent`      | Hex colour for the deck band, icon and share image                              |
-| `audiences`   | Any of `new-people`, `friends`, `date`, `partner`, `group` (used by the finder) |
-| `moods`       | Any of `light`, `deep`, `playful`, `spicy` (used by the finder)                 |
-| `season`      | Optional `{ start, end }` window, see Seasonal decks below                      |
+| Field         | Meaning                                                                              |
+| ------------- | ------------------------------------------------------------------------------------ |
+| `id`          | Same slug as the pack file                                                           |
+| `title`       | `{ en, pt }`                                                                         |
+| `tagline`     | One line, about 40 characters, `{ en, pt }`, shown on deck tiles; lint caps it at 44 |
+| `description` | `{ en, pt }`                                                                         |
+| `category`    | `friends`, `dating` or `adults`                                                      |
+| `tag`         | `""`, `new`, `beta` or `seasonal`                                                    |
+| `isAdult`     | `true` asks the player to confirm they are 18 or older                               |
+| `icon`        | One of the `DeckIconName` values in `types.ts`                                       |
+| `accent`      | Hex colour for the deck band, icon and share image                                   |
+| `audiences`   | Any of `new-people`, `friends`, `date`, `partner`, `group` (used by the finder)      |
+| `moods`       | Any of `light`, `deep`, `playful`, `spicy` (used by the finder)                      |
+| `season`      | Optional `{ start, end }` window, see Seasonal decks below                           |
 
 ### 3. Content lint
 
@@ -209,6 +216,7 @@ A deck with a `season` window shows up in the picker, the finder, the home page 
 | ---------------- | ------------------ |
 | Pride Month      | `06-01` to `06-30` |
 | Santos Populares | `06-01` to `06-30` |
+| Halloween        | `10-01` to `12-01` |
 | New Year         | `12-26` to `01-07` |
 | Valentine's Day  | `02-01` to `02-14` |
 
@@ -226,9 +234,21 @@ Unravel is deployed on Vercel. `vercel.json` sets:
   - `font-src data:` for any font file small enough that Vite inlines it as a data URL.
 - Long-lived immutable caching for `/assets/`, and `no-cache` for `/`, `/index.html` and `/sw.js`, so new versions reach players quickly.
 
-After `vite build`, the `postbuild` step (`scripts/prerender-decks.ts`) writes a page for every deck at `dist/decks/<id>` with its own title, description, canonical URL, Open Graph and Twitter tags and link preview image. 18+ decks are marked `noindex` and show no sample cards. The step also writes `dist/sitemap.xml` and a `dist/404.html` copy of the app shell.
+After `vite build`, the `postbuild` step (`scripts/prerender-decks.ts`) writes a page for every deck at `dist/decks/<id>` with its own title, description, canonical URL, Open Graph and Twitter tags and link preview image. 18+ decks are marked `noindex` and show no sample cards. Each deck page also carries JSON-LD (a Game plus its BreadcrumbList). The same step prerenders `/decks` (with an ItemList), `/finder` and `/about`, adds WebSite and FAQPage JSON-LD to the home page, and writes `dist/sitemap.xml` and a `dist/404.html` copy of the app shell.
+
+The service worker is `src/sw.ts`, built by vite-plugin-pwa's `injectManifest` strategy with `workbox-precaching` and `workbox-routing`. It precaches the app, serves the app shell for navigations and, on installed Chromium apps, wakes about once a day through Periodic Background Sync to show the card of the day as a notification. Tapping it opens `/#today`.
 
 The service worker uses a prompt update flow. The app checks for a new version once an hour while it is open. When one is ready, a banner says "A new version of Unravel is ready", and the app updates when the player picks "Update now".
+
+### Install images
+
+`npm run pwa:images` renders the images the web app manifest and `index.html` point at, with the Chromium that Playwright installed:
+
+- `public/screenshots/<page>-<form>.png`: install dialog screenshots of Home, the deck list and play, narrow (1080 by 2340) and wide (1920 by 1080).
+- `public/splash/<w>x<h>.png`: iOS launch screens, navy with the logo centred. The matching `apple-touch-startup-image` tags are rewritten in `index.html`.
+- `public/shortcuts/<name>.png`: 96 by 96 icons for the manifest shortcuts.
+
+Pass `splash`, `shortcuts` or `screenshots` to render one set (`npm run pwa:images -- splash`). Screenshots need the app running: start `npx vite --port 5405` first, or pass `--base-url=<address>`. Run it again after a visible UI change and commit the PNGs.
 
 ## Testing
 

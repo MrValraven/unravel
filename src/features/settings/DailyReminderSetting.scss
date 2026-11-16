@@ -1,0 +1,16 @@
+@use "../../styles/tokens" as *;
+
+.daily-reminder__problem {
+  margin-bottom: $space-3;
+  padding: $space-3 $space-4;
+  border: 1px solid var(--color-border-strong);
+  border-radius: $radius-sm;
+  background: var(--color-surface);
+  color: var(--color-heading);
+  font-size: 0.875rem;
+  line-height: 1.45;
+
+  &[hidden] {
+    display: none;
+  }
+}

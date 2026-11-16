@@ -11,6 +11,8 @@ export interface SegmentedOption<Value extends string | number> {
 interface SegmentedControlProps<Value extends string | number> {
   /** Id of the visible label that names the group. */
   labelledBy: string;
+  /** Id of a line that explains the choices, when there is one. */
+  describedBy?: string;
   options: SegmentedOption<Value>[];
   value: Value;
   onChange: (value: Value) => void;
@@ -19,6 +21,7 @@ interface SegmentedControlProps<Value extends string | number> {
 /** A row of toggle buttons with a highlight that slides to the selected one. */
 export const SegmentedControl = <Value extends string | number>({
   labelledBy,
+  describedBy,
   options,
   value,
   onChange,
@@ -37,6 +40,7 @@ export const SegmentedControl = <Value extends string | number>({
       className="segmented"
       role="group"
       aria-labelledby={labelledBy}
+      aria-describedby={describedBy}
       style={trackStyle}
     >
       <span className="segmented__highlight" aria-hidden="true" />

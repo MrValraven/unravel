@@ -22,6 +22,11 @@ const en = {
     createDeck: "Create a deck",
     manageDecks: "Manage your decks",
   },
+  makeOwnDeck: {
+    title: "Make your own deck",
+    body: "Write your own cards and share them with a link, or star {count} cards while you play for a favourites deck.",
+    action: "Create a deck",
+  },
   deckCard: {
     cardCount: { one: "{count} card", other: "{count} cards" },
     adultsOnly: "18+",
@@ -63,6 +68,9 @@ const en = {
       "In season {startDay} {startMonth} to {endDay} {endMonth}.",
     seasonNote:
       "Outside those dates it leaves the deck list, and you can still play it from this page.",
+    breadcrumbLabel: "Breadcrumb",
+    breadcrumbDecks: "Decks",
+    relatedTitle: "Related decks",
   },
 };
 
@@ -90,6 +98,11 @@ export const deckCopy = defineCopy<typeof en>({
       },
       createDeck: "Criar um baralho",
       manageDecks: "Gerir os teus baralhos",
+    },
+    makeOwnDeck: {
+      title: "Cria o teu baralho",
+      body: "Escreve as tuas próprias cartas e partilha-as com uma ligação, ou marca {count} cartas com estrela enquanto jogas para teres um baralho de favoritas.",
+      action: "Criar um baralho",
     },
     deckCard: {
       cardCount: { one: "{count} carta", other: "{count} cartas" },
@@ -132,6 +145,9 @@ export const deckCopy = defineCopy<typeof en>({
         "Disponível de {startDay} de {startMonth} a {endDay} de {endMonth}.",
       seasonNote:
         "Fora dessas datas sai da lista de baralhos, e podes jogá-lo a partir desta página.",
+      breadcrumbLabel: "Caminho de navegação",
+      breadcrumbDecks: "Baralhos",
+      relatedTitle: "Baralhos parecidos",
     },
   },
 });

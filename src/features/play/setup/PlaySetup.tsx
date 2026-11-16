@@ -1,13 +1,14 @@
 import { useState, type CSSProperties, type FormEvent } from "react";
-import { FiInfo, FiPlay, FiZap } from "react-icons/fi";
+import { FiInfo, FiPlay } from "react-icons/fi";
 import { DeckIcon } from "../../../components/DeckIcon";
 import { PageHeader } from "../../../components/PageHeader";
 import type { Deck } from "../../../content/types";
 import { formatCopy, localize, pluralize } from "../../../i18n/localize";
 import { useLocale } from "../../../i18n/LocaleContext";
 import { useCopy } from "../../../i18n/useCopy";
-import type { PlayOptions } from "../../../storage/progress";
+import { useProgress, type PlayOptions } from "../../../storage/progress";
 import { playCopy } from "../copy";
+import { flowCopy } from "../flowCopy";
 import {
   countCardsFromLevel,
   defaultPlayOptions,
@@ -18,25 +19,30 @@ import { SetupSwitch } from "./SetupSwitch";
 import { StartLevelPicker } from "./StartLevelPicker";
 import { useFocusOnMount } from "./useFocusOnMount";
 import { useOtherSavedGame } from "./useOtherSavedGame";
+import { useStickyFooterHeight } from "./useStickyFooterHeight";
 import "./PlaySetup.scss";
 
 interface PlaySetupProps {
   deck: Deck;
-  /** Options to show again when the player comes back from the check-in. */
+  /** The running game's or the last-used options; the defaults when missing. */
   initialOptions?: PlayOptions;
   onStart: (options: PlayOptions) => void;
 }
 
-/** Optional names, start level, shuffle and table mode, with a quick start that keeps the defaults. */
+/** Game options: optional names, start level, shuffle and table mode. Starting saves them for next time. */
 export const PlaySetup = ({
   deck,
   initialOptions,
   onStart,
 }: PlaySetupProps) => {
   const copy = useCopy(playCopy);
+  const flow = useCopy(flowCopy).setup;
   const locale = useLocale();
   const otherSavedGame = useOtherSavedGame(deck.id);
+  const savedProgress = useProgress();
+  const hasSavedGameOfThisDeck = savedProgress?.deckId === deck.id;
   const titleRef = useFocusOnMount<HTMLHeadingElement>();
+  const actionsRef = useStickyFooterHeight<HTMLDivElement>();
   const [options, setOptions] = useState<PlayOptions>(
     initialOptions ?? defaultPlayOptions
   );
@@ -62,10 +68,11 @@ export const PlaySetup = ({
         <span className="play-setup__icon" aria-hidden="true">
           <DeckIcon name={deck.icon} size={30} />
         </span>
+        <p className="play-setup__eyebrow">{flow.eyebrow}</p>
         <h1 ref={titleRef} className="play-setup__title" tabIndex={-1}>
           {localize(deck.title, locale)}
         </h1>
-        <p className="play-setup__intro">{copy.setup.intro}</p>
+        <p className="play-setup__intro">{flow.intro}</p>
         <p className="play-setup__count">
           {pluralize(deck.cards.length, copy.setup.cardCount)}
         </p>
@@ -85,6 +92,12 @@ export const PlaySetup = ({
                 deck: otherSavedGame.deckTitle,
               })
             : copy.setup.replacesSavedGameUntitled}
+        </p>
+      )}
+      {hasSavedGameOfThisDeck && deck.cards.length > 0 && (
+        <p className="play-setup__note">
+          <FiInfo aria-hidden="true" size={18} />
+          {flow.restartsSavedGame}
         </p>
       )}
 
@@ -123,7 +136,7 @@ export const PlaySetup = ({
             />
           </div>
         </section>
-        <div className="play-setup__actions">
+        <div ref={actionsRef} className="play-setup__actions">
           <button
             type="submit"
             className="button button--primary"
@@ -131,15 +144,6 @@ export const PlaySetup = ({
           >
             <FiPlay aria-hidden="true" size={20} />
             {copy.setup.startDeck}
-          </button>
-          <button
-            type="button"
-            className="button button--secondary"
-            disabled={deck.cards.length === 0}
-            onClick={() => onStart(defaultPlayOptions)}
-          >
-            <FiZap aria-hidden="true" size={20} />
-            {copy.setup.quickStart}
           </button>
         </div>
       </form>

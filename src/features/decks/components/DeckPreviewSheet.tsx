@@ -1,13 +1,16 @@
 import { useRef, type CSSProperties } from "react";
 import { Link } from "react-router";
-import { FiExternalLink, FiPlay } from "react-icons/fi";
+import { FiArrowRight, FiInfo, FiPlay, FiSliders } from "react-icons/fi";
 import { AgeGateDialog } from "../../../components/AgeGateDialog";
 import { DeckIcon } from "../../../components/DeckIcon";
 import { Dialog } from "../../../components/Dialog";
 import type { Deck } from "../../../content/types";
-import { localize } from "../../../i18n/localize";
+import { formatCopy, localize } from "../../../i18n/localize";
 import { useLocale } from "../../../i18n/LocaleContext";
 import { useCopy } from "../../../i18n/useCopy";
+import { playCopy } from "../../play/copy";
+import { flowCopy } from "../../play/flowCopy";
+import { useOtherSavedGame } from "../../play/setup/useOtherSavedGame";
 import { deckCopy } from "../copy";
 import { useDeckStart } from "../useDeckStart";
 import { DeckBadges } from "./DeckBadges";
@@ -26,7 +29,11 @@ interface DeckPreviewSheetProps {
   hasDeckPage: boolean;
 }
 
-/** Bottom sheet with a deck's length, level mix and a few sample cards before starting. */
+/**
+ * Bottom sheet with a deck's length, level mix and a few sample cards. Start
+ * goes straight into play with the last-used options; Game options is the
+ * quiet way to change them first.
+ */
 export const DeckPreviewSheet = ({
   deck,
   isOpen,
@@ -34,9 +41,14 @@ export const DeckPreviewSheet = ({
   hasDeckPage,
 }: DeckPreviewSheetProps) => {
   const copy = useCopy(deckCopy);
+  const flow = useCopy(flowCopy).preview;
+  const setupCopy = useCopy(playCopy).setup;
   const locale = useLocale();
   const startButtonRef = useRef<HTMLButtonElement>(null);
-  const { startDeck, runAfterAgeGate, ageGateProps } = useDeckStart();
+  const { startDeck, openGameOptions, runAfterAgeGate, ageGateProps } =
+    useDeckStart();
+  // Starting replaces the one saved game, and no setup screen warns any more.
+  const otherSavedGame = useOtherSavedGame(deck?.id ?? "");
 
   if (!deck) return null;
 
@@ -54,15 +66,27 @@ export const DeckPreviewSheet = ({
         initialFocusRef={canStart ? startButtonRef : undefined}
         footer={
           <>
-            {hasDeckPage && (
-              <Link
-                to={`/decks/${encodeURIComponent(deck.id)}`}
-                className="button button--secondary"
+            <div className="deck-preview__more">
+              <button
+                type="button"
+                className="button button--quiet"
+                disabled={!canStart}
+                onClick={() => openGameOptions(deck)}
               >
-                <FiExternalLink aria-hidden="true" size={18} />
-                {copy.preview.openDeckPage}
-              </Link>
-            )}
+                <FiSliders aria-hidden="true" size={18} />
+                {flow.gameOptions}
+              </button>
+              {hasDeckPage && (
+                <Link
+                  to={`/decks/${encodeURIComponent(deck.id)}`}
+                  viewTransition
+                  className="button button--quiet"
+                >
+                  {copy.preview.openDeckPage}
+                  <FiArrowRight aria-hidden="true" size={18} />
+                </Link>
+              )}
+            </div>
             <button
               ref={startButtonRef}
               type="button"
@@ -89,6 +113,16 @@ export const DeckPreviewSheet = ({
             sampleCount={PREVIEW_SAMPLE_COUNT}
             onRevealRequest={() => runAfterAgeGate(deck, () => undefined)}
           />
+          {canStart && otherSavedGame.kind === "saved" && (
+            <p className="deck-preview__note">
+              <FiInfo aria-hidden="true" size={18} />
+              {otherSavedGame.deckTitle
+                ? formatCopy(setupCopy.replacesSavedGame, {
+                    deck: otherSavedGame.deckTitle,
+                  })
+                : setupCopy.replacesSavedGameUntitled}
+            </p>
+          )}
         </div>
       </Dialog>
       <AgeGateDialog {...ageGateProps} />

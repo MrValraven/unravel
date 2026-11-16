@@ -34,6 +34,8 @@ const draftDeckIds = [
 
 const allCards: Card[] = decks.flatMap((deck) => deck.cards);
 const emDash = "\u2014";
+/** Taglines sit on one line of a deck tile, so they stay short. */
+const TAGLINE_MAX_LENGTH = 44;
 
 const findRepeated = (values: string[]): string[] => {
   const seen = new Set<string>();
@@ -99,11 +101,36 @@ describe("deck registry", () => {
     }
   });
 
-  it("keeps em dashes out of deck and category text", () => {
+  it.each(locales)("gives every deck a short %s tagline", (locale) => {
+    for (const deck of decks) {
+      const tagline = deck.tagline[locale];
+      expect(tagline.trim(), `${deck.id} tagline (${locale})`).not.toBe("");
+      expect(tagline, `${deck.id} tagline (${locale})`).toBe(tagline.trim());
+      expect(
+        tagline.length,
+        `${deck.id} tagline (${locale}) is ${tagline.length} characters, the cap is ${TAGLINE_MAX_LENGTH}`
+      ).toBeLessThanOrEqual(TAGLINE_MAX_LENGTH);
+      expect(
+        tagline.endsWith("."),
+        `${deck.id} tagline (${locale}) ends with a full stop`
+      ).toBe(false);
+    }
+  });
+
+  it("keeps taglines different from each other", () => {
+    for (const locale of locales) {
+      expect(
+        findRepeated(decks.map((deck) => normalizeText(deck.tagline[locale])))
+      ).toEqual([]);
+    }
+  });
+
+  it("keeps em dashes and double hyphens out of deck and category text", () => {
     const deckTexts = decks.flatMap((deck) =>
       locales.flatMap((locale) => [
         deck.title[locale],
         deck.description[locale],
+        deck.tagline[locale],
       ])
     );
     const categoryTexts = deckCategories.flatMap((category) =>
@@ -113,7 +140,9 @@ describe("deck registry", () => {
       ])
     );
     expect(
-      [...deckTexts, ...categoryTexts].filter((text) => text.includes(emDash))
+      [...deckTexts, ...categoryTexts].filter(
+        (text) => text.includes(emDash) || text.includes("--")
+      )
     ).toEqual([]);
   });
 });
@@ -210,5 +239,85 @@ describe("deck cards", () => {
       locales.some((locale) => card.text[locale].includes(emDash))
     );
     expect(withEmDash.map((card) => card.id)).toEqual([]);
+  });
+});
+
+describe("halloween pack", () => {
+  const halloweenCards =
+    decks.find((deck) => deck.id === "halloween")?.cards ?? [];
+  const countWhere = (matches: (card: Card) => boolean) =>
+    halloweenCards.filter(matches).length;
+
+  it("numbers 40 cards from halloween-001 to halloween-040 in level order", () => {
+    expect(halloweenCards.map((card) => card.id)).toEqual(
+      Array.from(
+        { length: 40 },
+        (_, index) => `halloween-${String(index + 1).padStart(3, "0")}`
+      )
+    );
+    expect(halloweenCards.map((card) => card.level)).toEqual([
+      ...Array<number>(16).fill(1),
+      ...Array<number>(14).fill(2),
+      ...Array<number>(10).fill(3),
+    ]);
+  });
+
+  it("mixes 26 questions, 8 timed challenges and 6 everyone rounds", () => {
+    expect(countWhere((card) => card.type === "question")).toBe(26);
+    expect(
+      countWhere(
+        (card) => card.type === "challenge" && card.timerSeconds !== undefined
+      )
+    ).toBe(8);
+    expect(countWhere((card) => card.type === "everyone")).toBe(6);
+    expect(
+      countWhere((card) => card.level === 3 && card.type !== "question")
+    ).toBe(0);
+  });
+
+  it("opens with a short level 1 question for previews", () => {
+    expect(halloweenCards[0]).toMatchObject({ type: "question", level: 1 });
+    expect(halloweenCards[0]?.text.en.length ?? 999).toBeLessThanOrEqual(100);
+  });
+
+  it("covers the traditions and folklore the spec names at level 2", () => {
+    const levelTwoText = halloweenCards
+      .filter((card) => card.level === 2)
+      .map((card) => card.text.en)
+      .join(" ");
+    for (const topic of [
+      /Pão-por-Deus/,
+      /magusto/i,
+      /Día de (los )?Muertos|Day of the Dead/,
+      /Obon/,
+      /barmbrack/i,
+      /lobisomem/i,
+      /Santa Compaña/,
+      /moura/i,
+      /Sintra/,
+    ]) {
+      expect(levelTwoText, String(topic)).toMatch(topic);
+    }
+  });
+
+  it("keeps clichés, misreported facts, harsh level 3 wording and Brazilian forms out", () => {
+    const bannedEnglish = [
+      /favou?rite (candy|sweets?|horror (film|movie))/i,
+      /vampires? (or|vs\.?|versus) werewol/i,
+      /zombie/i,
+      /ouija/i,
+      /candy corn/i,
+      /^do you believe in ghosts\??$/i,
+      /^what('s| is) your biggest fear\??$/i,
+      /1755/,
+      /templar/i,
+    ];
+    const flagged = halloweenCards.filter(
+      (card) =>
+        bannedEnglish.some((pattern) => pattern.test(card.text.en)) ||
+        /\bvocê/i.test(card.text.pt) ||
+        (card.level === 3 && /\bworst\b|trauma/i.test(card.text.en))
+    );
+    expect(flagged.map((card) => card.id)).toEqual([]);
   });
 });

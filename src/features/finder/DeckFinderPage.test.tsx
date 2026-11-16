@@ -24,7 +24,7 @@ describe("DeckFinderPage", () => {
     localStorage.clear();
     // Outside every seasonal window, so only the year-round decks rank.
     vi.useFakeTimers({ toFake: ["Date"] });
-    vi.setSystemTime(new Date("2026-11-14T12:00:00"));
+    vi.setSystemTime(new Date("2026-09-15T12:00:00"));
   });
   afterEach(() => vi.useRealTimers());
 

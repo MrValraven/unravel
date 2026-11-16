@@ -1,4 +1,4 @@
-import type { CardType } from "../../../content/types";
+import type { CardType, IntensityLevel } from "../../../content/types";
 import { formatCopy } from "../../../i18n/localize";
 import type { TurnInfo } from "../engine/selectors";
 
@@ -15,6 +15,34 @@ export const getCardBadgeLabel = (
   if (cardType === "challenge") return copy.challenge;
   if (cardType === "everyone") return copy.everyone;
   return undefined;
+};
+
+interface TypeCopy extends BadgeCopy {
+  question: string;
+}
+
+/** The chip label every card wears: question, challenge or everyone. */
+export const getCardTypeLabel = (cardType: CardType, copy: TypeCopy): string =>
+  getCardBadgeLabel(cardType, copy) ?? copy.question;
+
+interface LevelTitle {
+  title: string;
+}
+
+interface LevelsCopy {
+  warm: LevelTitle;
+  deeper: LevelTitle;
+  allIn: LevelTitle;
+}
+
+/** The level names from game setup: Warm, Deeper and All in. */
+export const getLevelLabel = (
+  level: IntensityLevel,
+  levels: LevelsCopy
+): string => {
+  if (level === 3) return levels.allIn.title;
+  if (level === 2) return levels.deeper.title;
+  return levels.warm.title;
 };
 
 interface TurnCopy {

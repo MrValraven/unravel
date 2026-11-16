@@ -36,11 +36,9 @@ $home-width: 1040px;
 }
 
 .home__title {
-  font-size: clamp(52px, 13vw, 104px);
-  font-weight: 700;
+  font-size: clamp(64px, 19vw, 128px);
+  font-weight: 400;
   line-height: 1;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
 }
 
 .home__tagline {
@@ -87,10 +85,12 @@ $home-width: 1040px;
   margin-top: $space-2;
 }
 
-.home__art img {
-  width: min(400px, 100%);
-  height: auto;
-  margin-inline: auto;
+.home__art {
+  width: 100%;
+}
+
+.home__language {
+  margin-top: -$space-2;
 }
 
 .home__today {
@@ -103,33 +103,29 @@ $home-width: 1040px;
   }
 }
 
-.home__footer {
-  @include page-gutter;
-  padding-top: $space-2;
-  padding-bottom: max($space-4, env(safe-area-inset-bottom));
-  color: $color-text-dim;
-  font-size: 0.875rem;
-  text-align: center;
+// /#today lands with a little room above the card.
+.home__today .daily-card {
+  scroll-margin-top: max($space-4, env(safe-area-inset-top));
+}
 
-  a {
-    display: inline-block;
-    padding-block: $space-3;
-    color: $color-text;
-    font-weight: 600;
+// Under the card of the day and as wide as it; collapses when the nudge is hidden.
+.home__install {
+  width: 100%;
+  max-width: 40rem;
+  margin-inline: auto;
+
+  &:empty {
+    display: none;
   }
 }
 
-.home__heart {
-  display: inline-block;
-  vertical-align: -0.15em;
-  color: $color-accent;
-  fill: currentColor;
+.home__footer {
+  margin-top: $space-4;
 }
 
 // Staggered rise-in for the first paint.
 @include motion-safe {
   .home__copy > *,
-  .home__art,
   .home__today {
     animation: home-rise $duration-slow $ease-out both;
   }
@@ -142,8 +138,7 @@ $home-width: 1040px;
     animation-delay: 120ms;
   }
 
-  .home__deck-count,
-  .home__art {
+  .home__deck-count {
     animation-delay: 180ms;
   }
 
@@ -174,6 +169,11 @@ $home-width: 1040px;
   .home__copy {
     flex: 1 1 0;
     align-items: flex-start;
+    min-width: 0;
+  }
+
+  .home__title {
+    font-size: clamp(88px, 9.6vw, 128px);
   }
 
   .home__tagline {
@@ -186,9 +186,5 @@ $home-width: 1040px;
 
   .home__art {
     flex: 1 1 0;
-
-    img {
-      width: min(460px, 100%);
-    }
   }
 }

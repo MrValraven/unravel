@@ -7,7 +7,6 @@ test.describe("favourites", () => {
   }) => {
     await seedStorage(page);
     await page.goto("/play/unravel");
-    await page.getByRole("button", { name: "Quick start" }).click();
 
     const starButton = page.getByRole("button", {
       name: "Save card to favourites",
@@ -30,7 +29,6 @@ test.describe("favourites", () => {
   }) => {
     await seedStorage(page, { extra: { favourites: unravelCardIds.slice(1) } });
     await page.goto("/play/unravel");
-    await page.getByRole("button", { name: "Quick start" }).click();
 
     const starButton = page.getByRole("button", {
       name: "Save card to favourites",

@@ -2,9 +2,10 @@ import { PageHeader } from "../../components/PageHeader";
 import type { Locale } from "../../content/types";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { useCopy } from "../../i18n/useCopy";
-import { useSettings } from "../../storage/settings";
+import { themes, useSettings, type Theme } from "../../storage/settings";
 import { AboutSection } from "./AboutSection";
 import { settingsCopy } from "./copy";
+import { DailyReminderSetting } from "./DailyReminderSetting";
 import { SegmentedControl, type SegmentedOption } from "./SegmentedControl";
 import { StatsPanel } from "./StatsPanel";
 import { SwitchRow } from "./SwitchRow";
@@ -24,6 +25,11 @@ const SettingsPage = () => {
   const copy = useCopy(settingsCopy);
   const [settings, updateSettings] = useSettings();
   useDocumentTitle(copy.documentTitle);
+
+  const themeOptions: SegmentedOption<Theme>[] = themes.map((theme) => ({
+    value: theme,
+    label: copy.theme.options[theme],
+  }));
 
   return (
     <main className="page settings">
@@ -47,14 +53,23 @@ const SettingsPage = () => {
             onChange={(locale) => updateSettings({ locale })}
           />
         </div>
+        <div className="settings__field">
+          <span id="theme-label" className="settings__field-label">
+            {copy.theme.label}
+          </span>
+          <SegmentedControl
+            labelledBy="theme-label"
+            describedBy="theme-description"
+            options={themeOptions}
+            value={settings.theme}
+            onChange={(theme) => updateSettings({ theme })}
+          />
+          <p id="theme-description" className="settings__field-description">
+            {copy.theme.description}
+          </p>
+        </div>
         <TextSizeSetting />
         <div className="settings__switches">
-          <SwitchRow
-            label={copy.dimMode.label}
-            description={copy.dimMode.description}
-            isOn={settings.isDimMode}
-            onToggle={(isDimMode) => updateSettings({ isDimMode })}
-          />
           {canVibrate() && (
             <SwitchRow
               label={copy.haptics.label}
@@ -65,6 +80,7 @@ const SettingsPage = () => {
               }
             />
           )}
+          <DailyReminderSetting />
         </div>
       </section>
 

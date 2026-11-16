@@ -21,7 +21,8 @@
     "e2e": "playwright test",
     "content:export": "tsx scripts/packs-to-csv.ts",
     "content:import": "tsx scripts/csv-to-packs.ts",
-    "og:images": "tsx scripts/generate-og-images.ts"
+    "og:images": "tsx scripts/generate-og-images.ts",
+    "pwa:images": "tsx scripts/generate-pwa-images.ts"
   },
   "dependencies": {
     "@fontsource-variable/figtree": "^5.3.0",
@@ -55,6 +56,8 @@
     "typescript-eslint": "^8.72.2",
     "vite": "^8.1.3",
     "vite-plugin-pwa": "^2.0.0",
-    "vitest": "^5.1.0"
+    "vitest": "^5.1.0",
+    "workbox-precaching": "^7.4.1",
+    "workbox-routing": "^7.4.1"
   }
 }

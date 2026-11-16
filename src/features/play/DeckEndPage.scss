@@ -17,12 +17,16 @@
   font-family: $font-card;
   font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.375rem);
   font-weight: 400;
-  animation: deck-end-rise $duration-slow $ease-out 120ms both;
+  @include motion-safe {
+    animation: deck-end-rise $duration-slow $ease-out 120ms both;
+  }
 }
 
 .deck-end__subtitle {
   max-width: 30rem;
-  animation: deck-end-rise $duration-slow $ease-out 160ms both;
+  @include motion-safe {
+    animation: deck-end-rise $duration-slow $ease-out 160ms both;
+  }
 }
 
 .deck-end__actions {
@@ -32,11 +36,18 @@
   width: 100%;
   max-width: 420px;
   margin-top: $space-2;
-  animation: deck-end-rise $duration-slow $ease-out 260ms both;
+  @include motion-safe {
+    animation: deck-end-rise $duration-slow $ease-out 260ms both;
+  }
 
   > .button {
     width: 100%;
   }
+}
+
+.deck-end > .install-nudge {
+  max-width: 420px;
+  margin-top: $space-2;
 }
 
 .deck-end__suggest {

@@ -4,8 +4,8 @@
 // 1. Brand constants ($bg, $text, $accent...) are plain hex values, safe for
 //    Sass colour maths. They never change at runtime.
 // 2. Theme colours ($color-*) read CSS custom properties defined in
-//    styles/global.scss, so they follow dim mode. Use these for anything
-//    visible on screen.
+//    styles/global.scss, so they follow the theme (night, dim or day). Use
+//    these for anything visible on screen.
 // Type sizes are in rem: the root font size follows the player's text scale
 // setting (--text-scale), so rem-based text grows with it.
 
@@ -37,19 +37,30 @@ $category-adults: #cf94bb;
 // Ink for the New and Beta tag pills: 11.39:1 on $new, 5.29:1 on $beta.
 $tag-ink: #161a2e;
 
-// ---- Theme colours (follow dim mode) ----
+// ---- Light and shade on deck faces (constants) ----
+// Deck faces are the same pastel in every theme, so their sheen and shading
+// use fixed brand tints instead of pure white or black.
+$sheen: $heading;
+$shade: #10132a;
+
+// ---- Theme colours (follow the theme) ----
 $color-bg: var(--color-bg);
 $color-bg-elevated: var(--color-bg-elevated);
 $color-heading: var(--color-heading);
 $color-text: var(--color-text);
 $color-text-dim: var(--color-text-dim);
+// Accent for text, icons, outlines and the focus ring on the page.
 $color-accent: var(--color-accent);
+// Accent for filled controls (primary buttons, switches, highlights) that carry
+// $color-on-accent ink. The same pink as $color-accent except in the day theme.
+$color-accent-fill: var(--color-accent-fill);
 $color-on-accent: var(--color-on-accent);
 $color-surface: var(--color-surface);
 $color-surface-hover: var(--color-surface-hover);
 $color-border: var(--color-border);
 $color-border-strong: var(--color-border-strong);
 $color-backdrop: var(--color-backdrop);
+$color-shadow: var(--color-shadow);
 $color-category-friends: var(--color-category-friends);
 $color-category-dating: var(--color-category-dating);
 $color-category-adults: var(--color-category-adults);
@@ -91,6 +102,16 @@ $duration-fast: 160ms;
 $duration: 260ms;
 $duration-slow: 420ms;
 
+// A drop shadow colour at `$strength` (0 to 1). Each theme sets how dark its
+// --color-shadow is, so the day theme gets softer shadows from the same call.
+@function shadow($strength) {
+  @return color-mix(
+    in srgb,
+    var(--color-shadow) #{$strength * 100%},
+    transparent
+  );
+}
+
 // A subtle raised panel/card surface used across screens.
 @mixin surface {
   border: 1px solid $color-border;
@@ -98,13 +119,27 @@ $duration-slow: 420ms;
   background: $color-surface;
 }
 
-// Scopes a --deck-tone for an element that sets --deck-accent inline. Dim mode
-// mutes it toward the page by the same 12% as the dim category tones.
+// Scopes two deck colours for an element that sets --deck-accent inline:
+// - --deck-tone fills a deck face that carries $color-on-accent ink. Dim mode
+//   mutes it toward the page by the same 12% as the dim category tones.
+// - --deck-text is the deck colour for text, icons and outlines on the page.
+//   The pastel tone itself in the dark themes; the day theme takes a deep shade
+//   of the same hue (oklch lightness 0.47): 6.26:1, 6.45:1 and 6.66:1 on the
+//   page for the lavender, pink and mauve tones.
 @mixin deck-tone {
   --deck-tone: var(--deck-accent);
+  --deck-text: var(--deck-tone);
 
   :root[data-theme="dim"] & {
     --deck-tone: color-mix(in srgb, var(--deck-accent) 88%, var(--color-bg));
+  }
+
+  :root[data-theme="light"] & {
+    --deck-text: var(--color-accent);
+
+    @supports (color: oklch(from red l c h)) {
+      --deck-text: oklch(from var(--deck-accent) 0.47 calc(c * 1.6) h);
+    }
   }
 }
 

@@ -76,7 +76,7 @@
 
 .setup-switch__input:checked + .setup-switch__track {
   border-color: $color-accent;
-  background: $color-accent;
+  background: $color-accent-fill;
 
   .setup-switch__thumb {
     background: $color-on-accent;

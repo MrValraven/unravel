@@ -29,7 +29,7 @@ export const UnavailableNotice = ({
       </span>
       <h2 className="unavailable-notice__title">{title}</h2>
       <div className="unavailable-notice__body">{children}</div>
-      <Link to="/custom" className="button button--primary">
+      <Link to="/custom" className="button button--primary" viewTransition>
         <FiArrowLeft aria-hidden="true" size={20} />
         {actionLabel}
       </Link>

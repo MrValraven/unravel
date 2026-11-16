@@ -1,53 +1,82 @@
 @use "../../../styles/tokens" as *;
 
-// A neutral card; the icon alone carries the deck's category tone.
-// Only the title is a button; its ::after overlay covers the card so the whole card is clickable.
+// A deck tile reads like a small physical deck: the deck tone fills the face,
+// the ink is navy $color-on-accent in every theme (8.04:1, 8.48:1, 5.83:1 on
+// the three tones; dim mode keeps about the same ratios), and two card edges
+// peek out underneath.
+// Only the title is a control; its ::after overlay covers the tile so the
+// whole tile is clickable.
 .deck-card {
-  @include surface;
   @include deck-tone;
+  --deck-ink: var(--color-on-accent);
+  --deck-edge: color-mix(in srgb, var(--deck-tone) 58%, var(--color-bg));
+  --deck-edge-far: color-mix(in srgb, var(--deck-tone) 32%, var(--color-bg));
+  // Hover moves the face toward the heading colour, lighter on the dark pages.
+  --deck-hover-mix: var(--color-heading);
+
   position: relative;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: $space-3;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
   width: 100%;
-  min-height: $tap-target;
-  padding: $space-4 $space-3 $space-4 $space-4;
-  overflow: hidden;
-  color: $color-text;
+  min-height: 9.5rem;
+  // Room for the card edges below the face.
+  margin-bottom: 8px;
+  padding: $space-4;
+  border-radius: $radius;
+  background: var(--deck-tone);
+  box-shadow:
+    0 4px 0 -1px var(--deck-edge),
+    0 8px 0 -3px var(--deck-edge-far);
+  color: var(--deck-ink);
   text-align: left;
   transition:
     background-color $duration-fast ease,
-    border-color $duration-fast ease,
-    transform $duration-fast $ease-out;
+    transform $duration $ease-out;
 
   @media (hover: hover) {
     &:hover {
-      border-color: $color-border-strong;
-      background: $color-surface-hover;
-
-      .deck-card__chevron {
-        color: $color-heading;
-      }
+      background: color-mix(
+        in srgb,
+        var(--deck-tone) 86%,
+        var(--deck-hover-mix)
+      );
     }
   }
 
-  &:active {
-    transform: scale(0.985);
+  @include motion-safe {
+    @media (hover: hover) {
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
   }
 
-  // The ring sits on the card while its button has focus. Browsers with :has
+  // The ring sits on the tile while its control has focus. Browsers with :has
   // drop it again after a mouse or touch press, so it shows for keyboard focus only.
   &:focus-within {
     @include focus-ring;
   }
 
-  &:has(.deck-card__button:focus:not(:focus-visible)) {
+  &:has(.deck-card__control:focus:not(:focus-visible)) {
     outline: none;
   }
 }
 
-.deck-card__button {
+// On the light day page the edges sit a shade deeper than the face, like a
+// real deck's shadowed sides, and hover lightens the face so the navy ink
+// only gains contrast (8.79:1, 9.18:1, 6.70:1).
+:root[data-theme="light"] .deck-card {
+  --deck-edge: color-mix(in srgb, var(--deck-tone) 78%, var(--color-heading));
+  --deck-edge-far: color-mix(in srgb, var(--deck-tone) 55%, var(--color-bg));
+  --deck-hover-mix: #{$sheen};
+}
+
+.deck-card__control {
   padding: 0;
   border: 0;
   background: none;
@@ -55,11 +84,13 @@
   font: inherit;
   line-height: inherit;
   text-align: inherit;
+  text-decoration: none;
 
   &::after {
     content: "";
     position: absolute;
     inset: 0;
+    border-radius: inherit;
   }
 
   &:focus-visible {
@@ -67,55 +98,50 @@
   }
 }
 
-.deck-card__icon {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: $radius-sm;
-  background: $color-surface-hover;
-  color: var(--deck-tone);
+.deck-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $space-1;
 }
 
-.deck-card__body {
-  display: flex;
-  flex-direction: column;
-  gap: $space-1;
-  min-width: 0;
+.deck-card__icon {
+  flex-shrink: 0;
+}
+
+.deck-card__arrow {
+  flex-shrink: 0;
+
+  @include motion-safe {
+    transition: transform $duration-fast $ease-out;
+
+    .deck-card:hover & {
+      transform: translateX(3px);
+    }
+  }
 }
 
 .deck-card__title {
-  color: $color-heading;
-  font-size: 1.0625rem;
-  font-weight: 600;
-  line-height: 1.25;
+  color: inherit;
+  font-family: $font-card;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.2;
+  text-wrap: balance;
+
+  @media (min-width: $bp-tablet) {
+    font-size: 1.25rem;
+  }
 }
 
-.deck-card__description {
-  display: -webkit-box;
-  overflow: hidden;
+.deck-card__tagline {
   font-size: 0.875rem;
-  line-height: 1.45;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-
-  // Wider cards have room for a third line, so fewer descriptions get cut.
-  @media (min-width: $bp-desktop) {
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-  }
+  font-weight: 500;
+  line-height: 1.4;
 }
 
-.deck-card__chevron {
-  color: $color-text-dim;
-  transition:
-    color $duration-fast ease,
-    transform $duration-fast $ease-out;
-
-  @include motion-safe {
-    .deck-card:hover & {
-      transform: translateX(2px);
-    }
-  }
+// Badges sit at the foot of the face, so tiles in one row line up.
+.deck-card .deck-badges {
+  margin-top: auto;
+  padding-top: $space-1;
 }

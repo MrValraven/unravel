@@ -1,10 +1,16 @@
-import { useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { PageHeader } from "../../../components/PageHeader";
 import type { Deck } from "../../../content/types";
+import { useTintedThemeColor } from "../../../hooks/useThemeColor";
+import { useWakeLock } from "../../../hooks/useWakeLock";
 import { localize } from "../../../i18n/localize";
 import { useLocale } from "../../../i18n/LocaleContext";
 import { useCopy } from "../../../i18n/useCopy";
+import {
+  hasSeenCoachMark,
+  markCoachMarkSeen,
+} from "../../../storage/coachMarks";
 import { playCopy } from "../copy";
 import { playReducer } from "../engine/playReducer";
 import { getCurrentCardId, getTurn } from "../engine/selectors";
@@ -15,10 +21,16 @@ import { PlayControls } from "./PlayControls";
 import { PlayMenu } from "./PlayMenu";
 import { PlayToolbar } from "./PlayToolbar";
 import { StatusToast } from "./StatusToast";
+import { useLevelUpNotice } from "./useLevelUpNotice";
 import { usePlayKeyboard } from "./usePlayKeyboard";
 import { usePlaySession } from "./usePlaySession";
 import { useShareCard } from "./useShareCard";
 import "./PlayScreen.scss";
+
+/** The how-to line shows on this many cards of the player's first game. */
+const HINT_CARDS = 3;
+/** How much of the deck tone tints the browser chrome during play. */
+const CHROME_TINT = 0.16;
 
 /** The card a step away, with the turn it would bring, or nothing at either end of the deck. */
 const getNeighbourPreview = (
@@ -44,7 +56,10 @@ interface PlayScreenProps {
 export const PlayScreen = ({ deck, initialSession }: PlayScreenProps) => {
   const copy = useCopy(playCopy);
   const locale = useLocale();
-  const play = usePlaySession(deck, initialSession);
+  const levelUp = useLevelUpNotice();
+  const play = usePlaySession(deck, initialSession, {
+    onLevelUp: levelUp.show,
+  });
   const share = useShareCard(deck);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
@@ -52,15 +67,28 @@ export const PlayScreen = ({ deck, initialSession }: PlayScreenProps) => {
     onNext: () => play.perform("next"),
     onPrevious: () => play.perform("previous"),
   });
+  useWakeLock();
+  useTintedThemeColor(deck.accent, CHROME_TINT);
 
+  // Only the first game ever explains the swipe (or the keys), on its first few cards.
+  const [isHintForThisGame] = useState(
+    () => !hasSeenCoachMark("playGestureHint")
+  );
+  const [hasHintLeft, setHasHintLeft] = useState(false);
   const { session, currentCard } = play;
+  const isHintVisible = isHintForThisGame && session.position < HINT_CARDS;
+  const hasSeenHintEnough = session.position >= HINT_CARDS - 1;
+  useEffect(() => {
+    if (isHintForThisGame && hasSeenHintEnough)
+      markCoachMarkSeen("playGestureHint");
+  }, [isHintForThisGame, hasSeenHintEnough]);
+
   // No current card means the deck just finished and the end screen is on its way.
   if (!currentCard) return null;
 
   const cardNumber = session.position + 1;
   const totalCards = session.order.length;
   const isTableMode = session.options.isTableMode;
-  const isGestureHintVisible = session.position === 0;
 
   return (
     <main
@@ -122,21 +150,33 @@ export const PlayScreen = ({ deck, initialSession }: PlayScreenProps) => {
             nextButtonRef={nextButtonRef}
             onAction={play.perform}
           />
-          <p
-            className="play-screen__hint"
-            data-visible={isGestureHintVisible}
-            aria-hidden={!isGestureHintVisible || undefined}
-          >
-            {copy.controls.gestureHint}
-          </p>
+          {isHintForThisGame && !hasHintLeft && (
+            <p
+              className="play-screen__hint"
+              data-visible={isHintVisible}
+              aria-hidden={!isHintVisible || undefined}
+              onTransitionEnd={(event) => {
+                if (event.target === event.currentTarget && !isHintVisible)
+                  setHasHintLeft(true);
+              }}
+            >
+              <span className="play-screen__hint-touch">
+                {copy.controls.gestureHint}
+              </span>
+              <span className="play-screen__hint-keys">
+                {copy.controls.keyboardHint}
+              </span>
+            </p>
+          )}
         </div>
       </div>
       <PlayMenu
+        deckId={deck.id}
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
         onRestart={play.restart}
       />
-      <StatusToast message={share.statusMessage} />
+      <StatusToast message={share.statusMessage ?? levelUp.message} />
     </main>
   );
 };

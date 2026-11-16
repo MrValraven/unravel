@@ -22,7 +22,7 @@ $segmented-inset: 4px;
   z-index: -1;
   width: calc((100% - 2 * #{$segmented-inset}) / var(--segment-count));
   border-radius: $radius-pill;
-  background: $color-accent;
+  background: $color-accent-fill;
   transform: translateX(calc(100% * var(--segment-index)));
 
   @include motion-safe {

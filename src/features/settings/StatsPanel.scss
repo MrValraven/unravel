@@ -35,6 +35,7 @@
 
 .stats-panel__most-played {
   @include surface;
+  @include deck-tone;
   display: flex;
   align-items: center;
   gap: $space-3;
@@ -49,7 +50,7 @@
   height: 40px;
   border-radius: $radius-sm;
   background: color-mix(in srgb, var(--deck-accent) 18%, transparent);
-  color: var(--deck-accent);
+  color: var(--deck-text);
 }
 
 .stats-panel__most-played-text {

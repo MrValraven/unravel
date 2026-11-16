@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes, useParams } from "react-router";
 import { confirmAge } from "../../storage/ageGate";
@@ -9,6 +9,9 @@ const PlayRouteProbe = () => {
   const { deckId } = useParams();
   return <p>Playing {deckId}</p>;
 };
+
+const getSamples = () =>
+  within(screen.getByRole("region", { name: "A taste of the deck" }));
 
 const renderLanding = (deckId: string) =>
   render(
@@ -28,7 +31,7 @@ describe("DeckLandingPage", () => {
     expect(
       screen.getByRole("heading", { level: 1, name: "First Date" })
     ).toBeInTheDocument();
-    expect(screen.getAllByRole("listitem")).toHaveLength(5);
+    expect(getSamples().getAllByRole("listitem")).toHaveLength(5);
     expect(document.title).toBe("First Date · Unravel");
     expect(
       screen.getByRole("link", { name: "Browse all decks" })
@@ -44,7 +47,7 @@ describe("DeckLandingPage", () => {
 
   it("keeps adult sample cards hidden until age is confirmed", () => {
     renderLanding("flames-of-desire");
-    expect(screen.queryAllByRole("listitem")).toHaveLength(0);
+    expect(getSamples().queryAllByRole("listitem")).toHaveLength(0);
     expect(
       screen.getByRole("button", { name: "Confirm age to see samples" })
     ).toBeInTheDocument();
@@ -53,7 +56,7 @@ describe("DeckLandingPage", () => {
   it("shows adult sample cards after age is confirmed", () => {
     confirmAge();
     renderLanding("flames-of-desire");
-    expect(screen.getAllByRole("listitem")).toHaveLength(5);
+    expect(getSamples().getAllByRole("listitem")).toHaveLength(5);
   });
 
   it("asks for age before starting an adult deck", async () => {
@@ -64,6 +67,66 @@ describe("DeckLandingPage", () => {
       screen.getByRole("button", { name: "Confirm I'm 18 or older" })
     );
     expect(screen.getByText("Playing flames-of-desire")).toBeInTheDocument();
+  });
+
+  it("shows breadcrumbs from the deck list through the category to the deck", () => {
+    renderLanding("first-date");
+    const breadcrumbs = within(
+      screen.getByRole("navigation", { name: "Breadcrumb" })
+    );
+    expect(breadcrumbs.getByRole("link", { name: "Decks" })).toHaveAttribute(
+      "href",
+      "/decks"
+    );
+    expect(
+      breadcrumbs.getByRole("link", { name: "Dating & Romance" })
+    ).toHaveAttribute("href", "/decks#decks-dating");
+    expect(breadcrumbs.getByText("First Date")).toHaveAttribute(
+      "aria-current",
+      "page"
+    );
+  });
+
+  it("links related decks to their own pages and keeps 18+ decks out", () => {
+    renderLanding("first-date");
+    const related = within(
+      screen.getByRole("region", { name: "Related decks" })
+    );
+    const links = related.getAllByRole("link");
+    expect(links.length).toBeGreaterThan(0);
+    expect(links.length).toBeLessThanOrEqual(4);
+    expect(related.getByRole("link", { name: "Date Night" })).toHaveAttribute(
+      "href",
+      "/decks/date-night"
+    );
+    expect(
+      related.queryByRole("link", { name: "First Date" })
+    ).not.toBeInTheDocument();
+    expect(
+      related.queryByRole("link", { name: "Flames of Desire" })
+    ).not.toBeInTheDocument();
+  });
+
+  it("keeps the canonical link and og:url on the deck's own address", () => {
+    const canonical = document.createElement("link");
+    canonical.rel = "canonical";
+    canonical.href = "https://unravel.tiagocostadev.com";
+    const ogUrl = document.createElement("meta");
+    ogUrl.setAttribute("property", "og:url");
+    ogUrl.content = "https://unravel.tiagocostadev.com";
+    document.head.append(canonical, ogUrl);
+    try {
+      renderLanding("first-date");
+      expect(canonical.getAttribute("href")).toBe(
+        "https://unravel.tiagocostadev.com/decks/first-date"
+      );
+      expect(ogUrl.getAttribute("content")).toBe(
+        "https://unravel.tiagocostadev.com/decks/first-date"
+      );
+    } finally {
+      canonical.remove();
+      ogUrl.remove();
+    }
   });
 
   describe("seasonal decks", () => {

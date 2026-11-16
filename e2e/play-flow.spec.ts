@@ -23,7 +23,7 @@ test.describe("playing a deck", () => {
     ).toBeVisible();
   });
 
-  test("picks a deck, previews it, plays cards, goes Back to the picker and resumes", async ({
+  test("picks a deck, previews it, starts straight into play, goes Back to the picker and resumes", async ({
     page,
   }) => {
     await page.goto("/decks");
@@ -36,12 +36,7 @@ test.describe("playing a deck", () => {
     ).toBeVisible();
     await previewSheet.getByRole("button", { name: "Start deck" }).click();
 
-    await expect(page).toHaveURL(/\/play\/unravel$/);
-    await expect(
-      page.getByRole("heading", { level: 1, name: "Unravel" })
-    ).toBeVisible();
-    await page.getByRole("button", { name: "Start deck", exact: true }).click();
-
+    // No setup step: Start goes straight to the first card.
     await expect(page.getByText(/^Card 1 of \d+$/)).toBeVisible();
     await expect(page).toHaveURL(/\/play\/unravel\?card=1$/);
 
@@ -98,9 +93,50 @@ test.describe("playing a deck", () => {
       page.getByRole("heading", { name: "A taste of the deck" })
     ).toBeVisible();
     await page.getByRole("button", { name: "Start deck" }).click();
-    await expect(page).toHaveURL(/\/play\/first-date$/);
-    await page.getByRole("button", { name: "Quick start" }).click();
     await expect(page.getByText(/^Card 1 of \d+$/)).toBeVisible();
+    await expect(page).toHaveURL(/\/play\/first-date\?card=1$/);
+  });
+
+  test("Game options in the preview sets up a game, and the next start reuses those options", async ({
+    page,
+  }) => {
+    await page.goto("/decks");
+    await page.getByRole("button", { name: "Unravel", exact: true }).click();
+    const previewSheet = page.getByRole("dialog", { name: "Unravel" });
+    await previewSheet.getByRole("button", { name: "Game options" }).click();
+
+    await expect(page).toHaveURL(/\/play\/unravel\?setup=1$/);
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Unravel" })
+    ).toBeVisible();
+    // Two players is the smallest game, so the first two rows cannot be removed.
+    await expect(
+      page.getByRole("button", { name: /Remove player/ })
+    ).toHaveCount(0);
+    await page.getByRole("textbox", { name: "Player 1 name" }).fill("Ana");
+    await page.getByRole("textbox", { name: "Player 2 name" }).fill("Rui");
+    await page.getByRole("radio", { name: /Deeper/ }).check();
+    await expect(page.getByRole("button", { name: "Quick start" })).toHaveCount(
+      0
+    );
+    await page.getByRole("button", { name: "Start deck", exact: true }).click();
+
+    await expect(page.getByText(/^Card 1 of \d+$/)).toBeVisible();
+    await expect(page).toHaveURL(/\/play\/unravel\?card=1$/);
+    const lastOptions = JSON.parse(
+      (await readStoredText(page, "lastPlayOptions")) ?? "null"
+    ) as { startLevel: number; players: string[] } | null;
+    expect(lastOptions?.startLevel).toBe(2);
+    expect(lastOptions?.players).toEqual(["Ana", "Rui"]);
+
+    // Another deck starts straight away with the same players and level.
+    await page.goto("/play/first-date");
+    await expect(page.getByText(/^Card 1 of \d+$/)).toBeVisible();
+    const progress = JSON.parse(
+      (await readStoredText(page, "progress")) ?? "null"
+    ) as { deckId: string; options: { startLevel: number } } | null;
+    expect(progress?.deckId).toBe("first-date");
+    expect(progress?.options.startLevel).toBe(2);
   });
 
   test("finishing the last card opens the end screen and clears the saved game", async ({
@@ -129,6 +165,13 @@ test.describe("playing a deck", () => {
     await expect(
       page.getByRole("button", { name: "Play again shuffled" })
     ).toBeVisible();
+    await expect(
+      page.getByText(/^We unravelled Unravel: 2 cards, /)
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Share recap" })
+    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Up next" })).toBeVisible();
     expect(await readStoredText(page, "progress")).toBe("null");
 
     await page.goto("/decks");

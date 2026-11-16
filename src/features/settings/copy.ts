@@ -15,9 +15,12 @@ const en = {
     previewLabel: "Preview",
     sample: "What made you smile this week?",
   },
-  dimMode: {
-    label: "Dim mode",
-    description: "Warmer, softer colours for late nights and low light.",
+  theme: {
+    label: "Theme",
+    /** One label per theme: default, dim, light. */
+    options: { default: "Night", dim: "Dim", light: "Day" },
+    description:
+      "Night is the classic navy, Dim is warmer and softer for low light, and Day is bright for daylight and playing outdoors.",
   },
   haptics: {
     label: "Haptics",
@@ -70,10 +73,11 @@ export const settingsCopy = defineCopy<typeof en>({
       previewLabel: "Pré-visualização",
       sample: "O que te fez sorrir esta semana?",
     },
-    dimMode: {
-      label: "Modo noturno",
+    theme: {
+      label: "Tema",
+      options: { default: "Noite", dim: "Penumbra", light: "Dia" },
       description:
-        "Cores mais quentes e suaves para noites longas e pouca luz.",
+        "Noite é o azul-marinho clássico, Penumbra tem cores mais quentes e suaves para pouca luz, e Dia é claro para a luz do dia e para jogar ao ar livre.",
     },
     haptics: {
       label: "Vibração",

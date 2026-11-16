@@ -43,6 +43,12 @@
   font-weight: 600;
 }
 
+.settings__field-description {
+  color: $color-text-dim;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
 .settings__sample {
   @include surface;
   display: flex;

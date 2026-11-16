@@ -33,5 +33,8 @@ test.describe("deck finder", () => {
       .getByRole("button", { name: "Confirm I'm 18 or older" })
       .click();
     await expect(page).toHaveURL(/\/play\/flames-of-desire$/);
+    await expect(
+      page.getByRole("heading", { name: "Before you start" })
+    ).toBeVisible();
   });
 });

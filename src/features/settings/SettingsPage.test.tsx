@@ -67,13 +67,35 @@ describe("SettingsPage", () => {
     ).toBeInTheDocument();
   });
 
-  it("turns dim mode on", async () => {
+  it("starts on the Night theme and saves the chosen theme", async () => {
     const user = userEvent.setup();
     renderSettings();
-    const dimSwitch = screen.getByRole("switch", { name: /Dim mode/ });
-    await user.click(dimSwitch);
-    expect(settingsStore.get().isDimMode).toBe(true);
-    expect(dimSwitch).toHaveAttribute("aria-checked", "true");
+    const themeGroup = screen.getByRole("group", { name: "Theme" });
+    expect(
+      within(themeGroup).getByRole("button", { name: "Night" })
+    ).toHaveAttribute("aria-pressed", "true");
+    expect(themeGroup).toHaveAccessibleDescription(/Day is bright/);
+
+    await user.click(within(themeGroup).getByRole("button", { name: "Day" }));
+    expect(settingsStore.get().theme).toBe("light");
+    expect(
+      within(themeGroup).getByRole("button", { name: "Day" })
+    ).toHaveAttribute("aria-pressed", "true");
+
+    await user.click(within(themeGroup).getByRole("button", { name: "Dim" }));
+    expect(settingsStore.get().theme).toBe("dim");
+  });
+
+  it("names the themes in Portuguese", async () => {
+    const user = userEvent.setup();
+    renderSettings();
+    await user.click(screen.getByRole("button", { name: "Português" }));
+    const themeGroup = screen.getByRole("group", { name: "Tema" });
+    for (const name of ["Noite", "Penumbra", "Dia"]) {
+      expect(
+        within(themeGroup).getByRole("button", { name })
+      ).toBeInTheDocument();
+    }
   });
 
   it("hides the haptics switch on devices without vibration", () => {

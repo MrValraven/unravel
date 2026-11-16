@@ -71,6 +71,7 @@ const RouteErrorScreen = ({
           <Link
             to="/"
             className="button button--secondary"
+            viewTransition
             // Leaving for home resets the boundary through the pathname change;
             // on home itself the path stays the same, so reset it here.
             onClick={pathname === "/" ? onReset : undefined}

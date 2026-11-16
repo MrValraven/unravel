@@ -65,12 +65,16 @@ export const YourDecksSection = ({
         ))}
       </ul>
       <div className="your-decks__actions">
-        <Link to="/custom/new" className="button button--secondary">
+        <Link
+          to="/custom/new"
+          viewTransition
+          className="button button--secondary"
+        >
           <FiPlus aria-hidden="true" size={18} />
           {copy.createDeck}
         </Link>
         {customDecks.length > 0 && (
-          <Link to="/custom" className="button button--quiet">
+          <Link to="/custom" viewTransition className="button button--quiet">
             <FiEdit2 aria-hidden="true" size={18} />
             {copy.manageDecks}
           </Link>

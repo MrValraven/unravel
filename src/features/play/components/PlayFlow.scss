@@ -2,7 +2,9 @@
 
 // Each step of the flow eases in when it replaces the one before.
 .play-phase {
-  animation: play-phase-in $duration-slow $ease-out both;
+  @include motion-safe {
+    animation: play-phase-in $duration-slow $ease-out both;
+  }
 }
 
 @keyframes play-phase-in {

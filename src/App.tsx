@@ -1,6 +1,8 @@
 import { lazy, Suspense, useEffect } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router";
+import { Navigate, Outlet, useLocation, type RouteObject } from "react-router";
+import { ConnectionPill } from "./components/ConnectionPill";
 import { PageLoading } from "./components/PageLoading";
+import { RootRouteError } from "./components/RootRouteError";
 import { RouteErrorBoundary } from "./components/RouteErrorBoundary";
 import { UpdateBanner } from "./components/UpdateBanner";
 import "./App.scss";
@@ -22,6 +24,7 @@ const CustomDeckImportPage = lazy(
 const SettingsPage = lazy(() => import("./features/settings/SettingsPage"));
 const WhatsNewGate = lazy(() => import("./features/settings/WhatsNewGate"));
 const NotFoundPage = lazy(() => import("./components/NotFoundPage"));
+const ContinueRedirect = lazy(() => import("./components/ContinueRedirect"));
 
 /** New pages start at the top. Search-param changes (the play card position) keep the scroll. */
 const useScrollToTopOnNavigate = () => {
@@ -31,6 +34,7 @@ const useScrollToTopOnNavigate = () => {
   }, [pathname]);
 };
 
+/** The app shell: the current page plus the banners that float over every page. */
 function App() {
   useScrollToTopOnNavigate();
 
@@ -38,40 +42,48 @@ function App() {
     <div className="app">
       <RouteErrorBoundary>
         <Suspense fallback={<PageLoading />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<IntroPage />} />
-            <Route
-              path="/reminder"
-              element={<Navigate to="/about" replace />}
-            />
-            <Route path="/decks" element={<DeckPickerPage />} />
-            <Route
-              path="/questions"
-              element={<Navigate to="/decks" replace />}
-            />
-            <Route path="/decks/:deckId" element={<DeckLandingPage />} />
-            <Route path="/finder" element={<DeckFinderPage />} />
-            <Route path="/play/:deckId" element={<PlayPage />} />
-            <Route path="/play/:deckId/done" element={<DeckEndPage />} />
-            <Route path="/custom" element={<CustomDecksPage />} />
-            <Route path="/custom/new" element={<CustomDeckEditorPage />} />
-            <Route path="/custom/import" element={<CustomDeckImportPage />} />
-            <Route
-              path="/custom/:customId/edit"
-              element={<CustomDeckEditorPage />}
-            />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+          <Outlet />
         </Suspense>
       </RouteErrorBoundary>
       <Suspense fallback={null}>
         <WhatsNewGate />
       </Suspense>
+      <ConnectionPill />
       <UpdateBanner />
     </div>
   );
 }
+
+/**
+ * Every page is a data route under the shell, so links and navigate() calls
+ * with `viewTransition` animate. React Router drops that option for links
+ * inside descendant <Routes>, which is why the pages are not matched in App.
+ */
+// eslint-disable-next-line react-refresh/only-export-components -- the route table belongs with the pages it lazy-loads
+export const appRoutes: RouteObject[] = [
+  {
+    element: <App />,
+    // Page errors land in App's RouteErrorBoundary first; this covers the shell itself.
+    errorElement: <RootRouteError />,
+    children: [
+      { path: "/", element: <HomePage /> },
+      { path: "/about", element: <IntroPage /> },
+      { path: "/reminder", element: <Navigate to="/about" replace /> },
+      { path: "/decks", element: <DeckPickerPage /> },
+      { path: "/questions", element: <Navigate to="/decks" replace /> },
+      { path: "/decks/:deckId", element: <DeckLandingPage /> },
+      { path: "/finder", element: <DeckFinderPage /> },
+      { path: "/continue", element: <ContinueRedirect /> },
+      { path: "/play/:deckId", element: <PlayPage /> },
+      { path: "/play/:deckId/done", element: <DeckEndPage /> },
+      { path: "/custom", element: <CustomDecksPage /> },
+      { path: "/custom/new", element: <CustomDeckEditorPage /> },
+      { path: "/custom/import", element: <CustomDeckImportPage /> },
+      { path: "/custom/:customId/edit", element: <CustomDeckEditorPage /> },
+      { path: "/settings", element: <SettingsPage /> },
+      { path: "*", element: <NotFoundPage /> },
+    ],
+  },
+];
 
 export default App;

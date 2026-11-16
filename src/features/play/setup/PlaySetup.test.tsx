@@ -2,15 +2,19 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { saveProgress } from "../../../storage/progress";
+import { saveProgress, type PlayOptions } from "../../../storage/progress";
 import { makeDeck, mixedCards } from "../engine/engine.testUtils";
 import { PlaySetup } from "./PlaySetup";
 
-const renderSetup = (deck = makeDeck()) => {
+const renderSetup = (deck = makeDeck(), initialOptions?: PlayOptions) => {
   const onStart = vi.fn();
   render(
     <MemoryRouter>
-      <PlaySetup deck={deck} onStart={onStart} />
+      <PlaySetup
+        deck={deck}
+        initialOptions={initialOptions}
+        onStart={onStart}
+      />
     </MemoryRouter>
   );
   return { onStart, user: userEvent.setup() };
@@ -58,16 +62,32 @@ describe("PlaySetup", () => {
     });
   });
 
-  it("quick start uses the defaults whatever the form says", async () => {
-    const { onStart, user } = renderSetup();
-    await user.click(screen.getByRole("switch", { name: /Shuffle cards/ }));
-    await user.click(screen.getByRole("button", { name: "Quick start" }));
+  it("has one Start button and no quick start", () => {
+    renderSetup();
+    expect(screen.getAllByRole("button", { name: /start/i })).toHaveLength(1);
+    expect(
+      screen.queryByRole("button", { name: "Quick start" })
+    ).not.toBeInTheDocument();
+  });
 
-    expect(onStart).toHaveBeenCalledWith({
-      isShuffled: false,
-      startLevel: 1,
+  it("opens with the options it is given and starts with them unchanged", async () => {
+    const { onStart, user } = renderSetup(makeDeck(), {
+      isShuffled: true,
+      startLevel: 3,
       isTableMode: false,
-      players: [],
+      players: ["Ana", "Rui", "Inês"],
+    });
+    expect(screen.getByRole("radio", { name: /All in/ })).toBeChecked();
+    expect(screen.getByRole("switch", { name: /Shuffle cards/ })).toBeChecked();
+    expect(screen.getByRole("textbox", { name: "Player 3 name" })).toHaveValue(
+      "Inês"
+    );
+    await user.click(screen.getByRole("button", { name: "Start deck" }));
+    expect(onStart).toHaveBeenCalledWith({
+      isShuffled: true,
+      startLevel: 3,
+      isTableMode: false,
+      players: ["Ana", "Rui", "Inês"],
     });
   });
 
@@ -95,11 +115,36 @@ describe("PlaySetup", () => {
     ).toBeInTheDocument();
   });
 
-  it("removes a player row", async () => {
+  it("keeps the two first name rows, so they have no remove button", () => {
+    renderSetup();
+    expect(screen.getAllByRole("textbox")).toHaveLength(2);
+    expect(
+      screen.queryByRole("button", { name: /Remove player/ })
+    ).not.toBeInTheDocument();
+  });
+
+  it("removes a third player row, and the remove buttons go again at two", async () => {
     const { user } = renderSetup();
-    await user.click(screen.getByRole("button", { name: "Remove player 2" }));
+    await user.click(screen.getByRole("button", { name: "Add player" }));
+    expect(
+      screen.getAllByRole("button", { name: /Remove player/ })
+    ).toHaveLength(3);
+    await user.click(screen.getByRole("button", { name: "Remove player 3" }));
     // The row animates out first, then leaves the DOM.
-    await waitFor(() => expect(screen.getAllByRole("textbox")).toHaveLength(1));
+    await waitFor(() => expect(screen.getAllByRole("textbox")).toHaveLength(2));
+    expect(
+      screen.queryByRole("button", { name: /Remove player/ })
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows two name rows when the saved options hold a single name", () => {
+    renderSetup(makeDeck(), {
+      isShuffled: false,
+      startLevel: 1,
+      isTableMode: false,
+      players: ["Ana"],
+    });
+    expect(screen.getAllByRole("textbox")).toHaveLength(2);
   });
 
   it("hides the start level for custom decks", () => {
@@ -112,7 +157,6 @@ describe("PlaySetup", () => {
   it("disables starting when the deck has no cards", () => {
     renderSetup(makeDeck([]));
     expect(screen.getByRole("button", { name: "Start deck" })).toBeDisabled();
-    expect(screen.getByRole("button", { name: "Quick start" })).toBeDisabled();
   });
 
   it("warns that a saved game of another deck will be replaced", () => {
@@ -135,6 +179,30 @@ describe("PlaySetup", () => {
     expect(
       screen.getByText(
         "Starting this deck replaces your saved game of First Date."
+      )
+    ).toBeInTheDocument();
+  });
+
+  it("says that starting begins a saved game of this deck again", () => {
+    saveProgress({
+      deckId: "a",
+      order: ["a-002", "a-004"],
+      position: 1,
+      hiddenCardIds: [],
+      turnIndex: 0,
+      options: {
+        isShuffled: false,
+        startLevel: 1,
+        isTableMode: false,
+        players: [],
+      },
+      startedAt: 1,
+      updatedAt: 2,
+    });
+    renderSetup(makeDeck(mixedCards));
+    expect(
+      screen.getByText(
+        "Starting with these options begins this deck again from the first card."
       )
     ).toBeInTheDocument();
   });

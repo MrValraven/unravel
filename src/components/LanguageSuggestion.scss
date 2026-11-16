@@ -1,0 +1,43 @@
+@use "../styles/tokens" as *;
+
+// A small one-line offer above the page content, quiet enough to ignore.
+.language-suggestion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2 $space-3;
+  width: min(100%, 30rem);
+  margin-inline: auto;
+  padding: $space-2 $space-2 $space-2 $space-4;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  background: $color-bg-elevated;
+  color: $color-heading;
+
+  @include motion-safe {
+    animation: language-suggestion-in $duration $ease-out both;
+  }
+}
+
+.language-suggestion__prompt {
+  font-weight: 600;
+}
+
+.language-suggestion__actions {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+}
+
+.language-suggestion__accept {
+  padding-inline: $space-4;
+  font-size: 0.9375rem;
+}
+
+@keyframes language-suggestion-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}

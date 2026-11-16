@@ -6,7 +6,7 @@ test.describe("adult decks", () => {
     await seedStorage(page);
   });
 
-  test("Go back keeps the preview open, and confirming leads through setup and the boundaries check-in", async ({
+  test("Go back keeps the preview open, and confirming leads to the boundaries check-in and play", async ({
     page,
   }) => {
     await page.goto("/decks");
@@ -34,11 +34,11 @@ test.describe("adult decks", () => {
 
     await expect(page).toHaveURL(/\/play\/flames-of-desire$/);
     expect(await readStoredText(page, "ageConfirmed")).toBe("true");
-    await expect(
-      page.getByRole("heading", { level: 1, name: "Flames of Desire" })
-    ).toBeVisible();
-    await page.getByRole("button", { name: "Start deck", exact: true }).click();
 
+    // No setup step: the check-in comes first, with Game options one tap away.
+    await expect(
+      page.getByRole("button", { name: "Game options" })
+    ).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Before you start" })
     ).toBeVisible();
@@ -72,7 +72,7 @@ test.describe("adult decks", () => {
       page.getByRole("dialog", { name: "Adult content ahead" })
     ).toHaveCount(0);
     await expect(
-      page.getByRole("heading", { level: 1, name: "Flames of Desire" })
+      page.getByRole("heading", { name: "Before you start" })
     ).toBeVisible();
   });
 });

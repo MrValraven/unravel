@@ -13,7 +13,10 @@ test.describe("custom decks", () => {
     await recordSharedLinks(page);
 
     await page.goto("/decks");
-    await page.getByRole("link", { name: "Create a deck" }).click();
+    await page
+      .getByRole("main")
+      .getByRole("link", { name: "Create a deck" })
+      .click();
     await expect(page).toHaveURL(/\/custom\/new$/);
     await expect(
       page.getByRole("heading", { level: 1, name: "New deck" })
@@ -85,7 +88,6 @@ test.describe("custom decks", () => {
     });
     await expect(startCustomDeck).toHaveText("Start deck");
     await startCustomDeck.click();
-    await page.getByRole("button", { name: "Quick start" }).click();
     await expect(page.getByText(/^Card 1 of 1$/)).toBeVisible();
     await expect(page.getByText(CARD_TEXT).first()).toBeVisible();
   });

@@ -24,10 +24,39 @@
   padding-inline: 0;
 }
 
+// The card is the one bright thing on screen, so Next is an outline in the deck
+// colour: heading ink on the page, a faint wash of the tone, plainly a button.
+// The outline takes --deck-text, so it stays visible on the light day page.
 .play-controls__next {
+  @include deck-tone;
   flex: 1;
   min-height: 56px;
+  border: 2px solid var(--deck-text, #{$color-accent});
+  background-color: color-mix(
+    in srgb,
+    var(--deck-tone, #{$color-accent}) 10%,
+    transparent
+  );
+  color: $color-heading;
   font-size: 1.0625rem;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: color-mix(
+        in srgb,
+        var(--deck-tone, #{$color-accent}) 18%,
+        transparent
+      );
+    }
+  }
+
+  &:active {
+    background-color: color-mix(
+      in srgb,
+      var(--deck-tone, #{$color-accent}) 24%,
+      transparent
+    );
+  }
 }
 
 .play-controls__quiet {

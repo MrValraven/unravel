@@ -3,6 +3,7 @@ import type { DeckCategoryInfo } from "../../../content/decks";
 import type { Deck } from "../../../content/types";
 import { localize } from "../../../i18n/localize";
 import { useLocale } from "../../../i18n/LocaleContext";
+import { categorySectionId } from "../deckSummary";
 import { DeckCard } from "./DeckCard";
 import "./DeckCategorySection.scss";
 
@@ -29,6 +30,7 @@ export const DeckCategorySection = ({
 
   return (
     <section
+      id={categorySectionId(category.key)}
       className="deck-section"
       style={categoryStyle}
       aria-labelledby={headingId}

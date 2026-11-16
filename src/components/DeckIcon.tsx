@@ -18,7 +18,13 @@ import {
   FiUsers,
   FiZap,
 } from "react-icons/fi";
-import { LuFlame, LuSparkles } from "react-icons/lu";
+import {
+  LuFlame,
+  LuGhost,
+  LuSnowflake,
+  LuSparkles,
+  LuTreePine,
+} from "react-icons/lu";
 import type { DeckIconName } from "../content/types";
 
 export interface DeckIconProps {
@@ -27,7 +33,7 @@ export interface DeckIconProps {
   className?: string;
 }
 
-// Feather has no flame or sparkles; Lucide (Feather's maintained fork) draws
+// Feather has no flame, sparkles, ghost, tree or snowflake; Lucide (Feather's maintained fork) draws
 // them with the same 2px stroke, so they sit naturally beside the Fi icons.
 const deckIcons: Record<DeckIconName, IconType> = {
   message: FiMessageCircle,
@@ -39,6 +45,9 @@ const deckIcons: Record<DeckIconName, IconType> = {
   music: FiMusic,
   map: FiMap,
   flame: LuFlame,
+  ghost: LuGhost,
+  tree: LuTreePine,
+  snowflake: LuSnowflake,
   zap: FiZap,
   shield: FiShield,
   feather: FiFeather,

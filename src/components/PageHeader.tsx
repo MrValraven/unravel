@@ -33,6 +33,7 @@ export const PageHeader = ({
         {backTo && (
           <Link
             to={backTo}
+            viewTransition
             className={`page-header__back${isBackLabelVisible ? " page-header__back--labelled" : ""}`}
             aria-label={isBackLabelVisible ? undefined : label}
           >

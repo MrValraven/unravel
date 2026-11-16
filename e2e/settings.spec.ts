@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { seedStorage } from "./helpers";
+import { returningPlayerSettings, seedStorage } from "./helpers";
 
 test.describe("settings", () => {
   test.beforeEach(async ({ page }) => {
@@ -63,20 +63,46 @@ test.describe("settings", () => {
     await expect.poll(readTextScale).toBe("1.3");
   });
 
-  test("dim mode persists across a reload", async ({ page }) => {
+  test("the chosen theme persists across a reload", async ({ page }) => {
     await page.goto("/settings");
-    const dimSwitch = page.getByRole("switch", { name: "Dim mode" });
-    await expect(dimSwitch).toHaveAttribute("aria-checked", "false");
+    const themeGroup = page.getByRole("group", { name: "Theme" });
+    await expect(
+      themeGroup.getByRole("button", { name: "Night", exact: true })
+    ).toHaveAttribute("aria-pressed", "true");
     await expect(page.locator("html")).toHaveAttribute("data-theme", "default");
 
-    await dimSwitch.click();
-    await expect(dimSwitch).toHaveAttribute("aria-checked", "true");
+    await themeGroup.getByRole("button", { name: "Dim", exact: true }).click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dim");
+
+    await themeGroup.getByRole("button", { name: "Day", exact: true }).click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    await expect(page.locator('meta[name="color-scheme"]')).toHaveAttribute(
+      "content",
+      "light"
+    );
 
     await page.reload();
     await expect(
-      page.getByRole("switch", { name: "Dim mode" })
-    ).toHaveAttribute("aria-checked", "true");
+      page
+        .getByRole("group", { name: "Theme" })
+        .getByRole("button", { name: "Day", exact: true })
+    ).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  });
+
+  test("a saved dim mode switch from an older version opens in the dim theme", async ({
+    page,
+  }) => {
+    const { theme: _theme, ...olderSettings } = returningPlayerSettings;
+    await seedStorage(page, {
+      extra: { settings: { ...olderSettings, isDimMode: true } },
+    });
+    await page.goto("/settings");
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dim");
+    await expect(
+      page
+        .getByRole("group", { name: "Theme" })
+        .getByRole("button", { name: "Dim", exact: true })
+    ).toHaveAttribute("aria-pressed", "true");
   });
 });

@@ -190,3 +190,133 @@ describe("findCardById", () => {
     expect(findCardById("unknown-card-001")).toBeUndefined();
   });
 });
+
+describe("halloween deck", () => {
+  const getHalloween = () => {
+    const deck = getBuiltinDeck("halloween");
+    if (!deck)
+      throw new Error('Test setup: deck "halloween" is not registered.');
+    return deck;
+  };
+
+  it("registers halloween as a seasonal friends deck with the ghost icon", () => {
+    expect(getHalloween()).toMatchObject({
+      title: { en: "Halloween", pt: "Halloween" },
+      category: "friends",
+      tag: "seasonal",
+      isAdult: false,
+      icon: "ghost",
+      accent: categoryAccents.friends,
+      audiences: ["friends", "group", "new-people"],
+      moods: ["playful", "deep"],
+      season: { start: "10-01", end: "12-01" },
+    });
+  });
+
+  it.each([
+    [11, 16],
+    [10, 1],
+    [12, 1],
+  ])("shows the halloween deck on %i-%i", (month, day) => {
+    expect(isDeckInSeason(getHalloween(), onDay(month, day))).toBe(true);
+    expect(getVisibleDecks(onDay(month, day)).map((deck) => deck.id)).toContain(
+      "halloween"
+    );
+  });
+
+  it.each([
+    [9, 30],
+    [12, 2],
+  ])("hides the halloween deck on %i-%i", (month, day) => {
+    expect(isDeckInSeason(getHalloween(), onDay(month, day))).toBe(false);
+    expect(
+      getVisibleDecks(onDay(month, day)).map((deck) => deck.id)
+    ).not.toContain("halloween");
+  });
+});
+
+describe("christmas decks", () => {
+  const christmasDeckIds = ["christmas-table", "friendsmas"];
+  const getDeck = (deckId: string) => {
+    const deck = getBuiltinDeck(deckId);
+    if (!deck)
+      throw new Error(`Test setup: deck "${deckId}" is not registered.`);
+    return deck;
+  };
+  const sharedMeta = {
+    category: "friends",
+    tag: "seasonal",
+    isAdult: false,
+    accent: categoryAccents.friends,
+    season: { start: "12-01", end: "01-06" },
+  };
+
+  it("registers christmas-table as a seasonal family deck with the tree icon", () => {
+    expect(getDeck("christmas-table")).toMatchObject({
+      ...sharedMeta,
+      title: { en: "Christmas at the Table", pt: "Natal à Mesa" },
+      tagline: {
+        en: "Questions for every age at the table",
+        pt: "Perguntas para todas as idades à mesa",
+      },
+      icon: "tree",
+      audiences: ["group", "friends"],
+      moods: ["light", "playful"],
+    });
+  });
+
+  it("registers friendsmas as a seasonal friends deck with the snowflake icon", () => {
+    expect(getDeck("friendsmas")).toMatchObject({
+      ...sharedMeta,
+      title: { en: "Friendsmas", pt: "Natal entre Amigos" },
+      tagline: {
+        en: "Christmas with the family you choose",
+        pt: "O Natal com a família que escolhemos",
+      },
+      icon: "snowflake",
+      audiences: ["friends", "group"],
+      moods: ["playful", "deep"],
+    });
+  });
+
+  it("registers both between halloween and new-year, in calendar order", () => {
+    const ids = decks.map((deck) => deck.id);
+    const start = ids.indexOf("halloween");
+    expect(ids.slice(start, start + 4)).toEqual([
+      "halloween",
+      "christmas-table",
+      "friendsmas",
+      "new-year",
+    ]);
+  });
+
+  it.each([
+    [12, 1],
+    [12, 25],
+    [1, 6],
+  ])("shows both christmas decks on %i-%i", (month, day) => {
+    for (const deckId of christmasDeckIds) {
+      expect(isDeckInSeason(getDeck(deckId), onDay(month, day)), deckId).toBe(
+        true
+      );
+    }
+    expect(getVisibleDecks(onDay(month, day)).map((deck) => deck.id)).toEqual(
+      expect.arrayContaining(christmasDeckIds)
+    );
+  });
+
+  it.each([
+    [11, 30],
+    [1, 7],
+  ])("hides both christmas decks on %i-%i", (month, day) => {
+    const visibleIds = getVisibleDecks(onDay(month, day)).map(
+      (deck) => deck.id
+    );
+    for (const deckId of christmasDeckIds) {
+      expect(isDeckInSeason(getDeck(deckId), onDay(month, day)), deckId).toBe(
+        false
+      );
+      expect(visibleIds, deckId).not.toContain(deckId);
+    }
+  });
+});

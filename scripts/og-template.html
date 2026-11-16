@@ -206,9 +206,49 @@
 
       .card-mark {
         margin-top: auto;
-        font-family: "Young Serif", Georgia, serif;
-        font-size: 24px;
+        font-size: 28px;
         color: var(--navy);
+        --wordmark-thread: var(--navy);
+      }
+
+      /* The Unravel wordmark, matching src/features/home/Wordmark.tsx. */
+      .wordmark {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: stretch;
+        font-family: "Young Serif", Georgia, serif;
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -0.015em;
+      }
+
+      .wordmark__word {
+        display: block;
+        white-space: nowrap;
+      }
+
+      .wordmark__loose {
+        color: var(--wordmark-thread, var(--accent));
+      }
+
+      .wordmark__thread {
+        display: block;
+        /* Sized by the word: a zero width keeps the drawing out of the measure. */
+        width: 0;
+        min-width: 100%;
+        height: auto;
+        margin-top: -0.16em;
+        overflow: visible;
+        fill: none;
+        stroke: var(--wordmark-thread, var(--accent));
+        stroke-width: 5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .title--wordmark {
+        font-size: 132px;
+        line-height: 1;
       }
 
       [hidden] {
@@ -231,10 +271,37 @@
           <p class="card-label" id="card-label"></p>
           <p class="card-text" id="card-text"></p>
           <p class="card-badge" id="card-badge"></p>
-          <p class="card-mark">Unravel</p>
+          <p class="card-mark">
+            <span class="wordmark">
+              <span class="wordmark__word"
+                >Unrave<span class="wordmark__loose">l</span></span
+              >
+              <svg
+                class="wordmark__thread"
+                viewBox="0 0 400 64"
+                aria-hidden="true"
+              >
+                <path
+                  d="M382 -2 C383 20 374 33 361 30 C348 27 351 11 364 14 C379 18 377 42 348 47 C310 53 282 40 242 45 C202 50 174 61 132 56 C100 52 80 61 52 58"
+                />
+              </svg>
+            </span>
+          </p>
         </div>
       </div>
     </main>
+    <template id="wordmark-template">
+      <span class="wordmark">
+        <span class="wordmark__word"
+          >Unrave<span class="wordmark__loose">l</span></span
+        >
+        <svg class="wordmark__thread" viewBox="0 0 400 64" aria-hidden="true">
+          <path
+            d="M382 -2 C383 20 374 33 361 30 C348 27 351 11 364 14 C379 18 377 42 348 47 C310 53 282 40 242 45 C202 50 174 61 132 56 C100 52 80 61 52 58"
+          />
+        </svg>
+      </span>
+    </template>
     <script>
       const fontLoads = [
         '400 84px "Young Serif"',
@@ -261,8 +328,8 @@
       };
 
       /**
-       * data: { eyebrow, title, description, facts: string[], accent, secondAccent,
-       *         thirdAccent, cardLabel, cardText, cardBadge }
+       * data: { eyebrow, title, isTitleWordmark, description, facts: string[],
+       *         accent, secondAccent, thirdAccent, cardLabel, cardText, cardBadge }
        */
       window.renderOgImage = async (data) => {
         const root = document.documentElement;
@@ -271,7 +338,14 @@
         root.style.setProperty("--third-accent", data.thirdAccent);
 
         document.getElementById("eyebrow").textContent = data.eyebrow;
-        document.getElementById("title").textContent = data.title;
+        const title = document.getElementById("title");
+        title.classList.toggle("title--wordmark", data.isTitleWordmark);
+        if (data.isTitleWordmark) {
+          const wordmark = document.getElementById("wordmark-template");
+          title.replaceChildren(wordmark.content.cloneNode(true));
+        } else {
+          title.textContent = data.title;
+        }
         document.getElementById("description").textContent = data.description;
 
         const facts = document.getElementById("facts");
@@ -296,7 +370,11 @@
         await Promise.all(fontLoads.map((font) => document.fonts.load(font)));
         await document.fonts.ready;
 
-        shrinkToFit(document.getElementById("title"), 84, 52, 1.04, 2);
+        if (!data.isTitleWordmark) {
+          shrinkToFit(title, 84, 52, 1.04, 2);
+        } else {
+          title.style.fontSize = "";
+        }
         if (!cardText.hidden) {
           shrinkToFit(cardText, 34, 24, 1.25, 7);
         }

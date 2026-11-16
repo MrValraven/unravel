@@ -33,3 +33,82 @@
     transform: none;
   }
 }
+
+// A two line item reads as a panel, not a stretched pill.
+.play-menu__item:has(.play-menu__item-text) {
+  border-radius: $radius;
+}
+
+.play-menu__item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  text-align: start;
+}
+
+.play-menu__item-note {
+  color: $color-text;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+// Text size: the label, where the size sits among the three, then A- and A+.
+.play-text-size {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  min-height: 56px;
+  margin-bottom: $space-1;
+  padding: $space-1 $space-1 $space-1 $space-5;
+  border: 1px solid $color-border;
+  border-radius: $radius-pill;
+}
+
+.play-text-size__label {
+  flex: 1;
+  color: $color-heading;
+  font-weight: 600;
+}
+
+.play-text-size__steps {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.play-text-size__step {
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid $color-text;
+  border-radius: 50%;
+
+  &[data-filled="true"] {
+    border-color: $color-heading;
+    background: $color-heading;
+  }
+}
+
+.play-text-size__buttons {
+  display: flex;
+  gap: $space-1;
+}
+
+.play-text-size__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  font-family: $font-card;
+  font-size: 1rem;
+  line-height: 1;
+
+  // aria-disabled at the limits keeps focus on the button.
+  &[aria-disabled="true"] {
+    cursor: default;
+    opacity: 0.45;
+  }
+}
+
+.play-text-size__button--large {
+  font-size: 1.25rem;
+}

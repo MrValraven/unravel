@@ -36,6 +36,9 @@ export type DeckIconName =
   | "music"
   | "map"
   | "flame"
+  | "ghost"
+  | "tree"
+  | "snowflake"
   | "zap"
   | "shield"
   | "feather"
@@ -57,7 +60,14 @@ export interface DeckMeta {
   /** Kebab-case slug used in URLs: /decks/first-date, /play/first-date */
   id: string;
   title: LocalizedText;
+  /** A sentence or two for the deck page, the preview and search snippets. */
   description: LocalizedText;
+  /**
+   * One short line (about 40 characters) shown untruncated on deck tiles.
+   * Every builtin deck has one (see BuiltinDeckMeta); favourites and custom
+   * decks fall back to their description.
+   */
+  tagline?: LocalizedText;
   category: DeckCategory;
   tag: DeckTag;
   isAdult: boolean;
@@ -71,6 +81,15 @@ export interface DeckMeta {
 
 export interface Deck extends DeckMeta {
   cards: Card[];
+}
+
+/** Registry decks always carry a tagline; `content.test.ts` lints its length. */
+export interface BuiltinDeckMeta extends DeckMeta {
+  tagline: LocalizedText;
+}
+
+export interface BuiltinDeck extends Deck {
+  tagline: LocalizedText;
 }
 
 export const FAVOURITES_DECK_ID = "favourites";

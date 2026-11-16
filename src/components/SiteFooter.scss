@@ -1,0 +1,79 @@
+@use "../styles/tokens" as *;
+
+// A quiet sign-off: a hairline, the main links, then the privacy note and the
+// credit. Links keep 44px tap targets through their block padding.
+.site-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+  width: 100%;
+  max-width: calc(#{$content-width} + 2 * #{$gutter});
+  // Pushed to the foot of the app shell when the page is shorter than the screen.
+  margin-top: auto;
+  margin-inline: auto;
+  @include page-gutter;
+  padding-top: $space-5;
+  padding-bottom: max($space-5, env(safe-area-inset-bottom));
+  color: $color-text-dim;
+  font-size: 0.875rem;
+  text-align: center;
+
+  &::before {
+    content: "";
+    width: min(100%, 12rem);
+    height: 1px;
+    margin-bottom: $space-3;
+    background: $color-border;
+  }
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 $space-2;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: $tap-target;
+  padding-inline: $space-3;
+  border-radius: $radius-pill;
+  color: $color-text;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color $duration-fast ease,
+    color $duration-fast ease;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $color-surface-hover;
+      color: $color-heading;
+    }
+  }
+}
+
+.site-footer__privacy {
+  max-width: 60ch;
+  text-wrap: balance;
+}
+
+.site-footer__author {
+  display: inline-block;
+  padding-block: $space-3;
+  color: $color-text;
+  font-weight: 600;
+}
+
+.site-footer__heart {
+  display: inline-block;
+  vertical-align: -0.15em;
+  color: $color-accent;
+  fill: currentColor;
+}

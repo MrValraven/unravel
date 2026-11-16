@@ -15,17 +15,27 @@ import {
   MIN_FAVOURITES_FOR_DECK,
   useFavouriteIds,
 } from "../../storage/favourites";
+import { loadLastPlayOptions } from "../../storage/lastPlayOptions";
 import { useStats } from "../../storage/stats";
+import { InstallNudge } from "../decks/install/InstallNudge";
 import { buildSuggestQuestionUrl } from "../share/suggestQuestionUrl";
 import { DeckEndActions } from "./components/DeckEndActions";
 import { DeckEndCelebration } from "./components/DeckEndCelebration";
+import { DeckEndRecap } from "./components/DeckEndRecap";
 import { DeckEndSummary } from "./components/DeckEndSummary";
 import { playCopy } from "./copy";
 import { pickSuggestedDeck, readDeckEndState } from "./deckEnd";
-import { defaultPlayOptions, startNewSession } from "./playSession";
+import {
+  buildPlayPath,
+  resolveStartOptions,
+  startNewSession,
+} from "./playSession";
 import "./DeckEndPage.scss";
 
-/** The celebration after the last card, with what happened and where to go next. */
+/**
+ * The ending after the last card: what happened, a line to share it, the deck
+ * to try next, one more round, and an install suggestion.
+ */
 const DeckEndPage = () => {
   const { deckId = "" } = useParams();
   const location = useLocation();
@@ -66,13 +76,15 @@ const DeckEndPage = () => {
   const handlePlayAgain = deck
     ? () => {
         const options = {
-          ...(endState?.options ?? defaultPlayOptions),
+          ...(endState?.options ??
+            resolveStartOptions(deck, loadLastPlayOptions())),
           isShuffled: true,
         };
         startNewSession(deck, options, Date.now());
         // Replace keeps Back pointing at the page before the first game.
-        void navigate(`/play/${encodeURIComponent(deck.id)}`, {
+        void navigate(buildPlayPath(deck.id), {
           replace: true,
+          viewTransition: true,
         });
       }
     : undefined;
@@ -89,11 +101,13 @@ const DeckEndPage = () => {
       </h1>
       <p className="deck-end__subtitle">{copy.end.subtitle}</p>
       {endState && <DeckEndSummary endState={endState} />}
+      {endState && <DeckEndRecap deckTitle={deckTitle} endState={endState} />}
       <DeckEndActions
         suggestedDeck={suggestedDeck}
         hasFavourites={hasFavouritesDeck && shownDeck.id !== FAVOURITES_DECK_ID}
         onPlayAgain={handlePlayAgain}
       />
+      <InstallNudge placement="deck-end" />
       {isBuiltinDeck && (
         <aside className="deck-end__suggest">
           <h2 className="deck-end__suggest-title">{copy.end.suggestTitle}</h2>

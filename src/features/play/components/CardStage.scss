@@ -21,7 +21,7 @@ $ease-card-exit: cubic-bezier(0.3, 0.6, 0.6, 1);
       var(--deck-accent, #{$accent}) 45%,
       var(--color-bg)
     );
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 10px 24px shadow(0.25);
     opacity: 0;
     transition: opacity $duration ease;
   }
@@ -74,7 +74,7 @@ $ease-card-exit: cubic-bezier(0.3, 0.6, 0.6, 1);
     z-index: -1;
     inset: 0;
     border-radius: $radius-lg;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.38);
+    box-shadow: 0 30px 60px shadow(0.38);
     opacity: 0;
     pointer-events: none;
   }
@@ -127,7 +127,7 @@ $ease-card-exit: cubic-bezier(0.3, 0.6, 0.6, 1);
     var(--deck-accent, #{$accent}) 45%,
     var(--color-bg)
   );
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 24px shadow(0.25);
 }
 
 .card-stage__end-line {
@@ -227,6 +227,11 @@ $ease-card-exit: cubic-bezier(0.3, 0.6, 0.6, 1);
         translate var(--exit-duration, #{$duration}) $ease-out;
     }
   }
+}
+
+// The current card keeps its place across page changes (deck page to play, play to the end).
+.card-stage__gesture > .play-card {
+  view-transition-name: play-card;
 }
 
 // A card that arrived by swipe was already on screen as the underlay, so it does not deal in again.

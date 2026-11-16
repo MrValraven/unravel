@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+# App screens with no content of their own: games in progress, decks made on
+# a device, and settings. Deck pages, the deck list, the finder and about stay open.
+Disallow: /play/
+Disallow: /custom
+Disallow: /settings
 
 Sitemap: https://unravel.tiagocostadev.com/sitemap.xml

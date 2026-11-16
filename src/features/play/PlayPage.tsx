@@ -46,7 +46,7 @@ const PlayDeckRoute = ({ deckId }: { deckId: string }) => {
           isOpen={isAgeGateOpen}
           deckTitle={localize(deck.title, locale)}
           onConfirm={() => undefined}
-          onCancel={() => void navigate("/decks")}
+          onCancel={() => void navigate("/decks", { viewTransition: true })}
         />
       )}
     </>

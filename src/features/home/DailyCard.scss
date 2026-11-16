@@ -37,7 +37,7 @@ $daily-card-max-width: 40rem;
   border-radius: $radius-lg;
   background: var(--daily-card-fill);
   color: $color-on-accent;
-  box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 18px 40px -24px shadow(0.6);
 
   // Inset on the sides and sitting straight, so only its bottom edge peeks
   // out about 10px below the face and its sides stay within the face.
@@ -136,13 +136,13 @@ $daily-card-max-width: 40rem;
   // Darker on hover so the label contrast only grows.
   @media (hover: hover) {
     &:hover {
-      background-color: color-mix(in srgb, #{$color-on-accent} 80%, black);
-      box-shadow: 0 8px 18px -10px rgba(0, 0, 0, 0.55);
+      background-color: color-mix(in srgb, #{$color-on-accent} 80%, #{$shade});
+      box-shadow: 0 8px 18px -10px shadow(0.55);
     }
   }
 
   &:active {
-    background-color: color-mix(in srgb, #{$color-on-accent} 80%, black);
+    background-color: color-mix(in srgb, #{$color-on-accent} 80%, #{$shade});
   }
 }
 

@@ -3,8 +3,6 @@ import { defineCopy } from "../../i18n/useCopy";
 const en = {
   backToDecks: "Back to decks",
   setup: {
-    intro:
-      "Set up your game. Everything here is optional, so you can also jump straight in.",
     cardCount: { one: "{count} card", other: "{count} cards" },
     emptyDeck: "This deck has no cards yet. Add a few cards to play it.",
     replacesSavedGame: "Starting this deck replaces your saved game of {deck}.",
@@ -32,7 +30,6 @@ const en = {
     tableModeHint:
       "Shows the card twice, one copy turned to face the person across the table.",
     startDeck: "Start deck",
-    quickStart: "Quick start",
   },
   checkIn: {
     title: "Before you start",
@@ -61,15 +58,17 @@ const en = {
   card: {
     position: "Card {current} of {total}",
     currentCard: "Current card",
+    question: "Question",
     challenge: "Challenge",
     everyone: "Everyone answers",
     turn: "{asker} asks, {answerer} answers",
     challengeTurn: "{answerer}'s turn, {asker} reads it out",
     pairTurn: "{first} answers first, then {second}",
     pairChallengeTurn: "{first} goes first, then {second}",
-    unnamedTurn: "Everyone answers. One of you starts, then pass it on",
-    unnamedChallengeTurn:
-      "Everyone takes a turn. One of you starts, then pass it on",
+    unnamedTurn: "Everyone answers, one at a time",
+    unnamedChallengeTurn: "Everyone takes a turn",
+    /** Said and shown when the next card is a level higher than the last one. */
+    levelUp: "Level {number}: {level}",
     /** Under the last card while it is dragged toward next. */
     lastCard: "Last card",
     saveFavourite: "Save card to favourites",
@@ -86,6 +85,8 @@ const en = {
     hide: "Not tonight",
     pass: "Pass",
     gestureHint: "Swipe the card, or tap its right side, to move on.",
+    /** Shown instead of the gesture hint on devices with a mouse or trackpad. */
+    keyboardHint: "Use the arrow keys or Space to move between cards.",
     smallerText: "Make text smaller",
     largerText: "Make text larger",
     textSizeLabel: "Text size",
@@ -96,6 +97,8 @@ const en = {
     restart: "Restart deck",
     restartQuestion:
       "Start again from the first card? Your place in this deck will be cleared.",
+    gameOptions: "Game options",
+    gameOptionsNote: "Start the deck again with new players, level or mode",
     keepPlaying: "Keep playing",
   },
   end: {
@@ -122,8 +125,6 @@ export const playCopy = defineCopy<typeof en>({
   pt: {
     backToDecks: "Voltar aos baralhos",
     setup: {
-      intro:
-        "Prepara o teu jogo. Tudo aqui é opcional, por isso também podes começar logo.",
       cardCount: { one: "{count} carta", other: "{count} cartas" },
       emptyDeck:
         "Este baralho ainda não tem cartas. Junta algumas para o jogar.",
@@ -154,7 +155,6 @@ export const playCopy = defineCopy<typeof en>({
       tableModeHint:
         "Mostra a carta duas vezes, com uma cópia virada para quem está do outro lado da mesa.",
       startDeck: "Começar baralho",
-      quickStart: "Começo rápido",
     },
     checkIn: {
       title: "Antes de começar",
@@ -184,15 +184,16 @@ export const playCopy = defineCopy<typeof en>({
     card: {
       position: "Carta {current} de {total}",
       currentCard: "Carta atual",
+      question: "Pergunta",
       challenge: "Desafio",
       everyone: "Todos respondem",
       turn: "{asker} pergunta, {answerer} responde",
       challengeTurn: "Vez de {answerer}, {asker} lê em voz alta",
       pairTurn: "{first} responde primeiro, depois {second}",
       pairChallengeTurn: "{first} começa, depois {second}",
-      unnamedTurn: "Toda a gente responde. Alguém começa e depois passa a vez",
-      unnamedChallengeTurn:
-        "Toda a gente faz o desafio. Alguém começa e depois passa a vez",
+      unnamedTurn: "Toda a gente responde, à vez",
+      unnamedChallengeTurn: "Toda a gente faz o desafio, à vez",
+      levelUp: "Nível {number}: {level}",
       lastCard: "Última carta",
       saveFavourite: "Guardar carta nas favoritas",
       shareCard: "Partilhar carta",
@@ -209,6 +210,8 @@ export const playCopy = defineCopy<typeof en>({
       hide: "Hoje não",
       pass: "Passar",
       gestureHint: "Desliza a carta, ou toca no lado direito, para avançar.",
+      keyboardHint:
+        "Usa as teclas de seta ou a barra de espaço para mudar de carta.",
       smallerText: "Diminuir o texto",
       largerText: "Aumentar o texto",
       textSizeLabel: "Tamanho do texto",
@@ -219,6 +222,8 @@ export const playCopy = defineCopy<typeof en>({
       restart: "Recomeçar baralho",
       restartQuestion:
         "Voltar à primeira carta? O teu lugar neste baralho vai ser apagado.",
+      gameOptions: "Opções de jogo",
+      gameOptionsNote: "Recomeça o baralho com outros jogadores, nível ou modo",
       keepPlaying: "Continuar a jogar",
     },
     end: {

@@ -1,0 +1,73 @@
+@use "../styles/tokens" as *;
+
+// Same spot as the update banner, which it never shares the screen with.
+.offline-toast {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: $z-banner;
+  display: flex;
+  justify-content: center;
+  padding: 0 $gutter max($gutter, env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+
+.offline-toast__panel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: $space-3;
+  width: 100%;
+  max-width: 420px;
+  padding: $space-3 $space-2 $space-3 $space-4;
+  border: 1px solid var(--color-border-strong);
+  border-radius: $radius-lg;
+  background: var(--color-bg-elevated);
+  box-shadow: 0 16px 40px shadow(0.35);
+  color: var(--color-heading);
+  pointer-events: auto;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(calc(100% + #{$space-6}));
+  transition:
+    transform $duration $ease-in,
+    opacity $duration ease,
+    visibility 0s linear $duration;
+
+  .offline-toast[data-state="open"] & {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      transform $duration-slow $ease-out,
+      opacity $duration ease-out,
+      visibility 0s linear 0s;
+  }
+}
+
+.offline-toast__icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-pill;
+  background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  color: var(--color-accent);
+}
+
+.offline-toast__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.35;
+}
+
+.offline-toast__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.offline-toast__detail {
+  color: var(--color-text-dim);
+  font-size: 0.8125rem;
+}

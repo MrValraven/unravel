@@ -1,9 +1,13 @@
 @use "tokens" as *;
 
 // ---- Theme: CSS custom properties ----
-// Default theme: the Unravel navy. Dim mode (data-theme="dim" on <html>) is a
-// warmer, softer palette for candlelit tables; every text colour in both
-// themes keeps WCAG AA contrast on the page and on elevated surfaces.
+// Three themes, set as data-theme on <html> by main.tsx:
+// - default ("Night"): the Unravel navy.
+// - dim: a warmer, softer palette for candlelit tables.
+// - light ("Day"): a warm off-white page with navy ink for daytime and outdoor
+//   play. Pink stays the fill colour; text and outlines take a deep rose.
+// Every text colour in every theme keeps WCAG AA contrast on the page, on
+// elevated surfaces and on the subtle surface tint.
 :root {
   color-scheme: dark;
   --text-scale: 1;
@@ -14,12 +18,14 @@
   --color-text: #{$text};
   --color-text-dim: #{$text-dim};
   --color-accent: #{$accent};
+  --color-accent-fill: #{$accent};
   --color-on-accent: #{$bg};
   --color-surface: #{$surface};
   --color-surface-hover: #{$surface-hover};
   --color-border: #{$border};
   --color-border-strong: #{$border-strong};
   --color-backdrop: rgba(12, 14, 30, 0.62);
+  --color-shadow: #090b1a;
   --color-category-friends: #{$category-friends};
   --color-category-dating: #{$category-dating};
   --color-category-adults: #{$category-adults};
@@ -33,17 +39,47 @@
   --color-text: #bcab9b;
   --color-text-dim: #a09081;
   --color-accent: #d6a08e;
+  --color-accent-fill: #d6a08e;
   --color-on-accent: #1d191d;
   --color-surface: rgba(188, 171, 155, 0.05);
   --color-surface-hover: rgba(188, 171, 155, 0.1);
   --color-border: rgba(188, 171, 155, 0.16);
   --color-border-strong: rgba(188, 171, 155, 0.28);
   --color-backdrop: rgba(8, 6, 8, 0.66);
+  --color-shadow: #080608;
   // The default tones mixed 12% toward the dim page: 7.87:1, 8.31:1 and
   // 5.80:1 on it, 7.02:1, 7.41:1 and 5.17:1 on the dim elevated surface.
   --color-category-friends: #a5add3;
   --color-category-dating: #d5a8af;
   --color-category-adults: #ba85a8;
+}
+
+// Contrast on the page (#f7f2ee) / elevated surface (#fdfaf8): heading 12.79 /
+// 13.68, text 8.82 / 9.43, dim text 5.82 / 6.22, accent 6.51 / 6.97 (4.63 on
+// a 22% accent tint). Navy ink on the pink fill: 7.76.
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --color-bg: #f7f2ee;
+  --color-bg-elevated: #fdfaf8;
+  --color-heading: #{$bg};
+  --color-text: #3b4168;
+  --color-text-dim: #575c80;
+  --color-accent: #93374f;
+  --color-accent-fill: #ebb0bb;
+  --color-on-accent: #{$bg};
+  --color-surface: rgba(35, 41, 70, 0.04);
+  --color-surface-hover: rgba(35, 41, 70, 0.075);
+  --color-border: rgba(35, 41, 70, 0.14);
+  --color-border-strong: rgba(35, 41, 70, 0.32);
+  --color-backdrop: rgba(35, 41, 70, 0.42);
+  // Navy at half strength: day shadows are softer than night ones.
+  --color-shadow: rgba(35, 41, 70, 0.5);
+  // Deep shades of the three tones, for text on the light page: 6.39:1,
+  // 6.51:1 and 6.73:1 on it.
+  --color-category-friends: #4a5394;
+  --color-category-dating: #93374f;
+  --color-category-adults: #86386f;
 }
 
 // ---- Reset ----
@@ -213,12 +249,17 @@ a {
 }
 
 .button--primary {
-  background-color: var(--color-accent);
+  background-color: var(--color-accent-fill);
   color: var(--color-on-accent);
 
+  // Toward the heading colour: lighter on the dark themes, deeper on day.
   @media (hover: hover) {
     &:hover:not(:disabled) {
-      background-color: color-mix(in srgb, var(--color-accent) 88%, white);
+      background-color: color-mix(
+        in srgb,
+        var(--color-accent-fill) 88%,
+        var(--color-heading)
+      );
     }
   }
 }
@@ -264,5 +305,41 @@ a {
       background-color: var(--color-surface-hover);
       color: var(--color-heading);
     }
+  }
+}
+
+// ---- View transitions ----
+// Links and navigate() calls with `viewTransition` (React Router data mode)
+// cross-fade the page. Elements named `play-card` (view-transition-name:
+// play-card) morph between screens instead of fading with the page, such as a
+// deck's card growing into the play screen. Reduced motion turns both off.
+@include motion-safe {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: $duration-fast;
+    animation-timing-function: ease-out;
+  }
+
+  ::view-transition-group(play-card) {
+    animation-duration: $duration;
+    animation-timing-function: $ease-out;
+  }
+
+  ::view-transition-old(play-card),
+  ::view-transition-new(play-card) {
+    animation-duration: $duration;
+    animation-timing-function: $ease-out;
+    // Keeps the card's text from stretching while its box resizes.
+    height: 100%;
+    object-fit: cover;
+    overflow: clip;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

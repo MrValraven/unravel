@@ -33,7 +33,11 @@ const NotFoundPage = () => {
       </div>
       <h1 className="not-found__title">{copy.title}</h1>
       <p className="not-found__body">{copy.body}</p>
-      <Link to="/decks" className="button button--primary not-found__link">
+      <Link
+        to="/decks"
+        className="button button--primary not-found__link"
+        viewTransition
+      >
         <FiArrowLeft aria-hidden="true" size={20} />
         {copy.backToDecks}
       </Link>

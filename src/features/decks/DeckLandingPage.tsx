@@ -12,12 +12,15 @@ import { localize } from "../../i18n/localize";
 import { useLocale } from "../../i18n/LocaleContext";
 import { useCopy } from "../../i18n/useCopy";
 import { DeckBadges } from "./components/DeckBadges";
+import { DeckBreadcrumbs } from "./components/DeckBreadcrumbs";
 import { LevelBreakdown } from "./components/LevelBreakdown";
+import { RelatedDecks } from "./components/RelatedDecks";
 import { SampleCards } from "./components/SampleCards";
 import { deckCopy } from "./copy";
 import { formatSeasonWindow } from "./seasonLabel";
 import { useDeckStart } from "./useDeckStart";
 import "./DeckLandingPage.scss";
+import { SiteFooter } from "../../components/SiteFooter";
 
 const LANDING_SAMPLE_COUNT = 5;
 
@@ -35,52 +38,67 @@ const DeckLanding = ({ deck }: { deck: Deck }) => {
       : undefined;
 
   return (
-    <div className="page deck-landing" style={accentStyle}>
-      <PageHeader backTo="/decks" backLabel={copy.backLabel} />
-      <main className="deck-landing__main">
-        <header className="deck-landing__hero">
-          <span className="deck-landing__icon" aria-hidden="true">
-            <DeckIcon name={deck.icon} size={32} />
-          </span>
-          <p className="deck-landing__eyebrow">{copy.eyebrow}</p>
-          <h1 className="deck-landing__title">{title}</h1>
-          <p className="deck-landing__description">
-            {localize(deck.description, locale)}
-          </p>
-          <DeckBadges deck={deck} cardCount={deck.cards.length} />
-          {seasonLine && (
-            <p className="deck-landing__season">
-              <FiCalendar aria-hidden="true" size={18} />
-              <span>
-                {seasonLine} {copy.seasonNote}
-              </span>
-            </p>
-          )}
-          <div className="deck-landing__actions">
-            <button
-              type="button"
-              className="button button--primary"
-              onClick={() => startDeck(deck)}
-            >
-              <FiPlay aria-hidden="true" size={18} />
-              {copy.startDeck}
-            </button>
-            <Link to="/decks" className="button button--secondary">
-              <FiGrid aria-hidden="true" size={18} />
-              {copy.browseDecks}
-            </Link>
+    <>
+      <div className="page deck-landing" style={accentStyle}>
+        <PageHeader backTo="/decks" backLabel={copy.backLabel} />
+        <main className="deck-landing__main">
+          <DeckBreadcrumbs deck={deck} />
+          <div className="deck-landing__layout">
+            <div className="deck-landing__info">
+              <header className="deck-landing__hero">
+                <span className="deck-landing__icon" aria-hidden="true">
+                  <DeckIcon name={deck.icon} size={32} />
+                </span>
+                <p className="deck-landing__eyebrow">{copy.eyebrow}</p>
+                <h1 className="deck-landing__title">{title}</h1>
+                <p className="deck-landing__description">
+                  {localize(deck.description, locale)}
+                </p>
+                <DeckBadges deck={deck} cardCount={deck.cards.length} />
+                {seasonLine && (
+                  <p className="deck-landing__season">
+                    <FiCalendar aria-hidden="true" size={18} />
+                    <span>
+                      {seasonLine} {copy.seasonNote}
+                    </span>
+                  </p>
+                )}
+                <div className="deck-landing__actions">
+                  <button
+                    type="button"
+                    className="button button--primary"
+                    onClick={() => startDeck(deck)}
+                  >
+                    <FiPlay aria-hidden="true" size={18} />
+                    {copy.startDeck}
+                  </button>
+                  <Link
+                    to="/decks"
+                    viewTransition
+                    className="button button--secondary"
+                  >
+                    <FiGrid aria-hidden="true" size={18} />
+                    {copy.browseDecks}
+                  </Link>
+                </div>
+              </header>
+              <LevelBreakdown cards={deck.cards} />
+            </div>
+            <div className="deck-landing__samples">
+              <SampleCards
+                deck={deck}
+                sampleCount={LANDING_SAMPLE_COUNT}
+                headingLevel="h2"
+                onRevealRequest={() => runAfterAgeGate(deck, () => undefined)}
+              />
+            </div>
           </div>
-        </header>
-        <LevelBreakdown cards={deck.cards} />
-        <SampleCards
-          deck={deck}
-          sampleCount={LANDING_SAMPLE_COUNT}
-          headingLevel="h2"
-          onRevealRequest={() => runAfterAgeGate(deck, () => undefined)}
-        />
-      </main>
-      <AgeGateDialog {...ageGateProps} />
-    </div>
+          <RelatedDecks deck={deck} />
+        </main>
+        <AgeGateDialog {...ageGateProps} />
+      </div>
+      <SiteFooter />
+    </>
   );
 };
 

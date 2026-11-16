@@ -14,7 +14,7 @@ describe("settings", () => {
     expect(settingsStore.get()).toEqual({
       locale: "en",
       textScale: 1,
-      isDimMode: false,
+      theme: "default",
       isHapticsEnabled: true,
       hasSeenIntro: false,
       lastSeenVersion: "",
@@ -36,16 +36,67 @@ describe("settings", () => {
       JSON.stringify({
         ...defaultSettings,
         locale: "pt",
-        isDimMode: true,
+        theme: "light",
         textScale: 2,
       })
     );
     expect(settingsStore.get()).toEqual({
       ...defaultSettings,
       locale: "pt",
-      isDimMode: true,
+      theme: "light",
       textScale: 1,
     });
+  });
+
+  it("carries a saved dim mode switch over to the dim theme", () => {
+    const { theme: _theme, ...withoutTheme } = defaultSettings;
+    localStorage.setItem(
+      "unravel:v2:settings",
+      JSON.stringify({ ...withoutTheme, locale: "pt", isDimMode: true })
+    );
+    expect(settingsStore.get()).toEqual({
+      ...defaultSettings,
+      locale: "pt",
+      theme: "dim",
+    });
+  });
+
+  it("carries a saved dim mode that was off over to the default theme", () => {
+    const { theme: _theme, ...withoutTheme } = defaultSettings;
+    localStorage.setItem(
+      "unravel:v2:settings",
+      JSON.stringify({ ...withoutTheme, isDimMode: false })
+    );
+    expect(settingsStore.get().theme).toBe("default");
+  });
+
+  it("prefers a stored theme over a leftover dim mode flag", () => {
+    localStorage.setItem(
+      "unravel:v2:settings",
+      JSON.stringify({ ...defaultSettings, theme: "light", isDimMode: true })
+    );
+    expect(settingsStore.get().theme).toBe("light");
+  });
+
+  it("falls back to the default theme for an unknown theme", () => {
+    localStorage.setItem(
+      "unravel:v2:settings",
+      JSON.stringify({ ...defaultSettings, theme: "sepia" })
+    );
+    expect(settingsStore.get().theme).toBe("default");
+  });
+
+  it("drops the old dim mode flag on the next save", () => {
+    localStorage.setItem(
+      "unravel:v2:settings",
+      JSON.stringify({ ...defaultSettings, isDimMode: true, theme: undefined })
+    );
+    updateSettings({ textScale: 1.15 });
+    const saved = JSON.parse(
+      localStorage.getItem("unravel:v2:settings") ?? "{}"
+    ) as Record<string, unknown>;
+    expect(saved.theme).toBe("dim");
+    expect(saved).not.toHaveProperty("isDimMode");
   });
 
   it("fills a field missing from older stored settings with its default", () => {
@@ -75,8 +126,8 @@ describe("settings", () => {
 
   it("updates the hook consumer", () => {
     const { result } = renderHook(() => useSettings());
-    expect(result.current[0].isDimMode).toBe(false);
-    act(() => result.current[1]({ isDimMode: true }));
-    expect(result.current[0].isDimMode).toBe(true);
+    expect(result.current[0].theme).toBe("default");
+    act(() => result.current[1]({ theme: "light" }));
+    expect(result.current[0].theme).toBe("light");
   });
 });

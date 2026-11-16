@@ -63,6 +63,7 @@ export const ResumeCard = ({ className }: ResumeCardProps) => {
         <Link
           to={`/play/${encodeURIComponent(deck.id)}`}
           className="button button--primary resume-card__continue"
+          viewTransition
         >
           <FiPlay aria-hidden="true" size={18} />
           {copy.continueDeck}

@@ -62,7 +62,7 @@ $thumb-size: 22px;
 
 .switch-row__track--on {
   border-color: $color-accent;
-  background: $color-accent;
+  background: $color-accent-fill;
 
   .switch-row__thumb {
     background: $color-on-accent;

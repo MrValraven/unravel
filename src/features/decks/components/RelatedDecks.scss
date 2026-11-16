@@ -1,0 +1,27 @@
+@use "../../../styles/tokens" as *;
+
+.related-decks {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.related-decks__title {
+  font-size: 1.25rem;
+}
+
+.related-decks__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr));
+  gap: $space-3;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    display: grid;
+  }
+
+  @media (min-width: $bp-desktop) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

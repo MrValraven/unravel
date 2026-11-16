@@ -1,0 +1,123 @@
+@use "../../styles/tokens" as *;
+
+// Four real cards fanned from a shared point below them. The spread and the
+// card size grow with the viewport; the box reserves room for the tilt.
+.hero-fan {
+  --fan-card-width: clamp(172px, 50vw, 250px);
+  --fan-step: clamp(28px, 8vw, 56px);
+  position: relative;
+  width: 100%;
+  height: calc(var(--fan-card-width) * 1.4 + 56px);
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+.hero-fan__card {
+  --fan-fill: var(--deck-accent);
+  position: absolute;
+  top: $space-4;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  width: var(--fan-card-width);
+  aspect-ratio: 5 / 7;
+  margin-left: calc(var(--fan-card-width) / -2);
+  padding: $space-4;
+  overflow: hidden;
+  border-radius: $radius-lg;
+  background: var(--fan-fill);
+  color: $color-on-accent;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #{$sheen} 40%, transparent),
+    0 2px 6px shadow(0.16),
+    0 22px 40px -18px shadow(0.55);
+  transform: var(--fan-transform);
+  transform-origin: 50% 60%;
+  text-align: left;
+}
+
+// The cards further back sit a little into the page, so the front one leads.
+.hero-fan__card--1,
+.hero-fan__card--2 {
+  --fan-fill: color-mix(in srgb, var(--deck-accent) 86%, var(--color-bg));
+}
+
+:root[data-theme="dim"] .hero-fan__card {
+  --fan-fill: color-mix(in srgb, var(--deck-accent) 84%, var(--color-bg));
+}
+
+:root[data-theme="dim"] .hero-fan__card--1,
+:root[data-theme="dim"] .hero-fan__card--2 {
+  --fan-fill: color-mix(in srgb, var(--deck-accent) 74%, var(--color-bg));
+}
+
+.hero-fan__card--1 {
+  --fan-transform: translate(calc(var(--fan-step) * -1.1), 22px) rotate(-14deg);
+}
+
+.hero-fan__card--2 {
+  --fan-transform: translate(calc(var(--fan-step) * -0.4), 8px) rotate(-7deg);
+}
+
+.hero-fan__card--3 {
+  --fan-transform: translate(calc(var(--fan-step) * 0.3), 0) rotate(-1deg);
+}
+
+.hero-fan__card--4 {
+  --fan-transform: translate(calc(var(--fan-step) * 1), 14px) rotate(6deg);
+}
+
+.hero-fan__header {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  min-width: 0;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.hero-fan__deck {
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hero-fan__text {
+  font-family: $font-card;
+  font-size: clamp(1.0625rem, 0.8rem + 1.1vw, 1.375rem);
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+
+.hero-fan__mark {
+  margin-top: auto;
+  font-family: $font-card;
+  font-size: 0.875rem;
+}
+
+// The cards deal out of one stack into the fan, back card first.
+@include motion-safe {
+  .hero-fan__card {
+    animation: hero-fan-deal 720ms $ease-out both;
+
+    @for $index from 1 through 4 {
+      &--#{$index} {
+        animation-delay: 120ms + ($index - 1) * 70ms;
+      }
+    }
+  }
+}
+
+@keyframes hero-fan-deal {
+  from {
+    opacity: 0;
+    transform: translate(0, 28px) rotate(0deg);
+  }
+}

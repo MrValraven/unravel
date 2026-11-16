@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { FiChevronRight, FiCompass } from "react-icons/fi";
+import { FiArrowRight, FiCompass } from "react-icons/fi";
 import { useCopy } from "../../../i18n/useCopy";
 import { deckCopy } from "../copy";
 import "./FinderEntry.scss";
@@ -9,7 +9,7 @@ export const FinderEntry = () => {
   const copy = useCopy(deckCopy).finderEntry;
 
   return (
-    <Link to="/finder" className="finder-entry">
+    <Link to="/finder" viewTransition className="finder-entry">
       <span className="finder-entry__icon" aria-hidden="true">
         <FiCompass size={22} />
       </span>
@@ -17,8 +17,8 @@ export const FinderEntry = () => {
         <span className="finder-entry__title">{copy.title}</span>
         <span className="finder-entry__text">{copy.body}</span>
       </span>
-      <FiChevronRight
-        className="finder-entry__chevron"
+      <FiArrowRight
+        className="finder-entry__arrow"
         aria-hidden="true"
         size={20}
       />

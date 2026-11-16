@@ -1,5 +1,6 @@
 import { useId, type CSSProperties } from "react";
-import { FiChevronRight } from "react-icons/fi";
+import { Link } from "react-router";
+import { FiArrowRight } from "react-icons/fi";
 import { DeckIcon } from "../../../components/DeckIcon";
 import type { Deck } from "../../../content/types";
 import { localize } from "../../../i18n/localize";
@@ -7,58 +8,88 @@ import { useLocale } from "../../../i18n/LocaleContext";
 import { DeckBadges } from "./DeckBadges";
 import "./DeckCard.scss";
 
-interface DeckCardProps {
+interface DeckCardBaseProps {
   deck: Deck;
-  onSelect: (deck: Deck) => void;
-  /** Hides the description, for short lists such as finder results. */
-  isCompact?: boolean;
+  /** Heading level of the title, so the tile fits the page outline. */
+  headingLevel?: "h2" | "h3";
 }
 
+interface DeckCardButtonProps extends DeckCardBaseProps {
+  /** Opens the preview sheet. */
+  onSelect: (deck: Deck) => void;
+  to?: never;
+}
+
+interface DeckCardLinkProps extends DeckCardBaseProps {
+  /** Goes to this route instead, for example the deck page. */
+  to: string;
+  onSelect?: never;
+}
+
+type DeckCardProps = DeckCardButtonProps | DeckCardLinkProps;
+
 /**
- * A deck in a list: icon in the deck tone, title, description and badges. Opens the preview.
- * The button holds only the title, so its accessible name matches its visible text;
- * its overlay stretches over the whole card to keep every part of the card clickable.
- * The description and badges stay outside the button and describe it.
+ * A deck as a small physical box: the deck tone fills the face, the title is
+ * set in the card serif and a second card edge peeks out underneath.
+ * The control holds only the title, so its accessible name matches its visible
+ * text; its overlay stretches over the whole tile so every part is clickable.
+ * The tagline and badges sit outside it and describe it.
  */
 export const DeckCard = ({
   deck,
   onSelect,
-  isCompact = false,
+  to,
+  headingLevel = "h3",
 }: DeckCardProps) => {
+  const Heading = headingLevel;
   const locale = useLocale();
-  const descriptionId = useId();
+  const taglineId = useId();
   const badgesId = useId();
   const title = localize(deck.title, locale);
+  // Favourites and custom decks have no tagline; their descriptions are one short line.
+  const tagline = localize(deck.tagline ?? deck.description, locale);
   const accentStyle = { "--deck-accent": deck.accent } as CSSProperties;
-  const describedByIds = isCompact ? badgesId : `${descriptionId} ${badgesId}`;
+  const describedBy = `${taglineId} ${badgesId}`;
 
   return (
     <div className="deck-card" style={accentStyle}>
-      <span className="deck-card__icon" aria-hidden="true">
-        <DeckIcon name={deck.icon} size={22} />
-      </span>
-      <div className="deck-card__body">
-        <h3 className="deck-card__title">
+      <div className="deck-card__top">
+        <DeckIcon name={deck.icon} size={24} className="deck-card__icon" />
+        <FiArrowRight
+          className="deck-card__arrow"
+          aria-hidden="true"
+          size={18}
+        />
+      </div>
+      <Heading className="deck-card__title">
+        {to === undefined ? (
           <button
             type="button"
-            className="deck-card__button"
-            aria-describedby={describedByIds}
+            className="deck-card__control"
+            aria-describedby={describedBy}
             onClick={() => onSelect(deck)}
           >
             {title}
           </button>
-        </h3>
-        {!isCompact && (
-          <p id={descriptionId} className="deck-card__description">
-            {localize(deck.description, locale)}
-          </p>
+        ) : (
+          <Link
+            to={to}
+            viewTransition
+            className="deck-card__control"
+            aria-describedby={describedBy}
+          >
+            {title}
+          </Link>
         )}
-        <DeckBadges id={badgesId} deck={deck} cardCount={deck.cards.length} />
-      </div>
-      <FiChevronRight
-        className="deck-card__chevron"
-        aria-hidden="true"
-        size={20}
+      </Heading>
+      <p id={taglineId} className="deck-card__tagline">
+        {tagline}
+      </p>
+      <DeckBadges
+        id={badgesId}
+        deck={deck}
+        cardCount={deck.cards.length}
+        isOnTone
       />
     </div>
   );

@@ -39,3 +39,20 @@
   background: $beta;
   color: $tag-ink;
 }
+
+// On a deck-tone tile face everything takes the tile's ink. Outlined pills use
+// a solid ink border, so they keep 3:1 against the tone in both themes.
+.deck-badges--on-tone {
+  color: inherit;
+
+  .deck-badges__pill {
+    border-color: currentColor;
+    color: inherit;
+  }
+
+  .deck-badges__pill--new,
+  .deck-badges__pill--beta {
+    border-color: transparent;
+    color: $tag-ink;
+  }
+}

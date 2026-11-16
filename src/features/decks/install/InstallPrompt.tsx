@@ -9,7 +9,7 @@ import "./InstallPrompt.scss";
 const MENU_ICON_TOKEN = "{menu}";
 
 /** Renders a step, swapping the `{menu}` token for the browser menu icon. */
-const InstallStep = ({ text }: { text: string }) => {
+export const InstallStep = ({ text }: { text: string }) => {
   const [beforeIcon, afterIcon] = text.split(MENU_ICON_TOKEN);
   if (afterIcon === undefined) return <>{text}</>;
   return (

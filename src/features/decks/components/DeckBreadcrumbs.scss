@@ -1,0 +1,50 @@
+@use "../../../styles/tokens" as *;
+
+.deck-breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+}
+
+.deck-breadcrumbs__item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.deck-breadcrumbs__separator {
+  flex-shrink: 0;
+  color: $color-text-dim;
+}
+
+// The links keep a 44px target with padding while the text stays small.
+.deck-breadcrumbs__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: $tap-target;
+  padding-inline: $space-2;
+  border-radius: $radius-sm;
+  color: $color-text;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: $color-border-strong;
+  text-underline-offset: 0.25em;
+
+  .deck-breadcrumbs__item:first-child & {
+    padding-left: 0;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      color: $color-heading;
+      text-decoration-color: currentColor;
+    }
+  }
+}
+
+.deck-breadcrumbs__current {
+  padding-inline: $space-2;
+  color: $color-text-dim;
+}

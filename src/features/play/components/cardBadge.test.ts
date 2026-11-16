@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { playCopy } from "../copy";
-import { getCardBadgeLabel, getTurnLine } from "./cardBadge";
+import {
+  getCardBadgeLabel,
+  getCardTypeLabel,
+  getLevelLabel,
+  getTurnLine,
+} from "./cardBadge";
 
 const englishCard = playCopy.en.card;
 const portugueseCard = playCopy.pt.card;
@@ -10,6 +15,26 @@ describe("getCardBadgeLabel", () => {
     expect(getCardBadgeLabel("challenge", englishCard)).toBe("Challenge");
     expect(getCardBadgeLabel("everyone", englishCard)).toBe("Everyone answers");
     expect(getCardBadgeLabel("question", englishCard)).toBeUndefined();
+  });
+});
+
+describe("getCardTypeLabel", () => {
+  it("names every card type, questions included", () => {
+    expect(getCardTypeLabel("question", englishCard)).toBe("Question");
+    expect(getCardTypeLabel("challenge", englishCard)).toBe("Challenge");
+    expect(getCardTypeLabel("everyone", portugueseCard)).toBe(
+      "Todos respondem"
+    );
+  });
+});
+
+describe("getLevelLabel", () => {
+  it("uses the setup level names", () => {
+    const levels = playCopy.en.setup.levels;
+    expect(getLevelLabel(1, levels)).toBe("Warm");
+    expect(getLevelLabel(2, levels)).toBe("Deeper");
+    expect(getLevelLabel(3, levels)).toBe("All in");
+    expect(getLevelLabel(2, playCopy.pt.setup.levels)).toBe("Mais fundo");
   });
 });
 
@@ -44,13 +69,13 @@ describe("getTurnLine", () => {
 
   it("tells everyone to take a turn when nobody is named", () => {
     expect(getTurnLine("question", unnamed, englishCard)).toBe(
-      "Everyone answers. One of you starts, then pass it on"
+      "Everyone answers, one at a time"
     );
     expect(getTurnLine("challenge", unnamed, englishCard)).toBe(
-      "Everyone takes a turn. One of you starts, then pass it on"
+      "Everyone takes a turn"
     );
     expect(getTurnLine("question", unnamed, portugueseCard)).toBe(
-      "Toda a gente responde. Alguém começa e depois passa a vez"
+      "Toda a gente responde, à vez"
     );
   });
 

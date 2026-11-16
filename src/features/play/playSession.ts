@@ -22,6 +22,16 @@ export const defaultPlayOptions: PlayOptions = {
   players: [],
 };
 
+/** `/play/<deck>?setup=1` opens Game options; every other start goes straight into play. */
+export const SETUP_SEARCH_PARAM = "setup";
+
+export const buildPlayPath = (deckId: string): string =>
+  `/play/${encodeURIComponent(deckId)}`;
+
+/** The Game options screen for a deck. Starting from it saves the options for next time. */
+export const buildGameOptionsPath = (deckId: string): string =>
+  `${buildPlayPath(deckId)}?${SETUP_SEARCH_PARAM}=1`;
+
 /** A long pause between sittings would inflate "minutes played", so one game counts at most this long. */
 export const MAX_COUNTED_PLAY_MILLISECONDS = 4 * 60 * 60 * 1000;
 
@@ -50,15 +60,46 @@ export const normalizePlayOptions = (
     .slice(0, MAX_PLAYERS),
 });
 
+/**
+ * The options a start without setup uses: the last ones chosen in Game options,
+ * or the defaults the first time. A start level with no cards in this deck
+ * falls back to the first level, so a quick start never deals an empty game.
+ */
+export const resolveStartOptions = (
+  deck: Deck,
+  lastOptions: PlayOptions | null
+): PlayOptions => {
+  const options = normalizePlayOptions(deck, lastOptions ?? defaultPlayOptions);
+  return countCardsFromLevel(deck, options.startLevel) > 0
+    ? options
+    : { ...options, startLevel: 1 };
+};
+
+/** Builds a fresh session without saving anything, so it is safe during render. */
+export const createNewSession = (
+  deck: Deck,
+  options: PlayOptions,
+  now: number
+): PlaySession => createSession(deck, normalizePlayOptions(deck, options), now);
+
+/** Counts the start and saves the session as the one saved game. Run once, outside render. */
+export const commitNewSession = (
+  deck: Deck,
+  session: PlaySession,
+  now: number
+): void => {
+  recordDeckStart(deck.id);
+  saveProgress(sessionToProgress(session, now));
+};
+
 /** Creates a fresh session, counts the start and saves it as the one saved game. */
 export const startNewSession = (
   deck: Deck,
   options: PlayOptions,
   now: number
 ): PlaySession => {
-  const session = createSession(deck, normalizePlayOptions(deck, options), now);
-  recordDeckStart(deck.id);
-  saveProgress(sessionToProgress(session, now));
+  const session = createNewSession(deck, options, now);
+  commitNewSession(deck, session, now);
   return session;
 };
 

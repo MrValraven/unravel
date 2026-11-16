@@ -12,6 +12,14 @@ const en = {
   installNow: "Install Unravel",
   close: "Close",
   stepsLabel: "How to install",
+  nudge: {
+    title: "Keep Unravel one tap away",
+    body: "Install it to open from your home screen, full screen, even without a connection.",
+    install: "Install",
+    showSteps: "How to install",
+    hideSteps: "Hide the steps",
+    dismiss: "Not now",
+  },
   steps: {
     ios: [
       "Tap the Share button in the Safari toolbar.",
@@ -41,6 +49,14 @@ export const installCopy = defineCopy<typeof en>({
     installNow: "Instalar o Unravel",
     close: "Fechar",
     stepsLabel: "Como instalar",
+    nudge: {
+      title: "Tem o Unravel à distância de um toque",
+      body: "Instala-o para abrires a partir do ecrã principal, em ecrã inteiro, mesmo sem internet.",
+      install: "Instalar",
+      showSteps: "Como instalar",
+      hideSteps: "Esconder os passos",
+      dismiss: "Agora não",
+    },
     steps: {
       ios: [
         "Toca no botão Partilhar na barra do Safari.",

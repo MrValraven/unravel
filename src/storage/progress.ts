@@ -38,7 +38,8 @@ const isStringList = (raw: unknown): raw is string[] =>
 const isNonNegativeInteger = (raw: unknown): raw is number =>
   typeof raw === "number" && Number.isInteger(raw) && raw >= 0;
 
-const isPlayOptions = (raw: unknown): raw is PlayOptions => {
+/** Shared by every store that keeps play options: the saved game and the last-used options. */
+export const isPlayOptions = (raw: unknown): raw is PlayOptions => {
   if (typeof raw !== "object" || raw === null) return false;
   const candidate = raw as Record<string, unknown>;
   return (

@@ -48,6 +48,8 @@ const cardTypeLabels: Record<CardType, string> = {
 interface OgImageData {
   eyebrow: string;
   title: string;
+  /** Draws the title as the Unravel wordmark (the word with its loose thread). */
+  isTitleWordmark: boolean;
   description: string;
   facts: string[];
   accent: string;
@@ -93,6 +95,7 @@ const buildDeckJob = (deck: Deck): OgImageJob => {
     data: {
       eyebrow: "Unravel",
       title: deck.title.en,
+      isTitleWordmark: false,
       description: deck.description.en,
       facts: [
         formatCardCount(deck.cards.length),
@@ -116,8 +119,9 @@ const buildAppJob = (everyoneDecks: Deck[]): OgImageJob => {
     data: {
       eyebrow: "A game about people",
       title: "Unravel",
+      isTitleWordmark: true,
       description:
-        "A card game of good questions for friends, first dates and partners. Pick a deck, pass the phone and get talking.",
+        "Good questions for friends, dates and partners. Pick a deck, pass the phone and get talking.",
       facts: [`${everyoneDecks.length} decks`, "English and Portuguese"],
       accent: brandAccent,
       secondAccent: categoryAccents.friends,
@@ -134,6 +138,7 @@ const buildAdultsJob = (adultDecks: Deck[]): OgImageJob => ({
   data: {
     eyebrow: "Unravel",
     title: "For grown-ups",
+    isTitleWordmark: false,
     description:
       "Decks about intimacy, trust and care for consenting adults. You confirm you are 18 or older before you play.",
     facts: [`${adultDecks.length} decks`, categoryLabels.adults],

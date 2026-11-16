@@ -29,39 +29,14 @@
 }
 
 .play-toolbar__fill {
+  @include deck-tone;
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--deck-accent, #{$color-accent});
+  background: var(--deck-text, #{$color-accent});
   transform-origin: left center;
 
   @include motion-safe {
     transition: transform $duration-slow $ease-out;
   }
-}
-
-.play-toolbar__text-size {
-  display: flex;
-  flex-shrink: 0;
-  gap: $space-1;
-}
-
-.play-toolbar__size-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1px;
-  font-family: $font-card;
-  font-size: 1rem;
-  line-height: 1;
-
-  // aria-disabled at the limits keeps focus on the button.
-  &[aria-disabled="true"] {
-    cursor: default;
-    opacity: 0.45;
-  }
-}
-
-.play-toolbar__size-button--large {
-  font-size: 1.25rem;
 }

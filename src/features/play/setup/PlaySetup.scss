@@ -25,8 +25,8 @@
   background: var(--deck-accent);
   color: $color-on-accent;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.35) inset,
-    0 10px 24px rgba(0, 0, 0, 0.25);
+    0 1px 0 color-mix(in srgb, #{$sheen} 35%, transparent) inset,
+    0 10px 24px shadow(0.25);
 }
 
 .play-setup__title {
@@ -43,6 +43,14 @@
 
 .play-setup__intro {
   max-width: 34rem;
+}
+
+.play-setup__eyebrow {
+  color: $color-text-dim;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .play-setup__count {
@@ -112,15 +120,37 @@
   }
 }
 
+// The sticky Start bar's height comes from useStickyFooterHeight, so anything
+// scrolled into view (a level card reached with Tab) stops above the bar.
+:root:has(.play-setup__actions) {
+  scroll-padding-bottom: calc(
+    var(--play-setup-footer-height, 96px) + #{$space-4}
+  );
+}
+
 .play-setup__actions {
   position: sticky;
   bottom: 0;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: $space-2;
   margin-inline: -$gutter;
-  padding: $space-4 $gutter max($space-4, env(safe-area-inset-bottom));
-  background: linear-gradient(to bottom, transparent, $color-bg 28%);
+  padding: $space-3 $gutter max($space-4, env(safe-area-inset-bottom));
+  background: $color-bg;
+
+  // A scrim above the bar, so cards passing under it fade out instead of
+  // running straight into the buttons.
+  &::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    left: 0;
+    height: $space-6;
+    background: linear-gradient(to bottom, transparent, $color-bg);
+    pointer-events: none;
+  }
 
   @media (min-width: $bp-tablet) {
     flex-direction: row-reverse;

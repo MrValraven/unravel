@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes, useParams } from "react-router";
 import { getBuiltinDeck } from "../../content/decks";
 import { confirmAge } from "../../storage/ageGate";
+import { saveCustomDeck } from "../../storage/customDecks";
 import { toggleFavourite } from "../../storage/favourites";
 import { saveProgress } from "../../storage/progress";
 import DeckPickerPage from "./DeckPickerPage";
@@ -58,6 +59,59 @@ describe("DeckPickerPage sections", () => {
     ).toBeInTheDocument();
     expect(
       within(datingSection).queryByRole("button", { name: "Unravel" })
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows each deck's tagline in full on its tile", () => {
+    renderPicker();
+    const firstDate = requireDeck("first-date");
+    expect(
+      screen.getByRole("button", { name: "First Date" })
+    ).toHaveAccessibleDescription(new RegExp(firstDate.tagline.en));
+    expect(screen.getByText(firstDate.tagline.en)).toBeInTheDocument();
+    expect(
+      screen.queryByText(firstDate.description.en)
+    ).not.toBeInTheDocument();
+  });
+
+  it("puts a compact make-your-own row after the catalogue on a first visit", () => {
+    renderPicker();
+    expect(
+      screen.queryByRole("region", { name: "Your decks" })
+    ).not.toBeInTheDocument();
+    const makeOwn = screen.getByRole("region", { name: "Make your own deck" });
+    expect(
+      within(makeOwn).getByRole("link", { name: "Create a deck" })
+    ).toHaveAttribute("href", "/custom/new");
+    const regions = screen.getAllByRole("region");
+    expect(regions.at(-1)).toBe(makeOwn);
+    expect(regions.indexOf(makeOwn)).toBeGreaterThan(
+      regions.indexOf(screen.getByRole("region", { name: "Adults · 18+" }))
+    );
+  });
+
+  it("keeps Your decks above the catalogue once there is a custom deck", () => {
+    saveCustomDeck({
+      id: "custom-abcdefghij",
+      title: "Our road trip",
+      cards: [{ id: "c1", type: "question", text: "Best snack?" }],
+      createdAt: 1,
+      updatedAt: 1,
+    });
+    renderPicker();
+    const yourDecks = screen.getByRole("region", { name: "Your decks" });
+    const friends = screen.getByRole("region", {
+      name: "Make Friends & Socialize",
+    });
+    expect(
+      yourDecks.compareDocumentPosition(friends) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(
+      within(yourDecks).getByRole("button", { name: "Our road trip" })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("region", { name: "Make your own deck" })
     ).not.toBeInTheDocument();
   });
 

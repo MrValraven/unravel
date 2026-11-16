@@ -1,0 +1,373 @@
+{
+  "id": "halloween",
+  "cards": [
+    {
+      "id": "halloween-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which house on your childhood street did every kid swear was haunted, and why?",
+        "pt": "Na rua onde cresceste, que casa é que os miúdos juravam que era assombrada? Porquê?"
+      }
+    },
+    {
+      "id": "halloween-002",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Stay in character as your costume for one minute while the group fires questions at you.",
+        "pt": "Encarna o teu disfarce durante um minuto enquanto o grupo te enche de perguntas."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "halloween-003",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the first costume you remember wearing, who made it, and would you wear it again tonight?",
+        "pt": "Qual é o primeiro disfarce de que te lembras, quem to fez, e voltavas a vesti-lo hoje?"
+      }
+    },
+    {
+      "id": "halloween-004",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone introduces their costume in one sentence, as if it were a dating profile.",
+        "pt": "Apresentem o vosso disfarce numa frase, como se fosse um perfil numa app de encontros."
+      }
+    },
+    {
+      "id": "halloween-005",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "As a kid, what did you swap with other kids after Halloween or Pão-por-Deus, and what was worth the most?",
+        "pt": "Quando eras criança, o que trocavas com os outros miúdos depois do Halloween ou do Pão-por-Deus, e o que é que valia mais?"
+      }
+    },
+    {
+      "id": "halloween-006",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Pick someone else's costume and invent its tragic backstory. Whoever is wearing it has to nod along.",
+        "pt": "Escolhe o disfarce de outra pessoa e inventa-lhe um passado trágico. Quem o veste tem de concordar com tudo."
+      },
+      "timerSeconds": 45
+    },
+    {
+      "id": "halloween-007",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "The first jack-o'-lanterns were turnips carved in Ireland and Scotland. What would you hollow out instead, and whose face would it have?",
+        "pt": "As primeiras lanternas de Halloween eram nabos esculpidos na Irlanda e na Escócia. O que escavavas tu em vez disso, e com a cara de quem?"
+      }
+    },
+    {
+      "id": "halloween-008",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "The first printed “trick or treat” dates from Alberta, Canada, in 1927. What trick would you play on a house that gave you nothing?",
+        "pt": "A expressão “trick or treat” apareceu impressa pela primeira vez em 1927, em Alberta, no Canadá. Que travessura fazias a uma casa que não te desse nada?"
+      }
+    },
+    {
+      "id": "halloween-009",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone points at once to the person here who'd be first to go and check on that noise in the dark.",
+        "pt": "Apontem ao mesmo tempo para quem aqui seria a primeira pessoa a ir ver que barulho foi aquele no escuro."
+      }
+    },
+    {
+      "id": "halloween-010",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Open a ghost story with one sentence. Going round the group, each person adds exactly one more until time runs out.",
+        "pt": "Abre uma história de fantasmas com uma frase. À vez, cada pessoa do grupo acrescenta só mais uma até o tempo acabar."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "halloween-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "When did a scream of fright turn into laughter you couldn't stop, and who was with you?",
+        "pt": "Quando é que um grito de susto se transformou num ataque de riso que não conseguias parar, e quem estava contigo?"
+      }
+    },
+    {
+      "id": "halloween-012",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Scaring each other makes a group feel closer. Who here would you want gripping your arm in a haunted house?",
+        "pt": "Apanhar sustos em grupo aproxima as pessoas. Quem daqui querias que te agarrasse o braço numa casa assombrada?"
+      }
+    },
+    {
+      "id": "halloween-013",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Nutcrack night: two nuts named for a couple burn together for love or pop apart for quarrels. Pair two costumes here and narrate their fate.",
+        "pt": "Na noite das nozes, duas nozes com os nomes de um casal ardiam juntas se fosse amor ou saltavam se viessem zangas. Junta dois disfarces e narra o destino deles."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "halloween-014",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "By state law, São Paulo marks 31 October as Dia do Saci. Which folk creature from where you grew up deserves its own day?",
+        "pt": "Uma lei do estado de São Paulo faz de 31 de outubro o Dia do Saci. Que criatura do folclore da tua terra merecia um dia só seu?"
+      }
+    },
+    {
+      "id": "halloween-015",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone names their scare limit from 1 to 10. A Danish haunted-house study found the fun peaks at moderate fear.",
+        "pt": "Digam o vosso limite de susto, de 1 a 10. Um estudo dinamarquês numa casa assombrada concluiu que a diversão é maior com um medo moderado."
+      }
+    },
+    {
+      "id": "halloween-016",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Without breaking character, convince the person on your right to swap costumes with you.",
+        "pt": "Sem sair da personagem, convence a pessoa à tua direita a trocar de disfarce contigo."
+      },
+      "timerSeconds": 45
+    },
+    {
+      "id": "halloween-017",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which legend from where you grew up was told to you as true? Tell it the way you first heard it.",
+        "pt": "Que lenda da terra onde cresceste te contaram como se fosse verdade? Conta-a tal como a ouviste."
+      }
+    },
+    {
+      "id": "halloween-018",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "On 1 November, children doing Pão-por-Deus recite rhymes door to door for bread and cakes. Make up a two-line rhyme that gets you fed here.",
+        "pt": "No Pão-por-Deus, a 1 de novembro, as crianças dizem versos de porta em porta em troca de pão e bolos. Inventa dois versos que te valham um petisco aqui."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "halloween-019",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "When did something ordinary, like a coat hanging on a chair in the dark, leave you frozen with fear?",
+        "pt": "Quando é que uma coisa banal, como um casaco pendurado numa cadeira às escuras, te paralisou de medo?"
+      }
+    },
+    {
+      "id": "halloween-020",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone votes: a São Martinho magusto with roasted chestnuts and água-pé, or a night of trick-or-treating. Defend it in one sentence.",
+        "pt": "Votem: um magusto de São Martinho, com castanhas assadas e água-pé, ou uma noite de doce ou travessura. Defendam a vossa escolha numa frase."
+      }
+    },
+    {
+      "id": "halloween-021",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "On Día de Muertos, altars hold the dead person's favourite things. Which three things belong on yours, and who here would get them wrong?",
+        "pt": "No Día de Muertos, os altares têm as coisas preferidas de quem morreu. Que três coisas não podiam faltar no teu, e quem daqui se ia enganar?"
+      }
+    },
+    {
+      "id": "halloween-022",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "The Portuguese lobisomem doesn't always become a wolf: some tales make it a donkey or horse. Act yours out silently for the group to guess.",
+        "pt": "O lobisomem português nem sempre se transforma em lobo: nalgumas histórias é um burro ou um cavalo. Faz a tua transformação em silêncio e o grupo adivinha."
+      },
+      "timerSeconds": 45
+    },
+    {
+      "id": "halloween-023",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "In Kyoto, Obon ends with mountain fires that send ancestors' spirits back. If yours visited, where in Lisbon would you take them?",
+        "pt": "No fim do Obon, fogueiras nas montanhas de Quioto guiam os espíritos dos antepassados de volta. Se os teus te visitassem, onde os levavas em Lisboa?"
+      }
+    },
+    {
+      "id": "halloween-024",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "In an Irish barmbrack, a ring means marriage soon, a coin wealth and a thimble never marrying. Which do you want in your slice, and why?",
+        "pt": "No barmbrack irlandês, o anel anuncia casamento, a moeda riqueza e o dedal que nunca te casas. Qual querias na tua fatia, e porquê?"
+      }
+    },
+    {
+      "id": "halloween-025",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone shares a superstition they still follow, like knocking on wood or throwing salt over the left shoulder, and who taught it to them.",
+        "pt": "Partilhem uma superstição que ainda seguem, como bater na madeira ou atirar sal por cima do ombro esquerdo, e quem vo-la ensinou."
+      }
+    },
+    {
+      "id": "halloween-026",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "The Santa Compaña is a night procession of souls whose living cross-bearer is freed only by passing the cross on. Who here gets it from you?",
+        "pt": "Na Santa Compaña, uma procissão noturna de almas, o vivo que leva a cruz só se liberta quando a passa a outra pessoa. A quem daqui a entregavas?"
+      }
+    },
+    {
+      "id": "halloween-027",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Two truths and a ghost: tell two strange things that really happened to you and one supernatural tale you invent. The group finds the ghost.",
+        "pt": "Duas verdades e um fantasma: conta duas coisas estranhas que te aconteceram mesmo e uma sobrenatural inventada. O grupo descobre o fantasma."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "halloween-028",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "The mouras encantadas of Portuguese folklore guard hidden treasure. When did you come closest to finding treasure of your own?",
+        "pt": "As mouras encantadas do folclore português guardam tesouros escondidos. Quando é que estiveste mais perto de encontrar um tesouro teu?"
+      }
+    },
+    {
+      "id": "halloween-029",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "At Hungry Ghost Festival getai shows, the front row is left empty for the ghosts. Everyone names the famous ghost they'd save a seat for.",
+        "pt": "Nos espetáculos getai do Festival dos Fantasmas Famintos, a primeira fila fica vazia para os fantasmas. Digam a que fantasma famoso guardavam lugar."
+      }
+    },
+    {
+      "id": "halloween-030",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "A night alone at one Sintra spot: Regaleira's Initiation Well, Palácio Biester or the Capuchos Convent. Which one, and what do you bring?",
+        "pt": "Uma noite sem companhia num sítio de Sintra: o Poço Iniciático da Regaleira, o Palácio Biester ou o Convento dos Capuchos. Qual escolhes e o que levas?"
+      }
+    },
+    {
+      "id": "halloween-031",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What happened to you that you still can't explain, and who was the first person you told?",
+        "pt": "O que te aconteceu que ainda hoje não consegues explicar, e a quem contaste primeiro?"
+      }
+    },
+    {
+      "id": "halloween-032",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which place have you walked into that felt wrong before anyone told you its story?",
+        "pt": "Em que sítio é que sentiste que havia algo de errado, antes de alguém te contar a história dele?"
+      }
+    },
+    {
+      "id": "halloween-033",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Roughly 4 in 10 Americans say ghosts exist, and about 1 in 5 say they've seen one. When did you come closest to joining that 1 in 5?",
+        "pt": "Cerca de 4 em 10 americanos dizem que os fantasmas existem e cerca de 1 em 5 diz já ter visto um. Quando estiveste mais perto desse 1 em 5?"
+      }
+    },
+    {
+      "id": "halloween-034",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What were you scared of as a kid that doesn't scare you now, and when did you notice the fear was gone?",
+        "pt": "De que é que tinhas medo em criança que agora já não te assusta, e quando é que reparaste que o medo tinha passado?"
+      }
+    },
+    {
+      "id": "halloween-035",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "When did your luck turn for the better almost overnight, and what did you credit it to?",
+        "pt": "Quando é que a tua sorte mudou para melhor quase de um dia para o outro, e a que é que atribuíste isso?"
+      }
+    },
+    {
+      "id": "halloween-036",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "The head of Diogo Alves, the “Aqueduct murderer”, is in a jar at the University of Lisbon. What's the eeriest thing you've seen on display?",
+        "pt": "A cabeça de Diogo Alves, o “assassino do Aqueduto”, está num frasco na Universidade de Lisboa. Qual foi a coisa mais perturbadora que já viste exposta?"
+      }
+    },
+    {
+      "id": "halloween-037",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What do you secretly believe about ghosts, luck or fate that you'd never admit at work?",
+        "pt": "Que crença secreta tens sobre fantasmas, sorte ou destino que nunca admitirias no trabalho?"
+      }
+    },
+    {
+      "id": "halloween-038",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Alminhas are the small roadside shrines at Portuguese crossroads. Which crossroads in your own life deserves one?",
+        "pt": "As alminhas são os pequenos nichos à beira da estrada nas encruzilhadas portuguesas. Que encruzilhada da tua vida merecia uma?"
+      }
+    },
+    {
+      "id": "halloween-039",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Horror fans are sometimes sorted into adrenaline junkies, white-knucklers and dark copers. Which one are you, and when did you find out?",
+        "pt": "No terror há viciados em adrenalina, os que aguentam de dentes cerrados e os que usam o medo para gerir a ansiedade. Qual és tu, e quando percebeste?"
+      }
+    },
+    {
+      "id": "halloween-040",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What should people do at your send-off one day, or you'll come back to haunt them?",
+        "pt": "O que é que as pessoas vão ter de fazer na tua despedida, um dia, senão voltas para as assombrar?"
+      }
+    }
+  ]
+}

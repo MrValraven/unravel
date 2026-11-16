@@ -112,12 +112,15 @@ export const DeckEditorForm = ({
     ) {
       clearProgress();
     }
-    void navigate(DECKS_PATH, { state: createSavedDeckState(savedDeck.title) });
+    void navigate(DECKS_PATH, {
+      state: createSavedDeckState(savedDeck.title),
+      viewTransition: true,
+    });
   };
 
   const requestLeave = () => {
     if (isChanged) setIsDiscardDialogOpen(true);
-    else void navigate(DECKS_PATH);
+    else void navigate(DECKS_PATH, { viewTransition: true });
   };
 
   // The header back link is a router Link; cancelling its click keeps the edits on screen.
@@ -200,7 +203,7 @@ export const DeckEditorForm = ({
       <DiscardChangesDialog
         isOpen={isDiscardDialogOpen}
         onKeepEditing={() => setIsDiscardDialogOpen(false)}
-        onDiscard={() => void navigate(DECKS_PATH)}
+        onDiscard={() => void navigate(DECKS_PATH, { viewTransition: true })}
       />
       <StatusMessage notice={notice} onDismissed={dismissStatus} />
     </div>

@@ -1,4 +1,4 @@
-import { getVisibleDecks } from "../../content/decks";
+import { getBuiltinDeck, getVisibleDecks } from "../../content/decks";
 import type {
   Deck,
   DeckCategory,
@@ -6,7 +6,9 @@ import type {
   DeckMeta,
   LocalizedText,
 } from "../../content/types";
+import { formatCopy, pluralize, type PluralForms } from "../../i18n/localize";
 import type { PlayOptions } from "../../storage/progress";
+import { AUDIENCE_WEIGHT, MOOD_WEIGHT } from "../finder/rankDecks";
 
 /**
  * What the end screen needs to show a deck that can no longer be resolved:
@@ -37,6 +39,9 @@ const knownIcons: Record<DeckIconName, true> = {
   music: true,
   map: true,
   flame: true,
+  ghost: true,
+  tree: true,
+  snowflake: true,
   zap: true,
   shield: true,
   feather: true,
@@ -123,29 +128,108 @@ export const readDeckEndState = (raw: unknown): DeckEndState | undefined => {
 };
 
 /**
+ * How alike two decks are, with the deck finder's weights: each shared
+ * audience counts like a matching "who", each shared mood like a matching mood.
+ */
+const scoreLikeness = (
+  first: Pick<DeckMeta, "audiences" | "moods">,
+  second: Pick<DeckMeta, "audiences" | "moods">
+): number =>
+  first.audiences.filter((audience) => second.audiences.includes(audience))
+    .length *
+    AUDIENCE_WEIGHT +
+  first.moods.filter((mood) => second.moods.includes(mood)).length *
+    MOOD_WEIGHT;
+
+/**
  * A different deck in the same category, adult only when the current deck is
- * adult. Among those, the deck finished the fewest times wins, with registry
- * order breaking ties.
+ * adult. The deck finished the fewest times wins; among those, the one most
+ * like the current deck (finder weights, builtin decks only), then registry order.
  */
 export const pickSuggestedDeck = (
   currentDeck: Pick<DeckMeta, "id" | "category" | "isAdult">,
   decksFinished: Record<string, number>,
   today: Date = new Date()
 ): Deck | undefined => {
-  const candidates = getVisibleDecks(today).filter(
-    (candidate) =>
-      candidate.id !== currentDeck.id &&
-      candidate.category === currentDeck.category &&
-      (currentDeck.isAdult || !candidate.isAdult)
+  const currentMeta = getBuiltinDeck(currentDeck.id);
+  const candidates = getVisibleDecks(today)
+    .filter(
+      (candidate) =>
+        candidate.id !== currentDeck.id &&
+        candidate.category === currentDeck.category &&
+        (currentDeck.isAdult || !candidate.isAdult)
+    )
+    .map((candidate, registryIndex) => ({
+      candidate,
+      registryIndex,
+      finishCount: decksFinished[candidate.id] ?? 0,
+      likeness: currentMeta ? scoreLikeness(currentMeta, candidate) : 0,
+    }));
+  candidates.sort(
+    (first, second) =>
+      first.finishCount - second.finishCount ||
+      second.likeness - first.likeness ||
+      first.registryIndex - second.registryIndex
   );
-  let suggestedDeck: Deck | undefined;
-  let lowestFinishCount = Number.POSITIVE_INFINITY;
-  for (const candidate of candidates) {
-    const finishCount = decksFinished[candidate.id] ?? 0;
-    if (finishCount < lowestFinishCount) {
-      suggestedDeck = candidate;
-      lowestFinishCount = finishCount;
+  return candidates[0]?.candidate;
+};
+
+const MILLISECONDS_PER_MINUTE = 60_000;
+
+export interface RecapCopy {
+  recap: Record<"warm" | "deeper" | "allIn", string>;
+  recapCards: PluralForms;
+  recapMinutes: string;
+  recapUnderAMinute: string;
+}
+
+const recapKeys = { 1: "warm", 2: "deeper", 3: "allIn" } as const;
+
+/** One shareable line about the game: "We went All in on First Date: 48 cards, 52 min." */
+export const buildRecapText = (
+  copy: RecapCopy,
+  deckTitle: string,
+  endState: Pick<DeckEndState, "cardsPlayed" | "millisecondsPlayed" | "options">
+): string => {
+  const minutes = Math.round(
+    endState.millisecondsPlayed / MILLISECONDS_PER_MINUTE
+  );
+  const startLevel = endState.options?.startLevel ?? 1;
+  return formatCopy(copy.recap[recapKeys[startLevel]], {
+    deck: deckTitle,
+    cards: pluralize(endState.cardsPlayed, copy.recapCards),
+    time:
+      minutes < 1
+        ? copy.recapUnderAMinute
+        : formatCopy(copy.recapMinutes, { count: minutes }),
+  });
+};
+
+export type RecapShareOutcome = "shared" | "copied" | "cancelled" | "failed";
+
+/**
+ * Opens the share sheet where there is one, else copies the line and the
+ * link. Closing the share sheet is not an error, so it reports "cancelled".
+ */
+export const shareRecap = async (
+  text: string,
+  url: string
+): Promise<RecapShareOutcome> => {
+  if (typeof navigator.share === "function") {
+    try {
+      await navigator.share({ text, url });
+      return "shared";
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        return "cancelled";
+      }
+      // Refused (no permission, unsupported data): the clipboard still works.
     }
   }
-  return suggestedDeck;
+  try {
+    await navigator.clipboard.writeText(`${text} ${url}`);
+    return "copied";
+  } catch {
+    return "failed";
+  }
 };

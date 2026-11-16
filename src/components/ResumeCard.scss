@@ -4,6 +4,7 @@
 // so the layout follows its own width.
 .resume-card {
   @include surface;
+  @include deck-tone;
   container-type: inline-size;
   padding: $space-4;
   border-color: color-mix(in srgb, var(--deck-accent) 40%, transparent);
@@ -33,7 +34,7 @@
   height: 48px;
   border-radius: $radius;
   background: color-mix(in srgb, var(--deck-accent) 18%, transparent);
-  color: var(--deck-accent);
+  color: var(--deck-text);
 }
 
 .resume-card__body {
@@ -75,7 +76,7 @@
 .resume-card__fill {
   height: 100%;
   border-radius: inherit;
-  background: var(--deck-accent);
+  background: var(--deck-text);
 
   @include motion-safe {
     animation: resume-card-fill $duration-slow $ease-out 200ms both;

@@ -54,6 +54,7 @@ export const CustomDeckListItem = ({
           <Link
             to={`/play/${encodedDeckId}`}
             className="button button--primary"
+            viewTransition
             aria-label={nameAction(listCopy.startDeckNamed)}
           >
             <FiPlay aria-hidden="true" size={18} />
@@ -63,6 +64,7 @@ export const CustomDeckListItem = ({
         <Link
           to={`/custom/${encodedDeckId}/edit`}
           className="button button--secondary"
+          viewTransition
           aria-label={nameAction(listCopy.editDeckNamed)}
         >
           <FiEdit2 aria-hidden="true" size={18} />

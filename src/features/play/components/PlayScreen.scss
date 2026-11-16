@@ -10,6 +10,14 @@
   overflow-x: clip;
 }
 
+// A downward swipe on the card must never pull the page to refresh (Android Chrome)
+// or bounce it, so the document, the scroll container, holds its overscroll in play.
+html:has(.play-screen),
+html:has(.play-screen) body,
+.play-screen {
+  overscroll-behavior-y: none;
+}
+
 .play-screen__layout {
   display: flex;
   flex-direction: column;
@@ -23,19 +31,46 @@
   margin-top: $space-2;
 }
 
+// The how-to line for a first game. It is the last thing on the screen, so it
+// leaves once faded out without moving anything above it.
 .play-screen__hint {
-  max-height: 3em;
-  overflow: hidden;
   color: $color-text-dim;
   font-size: 0.875rem;
   text-align: center;
-  transition:
-    opacity $duration ease,
-    max-height $duration $ease-out;
+  // Outside motion-safe on purpose: reduced motion keeps a 1ms fade, whose
+  // transitionend still removes the line.
+  transition: opacity $duration $ease-out;
+
+  @include motion-safe {
+    animation: play-screen-hint-in $duration-slow $ease-out both;
+  }
 
   &[data-visible="false"] {
-    max-height: 0;
     opacity: 0;
+  }
+}
+
+// Touch screens get the swipe line, a mouse or trackpad gets the keys.
+.play-screen__hint-keys {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .play-screen__hint-touch {
+    display: none;
+  }
+
+  .play-screen__hint-keys {
+    display: inline;
+  }
+}
+
+@keyframes play-screen-hint-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -230,24 +265,31 @@
       margin-left: 0;
     }
 
+    // Both faces keep the same floors, so the copy turned to the far side of the
+    // table never drops below 18px (16px for a long card). A face that runs out
+    // of room scrolls on its own.
     @media (max-height: 520px) {
-      .play-card__badge {
-        padding: 3px $space-2;
-        font-size: 0.75rem;
+      .play-card__meta {
+        gap: $space-1;
+      }
+
+      .play-card__chip {
+        min-height: 22px;
+        padding: 1px $space-2;
       }
 
       .play-card__turn {
-        font-size: 0.8125rem;
+        font-size: 0.875rem;
       }
     }
 
     .play-card__text {
-      font-size: clamp(1rem, 0.25rem + 4dvh, 1.875rem);
+      font-size: clamp(1.125rem, 0.25rem + 4dvh, 1.875rem);
       line-height: 1.25;
     }
 
     .play-card[data-text-length="long"] .play-card__text {
-      font-size: clamp(0.875rem, 0.25rem + 3dvh, 1.5rem);
+      font-size: clamp(1rem, 0.25rem + 3dvh, 1.5rem);
     }
 
     @include compact-countdown;

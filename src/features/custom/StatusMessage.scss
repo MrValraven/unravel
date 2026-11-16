@@ -28,7 +28,7 @@
   color: $color-heading;
   font-size: 0.9375rem;
   font-weight: 500;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 32px shadow(0.3);
   pointer-events: auto;
   animation: status-message-in $duration $ease-out both;
 

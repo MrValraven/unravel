@@ -1,7 +1,16 @@
 @use "../../styles/tokens" as *;
 
+$landing-wide-width: 1120px;
+
 .deck-landing {
   @include deck-tone;
+
+  // Wide screens get two columns, so the page widens past the usual column.
+  &.page {
+    @media (min-width: $bp-desktop) {
+      max-width: calc(#{$landing-wide-width} + 2 * #{$gutter});
+    }
+  }
 }
 
 .deck-landing__main {
@@ -9,6 +18,37 @@
   flex-direction: column;
   gap: $space-6;
   padding-top: $space-2;
+
+  @media (min-width: $bp-desktop) {
+    gap: $space-7;
+  }
+}
+
+// Deck info and actions on the left, sample cards on the right.
+.deck-landing__layout {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  // The breadcrumbs sit close above.
+  margin-top: -$space-4;
+
+  @media (min-width: $bp-desktop) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: $space-7;
+  }
+}
+
+.deck-landing__info {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+
+  @media (min-width: $bp-desktop) {
+    position: sticky;
+    top: $space-4;
+  }
 }
 
 .deck-landing__hero {
@@ -22,7 +62,10 @@
   border: 1px solid $color-border;
   border-radius: $radius-lg;
   background: $color-surface;
-  animation: deck-landing-in $duration-slow $ease-out both;
+
+  @include motion-safe {
+    animation: deck-landing-in $duration-slow $ease-out both;
+  }
 }
 
 .deck-landing__icon {
@@ -31,8 +74,8 @@
   width: 60px;
   height: 60px;
   border-radius: $radius;
-  background: $color-surface-hover;
-  color: var(--deck-tone);
+  background: var(--deck-tone);
+  color: $color-on-accent;
 }
 
 .deck-landing__eyebrow {

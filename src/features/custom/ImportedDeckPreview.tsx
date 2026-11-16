@@ -51,11 +51,15 @@ export const ImportedDeckPreview = ({ deck }: { deck: SharedDeck }) => {
     });
     // Replace the import entry so Back never lands on this page and offers a second save.
     if (shouldPlay)
-      void navigate(`/play/${encodeURIComponent(deckId)}`, { replace: true });
+      void navigate(`/play/${encodeURIComponent(deckId)}`, {
+        replace: true,
+        viewTransition: true,
+      });
     else
       void navigate("/custom", {
         replace: true,
         state: createSavedDeckState(deck.title),
+        viewTransition: true,
       });
   };
 

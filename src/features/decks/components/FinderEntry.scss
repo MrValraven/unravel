@@ -1,15 +1,17 @@
 @use "../../../styles/tokens" as *;
 
+// A signpost, not a deck: no tone face, no card edges. An open pill with a
+// dashed compass ring, set in the UI sans, so it never reads as one of the decks.
 .finder-entry {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: $space-3;
   min-height: $tap-target;
-  padding: $space-4;
+  padding: $space-3 $space-5 $space-3 $space-3;
   border: 1px solid $color-border-strong;
-  border-radius: $radius-lg;
-  background: $color-surface;
+  border-radius: $radius-pill;
+  background: transparent;
   color: $color-text;
   text-decoration: none;
   transition:
@@ -19,23 +21,38 @@
 
   @media (hover: hover) {
     &:hover {
-      background: $color-surface-hover;
+      border-color: $color-accent;
+      background: $color-surface;
     }
   }
 
-  &:active {
-    transform: scale(0.985);
+  @include motion-safe {
+    &:active {
+      transform: scale(0.985);
+    }
   }
 }
 
 .finder-entry__icon {
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
+  border: 1.5px dashed $color-accent;
   border-radius: $radius-pill;
-  background: $color-accent;
-  color: $color-on-accent;
+  color: $color-accent;
+
+  svg {
+    @include motion-safe {
+      transition: transform $duration $ease-out;
+    }
+  }
+
+  @media (hover: hover) {
+    .finder-entry:hover & svg {
+      transform: rotate(-20deg);
+    }
+  }
 }
 
 .finder-entry__body {
@@ -47,13 +64,14 @@
 
 .finder-entry__title {
   color: $color-heading;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .finder-entry__text {
   font-size: 0.875rem;
+  line-height: 1.4;
 }
 
-.finder-entry__chevron {
-  color: $color-text-dim;
+.finder-entry__arrow {
+  color: $color-accent;
 }

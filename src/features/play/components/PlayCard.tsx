@@ -1,12 +1,13 @@
 import type { ReactNode } from "react";
-import { FiUsers, FiZap } from "react-icons/fi";
-import type { Card } from "../../../content/types";
+import type { IconType } from "react-icons";
+import { FiMessageCircle, FiUsers, FiZap } from "react-icons/fi";
+import type { Card, CardType } from "../../../content/types";
 import { localize } from "../../../i18n/localize";
 import { useLocale } from "../../../i18n/LocaleContext";
 import { useCopy } from "../../../i18n/useCopy";
 import { playCopy } from "../copy";
 import type { TurnInfo } from "../engine/selectors";
-import { getCardBadgeLabel, getTurnLine } from "./cardBadge";
+import { getCardTypeLabel, getLevelLabel, getTurnLine } from "./cardBadge";
 import type { CardMotion } from "./usePlaySession";
 import "./PlayCard.scss";
 
@@ -22,10 +23,21 @@ interface PlayCardProps {
   footer: ReactNode;
 }
 
+const typeIcons: Record<CardType, IconType> = {
+  question: FiMessageCircle,
+  challenge: FiZap,
+  everyone: FiUsers,
+};
+
+const LEVEL_STEPS = [1, 2, 3] as const;
+
 /** Past this many characters a card counts as long, and small screens set it a step smaller. */
 const LONG_CARD_CHARACTERS = 110;
 
-/** One physical-looking card in the deck's accent. Table mode prints the text twice, one copy upside down. */
+/**
+ * One physical-looking card in the deck's accent: a type chip and a level chip,
+ * whose turn it is, then the card text. Table mode prints it twice, one copy upside down.
+ */
 export const PlayCard = ({
   card,
   turn,
@@ -34,10 +46,12 @@ export const PlayCard = ({
   isPreview = false,
   footer,
 }: PlayCardProps) => {
-  const copy = useCopy(playCopy).card;
+  const playText = useCopy(playCopy);
+  const copy = playText.card;
   const locale = useLocale();
-  const badgeLabel = getCardBadgeLabel(card.type, copy);
-  const BadgeIcon = card.type === "challenge" ? FiZap : FiUsers;
+  const typeLabel = getCardTypeLabel(card.type, copy);
+  const TypeIcon = typeIcons[card.type];
+  const levelLabel = getLevelLabel(card.level, playText.setup.levels);
   const turnLine = getTurnLine(card.type, turn, copy);
   const cardText = localize(card.text, locale);
 
@@ -46,17 +60,30 @@ export const PlayCard = ({
       className={`play-card__face${isAcrossTable ? " play-card__face--across" : ""}`}
       aria-hidden={isAcrossTable || undefined}
     >
-      {(badgeLabel || turnLine) && (
-        <div className="play-card__meta">
-          {badgeLabel && (
-            <span className="play-card__badge">
-              <BadgeIcon aria-hidden="true" size={16} />
-              {badgeLabel}
+      <div className="play-card__meta">
+        <div className="play-card__chips">
+          <span className="play-card__chip play-card__chip--type">
+            <TypeIcon aria-hidden="true" size={14} />
+            {typeLabel}
+          </span>
+          <span
+            className="play-card__chip play-card__chip--level"
+            data-level={card.level}
+          >
+            <span className="play-card__level-steps" aria-hidden="true">
+              {LEVEL_STEPS.map((step) => (
+                <span
+                  key={step}
+                  className="play-card__level-step"
+                  data-filled={step <= card.level}
+                />
+              ))}
             </span>
-          )}
-          {turnLine && <span className="play-card__turn">{turnLine}</span>}
+            {levelLabel}
+          </span>
         </div>
-      )}
+        {turnLine && <p className="play-card__turn">{turnLine}</p>}
+      </div>
       <p className="play-card__text">{cardText}</p>
     </div>
   );

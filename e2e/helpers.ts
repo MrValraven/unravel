@@ -11,7 +11,7 @@ const FUTURE_VERSION = "99.0.0";
 export const returningPlayerSettings = {
   locale: "en",
   textScale: 1,
-  isDimMode: false,
+  theme: "default",
   isHapticsEnabled: true,
   hasSeenIntro: true,
   lastSeenVersion: FUTURE_VERSION,

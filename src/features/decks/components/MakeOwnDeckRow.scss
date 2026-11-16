@@ -1,0 +1,31 @@
+@use "../../../styles/tokens" as *;
+
+// One quiet row under the catalogue: a rule above, text and a button side by
+// side once there is room.
+.make-own-deck {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-3 $space-4;
+  padding-top: $space-5;
+  border-top: 1px solid $color-border;
+}
+
+.make-own-deck__text {
+  display: flex;
+  flex: 1 1 18rem;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.make-own-deck__title {
+  font-size: 1.0625rem;
+}
+
+.make-own-deck__body {
+  font-size: 0.875rem;
+}
+
+.make-own-deck__action {
+  flex-shrink: 0;
+}

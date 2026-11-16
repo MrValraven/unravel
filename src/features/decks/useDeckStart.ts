@@ -15,8 +15,13 @@ interface PendingGatedAction {
 export interface DeckStartControls {
   /** Runs `action` now, or after the age gate when the deck is adult and age is unconfirmed. */
   runAfterAgeGate: (deck: DeckMeta, action: () => void) => void;
-  /** Opens the play screen for the deck, asking for age first when needed. */
+  /**
+   * Goes straight into play with the last-used options (a saved game of this
+   * deck resumes), asking for age first when needed.
+   */
   startDeck: (deck: DeckMeta) => void;
+  /** Opens Game options for the deck, asking for age first when needed. */
+  openGameOptions: (deck: DeckMeta) => void;
   /** Spread onto `<AgeGateDialog />`. */
   ageGateProps: AgeGateDialogProps;
 }
@@ -44,12 +49,24 @@ export const useDeckStart = (): DeckStartControls => {
   const startDeck = (deck: DeckMeta) =>
     runAfterAgeGate(deck, () => {
       haptics.tap();
-      void navigate(`/play/${encodeURIComponent(deck.id)}`);
+      void navigate(`/play/${encodeURIComponent(deck.id)}`, {
+        viewTransition: true,
+      });
+    });
+
+  // Same path as buildGameOptionsPath in play/playSession, written out so the
+  // deck picker's bundle does not pull in the play engine.
+  const openGameOptions = (deck: DeckMeta) =>
+    runAfterAgeGate(deck, () => {
+      void navigate(`/play/${encodeURIComponent(deck.id)}?setup=1`, {
+        viewTransition: true,
+      });
     });
 
   return {
     runAfterAgeGate,
     startDeck,
+    openGameOptions,
     ageGateProps: {
       isOpen: isAgeGateOpen,
       deckTitle: pendingAction?.deckTitle ?? "",

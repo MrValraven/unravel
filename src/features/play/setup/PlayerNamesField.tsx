@@ -19,7 +19,8 @@ interface PlayerNamesFieldProps {
   onNamesChange: (names: string[]) => void;
 }
 
-const INITIAL_ROW_COUNT = 2;
+/** Two name rows always show: two players is the smallest game, so those rows cannot be removed. */
+const MIN_ROW_COUNT = 2;
 /** Removes a leaving row even when animationend never fires (hidden tab, test runner). */
 const LEAVE_FALLBACK_MILLISECONDS = 400;
 
@@ -32,19 +33,22 @@ export const PlayerNamesField = ({
 }: PlayerNamesFieldProps) => {
   const copy = useCopy(playCopy).setup;
   const [rows, setRows] = useState<PlayerRow[]>(() => {
-    const names =
-      initialNames.length > 0
-        ? initialNames
-        : Array<string>(INITIAL_ROW_COUNT).fill("");
+    const names = [
+      ...initialNames,
+      ...Array<string>(Math.max(MIN_ROW_COUNT - initialNames.length, 0)).fill(
+        ""
+      ),
+    ];
     return names.map((name, rowId) => ({ rowId, name, isLeaving: false }));
   });
-  const nextRowIdRef = useRef(Math.max(initialNames.length, INITIAL_ROW_COUNT));
+  const nextRowIdRef = useRef(Math.max(initialNames.length, MIN_ROW_COUNT));
   const inputRefs = useRef(new Map<number, HTMLInputElement>());
   const addButtonRef = useRef<HTMLButtonElement>(null);
   /** A row id, or "add" for the Add player button. Focus moves after render, once the target exists. */
   const [focusTarget, setFocusTarget] = useState<number | "add" | null>(null);
   const activeRows = rows.filter((row) => !row.isLeaving);
   const isFull = activeRows.length >= MAX_PLAYERS;
+  const canRemoveRows = activeRows.length > MIN_ROW_COUNT;
   const hasLeavingRows = rows.some((row) => row.isLeaving);
 
   const updateRows = (nextRows: PlayerRow[]) => {
@@ -80,6 +84,7 @@ export const PlayerNamesField = ({
   };
 
   const removeRow = (rowId: number) => {
+    if (!canRemoveRows) return;
     updateRows(
       rows.map((row) =>
         row.rowId === rowId ? { ...row, isLeaving: true } : row
@@ -150,16 +155,19 @@ export const PlayerNamesField = ({
                 }
                 onKeyDown={(event) => handleKeyDown(event, rowIndex)}
               />
-              <button
-                type="button"
-                className="icon-button player-names__remove"
-                aria-label={formatCopy(copy.removePlayer, {
-                  number: playerNumber,
-                })}
-                onClick={() => removeRow(row.rowId)}
-              >
-                <FiX aria-hidden="true" size={20} />
-              </button>
+              {/* A leaving row keeps its button so it animates out whole. */}
+              {(canRemoveRows || row.isLeaving) && (
+                <button
+                  type="button"
+                  className="icon-button player-names__remove"
+                  aria-label={formatCopy(copy.removePlayer, {
+                    number: playerNumber,
+                  })}
+                  onClick={() => removeRow(row.rowId)}
+                >
+                  <FiX aria-hidden="true" size={20} />
+                </button>
+              )}
             </li>
           );
         })}

@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FiRefreshCw, FiX } from "react-icons/fi";
 import { useRegisterSW } from "virtual:pwa-register/react";
 import { useCopy } from "../i18n/useCopy";
 import { sharedCopy } from "./copy";
+import { OfflineReadyToast } from "./OfflineReadyToast";
 import "./UpdateBanner.scss";
 
 /** The page reloads into the new version on success; still here after this means it failed. */
@@ -27,11 +28,15 @@ const scheduleUpdateChecks = (
  * Global "A new version of Unravel is ready" banner. The service worker runs in prompt
  * mode: a new version installs in the background and waits until the player
  * picks "Update now", which activates it and reloads the page.
+ *
+ * It owns the one service worker registration, so it also shows the one-time
+ * "Ready to play offline" toast when the first install finishes precaching.
  */
 export const UpdateBanner = () => {
   const copy = useCopy(sharedCopy).updateBanner;
   const {
     needRefresh: [isUpdateWaiting, setIsUpdateWaiting],
+    offlineReady: [isOfflineReady, setIsOfflineReady],
     updateServiceWorker,
   } = useRegisterSW({ onRegisteredSW: scheduleUpdateChecks });
   const [isUpdating, setIsUpdating] = useState(false);
@@ -39,6 +44,11 @@ export const UpdateBanner = () => {
   const reloadTimeoutRef = useRef<number | undefined>(undefined);
 
   useEffect(() => () => window.clearTimeout(reloadTimeoutRef.current), []);
+
+  const hideOfflineReady = useCallback(
+    () => setIsOfflineReady(false),
+    [setIsOfflineReady]
+  );
 
   const markUpdateFailed = () => {
     setHasUpdateFailed(true);
@@ -65,38 +75,44 @@ export const UpdateBanner = () => {
   };
 
   return (
-    <div
-      className="update-banner"
-      data-state={isUpdateWaiting ? "open" : "closed"}
-    >
-      <p className="visually-hidden" role="status">
-        {isUpdateWaiting ? message : ""}
-      </p>
-      <div className="update-banner__panel">
-        <span className="update-banner__icon" aria-hidden="true">
-          <FiRefreshCw size={18} />
-        </span>
-        <p className="update-banner__message" aria-hidden="true">
-          {message}
+    <>
+      <OfflineReadyToast
+        isOpen={isOfflineReady && !isUpdateWaiting}
+        onDismiss={hideOfflineReady}
+      />
+      <div
+        className="update-banner"
+        data-state={isUpdateWaiting ? "open" : "closed"}
+      >
+        <p className="visually-hidden" role="status">
+          {isUpdateWaiting ? message : ""}
         </p>
-        <button
-          type="button"
-          className="button button--primary update-banner__action"
-          onClick={() => void handleUpdate()}
-          disabled={isUpdating}
-        >
-          {isUpdating ? copy.updating : copy.update}
-        </button>
-        <button
-          type="button"
-          className="icon-button update-banner__dismiss"
-          aria-label={copy.dismiss}
-          onClick={() => setIsUpdateWaiting(false)}
-        >
-          <FiX aria-hidden="true" size={20} />
-        </button>
+        <div className="update-banner__panel">
+          <span className="update-banner__icon" aria-hidden="true">
+            <FiRefreshCw size={18} />
+          </span>
+          <p className="update-banner__message" aria-hidden="true">
+            {message}
+          </p>
+          <button
+            type="button"
+            className="button button--primary update-banner__action"
+            onClick={() => void handleUpdate()}
+            disabled={isUpdating}
+          >
+            {isUpdating ? copy.updating : copy.update}
+          </button>
+          <button
+            type="button"
+            className="icon-button update-banner__dismiss"
+            aria-label={copy.dismiss}
+            onClick={() => setIsUpdateWaiting(false)}
+          >
+            <FiX aria-hidden="true" size={20} />
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

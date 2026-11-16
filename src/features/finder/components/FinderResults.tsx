@@ -72,7 +72,7 @@ export const FinderResults = ({
           <FiRotateCcw aria-hidden="true" size={18} />
           {copy.startOver}
         </button>
-        <Link to="/decks" className="button button--quiet">
+        <Link to="/decks" className="button button--quiet" viewTransition>
           <FiGrid aria-hidden="true" size={18} />
           {copy.browseDecks}
         </Link>

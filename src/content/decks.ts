@@ -1,5 +1,6 @@
 import type {
-  Deck,
+  BuiltinDeck,
+  BuiltinDeckMeta,
   DeckCategory,
   DeckMeta,
   DeckPackFile,
@@ -21,6 +22,9 @@ import sillyGoosePack from "./packs/silly-goose.json";
 import queerVibesPack from "./packs/queer-vibes.json";
 import pridePack from "./packs/pride.json";
 import santosPopularesPack from "./packs/santos-populares.json";
+import halloweenPack from "./packs/halloween.json";
+import christmasTablePack from "./packs/christmas-table.json";
+import friendsmasPack from "./packs/friendsmas.json";
 import newYearPack from "./packs/new-year.json";
 import valentinesPack from "./packs/valentines.json";
 
@@ -67,13 +71,13 @@ export const deckCategories: DeckCategoryInfo[] = [
  * so each pack is asserted to `DeckPackFile` here. `content.test.ts` checks
  * every pack against the contract.
  */
-const buildDeck = (meta: DeckMeta, pack: DeckPackFile): Deck => ({
+const buildDeck = (meta: BuiltinDeckMeta, pack: DeckPackFile): BuiltinDeck => ({
   ...meta,
   cards: pack.cards,
 });
 
 /** Live builtin decks in registry order. Draft decks live in /content-drafts. */
-export const decks: Deck[] = [
+export const decks: BuiltinDeck[] = [
   buildDeck(
     {
       id: "unravel",
@@ -81,6 +85,10 @@ export const decks: Deck[] = [
       description: {
         en: "Easy questions that slowly go deeper, for turning new faces into friends.",
         pt: "Perguntas leves que vão ficando mais profundas, para transformar caras novas em amigos.",
+      },
+      tagline: {
+        en: "Easy questions for new faces",
+        pt: "Perguntas leves para caras novas",
       },
       category: "friends",
       tag: "",
@@ -100,6 +108,10 @@ export const decks: Deck[] = [
         en: "From easy openers to what really matters, so you leave your first date knowing each other better.",
         pt: "Das perguntas fáceis ao que importa mesmo, para saírem do primeiro encontro a conhecerem-se melhor.",
       },
+      tagline: {
+        en: "Openers that get past small talk",
+        pt: "Para ir além da conversa de circunstância",
+      },
       category: "dating",
       tag: "",
       isAdult: false,
@@ -117,6 +129,10 @@ export const decks: Deck[] = [
       description: {
         en: "Playful questions and little challenges that turn a night in or out into a proper date.",
         pt: "Perguntas divertidas e pequenos desafios que transformam uma noite em casa ou fora num encontro a sério.",
+      },
+      tagline: {
+        en: "Turn any night into a proper date",
+        pt: "Faz de qualquer noite um encontro a sério",
       },
       category: "dating",
       tag: "new",
@@ -136,6 +152,10 @@ export const decks: Deck[] = [
         en: "Tender, curious questions for couples who want to know each other a little deeper.",
         pt: "Perguntas ternas e curiosas para casais que se querem conhecer um pouco mais a fundo.",
       },
+      tagline: {
+        en: "Tender questions for couples",
+        pt: "Perguntas ternas para casais",
+      },
       category: "dating",
       tag: "",
       isAdult: false,
@@ -153,6 +173,10 @@ export const decks: Deck[] = [
       description: {
         en: "Silly what-ifs and goofy challenges for couples who love to laugh together.",
         pt: "Hipóteses malucas e desafios tontos para casais que adoram rir juntos.",
+      },
+      tagline: {
+        en: "Silly what-ifs for couples who laugh",
+        pt: "Hipóteses tontas para casais que riem",
       },
       category: "dating",
       tag: "new",
@@ -172,6 +196,10 @@ export const decks: Deck[] = [
         en: "Quick, cheeky questions for meeting new people on a night out in Bairro Alto or anywhere else.",
         pt: "Perguntas rápidas e atrevidas para conhecer gente nova numa noite no Bairro Alto ou noutro sítio qualquer.",
       },
+      tagline: {
+        en: "Cheeky icebreakers for a night out",
+        pt: "Quebra-gelos atrevidos para sair à noite",
+      },
       category: "friends",
       tag: "new",
       isAdult: false,
@@ -189,6 +217,10 @@ export const decks: Deck[] = [
       description: {
         en: "Flirty questions and touch challenges that start gentle and get bolder, for partners who want to turn up the heat.",
         pt: "Perguntas atrevidas e desafios de toque que começam suaves e vão ficando mais ousados, para casais que querem aquecer o ambiente.",
+      },
+      tagline: {
+        en: "Flirty questions that turn up the heat",
+        pt: "Perguntas atrevidas para aquecer o ambiente",
       },
       category: "adults",
       tag: "",
@@ -208,6 +240,10 @@ export const decks: Deck[] = [
         en: "Honest questions about sex, turn-ons and fantasies, for partners who want to talk openly.",
         pt: "Perguntas sinceras sobre sexo, desejos e fantasias, para casais que querem falar abertamente.",
       },
+      tagline: {
+        en: "Honest talk about sex and fantasies",
+        pt: "Conversa sincera sobre sexo e fantasias",
+      },
       category: "adults",
       tag: "new",
       isAdult: true,
@@ -225,6 +261,10 @@ export const decks: Deck[] = [
       description: {
         en: "Talk through desires, limits, safe words and aftercare together before you play.",
         pt: "Falem juntos sobre desejos, limites, palavras de segurança e aftercare antes de começarem a sessão.",
+      },
+      tagline: {
+        en: "Limits, safe words and aftercare",
+        pt: "Limites, palavras de segurança e aftercare",
       },
       category: "adults",
       tag: "beta",
@@ -244,6 +284,10 @@ export const decks: Deck[] = [
         en: "A short, gentle check-in for the two of you after being intimate.",
         pt: "Uma conversa curta e carinhosa para depois de um momento íntimo a dois.",
       },
+      tagline: {
+        en: "A gentle check-in after intimacy",
+        pt: "Uma conversa carinhosa depois da intimidade",
+      },
       category: "adults",
       tag: "new",
       isAdult: true,
@@ -261,6 +305,10 @@ export const decks: Deck[] = [
       description: {
         en: "From comfort food to daring memories, questions about everything that brings you pleasure.",
         pt: "Da comida de conforto às memórias mais ousadas, perguntas sobre tudo o que vos dá prazer.",
+      },
+      tagline: {
+        en: "Everything that brings you pleasure",
+        pt: "Tudo o que vos dá prazer",
       },
       category: "adults",
       tag: "",
@@ -280,6 +328,10 @@ export const decks: Deck[] = [
         en: "Questions about loving more than one person, from jealousy and time to compersion and joy.",
         pt: "Perguntas sobre amar mais do que uma pessoa, do ciúme e do tempo à compersão e à alegria.",
       },
+      tagline: {
+        en: "On loving more than one person",
+        pt: "Sobre amar mais do que uma pessoa",
+      },
       category: "dating",
       tag: "",
       isAdult: false,
@@ -297,6 +349,10 @@ export const decks: Deck[] = [
       description: {
         en: "Absurd questions and daft challenges for when the group just wants to laugh.",
         pt: "Perguntas absurdas e desafios disparatados para quando o grupo só quer rir.",
+      },
+      tagline: {
+        en: "Absurd questions for a laughing group",
+        pt: "Perguntas absurdas para rir em grupo",
       },
       category: "friends",
       tag: "beta",
@@ -316,6 +372,10 @@ export const decks: Deck[] = [
         en: "Easygoing questions about queer life, identity and joy, for LGBTQ+ friends and allies.",
         pt: "Perguntas descontraídas sobre a vida, a identidade e a alegria queer, para amigos LGBTQ+ e aliados.",
       },
+      tagline: {
+        en: "Queer life, identity and joy",
+        pt: "Vida, identidade e alegria queer",
+      },
       category: "friends",
       tag: "beta",
       isAdult: false,
@@ -333,6 +393,10 @@ export const decks: Deck[] = [
       description: {
         en: "Stories, joy and a little glitter for June, made to share with your chosen family.",
         pt: "Histórias, alegria e um pouco de brilho para junho, para partilhar com a vossa família escolhida.",
+      },
+      tagline: {
+        en: "Stories and glitter for chosen family",
+        pt: "Histórias e brilho para a família escolhida",
       },
       category: "friends",
       tag: "seasonal",
@@ -353,6 +417,10 @@ export const decks: Deck[] = [
         en: "Sardines, manjericos and marchas: questions for warm June nights at the arraial.",
         pt: "Sardinhas, manjericos e marchas: perguntas para as noites quentes de junho no arraial.",
       },
+      tagline: {
+        en: "Questions for June nights at the arraial",
+        pt: "Para as noites de junho no arraial",
+      },
       category: "friends",
       tag: "seasonal",
       isAdult: false,
@@ -366,11 +434,84 @@ export const decks: Deck[] = [
   ),
   buildDeck(
     {
+      id: "halloween",
+      title: { en: "Halloween", pt: "Halloween" },
+      description: {
+        en: "Costumes, local legends and things that go bump in the night: questions for the spooky season.",
+        pt: "Disfarces, lendas locais e coisas que se ouvem na calada da noite: perguntas para a época do susto.",
+      },
+      tagline: {
+        en: "Costumes, legends and spooky stories",
+        pt: "Disfarces, lendas e histórias de arrepiar",
+      },
+      category: "friends",
+      tag: "seasonal",
+      isAdult: false,
+      icon: "ghost",
+      accent: categoryAccents.friends,
+      audiences: ["friends", "group", "new-people"],
+      moods: ["playful", "deep"],
+      season: { start: "10-01", end: "12-01" },
+    },
+    halloweenPack as DeckPackFile
+  ),
+  buildDeck(
+    {
+      id: "christmas-table",
+      title: { en: "Christmas at the Table", pt: "Natal à Mesa" },
+      description: {
+        en: "Traditions, memories and wishes to share over the Christmas meal, with questions that work for every age at the table.",
+        pt: "Tradições, memórias e desejos para partilhar na ceia de Natal, com perguntas que servem a todas as idades à mesa.",
+      },
+      tagline: {
+        en: "Questions for every age at the table",
+        pt: "Perguntas para todas as idades à mesa",
+      },
+      category: "friends",
+      tag: "seasonal",
+      isAdult: false,
+      icon: "tree",
+      accent: categoryAccents.friends,
+      audiences: ["group", "friends"],
+      moods: ["light", "playful"],
+      season: { start: "12-01", end: "01-06" },
+    },
+    christmasTablePack as DeckPackFile
+  ),
+  buildDeck(
+    {
+      id: "friendsmas",
+      title: { en: "Friendsmas", pt: "Natal entre Amigos" },
+      description: {
+        en: "Celebrate Christmas with the family you choose: funny stories, honest gratitude and what the year meant to you all.",
+        pt: "Celebrem o Natal com a família que escolhemos: histórias divertidas, gratidão sincera e o que o ano significou para todos.",
+      },
+      tagline: {
+        en: "Christmas with the family you choose",
+        pt: "O Natal com a família que escolhemos",
+      },
+      category: "friends",
+      tag: "seasonal",
+      isAdult: false,
+      icon: "snowflake",
+      accent: categoryAccents.friends,
+      audiences: ["friends", "group"],
+      moods: ["playful", "deep"],
+      season: { start: "12-01", end: "01-06" },
+    },
+    friendsmasPack as DeckPackFile
+  ),
+  buildDeck(
+    {
       id: "new-year",
       title: { en: "New Year", pt: "Ano Novo" },
       description: {
         en: "Look back on the year you had and raise a glass to the one ahead, together.",
         pt: "Olhem para o ano que passou e brindem juntos ao que aí vem.",
+      },
+      tagline: {
+        en: "Look back and toast the year ahead",
+        pt: "Olhar para trás e brindar ao ano novo",
       },
       category: "friends",
       tag: "seasonal",
@@ -391,6 +532,10 @@ export const decks: Deck[] = [
         en: "Sweet questions and playful challenges for Valentine's season, on a first date or with someone you've loved for years.",
         pt: "Perguntas doces e desafios divertidos para a época do Dia dos Namorados, num primeiro encontro ou num amor de longa data.",
       },
+      tagline: {
+        en: "Sweet questions for Valentine's season",
+        pt: "Perguntas doces para o Dia dos Namorados",
+      },
       category: "dating",
       tag: "seasonal",
       isAdult: false,
@@ -406,7 +551,7 @@ export const decks: Deck[] = [
 
 const decksById = new Map(decks.map((deck) => [deck.id, deck]));
 
-export function getBuiltinDeck(id: string): Deck | undefined {
+export function getBuiltinDeck(id: string): BuiltinDeck | undefined {
   return decksById.get(id);
 }
 
@@ -432,6 +577,6 @@ export function isDeckInSeason(
   return monthDay >= start || monthDay <= end;
 }
 
-export function getVisibleDecks(today: Date = new Date()): Deck[] {
+export function getVisibleDecks(today: Date = new Date()): BuiltinDeck[] {
   return decks.filter((deck) => isDeckInSeason(deck, today));
 }

@@ -27,7 +27,7 @@
   border: 1px solid $color-border-strong;
   border-radius: $radius-lg;
   background: $color-bg-elevated;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 16px 40px shadow(0.35);
   color: $color-heading;
   pointer-events: auto;
 

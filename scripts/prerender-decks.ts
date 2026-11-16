@@ -7,16 +7,22 @@
  * For every live deck it writes dist/decks/<id>/index.html and dist/decks/<id>.html
  * (the same page; vercel.json cleanUrls serves the second one at /decks/<id>).
  * Each page is dist/index.html with its own <title>, description, canonical,
- * Open Graph and Twitter tags, and a <noscript> summary with up to five sample
- * cards. 18+ decks get robots noindex, the shared adults image and no samples.
- * It also writes dist/sitemap.xml and dist/404.html (a copy of index.html, so
- * unknown paths still boot the app and show its own not found page).
+ * Open Graph and Twitter tags, a <noscript> summary with up to five sample
+ * cards, and JSON-LD (a Game for the deck plus its BreadcrumbList). 18+ decks
+ * get robots noindex, the shared adults image and no samples.
+ * The deck list (/decks, with an ItemList), the finder (/finder) and the about
+ * page (/about) get their own pages the same way. The home page keeps its own
+ * tags from index.html and gains WebSite and FAQPage JSON-LD.
+ * It also writes dist/sitemap.xml and dist/404.html (a copy of the original
+ * index.html, so unknown paths still boot the app and show its own not found page).
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { deckCategories, decks } from "../src/content/decks";
 import type { Card, Deck } from "../src/content/types";
+import { faqItems } from "../src/features/home/faq";
 
+/** Same origin as SITE_URL in src/hooks/useDocumentTitle.ts, which keeps canonicals in step on the client. */
 const SITE_URL = "https://unravel.tiagocostadev.com";
 const MAX_SAMPLE_CARDS = 5;
 const OG_IMAGE_WIDTH = 1200;
@@ -45,6 +51,10 @@ const escapeHtml = (value: string): string =>
 
 const deckUrl = (deck: Deck): string => `${SITE_URL}/decks/${deck.id}`;
 
+/** Structured data blocks are JSON inside <script>; escaping "<" keeps any text from closing the tag. */
+const buildJsonLdScript = (data: Record<string, unknown>): string =>
+  `<script type="application/ld+json">${JSON.stringify(data).replaceAll("<", "\\u003c")}</script>`;
+
 /** Deck images live in public/og/decks; a deck without one falls back to the app image. */
 const ogImagePath = (deck: Deck): string => {
   if (deck.isAdult) return "/og/adults.png";
@@ -59,6 +69,10 @@ const ogImagePath = (deck: Deck): string => {
 const categoryTitle = (deck: Deck): string =>
   deckCategories.find((category) => category.key === deck.category)?.title.en ??
   "";
+
+/** Matches categorySectionId in src/features/decks/deckSummary.ts, the picker's section ids. */
+const categoryUrl = (deck: Deck): string =>
+  `${SITE_URL}/decks#decks-${deck.category}`;
 
 const formatCardCount = (count: number): string =>
   count === 1 ? "1 card" : `${count} cards`;
@@ -173,6 +187,16 @@ const finderMeta: PageMeta = {
   isIndexable: true,
 };
 
+const aboutMeta: PageMeta = {
+  path: "/about",
+  title: "What is Unravel? · Unravel",
+  description:
+    "How Unravel works: decks that rise gently from easy questions to deeper ones, with challenges, cards for everyone and three levels.",
+  imagePath: APP_IMAGE_PATH,
+  imageAlt: appImageAlt,
+  isIndexable: true,
+};
+
 const buildHeadTags = (meta: PageMeta): string => {
   const title = escapeHtml(meta.title);
   const description = escapeHtml(meta.description);
@@ -260,13 +284,134 @@ const buildFinderNoscript = (): string =>
     `<p><a href="/decks">See every deck</a></p>`,
   ]);
 
+const buildAboutNoscript = (): string =>
+  wrapNoscript([
+    "<h1>What is Unravel?</h1>",
+    `<p>${escapeHtml(aboutMeta.description)}</p>`,
+    "<p>Turn on JavaScript to read the whole guide and play.</p>",
+    `<p><a href="/decks">See every deck</a></p>`,
+  ]);
+
+const websiteNode = {
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  name: "Unravel",
+  url: `${SITE_URL}/`,
+  inLanguage: ["en", "pt-PT"],
+};
+
+/** A deck as a Game (a CreativeWork) plus the trail its page shows: Decks › Category › Deck. */
+const buildDeckJsonLd = (deck: Deck, imagePath: string): string =>
+  buildJsonLdScript({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Game",
+        "@id": `${deckUrl(deck)}#deck`,
+        name: deck.title.en,
+        description: deckDescription(deck),
+        url: deckUrl(deck),
+        image: `${SITE_URL}${imagePath}`,
+        inLanguage: ["en", "pt-PT"],
+        genre: categoryTitle(deck),
+        isFamilyFriendly: !deck.isAdult,
+        ...(deck.isAdult ? { typicalAgeRange: "18-" } : {}),
+        isAccessibleForFree: true,
+        isPartOf: { "@id": websiteNode["@id"] },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Decks",
+            item: `${SITE_URL}/decks`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: categoryTitle(deck),
+            item: categoryUrl(deck),
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: deck.title.en,
+            item: deckUrl(deck),
+          },
+        ],
+      },
+    ],
+  });
+
+/** Every deck for everyone, in picker order. 18+ decks stay out, as in the sitemap. */
+const buildDeckListJsonLd = (everyoneDecks: Deck[]): string =>
+  buildJsonLdScript({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Unravel decks",
+    url: `${SITE_URL}${deckListMeta.path}`,
+    numberOfItems: everyoneDecks.length,
+    itemListElement: everyoneDecks.map((deck, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: deck.title.en,
+      url: deckUrl(deck),
+    })),
+  });
+
+/** The home page: the site itself and the FAQ it shows, in English. */
+const buildHomeJsonLd = (): string =>
+  buildJsonLdScript({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        ...websiteNode,
+        description:
+          "A card game of good questions for friends, first dates and partners.",
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/#faq`,
+        mainEntity: faqItems.map(({ question, answer }) => ({
+          "@type": "Question",
+          name: question.en,
+          acceptedAnswer: { "@type": "Answer", text: answer.en },
+        })),
+      },
+    ],
+  });
+
+const jsonLdPattern =
+  /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/g;
+
+/** Removes JSON-LD left by an earlier run, so each page carries only its own. */
+const stripJsonLd = (html: string): string => html.replace(jsonLdPattern, "");
+
+const headClosePattern = /\n?\s*<\/head>/;
+
+/** Puts JSON-LD right before </head>. */
+const injectJsonLd = (html: string, jsonLdScript: string): string => {
+  if (!headClosePattern.test(html)) {
+    throw new Error(
+      "dist/index.html has no </head>, so the structured data has nowhere to go."
+    );
+  }
+  return html.replace(
+    headClosePattern,
+    (headClose) => `\n    ${jsonLdScript}${headClose}`
+  );
+};
+
 /** Function replacements keep `$&` and friends in card text literal. */
 const buildPage = (
   baseHtml: string,
   meta: PageMeta,
-  noscriptBlock: string
-): string =>
-  baseHtml
+  noscriptBlock: string,
+  jsonLdScript?: string
+): string => {
+  const page = baseHtml
     .replace(
       viewportMetaPattern,
       (viewportTag) => `${viewportTag.trimEnd()}\n\n${buildHeadTags(meta)}\n`
@@ -275,6 +420,8 @@ const buildPage = (
       '<div id="root">',
       (rootTag) => `${noscriptBlock.trimStart()}\n    ${rootTag}`
     );
+  return jsonLdScript ? injectJsonLd(page, jsonLdScript) : page;
+};
 
 /** Writes <name>.html and <name>/index.html, so cleanUrls and folder paths both work. */
 const writePageTwice = (
@@ -293,6 +440,7 @@ const buildSitemap = (indexableDecks: Deck[], lastModified: string): string => {
     `${SITE_URL}/`,
     `${SITE_URL}${deckListMeta.path}`,
     `${SITE_URL}${finderMeta.path}`,
+    `${SITE_URL}${aboutMeta.path}`,
     ...indexableDecks.map(deckUrl),
   ];
   const entries = urls.map(
@@ -317,15 +465,17 @@ const main = (): void => {
     );
   }
   const indexHtml = readFileSync(indexPath, "utf8");
-  const baseHtml = stripAppHeadTags(indexHtml);
+  const baseHtml = stripAppHeadTags(stripJsonLd(indexHtml));
   const everyoneDecks = decks.filter((deck) => !deck.isAdult);
 
   const decksDirectory = join(distDirectory, "decks");
   for (const deck of decks) {
+    const meta = deckPageMeta(deck);
     const page = buildPage(
       baseHtml,
-      deckPageMeta(deck),
-      buildDeckNoscript(deck)
+      meta,
+      buildDeckNoscript(deck),
+      buildDeckJsonLd(deck, meta.imagePath)
     );
     writePageTwice(decksDirectory, deck.id, page);
   }
@@ -334,14 +484,35 @@ const main = (): void => {
   writePageTwice(
     distDirectory,
     "decks",
-    buildPage(baseHtml, deckListMeta, buildDeckListNoscript(everyoneDecks))
+    buildPage(
+      baseHtml,
+      deckListMeta,
+      buildDeckListNoscript(everyoneDecks),
+      buildDeckListJsonLd(everyoneDecks)
+    )
   );
   writePageTwice(
     distDirectory,
     "finder",
     buildPage(baseHtml, finderMeta, buildFinderNoscript())
   );
-  console.log(`Prerendered the deck list and finder pages in ${distDirectory}`);
+  writePageTwice(
+    distDirectory,
+    "about",
+    buildPage(baseHtml, aboutMeta, buildAboutNoscript())
+  );
+  console.log(
+    `Prerendered the deck list, finder and about pages in ${distDirectory}`
+  );
+
+  // The home page is index.html itself. Its tags stay; only the JSON-LD is new.
+  // A rerun on the same build replaces the block instead of adding a second one.
+  writeFileSync(
+    indexPath,
+    injectJsonLd(stripJsonLd(indexHtml), buildHomeJsonLd()),
+    "utf8"
+  );
+  console.log(`Added WebSite and FAQPage structured data to ${indexPath}`);
 
   const lastModified = new Date().toISOString().slice(0, 10);
   writeFileSync(
@@ -350,10 +521,14 @@ const main = (): void => {
     "utf8"
   );
   console.log(
-    `Wrote sitemap.xml with ${everyoneDecks.length + 3} URLs in ${distDirectory}`
+    `Wrote sitemap.xml with ${everyoneDecks.length + 4} URLs in ${distDirectory}`
   );
 
-  writeFileSync(join(distDirectory, "404.html"), indexHtml, "utf8");
+  writeFileSync(
+    join(distDirectory, "404.html"),
+    stripJsonLd(indexHtml),
+    "utf8"
+  );
   console.log(`Wrote 404.html in ${distDirectory}`);
 };
 

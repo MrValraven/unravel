@@ -13,6 +13,7 @@ import { playCopy } from "../copy";
 import type { TurnInfo } from "../engine/selectors";
 import { getCardBadgeLabel, getTurnLine } from "./cardBadge";
 import { CardFooterPreview } from "./CardFooterPreview";
+import { getCardsBehind } from "./cardStack";
 import { PlayCard } from "./PlayCard";
 import { useCardGestures, type SwipeDirection } from "./useCardGestures";
 import type { CardMotion } from "./usePlaySession";
@@ -69,7 +70,7 @@ export const CardStage = ({
     onPrevious,
   });
   const announcementId = useId();
-  const cardsBehind = Math.min(Math.max(totalCards - cardNumber, 0), 2);
+  const cardsBehind = getCardsBehind(cardNumber, totalCards);
   const badgeLabel = getCardBadgeLabel(card.type, copy);
   const turnLine = getTurnLine(card.type, turn, copy);
   const announcement = [

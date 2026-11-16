@@ -17,6 +17,7 @@ import {
 } from "./finderSteps";
 import { rankDecks, type FinderAnswers } from "./rankDecks";
 import "./DeckFinderPage.scss";
+import { SiteFooter } from "../../components/SiteFooter";
 
 type StepDirection = "forward" | "back";
 
@@ -103,48 +104,51 @@ const DeckFinderPage = () => {
   };
 
   return (
-    <div className="page deck-finder">
-      <PageHeader
-        backTo="/decks"
-        backLabel={copy.backLabel}
-        title={copy.title}
-      />
-      <main className="deck-finder__main">
-        {!isShowingResults && (
-          <div className="deck-finder__progress">
-            <p className="deck-finder__step-label">
-              {formatCopy(copy.stepProgress, {
-                step: stepIndex + 1,
-                total: totalSteps,
-              })}
-            </p>
-            <div className="deck-finder__track" aria-hidden="true">
-              <div
-                className="deck-finder__fill"
-                style={{ width: `${((stepIndex + 1) / totalSteps) * 100}%` }}
-              />
+    <>
+      <div className="page deck-finder">
+        <PageHeader
+          backTo="/decks"
+          backLabel={copy.backLabel}
+          title={copy.title}
+        />
+        <main className="deck-finder__main">
+          {!isShowingResults && (
+            <div className="deck-finder__progress">
+              <p className="deck-finder__step-label">
+                {formatCopy(copy.stepProgress, {
+                  step: stepIndex + 1,
+                  total: totalSteps,
+                })}
+              </p>
+              <div className="deck-finder__track" aria-hidden="true">
+                <div
+                  className="deck-finder__fill"
+                  style={{ width: `${((stepIndex + 1) / totalSteps) * 100}%` }}
+                />
+              </div>
+              {stepIndex > 0 && (
+                <button
+                  type="button"
+                  className="button button--quiet deck-finder__previous"
+                  onClick={() => goToStep(stepIndex - 1, "back")}
+                >
+                  <FiArrowLeft aria-hidden="true" size={18} />
+                  {copy.previousStep}
+                </button>
+              )}
             </div>
-            {stepIndex > 0 && (
-              <button
-                type="button"
-                className="button button--quiet deck-finder__previous"
-                onClick={() => goToStep(stepIndex - 1, "back")}
-              >
-                <FiArrowLeft aria-hidden="true" size={18} />
-                {copy.previousStep}
-              </button>
-            )}
+          )}
+          <div
+            key={stepIndex}
+            className="deck-finder__stage"
+            data-direction={direction}
+          >
+            {renderStep()}
           </div>
-        )}
-        <div
-          key={stepIndex}
-          className="deck-finder__stage"
-          data-direction={direction}
-        >
-          {renderStep()}
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+      <SiteFooter />
+    </>
   );
 };
 

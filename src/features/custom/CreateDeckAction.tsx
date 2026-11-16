@@ -30,7 +30,7 @@ export const CreateDeckAction = ({
 
   if (canCreate) {
     return (
-      <Link to="/custom/new" className={className}>
+      <Link to="/custom/new" className={className} viewTransition>
         <FiPlus aria-hidden="true" size={20} />
         {copy.list.createDeck}
       </Link>

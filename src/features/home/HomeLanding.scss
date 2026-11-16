@@ -1,0 +1,360 @@
+@use "../../styles/tokens" as *;
+
+// Below the app: plain sections separated by space and hairlines, no boxes.
+.home-landing {
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+  margin-top: $space-6;
+
+  // The installed app opens straight into play; marketing is for the website.
+  @media (display-mode: standalone) {
+    display: none;
+  }
+}
+
+.landing__title {
+  font-family: $font-card;
+  font-size: clamp(1.625rem, 1.3rem + 1.2vw, 2.25rem);
+  font-weight: 400;
+}
+
+.landing__body {
+  max-width: 62ch;
+  color: $color-text;
+  font-size: 1.0625rem;
+}
+
+// ---- How it works ----
+// Three numbered steps joined by a stitched thread: down the side on phones,
+// across the top once there is room.
+.landing-steps {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.landing-steps__list {
+  display: grid;
+  gap: $space-5;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: $bp-desktop) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-6;
+  }
+}
+
+.landing-steps__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  column-gap: $space-4;
+  row-gap: $space-1;
+
+  // The stitch from this step's number to the next one.
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 52px;
+    bottom: calc(-1 * #{$space-5} + 4px);
+    left: 23px;
+    border-left: 2px dashed
+      color-mix(in srgb, var(--color-accent) 55%, transparent);
+  }
+
+  @media (min-width: $bp-desktop) {
+    grid-template-columns: 1fr;
+    row-gap: $space-2;
+
+    &:not(:last-child)::after {
+      top: 23px;
+      right: calc(-1 * #{$space-6} + 4px);
+      bottom: auto;
+      left: 52px;
+      border-top: 2px dashed
+        color-mix(in srgb, var(--color-accent) 55%, transparent);
+      border-left: 0;
+    }
+  }
+}
+
+.landing-steps__number {
+  display: grid;
+  grid-row: span 2;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-pill;
+  background: $color-accent-fill;
+  color: $color-on-accent;
+  font-family: $font-card;
+  font-size: 1.375rem;
+  line-height: 1;
+
+  @media (min-width: $bp-desktop) {
+    grid-row: auto;
+    margin-bottom: $space-2;
+  }
+}
+
+.landing-steps__title {
+  align-self: end;
+  font-size: 1.1875rem;
+}
+
+.landing-steps__body {
+  max-width: 40ch;
+  color: $color-text;
+}
+
+// ---- Deck shelf ----
+.landing-shelf {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.landing-shelf__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $space-2 $space-4;
+}
+
+.landing-shelf__all {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  min-height: $tap-target;
+  color: $color-accent;
+  font-weight: 600;
+  text-decoration: none;
+
+  svg {
+    transition: transform $duration-fast $ease-out;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Phones scroll the shelf sideways; wide screens show the six in a row.
+.landing-shelf__list {
+  display: grid;
+  grid-auto-columns: minmax(9.5rem, 42%);
+  grid-auto-flow: column;
+  gap: $space-3;
+  margin-inline: calc(-1 * max(#{$gutter}, env(safe-area-inset-left)));
+  padding: $space-1 max($gutter, env(safe-area-inset-left)) $space-4;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: max($gutter, env(safe-area-inset-left));
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  list-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  > li {
+    scroll-snap-align: start;
+  }
+
+  @media (min-width: $bp-desktop) {
+    grid-auto-columns: auto;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(6, 1fr);
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
+  }
+}
+
+// A deck box: the deck's colour, with the edge of the next card showing.
+.landing-shelf__deck {
+  @include deck-tone;
+  --focus-ring: #{$color-heading};
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  height: 100%;
+  min-height: 11rem;
+  padding: $space-4;
+  border-radius: $radius;
+  background: var(--deck-tone);
+  color: $color-on-accent;
+  text-decoration: none;
+  box-shadow:
+    0 6px 0 -2px color-mix(in srgb, var(--deck-tone) 55%, var(--color-bg)),
+    0 16px 28px -18px shadow(0.6);
+  transition:
+    transform $duration-fast $ease-out,
+    box-shadow $duration-fast ease;
+
+  @include motion-safe {
+    @media (hover: hover) {
+      &:hover {
+        transform: translateY(-3px);
+      }
+    }
+  }
+}
+
+.landing-shelf__name {
+  margin-top: auto;
+  font-family: $font-card;
+  font-size: 1.1875rem;
+  line-height: 1.2;
+}
+
+.landing-shelf__count {
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+@include motion-safe {
+  @media (hover: hover) {
+    .landing-shelf__all:hover svg {
+      transform: translateX(3px);
+    }
+  }
+}
+
+// ---- Phone and privacy ----
+.landing-pair {
+  display: grid;
+  gap: $space-8;
+
+  @media (min-width: $bp-desktop) {
+    grid-template-columns: 1fr 1fr;
+    gap: $space-7;
+    padding-block: $space-6;
+    border-block: 1px solid $color-border;
+  }
+}
+
+// Only wide screens get the code; on a phone you are already there.
+.landing-phone {
+  display: none;
+
+  @media (min-width: $bp-desktop) {
+    display: flex;
+    align-items: center;
+    gap: $space-5;
+  }
+}
+
+// The code keeps dark navy modules on a near-white ground in every theme, so
+// every camera reads it. The hairline edges it on the light day page.
+.landing-phone__code {
+  flex-shrink: 0;
+  width: 152px;
+  padding: $space-1;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  background: $heading;
+  color: $bg;
+
+  svg {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.landing-phone__copy {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.landing-phone__host {
+  color: $color-heading;
+  font-weight: 600;
+}
+
+.landing-privacy {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.landing-privacy__points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-top: $space-1;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 6px $space-3;
+    border: 1px solid $color-border-strong;
+    border-radius: $radius-pill;
+    color: $color-heading;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+}
+
+// ---- FAQ ----
+.landing-faq {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  max-width: 46rem;
+}
+
+.landing-faq__list {
+  border-top: 1px solid $color-border;
+}
+
+.landing-faq__item {
+  border-bottom: 1px solid $color-border;
+}
+
+.landing-faq__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+  min-height: 56px;
+  padding-block: $space-3;
+  color: $color-heading;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      color: $color-accent;
+    }
+  }
+}
+
+.landing-faq__chevron {
+  flex-shrink: 0;
+  color: $color-text-dim;
+  transition: transform $duration $ease-out;
+
+  [open] > .landing-faq__question & {
+    transform: rotate(180deg);
+  }
+}
+
+.landing-faq__answer {
+  max-width: 62ch;
+  padding-bottom: $space-4;
+  color: $color-text;
+}

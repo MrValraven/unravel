@@ -49,7 +49,7 @@ export const PlayControls = ({
         <button
           ref={nextButtonRef}
           type="button"
-          className="button button--primary play-controls__next"
+          className="button play-controls__next"
           onClick={() => onAction("next")}
         >
           {isLastCard ? copy.finish : copy.next}

@@ -1,24 +1,35 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Link } from "react-router";
-import { FiGrid, FiRotateCcw } from "react-icons/fi";
+import { FiGrid, FiRotateCcw, FiSliders } from "react-icons/fi";
 import { Dialog } from "../../../components/Dialog";
 import { useCopy } from "../../../i18n/useCopy";
 import { playCopy } from "../copy";
+import { PlayTextSize } from "./PlayTextSize";
 import "./PlayMenu.scss";
 
 interface PlayMenuProps {
+  deckId: string;
   isOpen: boolean;
   onClose: () => void;
   onRestart: () => void;
 }
 
-/** Restart (asked twice, since it clears the saved place) and the way back to the decks. */
-export const PlayMenu = ({ isOpen, onClose, onRestart }: PlayMenuProps) => {
+/**
+ * Text size, game options (setup again, which starts the deck over), restart
+ * (asked twice, since it clears the saved place) and the way back to the decks.
+ */
+export const PlayMenu = ({
+  deckId,
+  isOpen,
+  onClose,
+  onRestart,
+}: PlayMenuProps) => {
   const copy = useCopy(playCopy);
   const [isConfirmingRestart, setIsConfirmingRestart] = useState(false);
   const keepPlayingRef = useRef<HTMLButtonElement>(null);
   const restartChoiceRef = useRef<HTMLButtonElement>(null);
   const hasSwappedRef = useRef(false);
+  const gameOptionsNoteId = useId();
 
   // The focused button leaves when the content swaps, so focus follows to the
   // safe choice on the confirm step and back to Restart after it.
@@ -74,6 +85,27 @@ export const PlayMenu = ({ isOpen, onClose, onRestart }: PlayMenuProps) => {
         </div>
       ) : (
         <div className="play-menu" key="choices">
+          <PlayTextSize />
+          <Link
+            to={`/play/${encodeURIComponent(deckId)}?setup=1`}
+            className="button button--secondary play-menu__item"
+            viewTransition
+            // The note is the link's description, so its name stays short.
+            aria-describedby={gameOptionsNoteId}
+            onClick={handleClose}
+          >
+            <FiSliders aria-hidden="true" size={20} />
+            <span className="play-menu__item-text">
+              {copy.menu.gameOptions}
+              <span
+                id={gameOptionsNoteId}
+                className="play-menu__item-note"
+                aria-hidden="true"
+              >
+                {copy.menu.gameOptionsNote}
+              </span>
+            </span>
+          </Link>
           <button
             ref={restartChoiceRef}
             type="button"
@@ -86,6 +118,7 @@ export const PlayMenu = ({ isOpen, onClose, onRestart }: PlayMenuProps) => {
           <Link
             to="/decks"
             className="button button--secondary play-menu__item"
+            viewTransition
           >
             <FiGrid aria-hidden="true" size={20} />
             {copy.backToDecks}

@@ -10,7 +10,7 @@ import { homeCopy } from "./copy";
 import "./DailyCard.scss";
 
 /** The same warm-up card for everyone today, drawn from the decks anyone can open. */
-export const DailyCard = () => {
+export const DailyCard = ({ id }: { id?: string }) => {
   const copy = useCopy(homeCopy).dailyCard;
   const locale = useLocale();
   const { card, deck } = getDailyCard();
@@ -19,6 +19,7 @@ export const DailyCard = () => {
 
   return (
     <section
+      id={id}
       className="daily-card"
       style={accentStyle}
       aria-labelledby="daily-card-title"
@@ -40,6 +41,7 @@ export const DailyCard = () => {
           <Link
             to={`/play/${encodeURIComponent(deck.id)}`}
             className="button daily-card__play"
+            viewTransition
             aria-label={formatCopy(copy.playDeckLabel, { deck: deckTitle })}
           >
             {copy.playDeck}

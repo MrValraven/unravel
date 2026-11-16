@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
-import type { Card, Deck } from "../../../content/types";
+import type { Card, Deck, IntensityLevel } from "../../../content/types";
 import { useHaptics } from "../../../hooks/useHaptics";
 import { getFavouriteIds } from "../../../storage/favourites";
 import { clearProgress, saveProgress } from "../../../storage/progress";
@@ -33,6 +33,11 @@ export interface PlaySessionControls {
   noteFavouriteAdded: (cardId: string) => void;
 }
 
+interface PlaySessionHooks {
+  /** Called when a forward move lands on a card a level higher than the one before it. */
+  onLevelUp?: (level: IntensityLevel) => void;
+}
+
 /**
  * Holds the running game. Every action saves progress straight away, and the
  * finishing action clears it, records the stats and moves to the end screen.
@@ -40,7 +45,8 @@ export interface PlaySessionControls {
  */
 export function usePlaySession(
   deck: Deck,
-  initialSession: PlaySession
+  initialSession: PlaySession,
+  { onLevelUp }: PlaySessionHooks = {}
 ): PlaySessionControls {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -53,6 +59,13 @@ export function usePlaySession(
     () => new Map(deck.cards.map((card) => [card.id, card])),
     [deck]
   );
+
+  const getCardLevel = (
+    someSession: PlaySession
+  ): IntensityLevel | undefined => {
+    const cardId = getCurrentCardId(someSession);
+    return cardId === undefined ? undefined : cardsById.get(cardId)?.level;
+  };
 
   const commit = (nextSession: PlaySession, nextMotion: CardMotion) => {
     sessionRef.current = nextSession;
@@ -89,13 +102,23 @@ export function usePlaySession(
     const nextSession = playReducer(previousSession, { type: action });
     if (nextSession === previousSession) return;
     commit(nextSession, action === "previous" ? "backward" : "forward");
-    if (action === "next") {
-      haptics.tap();
-      recordCardSeen();
-    }
+    if (action === "next") recordCardSeen();
     if (isSessionFinished(nextSession)) {
       finish(nextSession);
       return;
+    }
+    const previousLevel = getCardLevel(previousSession);
+    const nextLevel = getCardLevel(nextSession);
+    const isLevelUp =
+      action !== "previous" &&
+      previousLevel !== undefined &&
+      nextLevel !== undefined &&
+      nextLevel > previousLevel;
+    if (isLevelUp) {
+      haptics.levelUp();
+      onLevelUp?.(nextLevel);
+    } else if (action === "next") {
+      haptics.tap();
     }
     saveProgress(sessionToProgress(nextSession, Date.now()));
   };
@@ -126,10 +149,12 @@ export function usePlaySession(
   const cardNumber = String(session.position + 1);
   const cardParam = searchParams.get("card");
   const isFinished = isSessionFinished(session);
+  // ?setup=1 asks for game setup again, and the play flow takes over from here.
+  const isLeavingForSetup = searchParams.has("setup");
   useEffect(() => {
-    if (isFinished || cardParam === cardNumber) return;
+    if (isFinished || isLeavingForSetup || cardParam === cardNumber) return;
     setSearchParams({ card: cardNumber }, { replace: true });
-  }, [cardNumber, cardParam, isFinished, setSearchParams]);
+  }, [cardNumber, cardParam, isFinished, isLeavingForSetup, setSearchParams]);
 
   const currentCardId = getCurrentCardId(session);
   return {

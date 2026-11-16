@@ -1,0 +1,58 @@
+@use "../../styles/tokens" as *;
+
+// The word sets the width; the thread is drawn to that width underneath, so it
+// scales with the font size and the player's text size.
+.wordmark {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  color: $color-heading;
+  font-family: $font-card;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.015em;
+}
+
+.wordmark__word {
+  display: block;
+  white-space: nowrap;
+}
+
+// The letter the thread comes out of carries the thread's colour.
+.wordmark__loose {
+  color: $color-accent;
+}
+
+.wordmark__thread {
+  display: block;
+  // Sized by the word: a zero width keeps the drawing out of the measure.
+  width: 0;
+  min-width: 100%;
+  height: auto;
+  // Pulls the thread up so it starts at the foot of the "l".
+  margin-top: -0.16em;
+  overflow: visible;
+  fill: none;
+  stroke: $color-accent;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+// The thread pays out from the letter once the word has landed.
+@include motion-safe {
+  .wordmark__thread path {
+    animation: wordmark-unravel 1400ms $ease-out 320ms both;
+  }
+}
+
+@keyframes wordmark-unravel {
+  from {
+    stroke-dashoffset: 1;
+  }
+}

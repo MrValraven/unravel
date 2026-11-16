@@ -1,5 +1,5 @@
 import { useId, type CSSProperties } from "react";
-import { FiArrowLeft, FiPlay, FiShield } from "react-icons/fi";
+import { FiPlay, FiShield, FiSliders } from "react-icons/fi";
 import { PageHeader } from "../../../components/PageHeader";
 import type { Deck } from "../../../content/types";
 import { useHaptics } from "../../../hooks/useHaptics";
@@ -9,11 +9,14 @@ import { useCopy } from "../../../i18n/useCopy";
 import { playCopy } from "../copy";
 import { CountdownTimer } from "../components/CountdownTimer";
 import { useFocusOnMount } from "./useFocusOnMount";
+import { useStickyFooterHeight } from "./useStickyFooterHeight";
 import "./PlaySetup.scss";
 import "./BoundariesCheckIn.scss";
 
 interface BoundariesCheckInProps {
   deck: Deck;
+  /** "Back to setup" after Game options, "Game options" when the game started straight away. */
+  returnLabel: string;
   onContinue: () => void;
   onBack: () => void;
 }
@@ -23,6 +26,7 @@ const CHECK_IN_SECONDS = 30;
 /** Adult decks open with three prompts to talk through and an optional 30 second timer. */
 export const BoundariesCheckIn = ({
   deck,
+  returnLabel,
   onContinue,
   onBack,
 }: BoundariesCheckInProps) => {
@@ -31,6 +35,7 @@ export const BoundariesCheckIn = ({
   const haptics = useHaptics();
   const timerTitleId = useId();
   const titleRef = useFocusOnMount<HTMLHeadingElement>();
+  const actionsRef = useStickyFooterHeight<HTMLDivElement>();
 
   return (
     <main
@@ -81,7 +86,7 @@ export const BoundariesCheckIn = ({
         {copy.checkIn.passNote}
       </p>
 
-      <div className="play-setup__actions">
+      <div ref={actionsRef} className="play-setup__actions">
         <button
           type="button"
           className="button button--primary"
@@ -91,8 +96,8 @@ export const BoundariesCheckIn = ({
           {copy.checkIn.startDeck}
         </button>
         <button type="button" className="button button--quiet" onClick={onBack}>
-          <FiArrowLeft aria-hidden="true" size={20} />
-          {copy.checkIn.backToSetup}
+          <FiSliders aria-hidden="true" size={20} />
+          {returnLabel}
         </button>
       </div>
     </main>
