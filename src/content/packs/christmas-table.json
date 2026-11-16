@@ -1,1 +1,373 @@
-{ "id": "christmas-table", "cards": [] }
+{
+  "id": "christmas-table",
+  "cards": [
+    {
+      "id": "christmas-table-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What smell means Christmas to you, and whose kitchen does it come from?",
+        "pt": "Que cheiro é, para ti, o cheiro do Natal, e de que cozinha é que vem?"
+      }
+    },
+    {
+      "id": "christmas-table-002",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Mime unwrapping a present you never saw coming. The table guesses what was inside.",
+        "pt": "Faz a mímica de abrir uma prenda que nunca esperavas. A mesa adivinha o que estava lá dentro."
+      },
+      "timerSeconds": 30
+    },
+    {
+      "id": "christmas-table-003",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which decoration always goes up first in your home, and who gets to put it there?",
+        "pt": "Lá em casa, que enfeite é sempre o primeiro a ir para o sítio, e quem é que tem direito a pô-lo?"
+      }
+    },
+    {
+      "id": "christmas-table-004",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Count to three together, then everyone calls out the Christmas dish they could never do without.",
+        "pt": "Contem até três juntos e, ao três, digam todos ao mesmo tempo o prato de Natal que não pode faltar."
+      }
+    },
+    {
+      "id": "christmas-table-005",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Bacalhau com todos, polvo or something else entirely: what's on your Consoada plate, and what do you eat first?",
+        "pt": "Bacalhau com todos, polvo ou outra coisa qualquer: o que há no teu prato da Consoada, e o que comes primeiro?"
+      }
+    },
+    {
+      "id": "christmas-table-006",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Hum the start of a Christmas song. Going round the table, each person carries the tune on from where the last one stopped.",
+        "pt": "Trauteia o início de uma música de Natal. À vez, cada pessoa da mesa continua a melodia a partir de onde a anterior parou."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "christmas-table-007",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which Christmas story, film or TV show came back every year when you were a kid?",
+        "pt": "Que história, filme ou programa de Natal voltava todos os anos quando eras criança?"
+      }
+    },
+    {
+      "id": "christmas-table-008",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone points at once to the person here most likely to start singing before dessert.",
+        "pt": "Apontem ao mesmo tempo para a pessoa daqui que tem mais cara de começar a cantar antes da sobremesa."
+      }
+    },
+    {
+      "id": "christmas-table-009",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Rabanadas, filhós, sonhos, aletria or azevias: if only one sweet could stay on the Christmas table, which would you keep?",
+        "pt": "Rabanadas, filhós, sonhos, aletria ou azevias: se só um doce pudesse ficar na mesa de Natal, qual escolhias?"
+      }
+    },
+    {
+      "id": "christmas-table-010",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Mime cooking a Christmas dish from start to finish without making a sound. The table guesses what's on the stove.",
+        "pt": "Faz a mímica de cozinhar um prato de Natal, do princípio ao fim, sem fazer barulho. A mesa adivinha o que está ao lume."
+      },
+      "timerSeconds": 45
+    },
+    {
+      "id": "christmas-table-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Midnight on the 24th or the morning of the 25th: when are the presents opened in your home, and how do you get through the wait?",
+        "pt": "Meia-noite de 24 ou manhã de 25: quando é que se abrem as prendas lá em casa, e como é que aguentas a espera?"
+      }
+    },
+    {
+      "id": "christmas-table-012",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Going round the table, everyone makes one sound from Christmas at home, and the others guess what it is.",
+        "pt": "À vez, façam um som do Natal lá de casa e os outros adivinham o que é."
+      }
+    },
+    {
+      "id": "christmas-table-013",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "In 30 seconds, name everything you could hang on a Christmas tree while the table counts on its fingers.",
+        "pt": "Em 30 segundos, diz tudo o que se pode pendurar numa árvore de Natal, enquanto a mesa conta pelos dedos."
+      },
+      "timerSeconds": 30
+    },
+    {
+      "id": "christmas-table-014",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which Christmas tradition in your home would you never let anyone skip?",
+        "pt": "Que tradição de Natal lá de casa nunca deixarias que ficasse por fazer?"
+      }
+    },
+    {
+      "id": "christmas-table-015",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone picks a side: Bolo-Rei with candied fruit or Bolo-Rainha with nuts. Each side gets one sentence to win the others over.",
+        "pt": "Escolham um lado: Bolo-Rei com fruta cristalizada ou Bolo-Rainha com frutos secos. Cada lado tem uma frase para convencer o outro."
+      }
+    },
+    {
+      "id": "christmas-table-016",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "On the 25th, roupa-velha (“old clothes”) turns Consoada leftovers into a fry-up. Pick three things on this table and sell us your dish.",
+        "pt": "No dia 25, a roupa-velha transforma as sobras da Consoada num salteado. Escolhe três coisas desta mesa e vende-nos o prato que farias."
+      },
+      "timerSeconds": 45
+    },
+    {
+      "id": "christmas-table-017",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Think of Christmas morning when you were about seven. What's the first thing you see as you walk into the room?",
+        "pt": "Pensa na manhã de Natal quando tinhas uns sete anos. Qual é a primeira coisa que vês quando entras na sala?"
+      }
+    },
+    {
+      "id": "christmas-table-018",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Menino Jesus or Pai Natal: who brought the presents when you were little, and where did you find them?",
+        "pt": "Menino Jesus ou Pai Natal: quem trazia as prendas quando eras criança, e onde é que as encontravas?"
+      }
+    },
+    {
+      "id": "christmas-table-019",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Whoever finds the fava in the Bolo-Rei buys next year's cake. It's in your slice: describe the cake you'd bring to make mouths water.",
+        "pt": "Quem encontra a fava no Bolo-Rei paga o do ano seguinte. Calhou-te a ti: descreve o bolo que trazias para fazer crescer água na boca a todos."
+      },
+      "timerSeconds": 45
+    },
+    {
+      "id": "christmas-table-020",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What did the presépio look like at home when you were small, and who was allowed to touch it?",
+        "pt": "Como era o presépio da tua casa quando eras criança, e quem é que podia mexer nele?"
+      }
+    },
+    {
+      "id": "christmas-table-021",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone shares a Christmas task they were trusted with as a child, like stirring the aletria or fetching moss for the presépio.",
+        "pt": "Partilhem uma tarefa de Natal que vos confiavam quando eram pequenos, como mexer a aletria ou apanhar musgo para o presépio."
+      }
+    },
+    {
+      "id": "christmas-table-022",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "In Catalonia, kids feed the Tió, a log under a blanket, then tap it with sticks and sing until it “poops” presents. What would you feed it?",
+        "pt": "Na Catalunha, as crianças dão de comer ao Tió, um tronco tapado com uma manta, e batem-lhe com paus a cantar até ele fazer cocó de prendas. O que lhe davas?"
+      }
+    },
+    {
+      "id": "christmas-table-023",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which dish on this table has a story behind it, and who in the family first made it?",
+        "pt": "Que prato desta mesa tem uma história por trás, e quem foi a primeira pessoa da família a fazê-lo?"
+      }
+    },
+    {
+      "id": "christmas-table-024",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Up to Dia de Reis, groups sing the Janeiras door to door for chestnuts and walnuts. Sing us a verse, old or new, that earns you a treat.",
+        "pt": "Até ao Dia de Reis, cantam-se as Janeiras de porta em porta, a troco de castanhas e nozes. Canta à mesa uma quadra, antiga ou nova, que te valha um doce."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "christmas-table-025",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Iceland's 13 Yule Lads have names like Spoon-Licker and Door-Slammer. Everyone invents their own Yule Lad name and says why it fits.",
+        "pt": "Na Islândia, os 13 duendes do Natal têm nomes como Lambe-Colheres e Bate-Portas. Inventem cada um o vosso nome de duende e digam porque vos assenta bem."
+      }
+    },
+    {
+      "id": "christmas-table-026",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "In Italy, La Befana the witch flies in on 6 January with sweets or coal. What did you do this year that deserves sweets?",
+        "pt": "Em Itália, a bruxa Befana chega a 6 de janeiro com doces ou carvão. O que fizeste este ano que mereça doces?"
+      }
+    },
+    {
+      "id": "christmas-table-027",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Teach the table a game you played as a child, using words only. When time's up, everyone should be ready to play a round.",
+        "pt": "Ensina à mesa um jogo da tua infância, só com palavras. Quando o tempo acabar, toda a gente tem de estar pronta para jogar uma ronda."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "christmas-table-028",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Since a 1974 advert, lots of families in Japan eat KFC at Christmas. Which surprising dish would you add to our Christmas table?",
+        "pt": "Desde uma campanha publicitária de 1974, muitas famílias no Japão comem KFC no Natal. Que prato inesperado juntavas à nossa mesa de Natal?"
+      }
+    },
+    {
+      "id": "christmas-table-029",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone votes: a summer Christmas at the beach, as many Australians have, or a winter one wrapped up indoors. Say what you'd miss.",
+        "pt": "Votem: um Natal de verão na praia, como o de muitos australianos, ou um de inverno, bem agasalhados em casa. Digam do que sentiam falta."
+      }
+    },
+    {
+      "id": "christmas-table-030",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's the silliest Christmas mishap you remember, and what saved the day?",
+        "pt": "Qual é a trapalhada de Natal mais disparatada de que te lembras, e o que é que salvou o dia?"
+      }
+    },
+    {
+      "id": "christmas-table-031",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "When you were little, what did the grown-ups do at Christmas that you couldn't wait to be old enough for?",
+        "pt": "Quando eras criança, o que faziam os adultos no Natal que mal podias esperar por ter idade para fazer?"
+      }
+    },
+    {
+      "id": "christmas-table-032",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which recipe, song or trick did someone older teach you, and where were you when you learned it?",
+        "pt": "Que receita, canção ou truque te ensinou alguém mais velho, e onde estavas quando aprendeste?"
+      }
+    },
+    {
+      "id": "christmas-table-033",
+      "type": "everyone",
+      "level": 3,
+      "text": {
+        "en": "Everyone finishes the sentence: “You know it's Christmas in our family when…”",
+        "pt": "Completem a frase: “Sabe-se que é Natal nesta família quando…”"
+      }
+    },
+    {
+      "id": "christmas-table-034",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What did you wish for most at Christmas when you were younger, and what do you wish for now?",
+        "pt": "O que é que mais desejavas no Natal quando eras mais novo, e o que desejas agora?"
+      }
+    },
+    {
+      "id": "christmas-table-035",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which present have you never forgotten? Tell its story, and the table gets one follow-up question.",
+        "pt": "Que prenda nunca esqueceste? Conta a história dela, e a mesa tem direito a uma pergunta."
+      }
+    },
+    {
+      "id": "christmas-table-036",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What does this family do at Christmas that you've never seen another family do?",
+        "pt": "O que é que esta família faz no Natal que nunca viste outra família fazer?"
+      }
+    },
+    {
+      "id": "christmas-table-037",
+      "type": "everyone",
+      "level": 3,
+      "text": {
+        "en": "Everyone names one Christmas thing they'd love to teach someone at this table, like a recipe, a song or a game.",
+        "pt": "Digam uma coisa do Natal que gostavam de ensinar a alguém desta mesa, como uma receita, uma canção ou um jogo."
+      }
+    },
+    {
+      "id": "christmas-table-038",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's a small moment from this year, shared with someone here, that you'd like to keep?",
+        "pt": "Que pequeno momento deste ano, passado com alguém desta mesa, gostavas de guardar?"
+      }
+    },
+    {
+      "id": "christmas-table-039",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which bit of tonight do you hope gets told as a story at Christmases to come?",
+        "pt": "Que parte desta noite esperas que venha a ser contada como história nos próximos Natais?"
+      }
+    },
+    {
+      "id": "christmas-table-040",
+      "type": "everyone",
+      "level": 3,
+      "text": {
+        "en": "Everyone shares one wish for next Christmas, then the whole table says “Feliz Natal” together.",
+        "pt": "Digam um desejo para o próximo Natal e, no fim, digam todos juntos “Feliz Natal”."
+      }
+    }
+  ]
+}

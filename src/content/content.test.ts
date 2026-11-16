@@ -321,3 +321,231 @@ describe("halloween pack", () => {
     expect(flagged.map((card) => card.id)).toEqual([]);
   });
 });
+
+const cardsOfDeck = (deckId: string): Card[] =>
+  decks.find((deck) => deck.id === deckId)?.cards ?? [];
+const idsWhere = (cards: Card[], matches: (card: Card) => boolean): string[] =>
+  cards.filter(matches).map((card) => card.id);
+/** The research notes' "Misreported: never claim these" list, plus the Missa do Galo rooster legend told as fact. */
+const misreportedChristmasFacts = [
+  /coca-?cola/i,
+  /pickle|pepino/i,
+  /\bEU\b|\bUE\b|European Union|União Europeia/,
+  /\b2000\b/,
+  /pagan|pagã/i,
+  /16th century|século XVI|1500s/i,
+  /Norw(ay|egian)|Noruega|norueg/i,
+  /rooster crow|galo cantou/i,
+];
+
+describe("christmas-table pack", () => {
+  const cards = cardsOfDeck("christmas-table");
+  const countWhere = (matches: (card: Card) => boolean) =>
+    cards.filter(matches).length;
+
+  it("numbers 40 cards from christmas-table-001 to christmas-table-040 in level order", () => {
+    expect(cards.map((card) => card.id)).toEqual(
+      Array.from(
+        { length: 40 },
+        (_, index) => `christmas-table-${String(index + 1).padStart(3, "0")}`
+      )
+    );
+    expect(cards.map((card) => card.level)).toEqual([
+      ...Array<number>(16).fill(1),
+      ...Array<number>(14).fill(2),
+      ...Array<number>(10).fill(3),
+    ]);
+  });
+
+  it("mixes 22 questions, 8 timed challenges and 10 everyone rounds", () => {
+    expect(countWhere((card) => card.type === "question")).toBe(22);
+    expect(
+      countWhere(
+        (card) => card.type === "challenge" && card.timerSeconds !== undefined
+      )
+    ).toBe(8);
+    expect(countWhere((card) => card.type === "everyone")).toBe(10);
+    expect(
+      countWhere((card) => card.level === 3 && card.type === "challenge")
+    ).toBe(0);
+  });
+
+  it("opens with a short level 1 question for previews", () => {
+    expect(cards[0]).toMatchObject({ type: "question", level: 1 });
+    expect(cards[0]?.text.en.length ?? 999).toBeLessThanOrEqual(100);
+  });
+
+  it("keeps every card within 140 English and 160 Portuguese characters", () => {
+    expect(
+      idsWhere(
+        cards,
+        (card) => card.text.en.length > 140 || card.text.pt.length > 160
+      )
+    ).toEqual([]);
+  });
+
+  it("covers the family traditions the spec names at level 2", () => {
+    const levelTwoText = cards
+      .filter((card) => card.level === 2)
+      .map((card) => card.text.en)
+      .join(" ");
+    for (const topic of [
+      /Menino Jesus/,
+      /Pai Natal/,
+      /Bolo-Rei/,
+      /\bfava\b/i,
+      /presépio/i,
+      /Janeiras/,
+      /\bReis\b/,
+      /Tió/,
+      /Befana/,
+      /Yule Lads/,
+      /KFC/,
+      /beach/i,
+    ]) {
+      expect(levelTwoText, String(topic)).toMatch(topic);
+    }
+  });
+
+  it("keeps family no-go topics, spoilers, misreported facts and off-style Portuguese out", () => {
+    const noGoEnglish = [
+      /politic/i,
+      /\b(money|costs?|price|expensive|salary|euros?)\b|€/i,
+      /\b(weight|diet|fat|calories|skinny|ugl(y|iest)|good-looking)\b/i,
+      /\b(marr(y|ied|iage)|wedding|pregnan\w*|babies|careers?|jobs?)\b/i,
+      /favou?rite (relative|person|cousin|aunt|uncle|grand\w+|sibling|brother|sister|son|daughter)/i,
+      /\b(dead|death|died|dying|passed away|funeral|illness|sick|hospital|divorc\w*)\b/i,
+      /\b(worst|laziest|meanest|most annoying)\b/i,
+      /\b(alcohol\w*|wine|beer|drunk|tipsy|champagne|cocktails?|shots?)\b/i,
+      /\byour (mum and dad|mom and dad|parents|partner|husband|wife|boyfriend|girlfriend)\b/i,
+      // Belief questions and Pai Natal spoilers; it also catches "a real tree", so rephrase those.
+      /stop(ped)? believing|\bpray|believe in (god|jesus)|\b(is|was|isn't|wasn't|are|aren't)\b[^?.!]{0,25}\breal\b/i,
+      /, not\b/i,
+    ];
+    // No \b before an accented first letter: JavaScript's \b only knows ASCII word characters.
+    const noGoPortuguese = [
+      /polític/i,
+      /dinheiro|preço|custa|custou|salário|€/i,
+      /\b(peso|dieta|gord[oa]s?|fei[oa]s?)\b/i,
+      /\bcasa(r|mento)\b|bebés|grávida|carreira|emprego/i,
+      /\b(mort[eo]s?|morreu|morrer|faleci|funeral|doen(ça|te)|hospital|divórcio|divorcia)/i,
+      /\b(vinho|cerveja|bêbad|espumante|champanhe|licor|aguardente)|álcool/i,
+      /\bos teus pais\b|\b(teu|tua) (namorad[oa]|marido|mulher|companheir[oa])\b/i,
+      /você|Papai Noel|\bpresentes?\b|, não\b/i,
+    ];
+    const flagged = idsWhere(
+      cards,
+      (card) =>
+        noGoEnglish.some((pattern) => pattern.test(card.text.en)) ||
+        noGoPortuguese.some((pattern) => pattern.test(card.text.pt)) ||
+        misreportedChristmasFacts.some(
+          (pattern) => pattern.test(card.text.en) || pattern.test(card.text.pt)
+        )
+    );
+    expect(flagged).toEqual([]);
+  });
+});
+
+describe("friendsmas pack", () => {
+  const cards = cardsOfDeck("friendsmas");
+  const countWhere = (matches: (card: Card) => boolean) =>
+    cards.filter(matches).length;
+
+  it("numbers 40 cards from friendsmas-001 to friendsmas-040 in level order", () => {
+    expect(cards.map((card) => card.id)).toEqual(
+      Array.from(
+        { length: 40 },
+        (_, index) => `friendsmas-${String(index + 1).padStart(3, "0")}`
+      )
+    );
+    expect(cards.map((card) => card.level)).toEqual([
+      ...Array<number>(16).fill(1),
+      ...Array<number>(14).fill(2),
+      ...Array<number>(10).fill(3),
+    ]);
+  });
+
+  it("mixes 26 questions, 8 timed challenges and 6 everyone rounds", () => {
+    expect(countWhere((card) => card.type === "question")).toBe(26);
+    expect(
+      countWhere(
+        (card) => card.type === "challenge" && card.timerSeconds !== undefined
+      )
+    ).toBe(8);
+    expect(countWhere((card) => card.type === "everyone")).toBe(6);
+    expect(
+      countWhere((card) => card.level === 3 && card.type !== "question")
+    ).toBe(0);
+  });
+
+  it("opens with a short level 1 question for previews", () => {
+    expect(cards[0]).toMatchObject({ type: "question", level: 1 });
+    expect(cards[0]?.text.en.length ?? 999).toBeLessThanOrEqual(100);
+  });
+
+  it("keeps every card within 140 English and 160 Portuguese characters", () => {
+    expect(
+      idsWhere(
+        cards,
+        (card) => card.text.en.length > 140 || card.text.pt.length > 160
+      )
+    ).toEqual([]);
+  });
+
+  it("covers the traditions the spec names at levels 1 and 2", () => {
+    const earlyText = cards
+      .filter((card) => card.level < 3)
+      .map((card) => card.text.en)
+      .join(" ");
+    for (const topic of [
+      /Consoada/,
+      /roupa-velha/i,
+      /madeiro/i,
+      /brinde/i,
+      /Jólabókaflóð/,
+      /caganer/i,
+      /Krampus/,
+      /Kalle Anka|Donald Duck/,
+      /ber months/i,
+    ]) {
+      expect(earlyText, String(topic)).toMatch(topic);
+    }
+  });
+
+  it("keeps friends no-go topics, misreported facts and off-style Portuguese out", () => {
+    const noGoEnglish = [
+      /\byour (kids|children|son|daughter|partner|husband|wife|boyfriend|girlfriend|parents)\b/i,
+      /\bgo(ing)? home to\b/i,
+      /\b(pray\w*|your (church|faith|religion))\b/i,
+      /\b(sex(y|ual)?|naked|nude|striptease|kiss(es|ing)?|horny|hook(ing)? up)\b/i,
+      /\b(ugliest|laziest|meanest|stingiest|most annoying)\b/i,
+      /, not\b/i,
+    ];
+    const offStylePortuguese = /você|Papai Noel|\bpresentes?\b|, não\b/i;
+    const alcoholDareEnglish =
+      /\b(drinks?|drinking|drunk|tipsy|shots?|chug\w*|sips?)\b/i;
+    const alcoholDarePortuguese =
+      /\bbeb(e|a|am|er|es|eu|ida|idas)\b|bêbad|\bshots?\b/i;
+    const missingEnglish =
+      /\bmiss(es|ed|ing)?\b|\b(dead|death|died|passed away|funeral)\b/i;
+    const missingPortuguese =
+      /saudade|sent(es|iste|ir) (a )?falta|\bmort[oa]s?\b|morreu|faleci/i;
+    const flagged = idsWhere(
+      cards,
+      (card) =>
+        noGoEnglish.some((pattern) => pattern.test(card.text.en)) ||
+        offStylePortuguese.test(card.text.pt) ||
+        misreportedChristmasFacts.some(
+          (pattern) => pattern.test(card.text.en) || pattern.test(card.text.pt)
+        ) ||
+        (card.type !== "question" &&
+          (alcoholDareEnglish.test(card.text.en) ||
+            alcoholDarePortuguese.test(card.text.pt))) ||
+        (card.level < 3 &&
+          (missingEnglish.test(card.text.en) ||
+            missingPortuguese.test(card.text.pt))) ||
+        (card.level === 3 && /\bworst\b|trauma/i.test(card.text.en))
+    );
+    expect(flagged).toEqual([]);
+  });
+});

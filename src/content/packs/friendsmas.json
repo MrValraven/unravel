@@ -1,1 +1,373 @@
-{ "id": "friendsmas", "cards": [] }
+{
+  "id": "friendsmas",
+  "cards": [
+    {
+      "id": "friendsmas-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the most baffling present you've ever unwrapped, and what did your face do?",
+        "pt": "Qual foi a prenda mais desconcertante que já abriste, e que cara é que fizeste?"
+      }
+    },
+    {
+      "id": "friendsmas-002",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "On three, everyone points to the person here who'd sneak a peek at their presents before Christmas.",
+        "pt": "Ao três, apontem todos para a pessoa daqui que seria capaz de espreitar as prendas antes do Natal."
+      }
+    },
+    {
+      "id": "friendsmas-003",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Tell the whole story of a Christmas song in one breath. The table has to guess which song it is.",
+        "pt": "Conta a história toda de uma música de Natal num só fôlego. A mesa tem de adivinhar que música é."
+      },
+      "timerSeconds": 30
+    },
+    {
+      "id": "friendsmas-004",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which Christmas myth did you believe for far too long, and who finally broke the news?",
+        "pt": "Em que mito de Natal acreditaste durante tempo demais, e quem é que te deu a notícia?"
+      }
+    },
+    {
+      "id": "friendsmas-005",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Presents at midnight, presents at breakfast, or a film and bed by eleven: which camp are you in, and who here would you recruit?",
+        "pt": "Prendas à meia-noite, prendas ao pequeno-almoço, ou um filme e cama às onze: de que equipa és, e quem daqui é que recrutavas?"
+      }
+    },
+    {
+      "id": "friendsmas-006",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "In a Secret Santa, do you stick to the budget or sail right past it? What did you give last time?",
+        "pt": "No amigo secreto, és de cumprir o orçamento ou de o ultrapassar sem pensar duas vezes? O que deste da última vez?"
+      }
+    },
+    {
+      "id": "friendsmas-007",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Defend the Christmas sweet everyone leaves on the plate, candied fruit and all. Win over at least one person before time's up.",
+        "pt": "Defende o doce de Natal que toda a gente deixa no prato, fruta cristalizada incluída. Convence pelo menos uma pessoa antes de o tempo acabar."
+      },
+      "timerSeconds": 45
+    },
+    {
+      "id": "friendsmas-008",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone points at once to the person here who could pull off a whole Christmas with a day's notice.",
+        "pt": "Apontem ao mesmo tempo para quem aqui conseguia organizar um Natal inteiro com um dia de aviso."
+      }
+    },
+    {
+      "id": "friendsmas-009",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the most practical present you've ever been given, and why did you secretly love it?",
+        "pt": "Qual foi a prenda mais prática que já recebeste, e porque é que, no fundo, a adoraste?"
+      }
+    },
+    {
+      "id": "friendsmas-010",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Narrate tonight's dinner as the trailer for a Christmas film starring everyone at this table. Big voice, big music.",
+        "pt": "Narra o jantar desta noite como o trailer de um filme de Natal com toda a gente desta mesa no elenco. Voz grave e música épica."
+      },
+      "timerSeconds": 45
+    },
+    {
+      "id": "friendsmas-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Krampus night in the Alps, or the Philippines' “ber months”, with Christmas starting in September: which one would you sign up for?",
+        "pt": "A noite do Krampus nos Alpes ou os “ber months” das Filipinas, com o Natal a começar em setembro: a qual é que te juntavas?"
+      }
+    },
+    {
+      "id": "friendsmas-012",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "On three, everyone calls out the month they start their Christmas shopping. The earliest and the latest explain themselves.",
+        "pt": "Ao três, digam todos em que mês começam as compras de Natal. Quem disser o mês mais cedo e quem disser o mais tarde têm de se explicar."
+      }
+    },
+    {
+      "id": "friendsmas-013",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Real tree, plastic tree or a pot plant wrapped in fairy lights: what's standing in your living room this Christmas?",
+        "pt": "Árvore verdadeira, árvore de plástico ou um vaso com luzinhas: o que é que vai estar na tua sala este Natal?"
+      }
+    },
+    {
+      "id": "friendsmas-014",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "In 30 seconds, confess every present you've ever regifted. The table keeps count, and nobody asks who it came from.",
+        "pt": "Em 30 segundos, confessa todas as prendas que recebeste e voltaste a oferecer. A mesa conta, e ninguém pergunta quem tas deu."
+      },
+      "timerSeconds": 30
+    },
+    {
+      "id": "friendsmas-015",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone reveals their Christmas Eve uniform: pyjamas, the good shirt or whatever happened to be clean.",
+        "pt": "Revelem o vosso uniforme da noite de Natal: pijama, a camisa boa ou o que estiver lavado."
+      }
+    },
+    {
+      "id": "friendsmas-016",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which Christmas dish do you pretend to love every year, and who are you protecting?",
+        "pt": "Que prato de Natal finges adorar todos os anos, e quem é que estás a proteger?"
+      }
+    },
+    {
+      "id": "friendsmas-017",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Tell us about your first Christmas away from where you grew up, or the first you did your own way. Who made it feel like Christmas?",
+        "pt": "Conta-nos o teu primeiro Natal longe do sítio onde cresceste, ou o primeiro feito à tua maneira. Quem fez com que parecesse Natal?"
+      }
+    },
+    {
+      "id": "friendsmas-018",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Pitch a brand-new Christmas tradition for this group in under a minute. Then the table votes on whether it starts this year.",
+        "pt": "Apresenta uma tradição de Natal novinha em folha para este grupo, em menos de um minuto. Depois, a mesa vota se começa já este ano."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "friendsmas-019",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "The name Consoada goes back to the Latin consolare, to comfort. Which dish comforts you most, wherever you spend Christmas?",
+        "pt": "O nome Consoada vem do latim consolare, consolar. Qual é o prato que mais te conforta, passes o Natal onde passares?"
+      }
+    },
+    {
+      "id": "friendsmas-020",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which Christmas tradition would you bring to this table, and which one would you quietly let go of?",
+        "pt": "Que tradição de Natal trazias para esta mesa, e qual é que deixavas cair sem ninguém dar por isso?"
+      }
+    },
+    {
+      "id": "friendsmas-021",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "On Consoada night, some villages in inland Beira and Trás-os-Montes light the madeiro, a log bonfire. Everyone names one thing to burn.",
+        "pt": "Na noite da Consoada, há aldeias da Beira interior e de Trás-os-Montes que acendem o madeiro, uma fogueira de troncos. Digam uma coisa para queimar."
+      }
+    },
+    {
+      "id": "friendsmas-022",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Givers expect pricier presents to be loved more, but studies find they aren't. What's the cheapest present that meant the most to you?",
+        "pt": "Quem oferece acha que uma prenda mais cara agrada mais, mas os estudos dizem que não. Qual foi a prenda mais barata que mais te marcou?"
+      }
+    },
+    {
+      "id": "friendsmas-023",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Bolo-Rei used to hide a small toy, the brinde, until a 2001 Portuguese law took it out. What surprise would you hide in this group's cake?",
+        "pt": "O Bolo-Rei escondia um pequeno brinquedo, o brinde, até uma lei portuguesa de 2001 o tirar de lá. Que surpresa escondias no bolo deste grupo?"
+      }
+    },
+    {
+      "id": "friendsmas-024",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "In Iceland's Jólabókaflóð, books are given on Christmas Eve and read that night. Pick one for the person on your left and sell it to them.",
+        "pt": "No Jólabókaflóð islandês, oferecem-se livros na véspera de Natal para ler nessa noite. Escolhe um livro para a pessoa à tua esquerda e convence-a a lê-lo."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "friendsmas-025",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Catalan nativity scenes hide the caganer, a figure caught squatting. If you were tucked into this group's presépio, what would you be up to?",
+        "pt": "Nos presépios catalães esconde-se o caganer, um boneco agachado a fazer as necessidades. Se estivesses no presépio deste grupo, o que estarias a fazer?"
+      }
+    },
+    {
+      "id": "friendsmas-026",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "At 3 pm on Christmas Eve, millions in Sweden watch Kalle Anka, Donald Duck. Wish the table a merry Christmas in your best Donald Duck voice.",
+        "pt": "Na Suécia, às 15h da véspera de Natal, milhões de pessoas veem o Kalle Anka, o Pato Donald. Deseja um feliz Natal à mesa com a tua melhor voz de Pato Donald."
+      },
+      "timerSeconds": 30
+    },
+    {
+      "id": "friendsmas-027",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "On the 25th, Consoada leftovers come back as roupa-velha, “old clothes”. Which old story of yours gets reheated every Christmas?",
+        "pt": "No dia 25, com as sobras da Consoada faz-se a roupa-velha. Que história antiga tua é requentada todos os Natais?"
+      }
+    },
+    {
+      "id": "friendsmas-028",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Start a story about a Christmas that goes badly wrong but ends well. Round the table, each person adds one word until time runs out.",
+        "pt": "Começa a história de um Natal que corre muito mal mas acaba bem. À volta da mesa, cada pessoa acrescenta uma palavra até o tempo acabar."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "friendsmas-029",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Studies say people prefer the presents they asked for. What's one you gave that was on nobody's list and still landed perfectly?",
+        "pt": "Os estudos dizem que preferimos as prendas que pedimos. Que prenda deste que não estava em lista nenhuma e mesmo assim acertou em cheio?"
+      }
+    },
+    {
+      "id": "friendsmas-030",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone names a dish from where they grew up that deserves a seat at this table next Christmas.",
+        "pt": "Digam um prato do sítio onde cresceram que merece lugar nesta mesa no próximo Natal."
+      }
+    },
+    {
+      "id": "friendsmas-031",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Whose home has felt the most like Christmas to you, and what was it about the place?",
+        "pt": "De quem era a casa que mais te soube a Natal, e o que é que ela tinha de especial?"
+      }
+    },
+    {
+      "id": "friendsmas-032",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If your younger self could see this table tonight, what would surprise them most?",
+        "pt": "Se o teu eu mais novo pudesse ver esta mesa hoje, o que é que o surpreendia mais?"
+      }
+    },
+    {
+      "id": "friendsmas-033",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which memory with this group do you go back to when you need cheering up?",
+        "pt": "A que memória com este grupo voltas quando precisas de te animar?"
+      }
+    },
+    {
+      "id": "friendsmas-034",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which Christmas with friends do you still laugh about, and who was there when it happened?",
+        "pt": "De que Natal com amigos ainda te ris, e quem estava lá quando aconteceu?"
+      }
+    },
+    {
+      "id": "friendsmas-035",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Who would you raise a glass to tonight, and what would you want them to hear?",
+        "pt": "A quem fazias um brinde esta noite, e o que querias que essa pessoa ouvisse?"
+      }
+    },
+    {
+      "id": "friendsmas-036",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Who's far away tonight that you'd love to call after this dinner, and what's the first thing you'd tell them about it?",
+        "pt": "Quem está longe esta noite a quem gostavas de ligar depois deste jantar? Qual é a primeira coisa que lhe contavas?"
+      }
+    },
+    {
+      "id": "friendsmas-037",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Some families in the north of Portugal leave the table set overnight for loved ones who are gone. Who would you set a place for?",
+        "pt": "Algumas famílias do Norte deixam a mesa posta durante a noite para quem já partiu. Para quem punhas um lugar?"
+      }
+    },
+    {
+      "id": "friendsmas-038",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "When did a friendship first start to feel like family to you, and what changed?",
+        "pt": "Quando é que uma amizade passou a ser família para ti, e o que é que mudou?"
+      }
+    },
+    {
+      "id": "friendsmas-039",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What has this group given you this year that you didn't know you needed?",
+        "pt": "O que é que este grupo te deu este ano de que nem sabias que precisavas?"
+      }
+    },
+    {
+      "id": "friendsmas-040",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which tradition do you hope this group still keeps in ten years, and who's in charge of keeping it?",
+        "pt": "Que tradição esperas que este grupo ainda mantenha daqui a dez anos, e quem fica encarregado de a manter?"
+      }
+    }
+  ]
+}

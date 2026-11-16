@@ -483,7 +483,7 @@ export const decks: BuiltinDeck[] = [
       id: "friendsmas",
       title: { en: "Friendsmas", pt: "Natal entre Amigos" },
       description: {
-        en: "Celebrate Christmas with the family you choose: funny stories, honest gratitude and what the year meant to you all.",
+        en: "Celebrate Christmas with the family you choose: funny stories, honest gratitude and what the year meant to each of you.",
         pt: "Celebrem o Natal com a família que escolhemos: histórias divertidas, gratidão sincera e o que o ano significou para todos.",
       },
       tagline: {

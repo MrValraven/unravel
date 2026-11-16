@@ -10,7 +10,7 @@ Unravel is a frontend-only app. It has no backend, no accounts and no server cal
 
 ## Features
 
-- **19 decks** in three groups: Make Friends and Socialize, Dating and Romance, and Adults (18+). Five of them are seasonal.
+- **21 decks** in three groups: Make Friends and Socialize, Dating and Romance, and Adults (18+). Seven of them are seasonal.
 - **Three levels in every deck.** Cards rise from light to deep. Players can start at level 1, 2 or 3.
 - **Three card types.** Questions for one player, challenges (some with a countdown timer) and cards for everyone.
 - **Game setup.** Add player names and the app tracks whose turn it is, shuffle inside each level (levels stay in rising order), or turn on table mode to lay the card out for landscape.
@@ -25,7 +25,7 @@ Unravel is a frontend-only app. It has no backend, no accounts and no server cal
 - **Share a card as an image.** A 1080 by 1920 picture of the card for stories and chats.
 - **English and European Portuguese.** English is the default. Portuguese (pt-PT) is used only when a player picks it in Settings.
 - **Three themes and text size.** Night (the navy default), Dim (warmer and softer for low light) and Day (a light theme for daylight and outdoor play), plus three text sizes.
-- **Seasonal decks.** Pride, Santos Populares, Halloween, New Year and Valentine's Day appear in their own time of year.
+- **Seasonal decks.** Pride, Santos Populares, Halloween, Christmas at the Table, Friendsmas, New Year and Valentine's Day appear in their own time of year.
 - **Deck pages for search.** Every deck has its own page with a title, description and link preview image.
 - **Installable and offline.** A progressive web app that works without a connection once it is installed. An install card on Home and at the end of a deck offers to add it to the home screen, and a small notice says when you are offline.
 - **Your nights.** A local stats panel with decks started and finished, cards seen and time played.
@@ -212,13 +212,15 @@ The `content-drafts/` folder holds eight unreleased packs. See [content-drafts/R
 
 A deck with a `season` window shows up in the picker, the finder, the home page count and the end-of-deck suggestions only while today falls inside the window. Windows are inclusive, written as `MM-DD`, and may wrap the year end.
 
-| Deck             | Window             |
-| ---------------- | ------------------ |
-| Pride Month      | `06-01` to `06-30` |
-| Santos Populares | `06-01` to `06-30` |
-| Halloween        | `10-01` to `12-01` |
-| New Year         | `12-26` to `01-07` |
-| Valentine's Day  | `02-01` to `02-14` |
+| Deck                   | Window             |
+| ---------------------- | ------------------ |
+| Pride Month            | `06-01` to `06-30` |
+| Santos Populares       | `06-01` to `06-30` |
+| Halloween              | `10-01` to `12-01` |
+| Christmas at the Table | `12-01` to `01-06` |
+| Friendsmas             | `12-01` to `01-06` |
+| New Year               | `12-26` to `01-07` |
+| Valentine's Day        | `02-01` to `02-14` |
 
 The deck pages stay in the build and in `sitemap.xml` all year, so a direct link always works. Give a seasonal deck `tag: "seasonal"` together with its `season` window.
 
