@@ -13,7 +13,11 @@ import {
 import { recordDeckStart } from "../../storage/stats";
 import { buildOrder } from "./engine/buildOrder";
 import { createSession } from "./engine/playReducer";
-import { progressToSession, sessionToProgress } from "./engine/selectors";
+import {
+  getCurrentCardId,
+  progressToSession,
+  sessionToProgress,
+} from "./engine/selectors";
 import type { PlaySession } from "./engine/types";
 
 export const defaultPlayOptions: PlayOptions = {
@@ -121,12 +125,32 @@ export const startNewSession = (
 };
 
 /**
+ * The lowest start level Save and continue can use without dealing cards easier
+ * than the current one next: the game's own start level, or the current card's
+ * level when that is lower (after the level was raised mid-game). Levels below it
+ * are only for starting over.
+ */
+export const getLowestContinueLevel = (
+  deck: Deck,
+  session: PlaySession
+): IntensityLevel => {
+  const { startLevel } = session.options;
+  const currentCardId = getCurrentCardId(session);
+  const currentCard = deck.cards.find((card) => card.id === currentCardId);
+  return currentCard !== undefined && currentCard.level < startLevel
+    ? currentCard.level
+    : startLevel;
+};
+
+/**
  * Game options saved during a game: the same game with the new options, so the
  * place, the played cards, the turn count, the turn seed and the clock stay.
  * Shuffle and start level change only the cards still to come: when either
  * changes, the cards after the current one are dealt again by the `buildOrder`
  * rules from every deck card not yet played and not hidden. If the new start
- * level leaves none, the current card is the last. `random` is injectable for tests.
+ * level leaves none, the current card is the last. A start level below
+ * `getLowestContinueLevel` is raised to it, so easier cards never follow the
+ * current one. `random` is injectable for tests.
  */
 export const applyOptionsToSession = (
   deck: Deck,
@@ -134,7 +158,15 @@ export const applyOptionsToSession = (
   options: PlayOptions,
   random: () => number = Math.random
 ): PlaySession => {
-  const nextOptions = normalizePlayOptions(deck, options);
+  const normalizedOptions = normalizePlayOptions(deck, options);
+  const lowestLevel = getLowestContinueLevel(deck, session);
+  const nextOptions: PlayOptions = {
+    ...normalizedOptions,
+    startLevel:
+      normalizedOptions.startLevel < lowestLevel
+        ? lowestLevel
+        : normalizedOptions.startLevel,
+  };
   const isOrderChanged =
     nextOptions.isShuffled !== session.options.isShuffled ||
     nextOptions.startLevel !== session.options.startLevel;
@@ -177,8 +209,9 @@ export const continueWithOptions = (
 
 /**
  * Restores saved progress against the deck as it is today. Cards removed from
- * the deck since the save drop out, and the position follows the cards that
- * were already played. Undefined when nothing playable is left.
+ * the deck since the save drop out (from the order, the hidden and the skipped
+ * cards), and the position follows the cards that were already played.
+ * Undefined when nothing playable is left.
  */
 export const restoreSession = (
   deck: Deck,

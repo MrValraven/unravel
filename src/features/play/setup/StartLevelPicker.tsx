@@ -10,6 +10,11 @@ interface StartLevelPickerProps {
   deck: Deck;
   startLevel: IntensityLevel;
   onChange: (startLevel: IntensityLevel) => void;
+  /**
+   * During a game: levels below this one are past. They stay selectable for
+   * Start over, and are dimmed so they read as not for Save and continue.
+   */
+  lowestContinueLevel?: IntensityLevel;
 }
 
 const levelKeys = [
@@ -23,6 +28,7 @@ export const StartLevelPicker = ({
   deck,
   startLevel,
   onChange,
+  lowestContinueLevel = 1,
 }: StartLevelPickerProps) => {
   const copy = useCopy(playCopy).setup;
   const groupName = useId();
@@ -34,10 +40,12 @@ export const StartLevelPicker = ({
         {levelKeys.map(({ level, key }) => {
           const cardCount = countCardsFromLevel(deck, level);
           const levelCopy = copy.levels[key];
+          const isEmpty = cardCount === 0;
+          const isPast = !isEmpty && level < lowestContinueLevel;
           return (
             <label
               key={level}
-              className={`level-picker__option${cardCount === 0 ? " level-picker__option--empty" : ""}`}
+              className={`level-picker__option${isEmpty ? " level-picker__option--empty" : ""}${isPast ? " level-picker__option--past" : ""}`}
             >
               <input
                 type="radio"
@@ -45,7 +53,7 @@ export const StartLevelPicker = ({
                 className="level-picker__input"
                 value={level}
                 checked={startLevel === level}
-                disabled={cardCount === 0}
+                disabled={isEmpty}
                 onChange={() => onChange(level)}
               />
               <span className="level-picker__meter" aria-hidden="true">

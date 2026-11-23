@@ -141,6 +141,7 @@ export function sessionToProgress(
     turnIndex: session.turnIndex,
     firstStarterIndex: session.firstStarterIndex,
     turnSeed: session.turnSeed,
+    skippedCardIds: [...session.skippedCardIds],
     options: { ...session.options, players: [...session.options.players] },
     startedAt: session.startedAt,
     updatedAt: now,
@@ -148,8 +149,8 @@ export function sessionToProgress(
 }
 
 /**
- * `skippedCardIds` is session-only, so a restored session starts with none.
- * Games saved before `firstStarterIndex` existed start with the first player, and games
+ * Cards skipped once keep their mark, so a second skip hides them; ids no longer in
+ * the order drop out, and games saved before skips were kept start with none. Games saved before `firstStarterIndex` existed start with the first player, and games
  * saved before random turns have no turn seed, so they read it as 0 (and play as a rotation).
  */
 export function progressToSession(progress: SavedProgress): PlaySession {
@@ -163,6 +164,8 @@ export function progressToSession(progress: SavedProgress): PlaySession {
     turnSeed: progress.turnSeed ?? 0,
     options: { ...progress.options, players: [...progress.options.players] },
     startedAt: progress.startedAt,
-    skippedCardIds: [],
+    skippedCardIds: (progress.skippedCardIds ?? []).filter((cardId) =>
+      progress.order.includes(cardId)
+    ),
   };
 }

@@ -20,7 +20,7 @@ export interface PlaySession {
   turnSeed: number;
   options: PlayOptions;
   startedAt: number;
-  /** Card ids skipped once in this session. Session-only: it is not saved to storage. */
+  /** Card ids in `order` skipped once in this game: a second skip hides them. Saved with the game. */
   skippedCardIds: string[];
 }
 

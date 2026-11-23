@@ -304,6 +304,59 @@ describe("PlayFlow", () => {
       );
     });
 
+    it("keeps a once-skipped card's mark through Save and continue, so a second skip hides it", async () => {
+      saveGame("a", ["a-002", "a-004", "a-007", "a-001"], 0);
+      const user = renderFlow();
+      expect(screen.getByText("Card 1 of 4")).toBeInTheDocument();
+      // a-002, then a-004, go to the end: a-007, a-001, a-002, a-004.
+      await user.click(screen.getByRole("button", { name: "Skip for now" }));
+      await user.click(screen.getByRole("button", { name: "Skip for now" }));
+      await user.click(
+        screen.getByRole("button", { name: "Open game options" })
+      );
+      await user.click(
+        screen.getByRole("button", { name: "Save and continue" })
+      );
+      await user.click(screen.getByRole("button", { name: "Next card" }));
+      await user.click(screen.getByRole("button", { name: "Next card" }));
+      expect(screen.getByText("Card 3 of 4")).toBeInTheDocument();
+      // a-002 was skipped once already, so this skip hides it.
+      await user.click(screen.getByRole("button", { name: "Skip for now" }));
+      expect(screen.getByText("Card 3 of 3")).toBeInTheDocument();
+      expect(loadProgress()).toMatchObject({
+        order: ["a-007", "a-001", "a-004"],
+        hiddenCardIds: ["a-002"],
+        skippedCardIds: ["a-004"],
+      });
+    });
+
+    it("does not let Save and continue drop below the current card's level, but Start over can", async () => {
+      // Deeper, on a-003 (level 3).
+      saveProgress({
+        deckId: "a",
+        order: ["a-001", "a-003", "a-005"],
+        position: 1,
+        hiddenCardIds: [],
+        turnIndex: 1,
+        options: makeOptions({ startLevel: 2 }),
+        startedAt: 1,
+        updatedAt: 2,
+      });
+      const user = renderFlow(makeDeck(), "/play/a?setup=1");
+      await user.click(screen.getByRole("radio", { name: /Warm/ }));
+      expect(
+        screen.getByText("You're past this level. Start over to play it.")
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Save and continue" })
+      ).toBeDisabled();
+      await user.click(
+        screen.getByRole("button", { name: "Start over with these settings" })
+      );
+      expect(screen.getByText("Card 1 of 9")).toBeInTheDocument();
+      expect(loadProgress()?.options.startLevel).toBe(1);
+    });
+
     it("continues an adult deck without the check-in again", async () => {
       saveUnnamedGame();
       const user = renderFlow(

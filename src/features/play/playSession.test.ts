@@ -24,8 +24,10 @@ import {
   continueWithOptions,
   createNewSession,
   defaultPlayOptions,
+  getLowestContinueLevel,
   normalizePlayOptions,
   resolveStartOptions,
+  restoreSession,
 } from "./playSession";
 
 const deck = makeDeck();
@@ -225,7 +227,8 @@ describe("applyOptionsToSession", () => {
     expect(applied.options.startLevel).toBe(3);
   });
 
-  it("brings back unplayed cards a lower start level adds", () => {
+  it("never deals easier cards after the current one: a lower start level is clamped", () => {
+    // All in, on a-006 (level 3). Warm would put level 1 cards next.
     const session = playSteps(["next"], makeOptions({ startLevel: 3 }));
     expect(session.order).toEqual(["a-003", "a-006", "a-009"]);
     const applied = applyOptionsToSession(
@@ -233,16 +236,35 @@ describe("applyOptionsToSession", () => {
       session,
       makeOptions({ startLevel: 1 })
     );
-    expect(applied.order.slice(0, 2)).toEqual(["a-003", "a-006"]);
-    expect(applied.order.slice(2)).toEqual([
+    expect(applied.order).toEqual(["a-003", "a-006", "a-009"]);
+    expect(applied.position).toBe(1);
+    expect(applied.options.startLevel).toBe(3);
+  });
+
+  it("allows a lower start level that is not below the current card", () => {
+    // Warm, then raised to All in while on a-002 (level 1).
+    const raised = applyOptionsToSession(
+      deck,
+      playSteps(["next"]),
+      makeOptions({ startLevel: 3 })
+    );
+    expect(raised.order).toEqual(["a-001", "a-002", "a-003", "a-006", "a-009"]);
+    // Deeper is not below the current card, so it deals level 2 and 3 cards again.
+    const lowered = applyOptionsToSession(
+      deck,
+      raised,
+      makeOptions({ startLevel: 2 })
+    );
+    expect(lowered.order).toEqual([
       "a-001",
       "a-002",
-      "a-004",
+      "a-003",
       "a-005",
-      "a-007",
+      "a-006",
       "a-008",
       "a-009",
     ]);
+    expect(lowered.options.startLevel).toBe(2);
   });
 
   it("shuffles the cards still to come within their levels, leaving the played ones", () => {
@@ -308,6 +330,60 @@ describe("applyOptionsToSession", () => {
   });
 });
 
+describe("getLowestContinueLevel", () => {
+  it("is the game's start level while the current card is at or above it", () => {
+    const session = playSteps(["next"], makeOptions({ startLevel: 2 }));
+    // a-003 (level 3), started at Deeper.
+    expect(getLowestContinueLevel(deck, session)).toBe(2);
+  });
+
+  it("is the current card's level when that is below the game's start level", () => {
+    const raised = applyOptionsToSession(
+      deck,
+      playSteps(["next"]),
+      makeOptions({ startLevel: 3 })
+    );
+    expect(getLowestContinueLevel(deck, raised)).toBe(1);
+  });
+});
+
+describe("restoreSession", () => {
+  it("restores the cards skipped once, dropping ids no longer in the order", () => {
+    const smallDeck = makeDeck([
+      makeCard("a-001", 1),
+      makeCard("a-002", 1),
+      makeCard("a-004", 1),
+    ]);
+    const restored = restoreSession(smallDeck, {
+      deckId: "a",
+      order: ["a-001", "a-002", "a-003", "a-004"],
+      position: 1,
+      hiddenCardIds: [],
+      turnIndex: 1,
+      skippedCardIds: ["a-004", "a-003", "a-009"],
+      options: makeOptions(),
+      startedAt: 1,
+      updatedAt: 2,
+    });
+    expect(restored?.order).toEqual(["a-001", "a-002", "a-004"]);
+    expect(restored?.skippedCardIds).toEqual(["a-004"]);
+  });
+
+  it("restores a game saved before skipped cards were kept with none skipped", () => {
+    const restored = restoreSession(deck, {
+      deckId: "a",
+      order: ["a-001", "a-002"],
+      position: 0,
+      hiddenCardIds: [],
+      turnIndex: 0,
+      options: makeOptions(),
+      startedAt: 1,
+      updatedAt: 2,
+    });
+    expect(restored?.skippedCardIds).toEqual([]);
+  });
+});
+
 describe("continueWithOptions", () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -333,5 +409,12 @@ describe("continueWithOptions", () => {
       options: makeOptions({ players: ["Ana", "Rui", "Eva"] }),
     });
     expect(statsStore.get().decksStarted).toEqual({});
+  });
+
+  it("saves the cards skipped once, so they keep their mark", () => {
+    const session = playSteps(["next", "skip"]);
+    expect(session.skippedCardIds).toEqual(["a-002"]);
+    continueWithOptions(deck, session, makeOptions({ players: ["Ana"] }), 300);
+    expect(loadProgress()?.skippedCardIds).toEqual(["a-002"]);
   });
 });

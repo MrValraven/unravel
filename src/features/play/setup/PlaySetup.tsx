@@ -2,7 +2,7 @@ import { useState, type CSSProperties, type FormEvent } from "react";
 import { FiCheck, FiInfo, FiPlay, FiRotateCcw } from "react-icons/fi";
 import { DeckIcon } from "../../../components/DeckIcon";
 import { PageHeader } from "../../../components/PageHeader";
-import type { Deck } from "../../../content/types";
+import type { Deck, IntensityLevel } from "../../../content/types";
 import { formatCopy, localize, pluralize } from "../../../i18n/localize";
 import { useLocale } from "../../../i18n/LocaleContext";
 import { useCopy } from "../../../i18n/useCopy";
@@ -36,6 +36,11 @@ export interface RunningGameSetup {
    * to pop that entry. Without it the link replaces the entry with `backTo`.
    */
   onBack?: () => void;
+  /**
+   * Save and continue never deals cards easier than the current one, so a start level
+   * below this one blocks it, with a note; Start over can still use it. 1 when missing.
+   */
+  lowestContinueLevel?: IntensityLevel;
 }
 
 interface PlaySetupProps {
@@ -77,6 +82,8 @@ export const PlaySetup = ({
   const isCustomDeck = isCustomDeckId(deck.id);
   const playableCardCount = countCardsFromLevel(deck, options.startLevel);
   const canStart = playableCardCount > 0;
+  const lowestContinueLevel = runningGame?.lowestContinueLevel ?? 1;
+  const isPastLevel = !isCustomDeck && options.startLevel < lowestContinueLevel;
   const canUseGroupOptions =
     options.players.filter((name) => name.trim().length > 0).length >=
     GROUP_OPTIONS_MINIMUM_NAMES;
@@ -110,8 +117,9 @@ export const PlaySetup = ({
   // The submit button is the primary one: Save and continue during a game.
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (runningGame) runningGame.onContinue(options);
-    else if (canStart) onStart(options);
+    if (runningGame) {
+      if (!isPastLevel) runningGame.onContinue(options);
+    } else if (canStart) onStart(options);
   };
 
   return (
@@ -186,7 +194,19 @@ export const PlaySetup = ({
               deck={deck}
               startLevel={options.startLevel}
               onChange={(startLevel) => updateOptions({ startLevel })}
+              lowestContinueLevel={lowestContinueLevel}
             />
+            {runningGame && (
+              // Present before the note fills it, so screen readers announce the change.
+              <div className="play-setup__level-status" role="status">
+                {isPastLevel && (
+                  <p className="play-setup__note">
+                    <FiInfo aria-hidden="true" size={18} />
+                    {flow.pastLevel}
+                  </p>
+                )}
+              </div>
+            )}
           </section>
         )}
         <section className="play-setup__section">
@@ -238,7 +258,11 @@ export const PlaySetup = ({
         <div ref={actionsRef} className="play-setup__actions">
           {runningGame ? (
             <>
-              <button type="submit" className="button button--primary">
+              <button
+                type="submit"
+                className="button button--primary"
+                disabled={isPastLevel}
+              >
                 <FiCheck aria-hidden="true" size={20} />
                 {flow.saveAndContinue}
               </button>

@@ -210,6 +210,39 @@ describe("getTurn", () => {
     });
   });
 
+  it("keeps the cards skipped once after saving and resuming, so a second skip hides them", () => {
+    let session = startSession([]);
+    session = playReducer(session, { type: "skip" });
+    expect(session.skippedCardIds).toEqual(["a-001"]);
+    const progress = sessionToProgress(session, 9000);
+    expect(progress.skippedCardIds).toEqual(["a-001"]);
+    let resumed = progressToSession(progress);
+    expect(resumed.skippedCardIds).toEqual(["a-001"]);
+    for (let step = 0; step < 3; step += 1) {
+      resumed = playReducer(resumed, { type: "next" });
+    }
+    expect(getCurrentCardId(resumed)).toBe("a-001");
+    resumed = playReducer(resumed, { type: "skip" });
+    expect(resumed.hiddenCardIds).toEqual(["a-001"]);
+    expect(resumed.order).toEqual(["a-002", "a-003", "a-004"]);
+  });
+
+  it("resumes a game saved before skipped cards were kept with none skipped", () => {
+    const { skippedCardIds: _droppedSkips, ...oldProgress } = sessionToProgress(
+      startSession([]),
+      1
+    );
+    expect(progressToSession(oldProgress).skippedCardIds).toEqual([]);
+  });
+
+  it("drops skipped ids that are not in the saved order when resuming", () => {
+    const progress = {
+      ...sessionToProgress(startSession([]), 1),
+      skippedCardIds: ["a-002", "gone-001"],
+    };
+    expect(progressToSession(progress).skippedCardIds).toEqual(["a-002"]);
+  });
+
   it("starts with the first player when a game saved before the starter existed resumes", () => {
     const { firstStarterIndex: _droppedStarter, ...oldProgress } =
       sessionToProgress(startSession(["Ana", "Rui"], PICK_SECOND_PLAYER), 1);
@@ -466,14 +499,5 @@ describe("progress conversion", () => {
     progress.options.players.push("Eva");
     expect(session.order).toHaveLength(4);
     expect(session.options.players).toEqual(["Ana", "Rui"]);
-  });
-
-  it("starts a restored session with no skipped cards", () => {
-    let session = startSession([]);
-    session = playReducer(session, { type: "skip" });
-    expect(session.skippedCardIds).toEqual(["a-001"]);
-    expect(
-      progressToSession(sessionToProgress(session, 1)).skippedCardIds
-    ).toEqual([]);
   });
 });

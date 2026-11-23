@@ -1,9 +1,10 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
+import type { IntensityLevel } from "../../../content/types";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { saveProgress, type PlayOptions } from "../../../storage/progress";
-import { makeDeck, mixedCards } from "../engine/engine.testUtils";
+import { makeDeck, makeOptions, mixedCards } from "../engine/engine.testUtils";
 import { PlaySetup } from "./PlaySetup";
 
 const renderSetup = (deck = makeDeck(), initialOptions?: PlayOptions) => {
@@ -23,7 +24,8 @@ const renderSetup = (deck = makeDeck(), initialOptions?: PlayOptions) => {
 /** Game options opened from a running game of this deck. */
 const renderMidGameSetup = (
   initialOptions?: PlayOptions,
-  onBack?: () => void
+  onBack?: () => void,
+  lowestContinueLevel?: IntensityLevel
 ) => {
   const onStart = vi.fn();
   const onContinue = vi.fn();
@@ -33,7 +35,12 @@ const renderMidGameSetup = (
         deck={makeDeck()}
         initialOptions={initialOptions}
         onStart={onStart}
-        runningGame={{ backTo: "/play/a", onContinue, onBack }}
+        runningGame={{
+          backTo: "/play/a",
+          onContinue,
+          onBack,
+          lowestContinueLevel,
+        }}
       />
     </MemoryRouter>
   );
@@ -419,6 +426,72 @@ describe("PlaySetup", () => {
         expect.objectContaining({ startLevel: 2 })
       );
       expect(onContinue).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("start levels below the current card during a game", () => {
+    const pastNote = "You're past this level. Start over to play it.";
+
+    it("marks them as past and, when one is picked, blocks Save and continue with a note", async () => {
+      const { onContinue, user } = renderMidGameSetup(
+        makeOptions({ startLevel: 3 }),
+        undefined,
+        3
+      );
+      const warm = screen.getByRole("radio", { name: /Warm/ });
+      const deeper = screen.getByRole("radio", { name: /Deeper/ });
+      expect(warm.closest("label")).toHaveClass("level-picker__option--past");
+      expect(deeper.closest("label")).toHaveClass("level-picker__option--past");
+      expect(
+        screen.getByRole("radio", { name: /All in/ }).closest("label")
+      ).not.toHaveClass("level-picker__option--past");
+      expect(screen.queryByText(pastNote)).not.toBeInTheDocument();
+
+      await user.click(deeper);
+      expect(screen.getByText(pastNote)).toBeInTheDocument();
+      const saveButton = screen.getByRole("button", {
+        name: "Save and continue",
+      });
+      expect(saveButton).toBeDisabled();
+      // Enter in a name field submits the form: it must not continue either.
+      await user.type(
+        screen.getByRole("textbox", { name: "Player 1 name" }),
+        "Ana{Enter}"
+      );
+      expect(onContinue).not.toHaveBeenCalled();
+
+      await user.click(screen.getByRole("radio", { name: /All in/ }));
+      expect(screen.queryByText(pastNote)).not.toBeInTheDocument();
+      expect(saveButton).toBeEnabled();
+    });
+
+    it("still starts over from a past level", async () => {
+      const { onStart, user } = renderMidGameSetup(
+        makeOptions({ startLevel: 3 }),
+        undefined,
+        3
+      );
+      await user.click(screen.getByRole("radio", { name: /Warm/ }));
+      const startOver = screen.getByRole("button", {
+        name: "Start over with these settings",
+      });
+      expect(startOver).toBeEnabled();
+      await user.click(startOver);
+      expect(onStart).toHaveBeenCalledWith(
+        expect.objectContaining({ startLevel: 1 })
+      );
+    });
+
+    it("marks nothing as past in a fresh setup", async () => {
+      const { user } = renderSetup(makeDeck(), makeOptions({ startLevel: 3 }));
+      await user.click(screen.getByRole("radio", { name: /Warm/ }));
+      expect(
+        screen.queryByText("You're past this level. Start over to play it.")
+      ).not.toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Start deck" })).toBeEnabled();
+      expect(
+        document.querySelector(".level-picker__option--past")
+      ).not.toBeInTheDocument();
     });
   });
 

@@ -22,6 +22,7 @@ import {
   commitNewSession,
   continueWithOptions,
   createNewSession,
+  getLowestContinueLevel,
   normalizePlayOptions,
   resolveStartOptions,
   restoreSession,
@@ -260,6 +261,10 @@ export const PlayFlow = ({ deck }: { deck: Deck }) => {
               ? {
                   backTo: buildPlayPath(deck.id),
                   onBack: isPoppedOnLeave ? () => void navigate(-1) : undefined,
+                  lowestContinueLevel: getLowestContinueLevel(
+                    deck,
+                    runningSession
+                  ),
                   onContinue: (options) =>
                     handleSetupContinue(runningSession, options),
                 }

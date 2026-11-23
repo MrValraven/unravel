@@ -17,6 +17,7 @@ const en = {
     startOver: "Start over with these settings",
     continuesSavedGame:
       "Save and continue keeps your place. A new start level or shuffle changes only the cards still to come.",
+    pastLevel: "You're past this level. Start over to play it.",
   },
   checkIn: {
     gameOptions: "Game options",
@@ -55,6 +56,7 @@ export const flowCopy = defineCopy<typeof en>({
       startOver: "Recomeçar com estas opções",
       continuesSavedGame:
         "Guardar e continuar mantém o teu lugar. Mudar o nível inicial ou baralhar só altera as cartas que faltam.",
+      pastLevel: "Já passaste este nível. Recomeça para o jogar.",
     },
     checkIn: {
       gameOptions: "Opções de jogo",

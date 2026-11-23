@@ -102,7 +102,9 @@
   font-size: 0.875rem;
 }
 
-// The live region for the table mode and pass-the-phone note. Empty, it takes back the section gap.
+// The live regions for the past level note and the table mode and pass-the-phone
+// note. Empty, they take back the section gap.
+.play-setup__level-status:empty,
 .play-setup__switch-status:empty {
   margin-top: -$space-2;
 }

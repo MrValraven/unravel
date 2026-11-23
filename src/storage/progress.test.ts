@@ -83,7 +83,8 @@ describe("progress", () => {
     const progress = buildProgress();
     expect(progress).not.toHaveProperty("firstStarterIndex");
     localStorage.setItem("unravel:v2:progress", JSON.stringify(progress));
-    expect(loadProgress()).toEqual(progress);
+    // Saved before skipped cards were kept too, so it reads with none.
+    expect(loadProgress()).toEqual({ ...progress, skippedCardIds: [] });
   });
 
   it("returns null when the stored starter is invalid", () => {
@@ -177,6 +178,39 @@ describe("progress", () => {
       localStorage.setItem(
         "unravel:v2:progress",
         JSON.stringify({ ...buildProgress(), turnSeed })
+      );
+      expect(loadProgress()).toBeNull();
+    }
+  });
+
+  it("keeps the ids of cards skipped once", () => {
+    saveProgress(buildProgress({ skippedCardIds: ["first-date-003"] }));
+    expect(loadProgress()?.skippedCardIds).toEqual(["first-date-003"]);
+  });
+
+  it("reads a game saved before skipped cards were kept as having none", () => {
+    localStorage.setItem(
+      "unravel:v2:progress",
+      JSON.stringify(buildProgress())
+    );
+    expect(loadProgress()).toMatchObject({ position: 1, skippedCardIds: [] });
+  });
+
+  it("drops skipped ids that are not in the order", () => {
+    localStorage.setItem(
+      "unravel:v2:progress",
+      JSON.stringify(
+        buildProgress({ skippedCardIds: ["first-date-003", "gone-001"] })
+      )
+    );
+    expect(loadProgress()?.skippedCardIds).toEqual(["first-date-003"]);
+  });
+
+  it("returns null when the stored skipped ids are not a list of ids", () => {
+    for (const skippedCardIds of ["first-date-003", [3], null]) {
+      localStorage.setItem(
+        "unravel:v2:progress",
+        JSON.stringify({ ...buildProgress(), skippedCardIds })
       );
       expect(loadProgress()).toBeNull();
     }

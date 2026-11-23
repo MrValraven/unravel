@@ -35,6 +35,11 @@ export interface SavedProgress {
    * turns existed have none; they read it as 0 and play as a rotation.
    */
   turnSeed?: number;
+  /**
+   * Ids in `order` of cards skipped once, so a second skip hides them. Optional because
+   * games saved before it was kept have none; they read it as an empty list.
+   */
+  skippedCardIds?: string[];
   options: PlayOptions;
   /** Epoch milliseconds. */
   startedAt: number;
@@ -90,10 +95,11 @@ const readSavedProgress = (raw: unknown): SavedProgress | null | undefined => {
   if (typeof raw !== "object") return undefined;
   const candidate = raw as Record<string, unknown>;
   const options = readPlayOptions(candidate.options);
+  const { order, skippedCardIds: storedSkippedIds } = candidate;
   if (
     options === undefined ||
     typeof candidate.deckId !== "string" ||
-    !isStringList(candidate.order) ||
+    !isStringList(order) ||
     !isNonNegativeInteger(candidate.position) ||
     !isStringList(candidate.hiddenCardIds) ||
     !isNonNegativeInteger(candidate.turnIndex) ||
@@ -101,12 +107,22 @@ const readSavedProgress = (raw: unknown): SavedProgress | null | undefined => {
       !isNonNegativeInteger(candidate.firstStarterIndex)) ||
     (candidate.turnSeed !== undefined &&
       !isNonNegativeInteger(candidate.turnSeed)) ||
+    (storedSkippedIds !== undefined && !isStringList(storedSkippedIds)) ||
     typeof candidate.startedAt !== "number" ||
     typeof candidate.updatedAt !== "number"
   ) {
     return undefined;
   }
-  return { ...(candidate as unknown as SavedProgress), options };
+  // Games saved before skips were kept have none; ids outside the order drop out.
+  const orderIds = new Set(order);
+  const skippedCardIds = (storedSkippedIds ?? []).filter((cardId) =>
+    orderIds.has(cardId)
+  );
+  return {
+    ...(candidate as unknown as SavedProgress),
+    skippedCardIds,
+    options,
+  };
 };
 
 const isSavedProgress = (raw: unknown): raw is SavedProgress | null =>
