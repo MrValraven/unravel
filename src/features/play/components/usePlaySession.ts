@@ -9,8 +9,7 @@ import {
   recordDeckFinish,
   recordDeckStart,
 } from "../../../storage/stats";
-import { buildOrder } from "../engine/buildOrder";
-import { playReducer } from "../engine/playReducer";
+import { createRestartAction, playReducer } from "../engine/playReducer";
 import {
   getCurrentCardId,
   isSessionFinished,
@@ -125,10 +124,12 @@ export function usePlaySession(
 
   const restart = () => {
     const previousSession = sessionRef.current;
-    const order = buildOrder(deck.cards, previousSession.options);
-    // A restart is a new game, so its clock starts again too.
+    // A restart is a new game: new order, starter and turn seed, and its clock starts again too.
     const nextSession = {
-      ...playReducer(previousSession, { type: "restart", order }),
+      ...playReducer(
+        previousSession,
+        createRestartAction(deck.cards, previousSession.options)
+      ),
       startedAt: Date.now(),
     };
     commit(nextSession, "forward");

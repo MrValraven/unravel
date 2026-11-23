@@ -20,21 +20,66 @@
       }
     },
     {
+      "id": "aftercare-glow-008",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What do you like to do after sex?",
+        "pt": "O que é que gostas de fazer depois do sexo?"
+      }
+    },
+    {
+      "id": "aftercare-glow-009",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Do you need anything right now? Water, a blanket, the window open?",
+        "pt": "Precisas de alguma coisa agora? Água, uma manta, a janela aberta?"
+      }
+    },
+    {
+      "id": "aftercare-glow-010",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Do you want to be held, or would you like a little space?",
+        "pt": "Queres que te abrace ou preferes um bocadinho de espaço?"
+      }
+    },
+    {
+      "id": "aftercare-glow-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "How is your body feeling right now? Anything sore, tingly or cold?",
+        "pt": "Como está o teu corpo neste momento? Alguma parte dorida, a formigar ou com frio?"
+      }
+    },
+    {
+      "id": "aftercare-glow-012",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you had to sum up how you feel right now in one word, what would it be?",
+        "pt": "Se tivesses de resumir numa palavra o que sentes agora, qual seria?"
+      }
+    },
+    {
+      "id": "aftercare-glow-013",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Shall we stay in bed a little longer, or go raid the kitchen?",
+        "pt": "Ficamos na cama mais um bocadinho ou vamos assaltar a cozinha?"
+      }
+    },
+    {
       "id": "aftercare-glow-003",
       "type": "question",
       "level": 2,
       "text": {
         "en": "How can I help you feel even more pleasure?",
         "pt": "Como é que te posso ajudar a sentir ainda mais prazer?"
-      }
-    },
-    {
-      "id": "aftercare-glow-004",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "Is there anything you don't want to do again?",
-        "pt": "Há alguma coisa que não queiras voltar a fazer?"
       }
     },
     {
@@ -56,6 +101,60 @@
       }
     },
     {
+      "id": "aftercare-glow-014",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Was there a moment you felt especially connected to me?",
+        "pt": "Houve algum momento em que sentiste uma ligação especial comigo?"
+      }
+    },
+    {
+      "id": "aftercare-glow-015",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What did I do that made you feel safe with me?",
+        "pt": "O que é que eu fiz que te fez sentir em segurança comigo?"
+      }
+    },
+    {
+      "id": "aftercare-glow-016",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which touch of mine should I remember for next time?",
+        "pt": "Que toque meu devo guardar para a próxima vez?"
+      }
+    },
+    {
+      "id": "aftercare-glow-017",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Did the pace feel right, or would you like it slower or faster next time?",
+        "pt": "O ritmo soube-te bem, ou da próxima vez preferes mais devagar ou mais depressa?"
+      }
+    },
+    {
+      "id": "aftercare-glow-018",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Was there a sound or a word from me that you loved hearing?",
+        "pt": "Houve algum som ou alguma palavra minha que adoraste ouvir?"
+      }
+    },
+    {
+      "id": "aftercare-glow-004",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Is there anything you don't want to do again?",
+        "pt": "Há alguma coisa que não queiras voltar a fazer?"
+      }
+    },
+    {
       "id": "aftercare-glow-007",
       "type": "question",
       "level": 3,
@@ -65,12 +164,57 @@
       }
     },
     {
-      "id": "aftercare-glow-008",
+      "id": "aftercare-glow-019",
       "type": "question",
-      "level": 1,
+      "level": 3,
       "text": {
-        "en": "What do you like to do after sex?",
-        "pt": "O que é que gostas de fazer depois do sexo?"
+        "en": "Was there a moment you felt less at ease? What would help you feel more comfortable next time?",
+        "pt": "Houve algum momento em que te sentiste menos à vontade? O que te ajudaria a ficar mais confortável da próxima vez?"
+      }
+    },
+    {
+      "id": "aftercare-glow-020",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Did anything about yourself surprise you this time?",
+        "pt": "Desta vez, houve alguma coisa em ti que te surpreendeu?"
+      }
+    },
+    {
+      "id": "aftercare-glow-021",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which moment just now made you feel most wanted by me?",
+        "pt": "Há bocado, em que momento sentiste que eu te desejava mais?"
+      }
+    },
+    {
+      "id": "aftercare-glow-022",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Is there something you've been shy to ask for? You can whisper it now or save it for next time.",
+        "pt": "Há alguma coisa que tenhas tido vergonha de pedir? Podes sussurrá-la agora ou guardá-la para a próxima."
+      }
+    },
+    {
+      "id": "aftercare-glow-023",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If something ever doesn't feel right for you, what would make it easier to tell me, even days later?",
+        "pt": "Se alguma vez algo não te souber bem, o que te ajudaria a contar-me, mesmo que seja dias depois?"
+      }
+    },
+    {
+      "id": "aftercare-glow-024",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What do you need from me tomorrow to keep feeling this close?",
+        "pt": "De que precisas de mim amanhã para continuares a sentir esta proximidade?"
       }
     }
   ]

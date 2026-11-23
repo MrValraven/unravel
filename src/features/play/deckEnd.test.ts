@@ -1,12 +1,14 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { getBuiltinDeck } from "../../content/decks";
-import { buildRecapText, pickSuggestedDeck, shareRecap } from "./deckEnd";
+import { buildRecapText, pickSuggestedDeck, readDeckEndState } from "./deckEnd";
 import { flowCopy } from "./flowCopy";
 
 const options = (startLevel: 1 | 2 | 3) => ({
   isShuffled: false,
   startLevel,
   isTableMode: false,
+  isRandomTurns: false,
+  isPassThePhone: false,
   players: [],
 });
 
@@ -43,41 +45,6 @@ describe("buildRecapText", () => {
   });
 });
 
-describe("shareRecap", () => {
-  afterEach(() => {
-    vi.unstubAllGlobals();
-  });
-
-  it("opens the share sheet when there is one", async () => {
-    const share = vi.fn(() => Promise.resolve());
-    vi.stubGlobal("navigator", { share });
-    expect(await shareRecap("Line", "https://example.test/")).toBe("shared");
-    expect(share).toHaveBeenCalledWith({
-      text: "Line",
-      url: "https://example.test/",
-    });
-  });
-
-  it("reports a closed share sheet as cancelled", async () => {
-    vi.stubGlobal("navigator", {
-      share: () => Promise.reject(new DOMException("closed", "AbortError")),
-    });
-    expect(await shareRecap("Line", "https://example.test/")).toBe("cancelled");
-  });
-
-  it("copies the line and link without a share sheet", async () => {
-    const writeText = vi.fn(() => Promise.resolve());
-    vi.stubGlobal("navigator", { clipboard: { writeText } });
-    expect(await shareRecap("Line", "https://example.test/")).toBe("copied");
-    expect(writeText).toHaveBeenCalledWith("Line https://example.test/");
-  });
-
-  it("fails when neither sharing nor the clipboard works", async () => {
-    vi.stubGlobal("navigator", {});
-    expect(await shareRecap("Line", "https://example.test/")).toBe("failed");
-  });
-});
-
 describe("pickSuggestedDeck", () => {
   const firstDate = getBuiltinDeck("first-date");
   if (!firstDate) throw new Error("Missing live deck first-date");
@@ -95,5 +62,40 @@ describe("pickSuggestedDeck", () => {
     if (!firstPick) throw new Error("No suggestion");
     const secondPick = pickSuggestedDeck(firstDate, { [firstPick.id]: 3 });
     expect(secondPick?.id).not.toBe(firstPick.id);
+  });
+});
+
+describe("readDeckEndState options", () => {
+  const counts = {
+    cardsPlayed: 3,
+    millisecondsPlayed: 1000,
+    favouritesSavedCount: 0,
+  };
+
+  it("loads options saved before random turns and pass-the-phone as off", () => {
+    const { isRandomTurns: _r, isPassThePhone: _p, ...oldOptions } = options(2);
+    expect(
+      readDeckEndState({ ...counts, options: oldOptions })?.options
+    ).toEqual(options(2));
+  });
+
+  it("drops options whose new flags are not booleans", () => {
+    expect(
+      readDeckEndState({
+        ...counts,
+        options: { ...options(2), isRandomTurns: "on" },
+      })?.options
+    ).toBeUndefined();
+  });
+
+  it("keeps random turns from a four-name game", () => {
+    const fourNames = {
+      ...options(1),
+      isRandomTurns: true,
+      players: ["Ana", "Rui", "Eva", "Leo"],
+    };
+    expect(
+      readDeckEndState({ ...counts, options: fourNames })?.options
+    ).toEqual(fourNames);
   });
 });

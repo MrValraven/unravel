@@ -11,9 +11,11 @@ const englishCard = playCopy.en.card;
 const portugueseCard = playCopy.pt.card;
 
 describe("getCardBadgeLabel", () => {
-  it("labels challenge and everyone cards only", () => {
+  it("labels every card type except plain questions", () => {
     expect(getCardBadgeLabel("challenge", englishCard)).toBe("Challenge");
     expect(getCardBadgeLabel("everyone", englishCard)).toBe("Everyone answers");
+    expect(getCardBadgeLabel("vote", englishCard)).toBe("Vote");
+    expect(getCardBadgeLabel("hot-seat", englishCard)).toBe("Hot seat");
     expect(getCardBadgeLabel("question", englishCard)).toBeUndefined();
   });
 });
@@ -77,6 +79,40 @@ describe("getTurnLine", () => {
     expect(getTurnLine("question", unnamed, portugueseCard)).toBe(
       "Toda a gente responde, à vez"
     );
+  });
+
+  it("labels vote and hot-seat cards and gives them turn lines", () => {
+    expect(getCardTypeLabel("vote", portugueseCard)).toBe("Votação");
+    expect(getCardTypeLabel("hot-seat", portugueseCard)).toBe("Holofote");
+    expect(getTurnLine("vote", { kind: "vote" }, englishCard)).toBe(
+      "Everyone votes"
+    );
+    expect(
+      getTurnLine("hot-seat", { kind: "hot-seat", player: "Ana" }, englishCard)
+    ).toBe("Ana is in the hot seat");
+    expect(
+      getTurnLine("hot-seat", { kind: "hot-seat-unnamed" }, englishCard)
+    ).toBe("Pick someone for the hot seat");
+    expect(getTurnLine("vote", { kind: "vote" }, portugueseCard)).toBe(
+      "Toda a gente vota"
+    );
+    expect(
+      getTurnLine(
+        "hot-seat",
+        { kind: "hot-seat", player: "Ana" },
+        portugueseCard
+      )
+    ).toBe("Ana está no holofote");
+    expect(
+      getTurnLine("hot-seat", { kind: "hot-seat-unnamed" }, portugueseCard)
+    ).toBe("Escolham quem fica no holofote");
+  });
+
+  it("names only the answerer when the phone is passed to them", () => {
+    const solo = { kind: "solo", answerer: "Ana" } as const;
+    expect(getTurnLine("question", solo, englishCard)).toBe("Ana's turn");
+    expect(getTurnLine("challenge", solo, englishCard)).toBe("Ana's turn");
+    expect(getTurnLine("question", solo, portugueseCard)).toBe("Vez de Ana");
   });
 
   it("leaves everyone cards to their badge", () => {

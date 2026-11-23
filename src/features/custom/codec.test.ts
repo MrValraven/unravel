@@ -41,6 +41,42 @@ describe("share link codec", () => {
     expect(result).toEqual({ isDecoded: true, deck: sampleDeck });
   });
 
+  it("round-trips vote and hot-seat cards", () => {
+    const groupDeck: SharedDeck = {
+      title: "Group night",
+      cards: [
+        {
+          type: "vote",
+          text: "Who is most likely to forget their own birthday?",
+        },
+        {
+          type: "hot-seat",
+          text: "Everyone asks the person in the hot seat about their first job",
+        },
+      ],
+    };
+    expect(decodeDeckFromHash(`#d=${encodeSharedDeck(groupDeck)}`)).toEqual({
+      isDecoded: true,
+      deck: groupDeck,
+    });
+  });
+
+  it("still decodes a link made before the new types", () => {
+    const oldLinkHash =
+      "#d=eyJ2IjoxLCJ0aXRsZSI6Ik9sZCBsaW5rIiwiY2FyZHMiOlt7InQiOiJxdWVzdGlvbiIsIngiOiJCZXN0IHRyaXA_In0seyJ0IjoiY2hhbGxlbmdlIiwieCI6Ikh1bSBhIHNvbmcifSx7InQiOiJldmVyeW9uZSIsIngiOiJFdmVyeW9uZSBuYW1lcyBhIHNuYWNrIn1dfQ";
+    expect(decodeDeckFromHash(oldLinkHash)).toEqual({
+      isDecoded: true,
+      deck: {
+        title: "Old link",
+        cards: [
+          { type: "question", text: "Best trip?" },
+          { type: "challenge", text: "Hum a song" },
+          { type: "everyone", text: "Everyone names a snack" },
+        ],
+      },
+    });
+  });
+
   it("builds an import URL that carries the deck in the hash", () => {
     const url = buildShareUrl(sampleDeck, "https://unravel.example");
     expect(url.startsWith(`https://unravel.example${IMPORT_PATH}#d=`)).toBe(

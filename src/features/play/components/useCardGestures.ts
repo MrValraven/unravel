@@ -14,6 +14,11 @@ interface CardGestureOptions {
   canGoPrevious: boolean;
   onNext: () => void;
   onPrevious: () => void;
+  /**
+   * When set, a tap anywhere on the card calls this instead of turning it.
+   * Pass-the-phone sets it while the card is covered, so a tap reveals the card.
+   */
+  onTap?: () => void;
 }
 
 export type SwipeDirection = "next" | "previous";
@@ -94,7 +99,7 @@ const getReleaseVelocity = (samples: PointerSample[]): number => {
 
 /**
  * Swipe right for the next card, left for the previous one, and tap the right
- * third for the next card. The card follows the finger through CSS variables on
+ * third for the next card (or anywhere, calling `onTap`, when it is set). The card follows the finger through CSS variables on
  * the stage (--drag-x in px, --drag-progress from 0 to 1 at the commit distance),
  * written once per frame, so dragging never re-renders React. React renders only
  * when the side under the card changes (`underlaySide`). The gesture element
@@ -105,6 +110,7 @@ export function useCardGestures({
   canGoPrevious,
   onNext,
   onPrevious,
+  onTap,
 }: CardGestureOptions) {
   const elementRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -115,10 +121,10 @@ export function useCardGestures({
   const phaseRef = useRef<DragPhase>("idle");
   const frameRef = useRef<number | null>(null);
   const timerRef = useRef<number | null>(null);
-  const latestRef = useRef({ canGoPrevious, onNext, onPrevious });
+  const latestRef = useRef({ canGoPrevious, onNext, onPrevious, onTap });
 
   useEffect(() => {
-    latestRef.current = { canGoPrevious, onNext, onPrevious };
+    latestRef.current = { canGoPrevious, onNext, onPrevious, onTap };
   });
 
   const cancelScheduled = () => {
@@ -372,6 +378,10 @@ export function useCardGestures({
     }
 
     if (!isTap) return;
+    if (latestRef.current.onTap) {
+      latestRef.current.onTap();
+      return;
+    }
     const bounds = event.currentTarget.getBoundingClientRect();
     if (event.clientX >= bounds.left + (bounds.width * 2) / 3)
       latestRef.current.onNext();

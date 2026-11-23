@@ -101,7 +101,13 @@ const DeckEndPage = () => {
       </h1>
       <p className="deck-end__subtitle">{copy.end.subtitle}</p>
       {endState && <DeckEndSummary endState={endState} />}
-      {endState && <DeckEndRecap deckTitle={deckTitle} endState={endState} />}
+      {endState && (
+        <DeckEndRecap
+          deckId={shownDeck.id}
+          deckTitle={deckTitle}
+          endState={endState}
+        />
+      )}
       <DeckEndActions
         suggestedDeck={suggestedDeck}
         hasFavourites={hasFavouritesDeck && shownDeck.id !== FAVOURITES_DECK_ID}

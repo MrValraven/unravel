@@ -1,0 +1,86 @@
+@use "../../../styles/tokens" as *;
+
+// Built on currentColor like the timer, so it sits on the accent card in every theme.
+.vote-countdown {
+  display: flex;
+  align-items: center;
+  min-height: $tap-target;
+}
+
+.vote-countdown__button {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  min-height: $tap-target;
+  padding: $space-2 $space-4;
+  border: 1.5px solid currentColor;
+  border-radius: $radius-pill;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition:
+    background-color $duration-fast ease,
+    transform $duration-fast $ease-out;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: color-mix(in srgb, currentColor 12%, transparent);
+    }
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  // During the count the button stays (so focus stays) but drops its pill for the big number.
+  &[data-counting] {
+    padding: 0;
+    border-color: transparent;
+    background-color: transparent;
+    cursor: default;
+
+    &:active {
+      transform: none;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+// The count reads at arm's length across a room, so it is the biggest thing in the footer.
+.vote-countdown__step {
+  display: inline-flex;
+  align-items: center;
+  min-height: $tap-target;
+  font-family: $font-ui;
+  font-size: 2rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+
+  &[data-step="point"] {
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  // Reduced motion keeps the numbers and drops the pop.
+  @include motion-safe {
+    animation: vote-countdown-pop 360ms $ease-out both;
+  }
+}
+
+@keyframes vote-countdown-pop {
+  0% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

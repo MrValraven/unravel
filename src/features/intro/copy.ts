@@ -23,6 +23,14 @@ const en = {
       title: "Everyone cards",
       body: "The whole table answers, one person after another.",
     },
+    votes: {
+      title: "Votes",
+      body: "Everyone points at the same time at whoever fits the card best, on a count of three.",
+    },
+    hotSeat: {
+      title: "Hot seat",
+      body: "One person sits in the hot seat and the group asks them. With names, Unravel says whose turn it is.",
+    },
     levels: {
       title: "Levels",
       body: "Cards rise through three levels, from warm to all in. Start at the level that suits the moment.",
@@ -63,6 +71,14 @@ export const introCopy = defineCopy<typeof en>({
       everyone: {
         title: "Cartas para todos",
         body: "Toda a mesa responde, uma pessoa de cada vez.",
+      },
+      votes: {
+        title: "Votações",
+        body: "Toda a gente aponta ao mesmo tempo para quem melhor se encaixa na carta, a contar até três.",
+      },
+      hotSeat: {
+        title: "Holofote",
+        body: "Uma pessoa fica no holofote e o grupo faz-lhe perguntas. Com nomes, o Unravel diz de quem é a vez.",
       },
       levels: {
         title: "Níveis",

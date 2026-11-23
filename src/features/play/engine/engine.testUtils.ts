@@ -38,6 +38,8 @@ export const makeOptions = (patch: Partial<PlayOptions> = {}): PlayOptions => ({
   isShuffled: false,
   startLevel: 1,
   isTableMode: false,
+  isRandomTurns: false,
+  isPassThePhone: false,
   players: [],
   ...patch,
 });

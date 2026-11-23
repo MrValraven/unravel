@@ -56,6 +56,98 @@
       }
     },
     {
+      "id": "unravel-010",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What’s your most uncommon interest?",
+        "pt": "Qual é o teu interesse mais invulgar?"
+      }
+    },
+    {
+      "id": "unravel-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What’s the weirdest dream you’ve ever had?",
+        "pt": "Qual foi o sonho mais estranho que já tiveste?"
+      }
+    },
+    {
+      "id": "unravel-017",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What’s the most embarrassing way you’ve been injured?",
+        "pt": "Qual foi a forma mais embaraçosa como já te magoaste?"
+      }
+    },
+    {
+      "id": "unravel-019",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you had to pick, which fictional character best represents you?",
+        "pt": "Se tivesses de escolher, que personagem de ficção te representa melhor?"
+      }
+    },
+    {
+      "id": "unravel-021",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the best trip you’ve ever taken?",
+        "pt": "Qual foi a melhor viagem que já fizeste?"
+      }
+    },
+    {
+      "id": "unravel-026",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's something you wish you were really good at?",
+        "pt": "Que coisa gostavas de saber fazer mesmo bem?"
+      }
+    },
+    {
+      "id": "unravel-028",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's something you love about your hometown?",
+        "pt": "O que é que adoras na tua terra?"
+      }
+    },
+    {
+      "id": "unravel-030",
+      "type": "vote",
+      "level": 1,
+      "text": {
+        "en": "Who is most likely to bump into someone they know wherever they go?",
+        "pt": "Quem é mais capaz de dar de caras com um conhecido onde quer que vá?"
+      }
+    },
+    {
+      "id": "unravel-032",
+      "type": "hot-seat",
+      "level": 1,
+      "text": {
+        "en": "Until time runs out, the group fires quick questions at the person in the hot seat. Short answers only.",
+        "pt": "Até o tempo acabar, o grupo dispara perguntas rápidas a quem está no holofote. Só valem respostas curtas."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "unravel-035",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Round the circle, each person says their name and one fact, and the next repeats everything before adding theirs. Beat the clock.",
+        "pt": "À volta da roda, cada um diz o seu nome e uma curiosidade, e o seguinte repete tudo antes de juntar a sua. Contra o relógio."
+      },
+      "timerSeconds": 90
+    },
+    {
       "id": "unravel-007",
       "type": "question",
       "level": 2,
@@ -80,24 +172,6 @@
       "text": {
         "en": "What’s the most rebellious thing you did as a teenager?",
         "pt": "Qual foi a coisa mais rebelde que fizeste na adolescência?"
-      }
-    },
-    {
-      "id": "unravel-010",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What’s your most uncommon interest?",
-        "pt": "Qual é o teu interesse mais invulgar?"
-      }
-    },
-    {
-      "id": "unravel-011",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What’s the weirdest dream you’ve ever had?",
-        "pt": "Qual foi o sonho mais estranho que já tiveste?"
       }
     },
     {
@@ -128,48 +202,12 @@
       }
     },
     {
-      "id": "unravel-015",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "What do people misunderstand about you?",
-        "pt": "O que é que as pessoas costumam perceber mal sobre ti?"
-      }
-    },
-    {
       "id": "unravel-016",
       "type": "question",
       "level": 2,
       "text": {
         "en": "What’s something you’ve always wanted to do but haven’t yet?",
         "pt": "O que é que sempre quiseste fazer mas ainda não fizeste?"
-      }
-    },
-    {
-      "id": "unravel-017",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What’s the most embarrassing way you’ve been injured?",
-        "pt": "Qual foi a forma mais embaraçosa como já te magoaste?"
-      }
-    },
-    {
-      "id": "unravel-018",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "What event has made you a stronger person?",
-        "pt": "Que acontecimento te tornou uma pessoa mais forte?"
-      }
-    },
-    {
-      "id": "unravel-019",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "If you had to pick, which fictional character best represents you?",
-        "pt": "Se tivesses de escolher, que personagem de ficção te representa melhor?"
       }
     },
     {
@@ -182,30 +220,12 @@
       }
     },
     {
-      "id": "unravel-021",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What's the best trip you’ve ever taken?",
-        "pt": "Qual foi a melhor viagem que já fizeste?"
-      }
-    },
-    {
       "id": "unravel-022",
       "type": "question",
       "level": 2,
       "text": {
         "en": "What's one thing you would change about the world?",
         "pt": "Se pudesses mudar uma coisa no mundo, o que seria?"
-      }
-    },
-    {
-      "id": "unravel-023",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "If we learn from our mistakes, why are we always so afraid to make a mistake?",
-        "pt": "Se aprendemos com os erros, porque é que temos sempre tanto medo de errar?"
       }
     },
     {
@@ -218,6 +238,61 @@
       }
     },
     {
+      "id": "unravel-031",
+      "type": "vote",
+      "level": 2,
+      "text": {
+        "en": "Who is most likely to have a hidden talent nobody here knows about yet?",
+        "pt": "Quem é mais capaz de ter um talento escondido que ainda ninguém aqui conhece?"
+      }
+    },
+    {
+      "id": "unravel-033",
+      "type": "hot-seat",
+      "level": 2,
+      "text": {
+        "en": "Everyone asks the person in the hot seat one question about the best advice they've ever been given.",
+        "pt": "Cada um faz uma pergunta a quem está no holofote sobre o melhor conselho que já lhe deram."
+      }
+    },
+    {
+      "id": "unravel-034",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Find three things you all have in common before time runs out. Obvious ones don't count.",
+        "pt": "Descubram três coisas que todos têm em comum antes de o tempo acabar. As óbvias não contam."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "unravel-015",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What do people misunderstand about you?",
+        "pt": "O que é que as pessoas costumam perceber mal sobre ti?"
+      }
+    },
+    {
+      "id": "unravel-018",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What event has made you a stronger person?",
+        "pt": "Que acontecimento te tornou uma pessoa mais forte?"
+      }
+    },
+    {
+      "id": "unravel-023",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If we learn from our mistakes, why are we always so afraid to make a mistake?",
+        "pt": "Se aprendemos com os erros, porque é que temos sempre tanto medo de errar?"
+      }
+    },
+    {
       "id": "unravel-025",
       "type": "question",
       "level": 3,
@@ -227,30 +302,12 @@
       }
     },
     {
-      "id": "unravel-026",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What's something you wish you were really good at?",
-        "pt": "Que coisa gostavas de saber fazer mesmo bem?"
-      }
-    },
-    {
       "id": "unravel-027",
       "type": "question",
       "level": 3,
       "text": {
         "en": "What’s the most frightening experience you’ve ever had?",
         "pt": "Qual foi a experiência mais assustadora que já viveste?"
-      }
-    },
-    {
-      "id": "unravel-028",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What's something you love about your hometown?",
-        "pt": "O que é que adoras na tua terra?"
       }
     },
     {

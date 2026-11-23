@@ -1,5 +1,6 @@
 import type { Locale } from "../../content/types";
 import { shareCopy } from "./copy";
+import { downloadBlob } from "./downloadBlob";
 import { drawShareCard } from "./drawShareCard";
 import {
   SHARE_CARD_HEIGHT,
@@ -13,13 +14,15 @@ export interface ShareCardInput {
   deckId: string;
   accent: string;
   locale: Locale;
+  /** One line shown with the image in the share sheet. */
+  shareText: string;
+  /** The deck page the share points to. */
+  shareUrl: string;
 }
 
 export type ShareCardResult = "shared" | "downloaded" | "cancelled";
 
 const FONT_LOAD_TIMEOUT_MILLISECONDS = 1500;
-// Safari and iOS start blob downloads asynchronously, so an immediate revoke breaks them.
-const OBJECT_URL_REVOKE_DELAY_MILLISECONDS = 30000;
 
 /** Waits for both canvas fonts. A font failure or a slow network never blocks sharing.
  *  The real text is passed so browsers also fetch the subsets (such as latin-ext) it needs. */
@@ -61,44 +64,44 @@ const renderCardBlob = async (input: ShareCardInput): Promise<Blob> => {
   });
 };
 
-const downloadBlob = (blob: Blob, fileName: string): void => {
-  const objectUrl = URL.createObjectURL(blob);
-  const anchor = document.createElement("a");
-  anchor.href = objectUrl;
-  anchor.download = fileName;
-  anchor.style.display = "none";
-  document.body.appendChild(anchor);
-  anchor.click();
-  anchor.remove();
-  setTimeout(
-    () => URL.revokeObjectURL(objectUrl),
-    OBJECT_URL_REVOKE_DELAY_MILLISECONDS
-  );
-};
-
 const isAbortError = (error: unknown): boolean =>
   error instanceof DOMException
     ? error.name === "AbortError"
     : (error as { name?: string } | null)?.name === "AbortError";
 
-/** Opens the share sheet with the image when the browser can share files. Returns
- *  undefined when file sharing is unavailable. */
+/** Opens the share sheet with the image, a line of text and the deck link. A browser or
+ *  app that refuses the extra fields gets the image alone. Returns undefined when file
+ *  sharing is unavailable. */
 const tryShareFile = async (
   file: File,
   input: ShareCardInput
 ): Promise<"shared" | "cancelled" | undefined> => {
-  const canShareFiles =
-    typeof navigator.share === "function" &&
-    typeof navigator.canShare === "function" &&
-    navigator.canShare({ files: [file] });
-  if (!canShareFiles) return undefined;
-  try {
-    await navigator.share({ files: [file], title: input.deckTitle });
-    return "shared";
-  } catch (error) {
-    if (isAbortError(error)) return "cancelled";
+  if (
+    typeof navigator.share !== "function" ||
+    typeof navigator.canShare !== "function"
+  ) {
     return undefined;
   }
+  const attempts: ShareData[] = [
+    {
+      files: [file],
+      title: input.deckTitle,
+      text: input.shareText,
+      url: input.shareUrl,
+    },
+    { files: [file], title: input.deckTitle },
+  ];
+  for (const data of attempts) {
+    if (!navigator.canShare(data)) continue;
+    try {
+      await navigator.share(data);
+      return "shared";
+    } catch (error) {
+      if (isAbortError(error)) return "cancelled";
+      // Refused: try the image alone, then fall back to a download.
+    }
+  }
+  return undefined;
 };
 
 /** Renders a 1080x1920 PNG and shares it, or downloads it when sharing files is unavailable. */

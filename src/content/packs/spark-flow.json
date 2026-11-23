@@ -38,15 +38,6 @@
       }
     },
     {
-      "id": "spark-flow-005",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What’s one thing I do that makes you laugh even when you don’t want to?",
-        "pt": "Que coisa é que eu faço que te faz rir mesmo quando não queres?"
-      }
-    },
-    {
       "id": "spark-flow-006",
       "type": "question",
       "level": 1,
@@ -83,15 +74,6 @@
       }
     },
     {
-      "id": "spark-flow-010",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "If we had to enter a talent show together, what ridiculous act would we do?",
-        "pt": "Se tivéssemos de entrar juntos num concurso de talentos, que número ridículo é que fazíamos?"
-      }
-    },
-    {
       "id": "spark-flow-011",
       "type": "question",
       "level": 1,
@@ -119,21 +101,57 @@
       }
     },
     {
-      "id": "spark-flow-014",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "If you had to cook me something using only vending machine snacks, what would you make?",
-        "pt": "Se tivesses de me cozinhar alguma coisa só com snacks da máquina de venda automática, o que fazias?"
-      }
-    },
-    {
       "id": "spark-flow-015",
       "type": "question",
       "level": 1,
       "text": {
         "en": "If we had a fan club, what would they call themselves?",
         "pt": "Se tivéssemos um clube de fãs, que nome é que eles davam a si próprios?"
+      }
+    },
+    {
+      "id": "spark-flow-018",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you could instantly give me a useless superpower, what would it be?",
+        "pt": "Se pudesses dar-me já um superpoder inútil, qual seria?"
+      }
+    },
+    {
+      "id": "spark-flow-032",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you found a pink sheep in Minecraft, what would you name them?",
+        "pt": "Se encontrasses uma ovelha cor-de-rosa no Minecraft, que nome lhe davas?"
+      }
+    },
+    {
+      "id": "spark-flow-005",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What’s one thing I do that makes you laugh even when you don’t want to?",
+        "pt": "Que coisa é que eu faço que te faz rir mesmo quando não queres?"
+      }
+    },
+    {
+      "id": "spark-flow-010",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If we had to enter a talent show together, what ridiculous act would we do?",
+        "pt": "Se tivéssemos de entrar juntos num concurso de talentos, que número ridículo é que fazíamos?"
+      }
+    },
+    {
+      "id": "spark-flow-014",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you had to cook me something using only vending machine snacks, what would you make?",
+        "pt": "Se tivesses de me cozinhar alguma coisa só com snacks da máquina de venda automática, o que fazias?"
       }
     },
     {
@@ -154,15 +172,6 @@
         "pt": "Inventem a dois um passo de dança só vosso"
       },
       "timerSeconds": 60
-    },
-    {
-      "id": "spark-flow-018",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "If you could instantly give me a useless superpower, what would it be?",
-        "pt": "Se pudesses dar-me já um superpoder inútil, qual seria?"
-      }
     },
     {
       "id": "spark-flow-019",
@@ -211,16 +220,6 @@
       }
     },
     {
-      "id": "spark-flow-024",
-      "type": "challenge",
-      "level": 3,
-      "text": {
-        "en": "Do a fake commercial together for an imaginary product.",
-        "pt": "Façam a dois um anúncio de televisão a um produto imaginário."
-      },
-      "timerSeconds": 90
-    },
-    {
       "id": "spark-flow-025",
       "type": "challenge",
       "level": 2,
@@ -229,6 +228,34 @@
         "pt": "Criem o “aceno real” que usariam se fossem monarcas famosos."
       },
       "timerSeconds": 30
+    },
+    {
+      "id": "spark-flow-030",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you lost me in a shopping mall, which shop would you look in first?",
+        "pt": "Se me perdesses num centro comercial, em que loja procuravas primeiro?"
+      }
+    },
+    {
+      "id": "spark-flow-033",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If we met during the Ancient Roman Empire, what would our first date be?",
+        "pt": "Se nos tivéssemos conhecido no tempo do Império Romano, como seria o nosso primeiro encontro?"
+      }
+    },
+    {
+      "id": "spark-flow-024",
+      "type": "challenge",
+      "level": 3,
+      "text": {
+        "en": "Do a fake commercial together for an imaginary product.",
+        "pt": "Façam a dois um anúncio de televisão a um produto imaginário."
+      },
+      "timerSeconds": 90
     },
     {
       "id": "spark-flow-026",
@@ -270,39 +297,12 @@
       }
     },
     {
-      "id": "spark-flow-030",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "If you lost me in a shopping mall, which shop would you look in first?",
-        "pt": "Se me perdesses num centro comercial, em que loja procuravas primeiro?"
-      }
-    },
-    {
       "id": "spark-flow-031",
       "type": "question",
       "level": 3,
       "text": {
         "en": "What’s something I do that is so “me”?",
         "pt": "O que é que eu faço que é tão “eu”?"
-      }
-    },
-    {
-      "id": "spark-flow-032",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "If you found a pink sheep in Minecraft, what would you name them?",
-        "pt": "Se encontrasses uma ovelha cor-de-rosa no Minecraft, que nome lhe davas?"
-      }
-    },
-    {
-      "id": "spark-flow-033",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "If we met during the Ancient Roman Empire, what would our first date be?",
-        "pt": "Se nos tivéssemos conhecido no tempo do Império Romano, como seria o nosso primeiro encontro?"
       }
     }
   ]

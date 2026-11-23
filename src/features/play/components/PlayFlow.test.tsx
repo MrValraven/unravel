@@ -8,6 +8,7 @@ import {
   useNavigate,
 } from "react-router";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { getBuiltinDeck } from "../../../content/decks";
 import type { Deck } from "../../../content/types";
 import {
   loadLastPlayOptions,
@@ -16,6 +17,7 @@ import {
 import { loadProgress, saveProgress } from "../../../storage/progress";
 import { statsStore } from "../../../storage/stats";
 import { makeCard, makeDeck, makeOptions } from "../engine/engine.testUtils";
+import { REPLACE_CONFIRMED_STATE } from "../setup/replaceConfirmation";
 import { PlayFlow } from "./PlayFlow";
 
 vi.mock("../../share/shareCard", () => ({
@@ -35,25 +37,70 @@ const OpenGameOptions = ({ deckId }: { deckId: string }) => {
   );
 };
 
-const LocationProbe = () => (
-  <p data-testid="location-search">{useLocation().search}</p>
-);
+/** Leaves for the deck list, and goes Back to the play entry. */
+const LeaveAndReturn = () => {
+  const navigate = useNavigate();
+  return (
+    <>
+      <button type="button" onClick={() => void navigate("/decks")}>
+        Leave play
+      </button>
+      <button type="button" onClick={() => void navigate(-1)}>
+        Go back
+      </button>
+    </>
+  );
+};
 
-const renderFlow = (deck: Deck = makeDeck(), entry = `/play/${deck.id}`) => {
+const LocationProbe = () => {
+  const location = useLocation();
+  return (
+    <>
+      <p data-testid="location-search">{location.search}</p>
+      <p data-testid="location-path">{location.pathname}</p>
+      <p data-testid="location-state">{JSON.stringify(location.state)}</p>
+    </>
+  );
+};
+
+type FlowEntry = string | { pathname: string; state: unknown };
+
+const renderFlow = (
+  deck: Deck = makeDeck(),
+  entry: FlowEntry = `/play/${deck.id}`
+) => {
   render(
     <MemoryRouter initialEntries={[entry]}>
       <Routes>
+        <Route
+          path="/play/first-date"
+          element={
+            <>
+              <p>Saved game page</p>
+              <LocationProbe />
+            </>
+          }
+        />
         <Route
           path="/play/:deckId"
           element={
             <>
               <PlayFlow deck={deck} />
               <OpenGameOptions deckId={deck.id} />
+              <LeaveAndReturn />
               <LocationProbe />
             </>
           }
         />
-        <Route path="/decks" element={<p>Deck list</p>} />
+        <Route
+          path="/decks"
+          element={
+            <>
+              <p>Deck list</p>
+              <LeaveAndReturn />
+            </>
+          }
+        />
       </Routes>
     </MemoryRouter>
   );
@@ -71,6 +118,20 @@ const saveGame = (deckId: string, order: string[], position: number) =>
     startedAt: 1,
     updatedAt: 2,
   });
+
+const requireDeck = (deckId: string): Deck => {
+  const deck = getBuiltinDeck(deckId);
+  if (!deck) throw new Error(`Missing live deck ${deckId}`);
+  return deck;
+};
+
+/** A real builtin deck's game, so the saved deck resolves for the dialog. */
+const saveBuiltinGame = (deckId: string, position: number) =>
+  saveGame(
+    deckId,
+    requireDeck(deckId).cards.map((card) => card.id),
+    position
+  );
 
 describe("PlayFlow", () => {
   beforeEach(() => {
@@ -166,5 +227,130 @@ describe("PlayFlow", () => {
     await user.click(screen.getByRole("button", { name: "Start deck" }));
     expect(screen.getByText("Card 1 of 9")).toBeInTheDocument();
     expect(statsStore.get().decksStarted).toEqual({ a: 1 });
+  });
+  describe("replacing another deck's saved game", () => {
+    const savedCardCount = requireDeck("first-date").cards.length;
+
+    it("asks before replacing another deck's saved game opened by URL, before anything is saved", () => {
+      saveBuiltinGame("first-date", 2);
+      renderFlow();
+      expect(
+        screen.getByRole("dialog", { name: "Replace your First Date game?" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(`You are on card 3 of ${savedCardCount}.`)
+      ).toBeInTheDocument();
+      expect(loadProgress()?.deckId).toBe("first-date");
+      expect(statsStore.get().decksStarted.a).toBeUndefined();
+      expect(screen.queryByText(/^Card \d+ of/)).not.toBeInTheDocument();
+    });
+
+    it("Start replaces the saved game and counts the start once", async () => {
+      saveBuiltinGame("first-date", 2);
+      const user = renderFlow();
+      await user.click(screen.getByRole("button", { name: "Start A" }));
+      expect(screen.getByText("Card 1 of 9")).toBeInTheDocument();
+      expect(loadProgress()?.deckId).toBe("a");
+      expect(statsStore.get().decksStarted).toEqual({ a: 1 });
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    });
+
+    it("Keep goes back to the saved game", async () => {
+      saveBuiltinGame("first-date", 2);
+      const user = renderFlow();
+      expect(
+        screen.getByRole("button", { name: "Keep First Date" })
+      ).toHaveFocus();
+      await user.click(screen.getByRole("button", { name: "Keep First Date" }));
+      expect(screen.getByTestId("location-path")).toHaveTextContent(
+        "/play/first-date"
+      );
+      expect(loadProgress()?.deckId).toBe("first-date");
+      expect(statsStore.get().decksStarted).toEqual({});
+    });
+
+    it("does not ask when the start was confirmed on the way in", () => {
+      saveBuiltinGame("first-date", 2);
+      renderFlow(makeDeck(), {
+        pathname: "/play/a",
+        state: REPLACE_CONFIRMED_STATE,
+      });
+      expect(screen.getByText("Card 1 of 9")).toBeInTheDocument();
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      expect(loadProgress()?.deckId).toBe("a");
+    });
+
+    it("keeps the card number in the URL while it clears the confirmed state", () => {
+      saveBuiltinGame("first-date", 2);
+      renderFlow(makeDeck(), {
+        pathname: "/play/a",
+        state: REPLACE_CONFIRMED_STATE,
+      });
+      expect(screen.getByText("Card 1 of 9")).toBeInTheDocument();
+      expect(screen.getByTestId("location-search")).toHaveTextContent(
+        /^\?card=1$/
+      );
+      expect(screen.getByTestId("location-state")).toHaveTextContent(/^null$/);
+    });
+
+    it("asks again when Back returns to an entry that was confirmed earlier", async () => {
+      saveBuiltinGame("first-date", 2);
+      // An adult deck waits on the check-in, so the play screen has not
+      // rewritten the URL: the confirmed state is still on the history entry.
+      const user = renderFlow(
+        { ...makeDeck(), isAdult: true },
+        { pathname: "/play/a", state: REPLACE_CONFIRMED_STATE }
+      );
+      expect(
+        screen.getByRole("heading", { name: "Before you start" })
+      ).toBeInTheDocument();
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+
+      await user.click(screen.getByRole("button", { name: "Leave play" }));
+      await user.click(screen.getByRole("button", { name: "Go back" }));
+
+      expect(
+        screen.getByRole("dialog", { name: "Replace your First Date game?" })
+      ).toBeInTheDocument();
+      expect(loadProgress()?.deckId).toBe("first-date");
+    });
+
+    it("does not ask for Game options", () => {
+      saveBuiltinGame("first-date", 2);
+      renderFlow(makeDeck(), "/play/a?setup=1");
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "Starting this deck replaces your saved game of First Date."
+        )
+      ).toBeInTheDocument();
+    });
+
+    it("does not ask when the saved deck no longer exists", () => {
+      saveGame("custom-gone1234", ["custom-gone1234-001"], 0);
+      renderFlow();
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      expect(screen.getByText("Card 1 of 9")).toBeInTheDocument();
+    });
+
+    it("does not ask when the saved game is this deck", () => {
+      saveGame("a", ["a-002", "a-004", "a-007"], 1);
+      renderFlow();
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      expect(screen.getByText("Card 2 of 3")).toBeInTheDocument();
+    });
+
+    it("asks before an adult deck's check-in, and Start continues to the check-in", async () => {
+      saveBuiltinGame("first-date", 2);
+      const user = renderFlow({ ...makeDeck(), isAdult: true });
+      expect(
+        screen.queryByRole("heading", { name: "Before you start" })
+      ).not.toBeInTheDocument();
+      await user.click(screen.getByRole("button", { name: "Start A" }));
+      expect(
+        screen.getByRole("heading", { name: "Before you start" })
+      ).toBeInTheDocument();
+      expect(loadProgress()?.deckId).toBe("first-date");
+    });
   });
 });

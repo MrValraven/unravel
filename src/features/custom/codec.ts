@@ -1,9 +1,9 @@
+import { isCardType } from "../../content/cardRules";
 import type { CardType } from "../../content/types";
 import {
   MAX_CARDS,
   findCardTextProblem,
   findTitleProblem,
-  isCardType,
   type CardContent,
 } from "./deckRules";
 

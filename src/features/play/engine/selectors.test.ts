@@ -2,13 +2,20 @@ import { describe, expect, it } from "vitest";
 import { createSession, playReducer } from "./playReducer";
 import {
   getCurrentCardId,
+  getPassThePhoneName,
   getProgressFraction,
   getTurn,
   isSessionFinished,
   progressToSession,
   sessionToProgress,
 } from "./selectors";
-import { makeCard, makeDeck, makeOptions } from "./engine.testUtils";
+import {
+  makeCard,
+  makeDeck,
+  makeOptions,
+  makeSeededRandom,
+} from "./engine.testUtils";
+import { getRandomTurn } from "./randomTurns";
 
 const fourCardDeck = makeDeck(
   ["a-001", "a-002", "a-003", "a-004"].map((id) => makeCard(id, 1))
@@ -131,6 +138,51 @@ describe("getTurn", () => {
     });
   });
 
+  it.each([[[]], [["Ana"]], [["Ana", "Rui"]], [["Ana", "Rui", "Eva"]]])(
+    "lets everyone vote with %j",
+    (players: string[]) => {
+      expect(getTurn(advance(players, 1), "vote")).toEqual({ kind: "vote" });
+    }
+  );
+
+  it("asks the group to pick someone for the hot seat with fewer than two names", () => {
+    expect(getTurn(startSession([]), "hot-seat")).toEqual({
+      kind: "hot-seat-unnamed",
+    });
+    expect(getTurn(advance(["Ana"], 2), "hot-seat")).toEqual({
+      kind: "hot-seat-unnamed",
+    });
+  });
+
+  it("seats the first of a pair, and the answerer of a rotation", () => {
+    const pair = ["Ana", "Rui"];
+    expect(getTurn(advance(pair, 0), "hot-seat")).toEqual({
+      kind: "hot-seat",
+      player: "Ana",
+    });
+    expect(getTurn(advance(pair, 1), "hot-seat")).toEqual({
+      kind: "hot-seat",
+      player: "Rui",
+    });
+    expect(getTurn(advance(pair, 0, PICK_SECOND_PLAYER), "hot-seat")).toEqual({
+      kind: "hot-seat",
+      player: "Rui",
+    });
+    const group = ["Ana", "Rui", "Eva"];
+    expect(getTurn(advance(group, 0), "hot-seat")).toEqual({
+      kind: "hot-seat",
+      player: "Ana",
+    });
+    expect(getTurn(advance(group, 2), "hot-seat")).toEqual({
+      kind: "hot-seat",
+      player: "Eva",
+    });
+    expect(getTurn(advance(group, 3), "hot-seat")).toEqual({
+      kind: "hot-seat",
+      player: "Ana",
+    });
+  });
+
   it("keeps the same player after skip and hide, and steps back on previous", () => {
     const players = ["Ana", "Rui", "Eva"];
     let session = advance(players, 1);
@@ -168,6 +220,203 @@ describe("getTurn", () => {
       first: "Ana",
       second: "Rui",
     });
+  });
+});
+
+describe("getTurn with random turns", () => {
+  const group = ["Ana", "Rui", "Eva", "Leo"];
+  const startRandomSession = (players: string[] = group) =>
+    createSession(
+      makeDeck(),
+      makeOptions({ players, isRandomTurns: true }),
+      500,
+      makeSeededRandom(77)
+    );
+
+  const answererAt = (session: ReturnType<typeof startRandomSession>) => {
+    const turn = getTurn(session, "question");
+    if (turn.kind !== "rotation")
+      throw new Error(`Expected rotation: ${turn.kind}`);
+    return turn;
+  };
+
+  it("draws a turn seed after the order and the first starter", () => {
+    const session = startRandomSession();
+    expect(Number.isInteger(session.turnSeed)).toBe(true);
+    expect(session.turnSeed).toBeGreaterThanOrEqual(0);
+    expect(session.turnSeed).toBeLessThan(2 ** 31);
+  });
+
+  it("picks the answerer from the seed and shows the previous answerer as the asker", () => {
+    const session = startRandomSession();
+    const { askerIndex, answererIndex } = getRandomTurn(
+      session.turnSeed,
+      0,
+      group.length
+    );
+    expect(getTurn(session, "question")).toEqual({
+      kind: "rotation",
+      asker: group[askerIndex],
+      answerer: group[answererIndex],
+    });
+    const next = playReducer(session, { type: "next" });
+    expect(answererAt(next).asker).toBe(answererAt(session).answerer);
+  });
+
+  it("never repeats the answerer on consecutive cards", () => {
+    let session = startRandomSession();
+    let previousAnswerer = answererAt(session).answerer;
+    for (let step = 0; step < 3; step += 1) {
+      session = playReducer(session, { type: "next" });
+      const { answerer } = answererAt(session);
+      expect(answerer).not.toBe(previousAnswerer);
+      previousAnswerer = answerer;
+    }
+  });
+
+  it("applies to challenge cards and seats the random answerer on hot-seat cards", () => {
+    const session = playReducer(startRandomSession(), { type: "next" });
+    const { answerer } = answererAt(session);
+    expect(getTurn(session, "challenge")).toMatchObject({
+      kind: "rotation",
+      answerer,
+    });
+    expect(getTurn(session, "hot-seat")).toEqual({
+      kind: "hot-seat",
+      player: answerer,
+    });
+  });
+
+  it("still shows everyone and vote cards as before", () => {
+    const session = startRandomSession();
+    expect(getTurn(session, "everyone")).toEqual({ kind: "everyone" });
+    expect(getTurn(session, "vote")).toEqual({ kind: "vote" });
+  });
+
+  it("keeps the random answerer after Previous, save and restore", () => {
+    let session = startRandomSession();
+    const answerers: string[] = [answererAt(session).answerer];
+    const askers: string[] = [answererAt(session).asker];
+    for (let step = 0; step < 5; step += 1) {
+      session = playReducer(session, { type: "next" });
+      answerers.push(answererAt(session).answerer);
+      askers.push(answererAt(session).asker);
+    }
+    session = playReducer(session, { type: "previous" });
+    expect(answererAt(session).answerer).toBe(answerers[4]);
+    expect(answererAt(session).asker).toBe(askers[4]);
+
+    const restored = progressToSession(sessionToProgress(session, 9000));
+    expect(restored.turnSeed).toBe(session.turnSeed);
+    expect(answererAt(restored)).toEqual(answererAt(session));
+    const afterRestore = playReducer(restored, { type: "next" });
+    expect(answererAt(afterRestore).answerer).toBe(answerers[5]);
+  });
+
+  it("plays a game saved before random turns as a rotation", () => {
+    const { turnSeed: _droppedSeed, ...oldProgress } = sessionToProgress(
+      createSession(
+        fourCardDeck,
+        makeOptions({ players: group }),
+        500,
+        PICK_FIRST_PLAYER
+      ),
+      1
+    );
+    const {
+      isRandomTurns: _r,
+      isPassThePhone: _p,
+      ...oldOptions
+    } = oldProgress.options;
+    const resumed = progressToSession({
+      ...oldProgress,
+      options: oldOptions as typeof oldProgress.options,
+    });
+    expect(resumed.turnSeed).toBe(0);
+    expect(getTurn(resumed, "question")).toEqual({
+      kind: "rotation",
+      asker: "Leo",
+      answerer: "Ana",
+    });
+    const next = playReducer(resumed, { type: "next" });
+    expect(getTurn(next, "question")).toEqual({
+      kind: "rotation",
+      asker: "Ana",
+      answerer: "Rui",
+    });
+  });
+
+  it("plays a pair exactly as before when random turns is on with two names", () => {
+    const session = startRandomSession(["Ana", "Rui"]);
+    expect(getTurn(session, "question")).toEqual({
+      kind: "pair",
+      first: "Ana",
+      second: "Rui",
+    });
+  });
+
+  it("keeps the saved turn seed", () => {
+    const session = startRandomSession();
+    expect(sessionToProgress(session, 1).turnSeed).toBe(session.turnSeed);
+  });
+});
+
+describe("getTurn with pass-the-phone", () => {
+  const group = ["Ana", "Rui", "Eva"];
+  const startPassSession = (
+    players: string[] = group,
+    patch: { isRandomTurns?: boolean } = {}
+  ) =>
+    createSession(
+      makeDeck(),
+      makeOptions({ players, isPassThePhone: true, ...patch }),
+      500,
+      makeSeededRandom(77)
+    );
+
+  it("drops the asker and names only the answerer with pass-the-phone", () => {
+    const session = startPassSession();
+    expect(getTurn(session, "question")).toEqual({
+      kind: "solo",
+      answerer: "Ana",
+    });
+    expect(getTurn(session, "challenge")).toEqual({
+      kind: "solo",
+      answerer: "Ana",
+    });
+    expect(getTurn(session, "hot-seat")).toEqual({
+      kind: "hot-seat",
+      player: "Ana",
+    });
+
+    const random = startPassSession(group, { isRandomTurns: true });
+    const { answererIndex } = getRandomTurn(random.turnSeed, 0, group.length);
+    expect(getTurn(random, "question")).toEqual({
+      kind: "solo",
+      answerer: group[answererIndex],
+    });
+  });
+
+  it("asks to pass the phone on question, challenge and hot-seat cards only", () => {
+    const session = playReducer(startPassSession(), { type: "next" });
+    expect(getPassThePhoneName(session, "question")).toBe("Rui");
+    expect(getPassThePhoneName(session, "challenge")).toBe("Rui");
+    expect(getPassThePhoneName(session, "hot-seat")).toBe("Rui");
+    expect(getPassThePhoneName(session, "vote")).toBeUndefined();
+    expect(getPassThePhoneName(session, "everyone")).toBeUndefined();
+
+    const pair = startPassSession(["Ana", "Rui"]);
+    expect(getTurn(pair, "question").kind).toBe("pair");
+    expect(getPassThePhoneName(pair, "question")).toBeUndefined();
+    expect(getPassThePhoneName(pair, "hot-seat")).toBeUndefined();
+
+    const switchedOff = createSession(
+      makeDeck(),
+      makeOptions({ players: group }),
+      500
+    );
+    expect(getPassThePhoneName(switchedOff, "question")).toBeUndefined();
+    expect(getPassThePhoneName(switchedOff, "hot-seat")).toBeUndefined();
   });
 });
 

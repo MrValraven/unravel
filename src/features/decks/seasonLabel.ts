@@ -44,3 +44,20 @@ export const formatSeasonWindow = (
     endMonth: monthName(end.monthIndex),
   });
 };
+
+/**
+ * "1 Dec" in English, "1 de fevereiro" in Portuguese: the day a season opens,
+ * for "Coming up" lines. pt-PT renders a short month as a number ("1/02"), so
+ * Portuguese spells the month out.
+ */
+export const formatSeasonStart = (
+  season: SeasonWindow,
+  locale: Locale
+): string => {
+  const { monthIndex, day } = parseMonthDay(season.start);
+  return new Intl.DateTimeFormat(intlLocales[locale], {
+    day: "numeric",
+    month: locale === "pt" ? "long" : "short",
+    timeZone: "UTC",
+  }).format(new Date(Date.UTC(2026, monthIndex, day)));
+};

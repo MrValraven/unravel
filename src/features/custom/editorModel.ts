@@ -55,7 +55,8 @@ export type DraftAction =
   | { type: "set-card-text"; key: string; text: string }
   | { type: "set-card-type"; key: string; cardType: CardType }
   | { type: "move-card"; key: string; direction: MoveDirection }
-  | { type: "delete-card"; key: string };
+  | { type: "delete-card"; key: string }
+  | { type: "restore"; draft: DeckDraft };
 
 const updateCard = (
   draft: DeckDraft,
@@ -106,7 +107,30 @@ export const draftReducer = (
         ...draft,
         cards: draft.cards.filter((card) => card.key !== action.key),
       };
+    case "restore":
+      return action.draft;
   }
+};
+
+/**
+ * Gives every card that is not one of the deck's own cards a fresh key. A restored draft
+ * was keyed in an earlier visit, and its keys could meet the ones this visit hands out.
+ */
+export const rekeyRestoredDraft = (
+  draft: DeckDraft,
+  deckCardIds: readonly string[]
+): DeckDraft => {
+  const ownKeys = new Set(deckCardIds);
+  const usedKeys = new Set<string>();
+  return {
+    ...draft,
+    cards: draft.cards.map((card) => {
+      const isOwnKey = ownKeys.has(card.key) && !usedKeys.has(card.key);
+      const key = isOwnKey ? card.key : createDraftCard().key;
+      usedKeys.add(key);
+      return { ...card, key };
+    }),
+  };
 };
 
 export type DeckProblem = "no-cards" | "too-many-cards";

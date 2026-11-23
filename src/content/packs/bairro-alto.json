@@ -20,48 +20,12 @@
       }
     },
     {
-      "id": "bairro-alto-003",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What is one thing you think men should learn about women?",
-        "pt": "Que coisa achas que os homens deviam aprender sobre as mulheres?"
-      }
-    },
-    {
-      "id": "bairro-alto-004",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "If you had to make money in an unethical way how would you do it?",
-        "pt": "Se tivesses de ganhar dinheiro de forma pouco ética, como é que o farias?"
-      }
-    },
-    {
       "id": "bairro-alto-005",
       "type": "question",
       "level": 1,
       "text": {
         "en": "If you could only eat one colour of food for the rest of your life, what color are you choosing?",
         "pt": "Se só pudesses comer comida de uma cor para o resto da vida, que cor escolhias?"
-      }
-    },
-    {
-      "id": "bairro-alto-006",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "Which of the seven deadly sins do you relate to the most?",
-        "pt": "Com qual dos sete pecados mortais te identificas mais?"
-      }
-    },
-    {
-      "id": "bairro-alto-007",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What are the 3 best compliments you’ve ever received?",
-        "pt": "Quais são os 3 melhores elogios que já recebeste?"
       }
     },
     {
@@ -155,15 +119,6 @@
       }
     },
     {
-      "id": "bairro-alto-018",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What is one outfit you could have thrown away a long time ago but you still keep in your closet? What does it mean to you?",
-        "pt": "Que peça de roupa já devias ter deitado fora há muito tempo mas continuas a guardar no armário? O que é que significa para ti?"
-      }
-    },
-    {
       "id": "bairro-alto-019",
       "type": "question",
       "level": 1,
@@ -200,12 +155,122 @@
       }
     },
     {
-      "id": "bairro-alto-023",
+      "id": "bairro-alto-027",
       "type": "question",
-      "level": 3,
+      "level": 1,
       "text": {
-        "en": "What's one secret you've never told anyone?",
-        "pt": "Que segredo nunca contaste a ninguém?"
+        "en": "What is the most interesting thing about people in your line of work?",
+        "pt": "Qual é a coisa mais interessante nas pessoas da tua área?"
+      }
+    },
+    {
+      "id": "bairro-alto-029",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "You’re invited onto Shark Tank or Dragon’s Den. What do you pitch?",
+        "pt": "Convidaram-te para o Shark Tank ou o Dragon's Den. Que ideia apresentas?"
+      }
+    },
+    {
+      "id": "bairro-alto-030",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What do you own that you’re pretty sure that no one else in your group owns?",
+        "pt": "O que é que tens que, de certeza, mais ninguém do teu grupo tem?"
+      }
+    },
+    {
+      "id": "bairro-alto-033",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What role would you play in a heist crew?",
+        "pt": "Num grupo de assaltantes a preparar um golpe, que papel era o teu?"
+      }
+    },
+    {
+      "id": "bairro-alto-034",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What is the story behind your Instagram profile picture?",
+        "pt": "Qual é a história por trás da tua foto de perfil do Instagram?"
+      }
+    },
+    {
+      "id": "bairro-alto-043",
+      "type": "vote",
+      "level": 1,
+      "text": {
+        "en": "Who is most likely to make a friend for life in the bathroom queue?",
+        "pt": "Quem é mais capaz de fazer uma amizade para a vida na fila da casa de banho?"
+      }
+    },
+    {
+      "id": "bairro-alto-045",
+      "type": "hot-seat",
+      "level": 1,
+      "text": {
+        "en": "Until time runs out, the group asks the person in the hot seat about their best night out ever.",
+        "pt": "Até o tempo acabar, o grupo faz perguntas a quem está no holofote sobre a melhor noitada da sua vida."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "bairro-alto-047",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Before time runs out, agree on one song you all know and sing the chorus together.",
+        "pt": "Antes de o tempo acabar, ponham-se de acordo numa música que todos conheçam e cantem o refrão juntos."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "bairro-alto-003",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What is one thing you think men should learn about women?",
+        "pt": "Que coisa achas que os homens deviam aprender sobre as mulheres?"
+      }
+    },
+    {
+      "id": "bairro-alto-004",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you had to make money in an unethical way how would you do it?",
+        "pt": "Se tivesses de ganhar dinheiro de forma pouco ética, como é que o farias?"
+      }
+    },
+    {
+      "id": "bairro-alto-006",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which of the seven deadly sins do you relate to the most?",
+        "pt": "Com qual dos sete pecados mortais te identificas mais?"
+      }
+    },
+    {
+      "id": "bairro-alto-007",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What are the 3 best compliments you’ve ever received?",
+        "pt": "Quais são os 3 melhores elogios que já recebeste?"
+      }
+    },
+    {
+      "id": "bairro-alto-018",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What is one outfit you could have thrown away a long time ago but you still keep in your closet? What does it mean to you?",
+        "pt": "Que peça de roupa já devias ter deitado fora há muito tempo mas continuas a guardar no armário? O que é que significa para ti?"
       }
     },
     {
@@ -236,15 +301,6 @@
       }
     },
     {
-      "id": "bairro-alto-027",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What is the most interesting thing about people in your line of work?",
-        "pt": "Qual é a coisa mais interessante nas pessoas da tua área?"
-      }
-    },
-    {
       "id": "bairro-alto-028",
       "type": "question",
       "level": 2,
@@ -254,57 +310,12 @@
       }
     },
     {
-      "id": "bairro-alto-029",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "You’re invited onto Shark Tank or Dragon’s Den. What do you pitch?",
-        "pt": "Convidaram-te para o Shark Tank ou o Dragon's Den. Que ideia apresentas?"
-      }
-    },
-    {
-      "id": "bairro-alto-030",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What do you own that you’re pretty sure that no one else in your group owns?",
-        "pt": "O que é que tens que, de certeza, mais ninguém do teu grupo tem?"
-      }
-    },
-    {
       "id": "bairro-alto-031",
       "type": "question",
       "level": 2,
       "text": {
         "en": "What's a weird belief you still stand by to this day?",
         "pt": "Que crença estranha continuas a defender até hoje?"
-      }
-    },
-    {
-      "id": "bairro-alto-032",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "If your sex life was an ice cream flavour, which one would it be and why?",
-        "pt": "Se a tua vida sexual fosse um sabor de gelado, qual seria e porquê?"
-      }
-    },
-    {
-      "id": "bairro-alto-033",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What role would you play in a heist crew?",
-        "pt": "Num grupo de assaltantes a preparar um golpe, que papel era o teu?"
-      }
-    },
-    {
-      "id": "bairro-alto-034",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What is the story behind your Instagram profile picture?",
-        "pt": "Qual é a história por trás da tua foto de perfil do Instagram?"
       }
     },
     {
@@ -326,24 +337,6 @@
       }
     },
     {
-      "id": "bairro-alto-037",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "What's the most shocking thing someone has ever said to you during sex?",
-        "pt": "Qual foi a coisa mais chocante que alguém já te disse durante o sexo?"
-      }
-    },
-    {
-      "id": "bairro-alto-038",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "If tonight was to go perfect for you, what would that look like? Imagine it, and then tell the story",
-        "pt": "Se esta noite corresse na perfeição para ti, como seria? Imagina-a e depois conta a história"
-      }
-    },
-    {
       "id": "bairro-alto-039",
       "type": "question",
       "level": 2,
@@ -359,6 +352,70 @@
       "text": {
         "en": "What is the thing that makes the relationship with your best friend feel special to you?",
         "pt": "O que é que torna tão especial a tua relação com o teu melhor amigo ou a tua melhor amiga?"
+      }
+    },
+    {
+      "id": "bairro-alto-044",
+      "type": "vote",
+      "level": 2,
+      "text": {
+        "en": "Who is most likely to say “just one drink” and still be here when the lights come on?",
+        "pt": "Quem é mais capaz de dizer «só uma bebida» e ainda cá estar quando acenderem as luzes?"
+      }
+    },
+    {
+      "id": "bairro-alto-046",
+      "type": "hot-seat",
+      "level": 2,
+      "text": {
+        "en": "Everyone asks the person in the hot seat one question about the strangest place a night out has led them.",
+        "pt": "Cada um faz uma pergunta a quem está no holofote sobre o sítio mais estranho onde já foi parar depois de uma noitada."
+      }
+    },
+    {
+      "id": "bairro-alto-048",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Taking turns, raise a toast to something tiny, like good ice or a free table, until time runs out.",
+        "pt": "À vez, façam brindes a coisas pequeninas, como gelo bom ou uma mesa livre, até o tempo acabar."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "bairro-alto-023",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's one secret you've never told anyone?",
+        "pt": "Que segredo nunca contaste a ninguém?"
+      }
+    },
+    {
+      "id": "bairro-alto-038",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If tonight was to go perfect for you, what would that look like? Imagine it, and then tell the story",
+        "pt": "Se esta noite corresse na perfeição para ti, como seria? Imagina-a e depois conta a história"
+      }
+    },
+    {
+      "id": "bairro-alto-041",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's a rumour about you that's actually true?",
+        "pt": "Que boato sobre ti é mesmo verdade?"
+      }
+    },
+    {
+      "id": "bairro-alto-042",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's the most spontaneous thing you've ever said yes to on a night out, and how did it end?",
+        "pt": "Qual foi a coisa mais espontânea a que já disseste que sim numa noite fora, e como acabou?"
       }
     }
   ]

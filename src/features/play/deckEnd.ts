@@ -7,8 +7,7 @@ import type {
   LocalizedText,
 } from "../../content/types";
 import { formatCopy, pluralize, type PluralForms } from "../../i18n/localize";
-import type { PlayOptions } from "../../storage/progress";
-import { AUDIENCE_WEIGHT, MOOD_WEIGHT } from "../finder/rankDecks";
+import { readPlayOptions, type PlayOptions } from "../../storage/progress";
 
 /**
  * What the end screen needs to show a deck that can no longer be resolved:
@@ -36,6 +35,7 @@ const knownIcons: Record<DeckIconName, true> = {
   moon: true,
   star: true,
   sun: true,
+  sunrise: true,
   music: true,
   map: true,
   flame: true,
@@ -93,20 +93,6 @@ const isDeckEndSnapshot = (raw: unknown): raw is DeckEndSnapshot => {
 const isCount = (raw: unknown): raw is number =>
   typeof raw === "number" && Number.isFinite(raw) && raw >= 0;
 
-const isPlayOptions = (raw: unknown): raw is PlayOptions => {
-  if (typeof raw !== "object" || raw === null) return false;
-  const candidate = raw as Record<string, unknown>;
-  return (
-    typeof candidate.isShuffled === "boolean" &&
-    (candidate.startLevel === 1 ||
-      candidate.startLevel === 2 ||
-      candidate.startLevel === 3) &&
-    typeof candidate.isTableMode === "boolean" &&
-    Array.isArray(candidate.players) &&
-    candidate.players.every((name) => typeof name === "string")
-  );
-};
-
 /** Location state survives in history, so it is checked before use. Missing after a refresh. */
 export const readDeckEndState = (raw: unknown): DeckEndState | undefined => {
   if (typeof raw !== "object" || raw === null) return undefined;
@@ -122,14 +108,18 @@ export const readDeckEndState = (raw: unknown): DeckEndState | undefined => {
     cardsPlayed: candidate.cardsPlayed,
     millisecondsPlayed: candidate.millisecondsPlayed,
     favouritesSavedCount: candidate.favouritesSavedCount,
-    options: isPlayOptions(candidate.options) ? candidate.options : undefined,
+    options: readPlayOptions(candidate.options),
     deck: isDeckEndSnapshot(candidate.deck) ? candidate.deck : undefined,
   };
 };
 
+/** Likeness weights for "Up next": a shared audience counts 3, a shared mood 2. */
+const SHARED_AUDIENCE_WEIGHT = 3;
+const SHARED_MOOD_WEIGHT = 2;
+
 /**
- * How alike two decks are, with the deck finder's weights: each shared
- * audience counts like a matching "who", each shared mood like a matching mood.
+ * How alike two decks are: each shared audience and each shared mood adds its
+ * weight. Kept apart from the deck finder, which now sorts by audience first.
  */
 const scoreLikeness = (
   first: Pick<DeckMeta, "audiences" | "moods">,
@@ -137,14 +127,14 @@ const scoreLikeness = (
 ): number =>
   first.audiences.filter((audience) => second.audiences.includes(audience))
     .length *
-    AUDIENCE_WEIGHT +
+    SHARED_AUDIENCE_WEIGHT +
   first.moods.filter((mood) => second.moods.includes(mood)).length *
-    MOOD_WEIGHT;
+    SHARED_MOOD_WEIGHT;
 
 /**
  * A different deck in the same category, adult only when the current deck is
  * adult. The deck finished the fewest times wins; among those, the one most
- * like the current deck (finder weights, builtin decks only), then registry order.
+ * like the current deck (likeness weights, builtin decks only), then registry order.
  */
 export const pickSuggestedDeck = (
   currentDeck: Pick<DeckMeta, "id" | "category" | "isAdult">,
@@ -203,33 +193,4 @@ export const buildRecapText = (
         ? copy.recapUnderAMinute
         : formatCopy(copy.recapMinutes, { count: minutes }),
   });
-};
-
-export type RecapShareOutcome = "shared" | "copied" | "cancelled" | "failed";
-
-/**
- * Opens the share sheet where there is one, else copies the line and the
- * link. Closing the share sheet is not an error, so it reports "cancelled".
- */
-export const shareRecap = async (
-  text: string,
-  url: string
-): Promise<RecapShareOutcome> => {
-  if (typeof navigator.share === "function") {
-    try {
-      await navigator.share({ text, url });
-      return "shared";
-    } catch (error) {
-      if (error instanceof DOMException && error.name === "AbortError") {
-        return "cancelled";
-      }
-      // Refused (no permission, unsupported data): the clipboard still works.
-    }
-  }
-  try {
-    await navigator.clipboard.writeText(`${text} ${url}`);
-    return "copied";
-  } catch {
-    return "failed";
-  }
 };

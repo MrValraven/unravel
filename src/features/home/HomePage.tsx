@@ -9,7 +9,8 @@ import { useResumableGame } from "../../components/useResumableGame";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { pluralize } from "../../i18n/localize";
 import { useCopy } from "../../i18n/useCopy";
-import { useSettings } from "../../storage/settings";
+import { FinderEntry } from "../decks/components/FinderEntry";
+import { SeasonStrip } from "../decks/components/SeasonStrip";
 import { InstallNudge } from "../decks/install/InstallNudge";
 import { DailyCard } from "./DailyCard";
 import { HeroFan } from "./HeroFan";
@@ -47,11 +48,9 @@ const useScrollToToday = () => {
 
 const HomePage = () => {
   const copy = useCopy(homeCopy);
-  const [settings] = useSettings();
   useDocumentTitle(copy.documentTitle, { isFullTitle: true });
   useScrollToToday();
 
-  const hasSeenIntro = settings.hasSeenIntro;
   const deckCount = getVisibleDecks().length;
   // A saved game takes the lead: Continue becomes the one primary action.
   const hasResumableGame = useResumableGame() !== undefined;
@@ -78,34 +77,35 @@ const HomePage = () => {
               <Wordmark />
             </h1>
             <p className="home__tagline">{copy.tagline}</p>
+            <ResumeCard className="home__resume" />
             <div className="home__actions">
               <Link
-                to={hasSeenIntro ? "/decks" : "/about"}
+                to="/decks"
                 className={`button ${hasResumableGame ? "button--secondary" : "button--primary"} home__start`}
                 viewTransition
               >
                 {copy.getStarted}
                 <FiArrowRight aria-hidden="true" size={20} />
               </Link>
-              {hasSeenIntro && (
-                <Link
-                  to="/about"
-                  className="button button--quiet"
-                  viewTransition
-                >
-                  {copy.howItWorks}
-                </Link>
-              )}
+              <Link to="/about" className="button button--quiet" viewTransition>
+                {copy.whatIsUnravel}
+              </Link>
+            </div>
+            <div className="home__finder">
+              <FinderEntry />
             </div>
             <p className="home__deck-count">
               {pluralize(deckCount, copy.deckCount)}
             </p>
-            <ResumeCard className="home__resume" />
           </div>
           <div className="home__art">
             <HeroFan />
           </div>
         </section>
+
+        <div className="home__season">
+          <SeasonStrip />
+        </div>
 
         <div className="home__today">
           <DailyCard id={TODAY_ID} />

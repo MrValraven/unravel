@@ -39,6 +39,16 @@ describe("IntroPage", () => {
     }
   });
 
+  it("explains votes and the hot seat", () => {
+    renderIntro();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Votes" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Hot seat" })
+    ).toBeInTheDocument();
+  });
+
   it("remembers the intro was seen and opens the decks", async () => {
     const user = userEvent.setup();
     renderIntro();

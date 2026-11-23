@@ -24,6 +24,8 @@ const buildProgress = (
     isShuffled: false,
     startLevel: 1,
     isTableMode: false,
+    isRandomTurns: false,
+    isPassThePhone: false,
     players: [],
   },
   startedAt: 1000,
@@ -115,6 +117,71 @@ describe("progress", () => {
     expect(loadProgress()).toBeNull();
   });
 
+  it("loads options saved before random turns and pass-the-phone as off", () => {
+    const {
+      isRandomTurns: _r,
+      isPassThePhone: _p,
+      ...oldOptions
+    } = buildProgress().options;
+    localStorage.setItem(
+      "unravel:v2:progress",
+      JSON.stringify({ ...buildProgress(), options: oldOptions })
+    );
+    expect(loadProgress()?.options).toEqual(buildProgress().options);
+  });
+
+  it("rejects options whose new flags are not booleans", () => {
+    for (const flags of [
+      { isRandomTurns: "yes" },
+      { isPassThePhone: 1 },
+      { isRandomTurns: null },
+    ]) {
+      localStorage.setItem(
+        "unravel:v2:progress",
+        JSON.stringify({
+          ...buildProgress(),
+          options: { ...buildProgress().options, ...flags },
+        })
+      );
+      expect(loadProgress()).toBeNull();
+    }
+  });
+
+  it("rejects options with more than ten players", () => {
+    localStorage.setItem(
+      "unravel:v2:progress",
+      JSON.stringify(
+        buildProgress({
+          options: {
+            ...buildProgress().options,
+            players: Array.from({ length: 11 }, (_, index) => `P${index}`),
+          },
+        })
+      )
+    );
+    expect(loadProgress()).toBeNull();
+  });
+
+  it("keeps a saved turn seed", () => {
+    saveProgress(buildProgress({ turnSeed: 123456 }));
+    expect(loadProgress()?.turnSeed).toBe(123456);
+  });
+
+  it("loads a game saved before the turn seed existed without one", () => {
+    saveProgress(buildProgress());
+    expect(loadProgress()).not.toHaveProperty("turnSeed");
+  });
+
+  it("returns null when the stored turn seed is invalid", () => {
+    for (const turnSeed of [-1, 1.5, "7"]) {
+      localStorage.setItem(
+        "unravel:v2:progress",
+        JSON.stringify({ ...buildProgress(), turnSeed })
+      );
+      expect(loadProgress()).toBeNull();
+    }
+  });
+
   it("clears progress", () => {
     saveProgress(buildProgress());
     clearProgress();
@@ -164,6 +231,8 @@ describe("migrateLegacyStorage", () => {
       isShuffled: false,
       startLevel: 1,
       isTableMode: false,
+      isRandomTurns: false,
+      isPassThePhone: false,
       players: [],
     });
   });

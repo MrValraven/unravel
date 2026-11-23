@@ -1,0 +1,56 @@
+@use "../../../styles/tokens" as *;
+
+// Sits on the accent card in the card's own ink, so it reads in every theme.
+// It fills the space the card text would take, so the card keeps its size.
+.reveal-cover {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-4;
+  margin-block: auto;
+  text-align: center;
+}
+
+.reveal-cover__icon {
+  opacity: 0.8;
+}
+
+.reveal-cover__pass {
+  font-family: $font-card;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.125rem);
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+// Solid ink with the card colour on it, the same pair as the type chip.
+.reveal-cover__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  min-height: $tap-target;
+  padding: $space-2 $space-5;
+  border: 1.5px solid $color-on-accent;
+  border-radius: $radius-pill;
+  background: $color-on-accent;
+  color: var(--card-surface);
+  font-family: $font-ui;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: transform $duration-fast $ease-out;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+// Table mode sets the card text a step smaller, and the pass line follows it.
+.play-card--table .reveal-cover__pass {
+  font-size: clamp(1.25rem, 1rem + 1.2vw, 1.875rem);
+}

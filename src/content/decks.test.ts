@@ -4,6 +4,8 @@ import {
   categoryAccents,
   decks,
   getBuiltinDeck,
+  getInSeasonDecks,
+  getNextSeasonalDeck,
   getVisibleDecks,
   isDeckInSeason,
 } from "./decks";
@@ -235,6 +237,133 @@ describe("halloween deck", () => {
   });
 });
 
+describe("summer-nights deck", () => {
+  const getSummerNights = () => {
+    const deck = getBuiltinDeck("summer-nights");
+    if (!deck)
+      throw new Error('Test setup: deck "summer-nights" is not registered.');
+    return deck;
+  };
+
+  it("registers summer-nights as a seasonal friends deck with the sun icon", () => {
+    expect(getSummerNights()).toMatchObject({
+      title: { en: "Summer Nights" },
+      category: "friends",
+      tag: "seasonal",
+      isAdult: false,
+      icon: "sun",
+      accent: categoryAccents.friends,
+      audiences: ["friends", "group", "new-people"],
+      moods: ["light", "playful"],
+      season: { start: "07-01", end: "09-30" },
+    });
+  });
+
+  it("registers summer-nights between santos-populares and halloween", () => {
+    const ids = decks.map((deck) => deck.id);
+    const start = ids.indexOf("santos-populares");
+    expect(ids.slice(start, start + 3)).toEqual([
+      "santos-populares",
+      "summer-nights",
+      "halloween",
+    ]);
+  });
+
+  it.each([
+    [7, 1],
+    [9, 30],
+  ])("shows Summer Nights on %i-%i", (month, day) => {
+    expect(isDeckInSeason(getSummerNights(), onDay(month, day))).toBe(true);
+    expect(getVisibleDecks(onDay(month, day)).map((deck) => deck.id)).toContain(
+      "summer-nights"
+    );
+  });
+
+  it.each([
+    [6, 30],
+    [10, 1],
+  ])("hides Summer Nights on %i-%i", (month, day) => {
+    expect(isDeckInSeason(getSummerNights(), onDay(month, day))).toBe(false);
+    expect(
+      getVisibleDecks(onDay(month, day)).map((deck) => deck.id)
+    ).not.toContain("summer-nights");
+  });
+});
+
+describe("spring-reset deck", () => {
+  const getSpringReset = () => {
+    const deck = getBuiltinDeck("spring-reset");
+    if (!deck)
+      throw new Error('Test setup: deck "spring-reset" is not registered.');
+    return deck;
+  };
+
+  it("registers spring-reset as a seasonal friends deck with the sunrise icon", () => {
+    expect(getSpringReset()).toMatchObject({
+      title: { en: "Spring Reset" },
+      category: "friends",
+      tag: "seasonal",
+      isAdult: false,
+      icon: "sunrise",
+      accent: categoryAccents.friends,
+      audiences: ["friends", "partner", "group"],
+      moods: ["light", "deep"],
+      season: { start: "03-01", end: "05-31" },
+    });
+  });
+
+  it("registers spring-reset right after valentines", () => {
+    const ids = decks.map((deck) => deck.id);
+    expect(ids[ids.indexOf("valentines") + 1]).toBe("spring-reset");
+  });
+
+  it.each([
+    [3, 1],
+    [5, 31],
+  ])("shows Spring Reset on %i-%i", (month, day) => {
+    expect(isDeckInSeason(getSpringReset(), onDay(month, day))).toBe(true);
+    expect(getVisibleDecks(onDay(month, day)).map((deck) => deck.id)).toContain(
+      "spring-reset"
+    );
+  });
+
+  it.each([
+    [2, 28],
+    [6, 1],
+  ])("hides Spring Reset on %i-%i", (month, day) => {
+    expect(isDeckInSeason(getSpringReset(), onDay(month, day))).toBe(false);
+    expect(
+      getVisibleDecks(onDay(month, day)).map((deck) => deck.id)
+    ).not.toContain("spring-reset");
+  });
+});
+
+describe("group-night deck", () => {
+  it("registers group-night as a new friends deck for groups", () => {
+    expect(getBuiltinDeck("group-night")).toMatchObject({
+      title: { en: "Group Night" },
+      category: "friends",
+      tag: "new",
+      isAdult: false,
+      icon: "users",
+      accent: categoryAccents.friends,
+      audiences: ["group", "friends", "new-people"],
+      moods: ["playful", "light"],
+    });
+    expect(getBuiltinDeck("group-night")?.season).toBeUndefined();
+  });
+
+  it("registers group-night between queer-vibes and pride", () => {
+    const ids = decks.map((deck) => deck.id);
+    const start = ids.indexOf("queer-vibes");
+    expect(ids.slice(start, start + 3)).toEqual([
+      "queer-vibes",
+      "group-night",
+      "pride",
+    ]);
+  });
+});
+
 describe("christmas decks", () => {
   const christmasDeckIds = ["christmas-table", "friendsmas"];
   const getDeck = (deckId: string) => {
@@ -318,5 +447,60 @@ describe("christmas decks", () => {
       );
       expect(visibleIds, deckId).not.toContain(deckId);
     }
+  });
+});
+
+describe("getInSeasonDecks", () => {
+  it("lists Halloween as in season on 2026-11-23", () => {
+    expect(getInSeasonDecks(onDay(11, 23)).map((deck) => deck.id)).toEqual([
+      "halloween",
+    ]);
+  });
+
+  it("returns nothing for decks without a season", () => {
+    const ids = getInSeasonDecks(onDay(11, 23)).map((deck) => deck.id);
+    expect(ids).not.toContain("unravel");
+    expect(getInSeasonDecks(onDay(1, 20))).toEqual([]);
+  });
+
+  it("lists Spring Reset in March and Summer Nights in August", () => {
+    expect(getInSeasonDecks(onDay(3, 15)).map((deck) => deck.id)).toEqual([
+      "spring-reset",
+    ]);
+    expect(getInSeasonDecks(onDay(8, 15)).map((deck) => deck.id)).toEqual([
+      "summer-nights",
+    ]);
+  });
+
+  it("keeps registry order when several decks share a season", () => {
+    expect(getInSeasonDecks(onDay(12, 28)).map((deck) => deck.id)).toEqual([
+      "christmas-table",
+      "friendsmas",
+      "new-year",
+    ]);
+  });
+});
+
+describe("getNextSeasonalDeck", () => {
+  it("names Valentine's Day as coming up on 2027-01-20", () => {
+    expect(getNextSeasonalDeck(new Date(2027, 0, 20))?.deck.id).toBe(
+      "valentines"
+    );
+  });
+
+  it("finds the next season after Valentine's Day", () => {
+    expect(getNextSeasonalDeck(new Date(2027, 1, 20))?.deck.id).toBe(
+      "spring-reset"
+    );
+  });
+
+  it("wraps the year end when looking for the next season", () => {
+    const next = getNextSeasonalDeck(new Date(2026, 11, 30));
+    expect(next?.deck.id).toBe("valentines");
+    expect(next?.startsOn).toEqual(new Date(2027, 1, 1));
+  });
+
+  it("keeps registry order when two seasons start on the same day", () => {
+    expect(getNextSeasonalDeck(new Date(2027, 4, 10))?.deck.id).toBe("pride");
   });
 });

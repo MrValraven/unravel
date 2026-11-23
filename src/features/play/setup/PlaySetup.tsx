@@ -22,6 +22,9 @@ import { useOtherSavedGame } from "./useOtherSavedGame";
 import { useStickyFooterHeight } from "./useStickyFooterHeight";
 import "./PlaySetup.scss";
 
+/** Random turns and pass-the-phone need a group: their switches show with this many names. */
+const GROUP_OPTIONS_MINIMUM_NAMES = 3;
+
 interface PlaySetupProps {
   deck: Deck;
   /** The running game's or the last-used options; the defaults when missing. */
@@ -29,7 +32,10 @@ interface PlaySetupProps {
   onStart: (options: PlayOptions) => void;
 }
 
-/** Game options: optional names, start level, shuffle and table mode. Starting saves them for next time. */
+/**
+ * Game options: optional names, start level, shuffle and table mode, plus random turns and
+ * pass-the-phone once three names are in. Starting saves them for next time.
+ */
 export const PlaySetup = ({
   deck,
   initialOptions,
@@ -49,9 +55,35 @@ export const PlaySetup = ({
   const isCustomDeck = isCustomDeckId(deck.id);
   const playableCardCount = countCardsFromLevel(deck, options.startLevel);
   const canStart = playableCardCount > 0;
+  const canUseGroupOptions =
+    options.players.filter((name) => name.trim().length > 0).length >=
+    GROUP_OPTIONS_MINIMUM_NAMES;
+  const [hasSwitchedOtherOff, setHasSwitchedOtherOff] = useState(false);
 
   const updateOptions = (patch: Partial<PlayOptions>) =>
     setOptions((previous) => ({ ...previous, ...patch }));
+
+  // Table mode shows the card across the table, which pass-the-phone keeps private:
+  // turning one on turns the other off, and the note says why.
+  const handlePassThePhoneChange = (isPassThePhone: boolean) => {
+    const turnsTableModeOff = isPassThePhone && options.isTableMode;
+    updateOptions(
+      turnsTableModeOff
+        ? { isPassThePhone, isTableMode: false }
+        : { isPassThePhone }
+    );
+    if (turnsTableModeOff) setHasSwitchedOtherOff(true);
+  };
+  const handleTableModeChange = (isTableMode: boolean) => {
+    const turnsPassThePhoneOff = isTableMode && options.isPassThePhone;
+    updateOptions(
+      turnsPassThePhoneOff
+        ? { isTableMode, isPassThePhone: false }
+        : { isTableMode }
+    );
+    if (turnsPassThePhoneOff && canUseGroupOptions)
+      setHasSwitchedOtherOff(true);
+  };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -128,13 +160,40 @@ export const PlaySetup = ({
               isOn={options.isShuffled}
               onChange={(isShuffled) => updateOptions({ isShuffled })}
             />
+            {canUseGroupOptions && (
+              <SetupSwitch
+                title={copy.setup.randomTurnsTitle}
+                hint={copy.setup.randomTurnsHint}
+                isOn={options.isRandomTurns}
+                onChange={(isRandomTurns) => updateOptions({ isRandomTurns })}
+              />
+            )}
+            {canUseGroupOptions && (
+              <SetupSwitch
+                title={copy.setup.passThePhoneTitle}
+                hint={copy.setup.passThePhoneHint}
+                isOn={options.isPassThePhone}
+                onChange={handlePassThePhoneChange}
+              />
+            )}
             <SetupSwitch
               title={copy.setup.tableModeTitle}
               hint={copy.setup.tableModeHint}
               isOn={options.isTableMode}
-              onChange={(isTableMode) => updateOptions({ isTableMode })}
+              onChange={handleTableModeChange}
             />
           </div>
+          {canUseGroupOptions && (
+            // Present before the note fills it, so screen readers announce the change.
+            <div className="play-setup__switch-status" role="status">
+              {hasSwitchedOtherOff && (
+                <p className="play-setup__note">
+                  <FiInfo aria-hidden="true" size={18} />
+                  {copy.setup.exclusiveNote}
+                </p>
+              )}
+            </div>
+          )}
         </section>
         <div ref={actionsRef} className="play-setup__actions">
           <button

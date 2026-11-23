@@ -6,29 +6,33 @@
   border: 0;
 }
 
-// Three equal segments in a pill track. The query is in rem, so it follows the text size.
+$track-inset: 3px;
+
+// Five pill segments in one track. Wide cards keep them on one row; narrow ones wrap
+// them onto more rows, each segment growing to fill its row, so nothing scrolls sideways.
 .card-type-picker__track {
-  container: card-type / inline-size;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 2px;
   // Wide cards keep the picker at a compact width.
-  max-width: 26rem;
-  padding: 3px;
+  max-width: 34rem;
+  padding: $track-inset;
   border: 1px solid $color-border;
-  border-radius: $radius-pill;
+  // A pill while the segments fit on one row, rounded corners that hug them once they wrap.
+  border-radius: calc(#{$tap-target} / 2 + #{$track-inset});
   background: color-mix(in srgb, $color-bg 55%, transparent);
 }
 
 .card-type-picker__option {
   position: relative;
   display: flex;
+  flex: 1 1 auto;
   align-items: center;
   justify-content: center;
   gap: 6px;
   min-width: 0;
   min-height: $tap-target;
-  padding: 0 $space-2;
+  padding: 0 $space-3;
   border-radius: $radius-pill;
   color: $color-text-dim;
   font-size: 0.875rem;
@@ -60,14 +64,6 @@
   &:has(.card-type-picker__input:focus-visible) {
     @include focus-ring;
     outline-offset: 1px;
-  }
-
-  // Narrow cards stack the icon over its label so every name fits.
-  @container card-type (max-width: 19rem) {
-    flex-direction: column;
-    gap: 2px;
-    padding: $space-1 2px;
-    font-size: 0.8125rem;
   }
 }
 

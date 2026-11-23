@@ -6,6 +6,7 @@ import type { Deck } from "../../../content/types";
 import { useCopy } from "../../../i18n/useCopy";
 import { DeckPreviewSheet } from "../../decks/components/DeckPreviewSheet";
 import { useDeckStart } from "../../decks/useDeckStart";
+import { ReplaceSavedGameDialog } from "../../play/setup/ReplaceSavedGameDialog";
 import { finderCopy } from "../copy";
 import { FinderSuggestion } from "./FinderSuggestion";
 import "./FinderResults.scss";
@@ -23,7 +24,7 @@ export const FinderResults = ({
   const copy = useCopy(finderCopy).results;
   const headingId = useId();
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const { startDeck, ageGateProps } = useDeckStart();
+  const { startDeck, ageGateProps, replaceDialogProps } = useDeckStart();
   const [previewDeck, setPreviewDeck] = useState<Deck | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const hasSuggestions = suggestions.length > 0;
@@ -84,6 +85,7 @@ export const FinderResults = ({
         hasDeckPage
       />
       <AgeGateDialog {...ageGateProps} />
+      <ReplaceSavedGameDialog {...replaceDialogProps} />
     </section>
   );
 };

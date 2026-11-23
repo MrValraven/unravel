@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { createSession, playReducer } from "./playReducer";
+import {
+  createRestartAction,
+  createSession,
+  playReducer,
+} from "./playReducer";
 import { getCurrentCardId, isSessionFinished } from "./selectors";
 import {
   makeDeck,
@@ -220,7 +224,7 @@ describe("playReducer hide and pass", () => {
 });
 
 describe("playReducer restart", () => {
-  it("resets progress with the new order and keeps options and start time", () => {
+  it("resets progress with the new order, starter and turn seed, and keeps options and start time", () => {
     let session = startThreeCardSession(["Ana", "Rui"]);
     session = playReducer(session, { type: "next" });
     session = playReducer(session, { type: "skip" });
@@ -228,6 +232,8 @@ describe("playReducer restart", () => {
     const restarted = playReducer(session, {
       type: "restart",
       order: ["a-003", "a-002", "a-001"],
+      firstStarterIndex: 1 - session.firstStarterIndex,
+      turnSeed: session.turnSeed + 1,
     });
     expect(restarted).toEqual({
       deckId: "a",
@@ -236,9 +242,40 @@ describe("playReducer restart", () => {
       hiddenCardIds: [],
       skippedCardIds: [],
       turnIndex: 0,
-      firstStarterIndex: session.firstStarterIndex,
+      firstStarterIndex: 1 - session.firstStarterIndex,
+      turnSeed: session.turnSeed + 1,
       options: session.options,
       startedAt: 1000,
     });
+  });
+});
+
+describe("createRestartAction", () => {
+  it("draws a new order, starter and turn seed the way a new game does", () => {
+    const options = makeOptions({ players: ["Ana", "Rui"], isShuffled: true });
+    const fresh = createSession(threeCardDeck, options, 1, makeSeededRandom(4));
+    const action = createRestartAction(
+      threeCardDeck.cards,
+      options,
+      makeSeededRandom(4)
+    );
+    expect(action).toEqual({
+      type: "restart",
+      order: fresh.order,
+      firstStarterIndex: fresh.firstStarterIndex,
+      turnSeed: fresh.turnSeed,
+    });
+  });
+
+  it("re-rolls the starter and turn seed on a restart", () => {
+    const options = makeOptions({ players: ["Ana", "Rui"] });
+    const session = createSession(threeCardDeck, options, 1, () => 0);
+    const restarted = playReducer(
+      session,
+      createRestartAction(threeCardDeck.cards, options, () => 0.99)
+    );
+    expect(session.firstStarterIndex).toBe(0);
+    expect(restarted.firstStarterIndex).toBe(1);
+    expect(restarted.turnSeed).not.toBe(session.turnSeed);
   });
 });

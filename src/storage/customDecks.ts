@@ -1,5 +1,7 @@
+import { isCardType } from "../content/cardRules";
 import { CUSTOM_DECK_PREFIX, type CardType } from "../content/types";
 import { createStore, useStore } from "./createStore";
+import { requestPersistentStorage } from "./persistence";
 
 export const MAX_CUSTOM_DECKS = 50;
 export const MAX_CARDS_PER_CUSTOM_DECK = 200;
@@ -19,15 +21,12 @@ export interface CustomDeck {
   updatedAt: number;
 }
 
-const cardTypes: readonly string[] = ["question", "challenge", "everyone"];
-
 const isCustomCard = (raw: unknown): raw is CustomCard => {
   if (typeof raw !== "object" || raw === null) return false;
   const candidate = raw as Record<string, unknown>;
   return (
     typeof candidate.id === "string" &&
-    typeof candidate.type === "string" &&
-    cardTypes.includes(candidate.type) &&
+    isCardType(candidate.type) &&
     typeof candidate.text === "string"
   );
 };
@@ -53,7 +52,9 @@ const isCustomDeckList = (raw: unknown): raw is CustomDeck[] =>
  * Keeps every valid deck. Invalid cards are dropped from their deck, and a deck whose
  * cards were all invalid is dropped too. One bad entry never empties the whole list.
  */
-const normalizeCustomDecks = (raw: unknown): CustomDeck[] | undefined => {
+export const normalizeCustomDecks = (
+  raw: unknown
+): CustomDeck[] | undefined => {
   if (!Array.isArray(raw)) return undefined;
   const validDecks: CustomDeck[] = [];
   for (const entry of raw) {
@@ -102,26 +103,35 @@ export function canCreateCustomDeck(): boolean {
   return customDecksStore.get().length < MAX_CUSTOM_DECKS;
 }
 
+export type SaveCustomDeckResult = "saved" | "deck-limit" | "storage-blocked";
+
 /**
  * Inserts or replaces by id. Cards past MAX_CARDS_PER_CUSTOM_DECK are dropped.
- * A new deck is ignored once MAX_CUSTOM_DECKS exists (check canCreateCustomDeck first).
+ * A new deck past MAX_CUSTOM_DECKS is not stored and reports "deck-limit".
+ * "storage-blocked" means the browser refused the write: the deck lives in memory until
+ * the tab closes. A deck that was written asks the browser to keep this site's storage.
  */
-export function saveCustomDeck(deck: CustomDeck): void {
+export function saveCustomDeck(deck: CustomDeck): SaveCustomDeckResult {
   const cappedDeck: CustomDeck = {
     ...deck,
     cards: deck.cards.slice(0, MAX_CARDS_PER_CUSTOM_DECK),
   };
-  customDecksStore.set((previous) => {
-    const existingIndex = previous.findIndex((entry) => entry.id === deck.id);
-    if (existingIndex === -1) {
-      return previous.length >= MAX_CUSTOM_DECKS
-        ? previous
-        : [...previous, cappedDeck];
-    }
-    return previous.map((entry, index) =>
-      index === existingIndex ? cappedDeck : entry
-    );
+  const decks = customDecksStore.get();
+  const existingIndex = decks.findIndex((entry) => entry.id === deck.id);
+  if (existingIndex === -1 && decks.length >= MAX_CUSTOM_DECKS) {
+    return "deck-limit";
+  }
+  const hasWritten = customDecksStore.set((previous) => {
+    const indexNow = previous.findIndex((entry) => entry.id === deck.id);
+    return indexNow === -1
+      ? [...previous, cappedDeck]
+      : previous.map((entry, index) =>
+          index === indexNow ? cappedDeck : entry
+        );
   });
+  if (!hasWritten) return "storage-blocked";
+  requestPersistentStorage();
+  return "saved";
 }
 
 export function deleteCustomDeck(id: string): void {

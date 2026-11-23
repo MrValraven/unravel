@@ -2,39 +2,12 @@
   "id": "safe-kink",
   "cards": [
     {
-      "id": "safe-kink-001",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What are your kinks, and which might you like to explore with me?",
-        "pt": "Quais são os teus kinks, e quais é que gostavas de explorar comigo?"
-      }
-    },
-    {
-      "id": "safe-kink-002",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "How do you like to feel when you play?",
-        "pt": "Como é que gostas de te sentir durante uma sessão?"
-      }
-    },
-    {
       "id": "safe-kink-003",
       "type": "question",
       "level": 1,
       "text": {
         "en": "What are your soft and hard limits?",
         "pt": "Quais são os teus limites flexíveis e os teus limites inegociáveis?"
-      }
-    },
-    {
-      "id": "safe-kink-004",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "Is kink sexual to you? If so, how?",
-        "pt": "O kink é sexual para ti? Se sim, de que forma?"
       }
     },
     {
@@ -74,12 +47,111 @@
       }
     },
     {
+      "id": "safe-kink-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "When were you last tested for STIs, and what protection do we want to use when we play?",
+        "pt": "Quando fizeste os últimos testes às IST, e que proteção queremos usar nas nossas sessões?"
+      }
+    },
+    {
+      "id": "safe-kink-012",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Is there anything about your physical or mental health I should know before we play, like injuries, asthma or medication?",
+        "pt": "Há alguma coisa sobre a tua saúde física ou mental que eu deva saber antes de uma sessão, como lesões, asma ou medicação?"
+      }
+    },
+    {
+      "id": "safe-kink-013",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's our agreement on alcohol or other substances before and during a scene?",
+        "pt": "O que combinamos sobre álcool ou outras substâncias antes e durante uma cena?"
+      }
+    },
+    {
+      "id": "safe-kink-014",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you can't speak during a scene, what signal means stop? Three taps, dropping something, a hum?",
+        "pt": "Se não conseguires falar durante uma cena, que sinal quer dizer parar? Três toques, deixar cair alguma coisa, um murmúrio?"
+      }
+    },
+    {
+      "id": "safe-kink-001",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What are your kinks, and which might you like to explore with me?",
+        "pt": "Quais são os teus kinks, e quais é que gostavas de explorar comigo?"
+      }
+    },
+    {
+      "id": "safe-kink-002",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How do you like to feel when you play?",
+        "pt": "Como é que gostas de te sentir durante uma sessão?"
+      }
+    },
+    {
+      "id": "safe-kink-004",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Is kink sexual to you? If so, how?",
+        "pt": "O kink é sexual para ti? Se sim, de que forma?"
+      }
+    },
+    {
       "id": "safe-kink-009",
       "type": "question",
-      "level": 3,
+      "level": 2,
       "text": {
         "en": "What names do you like being called?",
         "pt": "Que nomes gostas que te chamem?"
+      }
+    },
+    {
+      "id": "safe-kink-015",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How often do you want me to check in during a scene? Does a quick “colour?” keep you feeling safe or pull you out of it?",
+        "pt": "Com que frequência queres que eu confirme se estás bem durante uma cena? Um rápido “que cor?” dá-te segurança ou tira-te do momento?"
+      }
+    },
+    {
+      "id": "safe-kink-016",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Do you lean towards leading, following or switching? Has that shifted over time?",
+        "pt": "Inclinas-te mais para conduzir, para te entregares ou para alternar? Isso já mudou com o tempo?"
+      }
+    },
+    {
+      "id": "safe-kink-017",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What would you like to try slowly, at a gentler intensity first, before we take it further?",
+        "pt": "O que é que gostavas de experimentar devagar, com menos intensidade primeiro, antes de irmos mais longe?"
+      }
+    },
+    {
+      "id": "safe-kink-018",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What aftercare do you need when you've been the one in control?",
+        "pt": "De que aftercare precisas quando foste tu a conduzir?"
       }
     },
     {
@@ -89,6 +161,60 @@
       "text": {
         "en": "Do you hope to have a one off play date or to build a long term dynamic?",
         "pt": "Procuras uma sessão pontual ou queres construir uma dinâmica a longo prazo?"
+      }
+    },
+    {
+      "id": "safe-kink-019",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Drop can arrive a day or two after a scene. What does it feel like for you, and how can I show up when it does?",
+        "pt": "A quebra emocional pode chegar um ou dois dias depois de uma cena. Como é que a vives, e como posso estar presente quando acontecer?"
+      }
+    },
+    {
+      "id": "safe-kink-020",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Is there a kink you've only ever explored in your head? What would help you feel safe saying it out loud?",
+        "pt": "Há algum kink que só exploraste na tua cabeça? O que te ajudaria a sentir segurança para o dizeres em voz alta?"
+      }
+    },
+    {
+      "id": "safe-kink-021",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Have you ever felt ashamed of something you're into? What would you want me to understand about it?",
+        "pt": "Já sentiste vergonha de alguma coisa de que gostas? O que gostavas que eu percebesse sobre isso?"
+      }
+    },
+    {
+      "id": "safe-kink-022",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Has a scene ever gone wrong for you? What did you learn that you'd want me to know?",
+        "pt": "Alguma vez uma cena correu mal para ti? O que aprendeste que gostavas que eu soubesse?"
+      }
+    },
+    {
+      "id": "safe-kink-023",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What would you need to feel from me to fully let go?",
+        "pt": "O que precisas de sentir da minha parte para te entregares por completo?"
+      }
+    },
+    {
+      "id": "safe-kink-024",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If you ever use your safe word with me, what do you need to hear so you never feel you ruined the moment?",
+        "pt": "Se um dia usares a palavra de segurança comigo, o que precisas de ouvir para nunca sentires que estragaste o momento?"
       }
     }
   ]

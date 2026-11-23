@@ -1,12 +1,17 @@
 import { expect, test } from "@playwright/test";
-import { buildSavedProgress, readStoredText, seedStorage } from "./helpers";
+import {
+  buildSavedProgress,
+  readStoredText,
+  seedStorage,
+  unravelCardIds,
+} from "./helpers";
 
 test.describe("playing a deck", () => {
   test.beforeEach(async ({ page }) => {
     await seedStorage(page);
   });
 
-  test("home opens the decks picker for a returning player", async ({
+  test("home opens the decks picker straight away, with the explainer and finder one link away", async ({
     page,
   }) => {
     await page.goto("/");
@@ -15,6 +20,12 @@ test.describe("playing a deck", () => {
     ).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Card of the day" })
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "What is Unravel?" })
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: /Not sure which deck\? Find one/ })
     ).toBeVisible();
     await page.getByRole("link", { name: "Get started" }).click();
     await expect(page).toHaveURL(/\/decks$/);
@@ -130,7 +141,9 @@ test.describe("playing a deck", () => {
     expect(lastOptions?.players).toEqual(["Ana", "Rui"]);
 
     // Another deck starts straight away with the same players and level.
+    // A saved game of Unravel is on the device, so opening another deck asks first.
     await page.goto("/play/first-date");
+    await page.getByRole("button", { name: "Start First Date" }).click();
     await expect(page.getByText(/^Card 1 of \d+$/)).toBeVisible();
     const progress = JSON.parse(
       (await readStoredText(page, "progress")) ?? "null"
@@ -176,5 +189,76 @@ test.describe("playing a deck", () => {
 
     await page.goto("/decks");
     await expect(page.getByText("Pick up where you left off")).toHaveCount(0);
+  });
+
+  test("starting another deck while a game is saved asks before replacing it", async ({
+    page,
+  }) => {
+    await seedStorage(page, {
+      extra: { progress: buildSavedProgress("unravel", unravelCardIds, 2) },
+    });
+    await page.goto("/decks/first-date");
+    await page.getByRole("button", { name: "Start deck" }).click();
+
+    const dialog = page.getByRole("dialog", {
+      name: "Replace your Unravel game?",
+    });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByText("You are on card 3 of 5.")).toBeVisible();
+
+    await dialog.getByRole("button", { name: "Keep Unravel" }).click();
+    await expect(dialog).toBeHidden();
+    await expect(page).toHaveURL(/\/decks\/first-date$/);
+    const keptProgress = JSON.parse(
+      (await readStoredText(page, "progress")) ?? "null"
+    ) as { deckId: string } | null;
+    expect(keptProgress?.deckId).toBe("unravel");
+
+    await page.getByRole("button", { name: "Start deck" }).click();
+    await page.getByRole("button", { name: "Start First Date" }).click();
+    await expect(page).toHaveURL(/\/play\/first-date\?card=1$/);
+    await expect(page.getByText(/^Card 1 of \d+$/)).toBeVisible();
+  });
+
+  test("pass the phone covers the first card until it is revealed, and replaces table mode", async ({
+    page,
+  }) => {
+    await page.goto("/play/unravel?setup=1");
+    await page.getByRole("textbox", { name: "Player 1 name" }).fill("Ana");
+    await page.getByRole("textbox", { name: "Player 2 name" }).fill("Rui");
+    // Pass the phone is for groups: it appears once a third name is added.
+    await expect(
+      page.getByRole("switch", { name: /Pass the phone/ })
+    ).toHaveCount(0);
+    await page.getByRole("button", { name: "Add player" }).click();
+    await page.getByRole("textbox", { name: "Player 3 name" }).fill("Bea");
+
+    const tableMode = page.getByRole("switch", { name: /Table mode/ });
+    const passThePhone = page.getByRole("switch", { name: /Pass the phone/ });
+    await tableMode.click();
+    await expect(tableMode).toBeChecked();
+    await passThePhone.click();
+    await expect(passThePhone).toBeChecked();
+    await expect(tableMode).not.toBeChecked();
+    await expect(
+      page.getByText(/Pass the phone and table mode can't both be on/)
+    ).toBeVisible();
+
+    await page.getByRole("button", { name: "Start deck", exact: true }).click();
+    await expect(page.getByText(/^Card 1 of \d+$/)).toBeVisible();
+    await expect(
+      page.getByText("Pass the phone to Ana", { exact: true })
+    ).toBeVisible();
+    await expect(
+      page.getByText(/How would you describe your personality/)
+    ).toHaveCount(0);
+
+    await page.getByRole("button", { name: "Reveal card" }).click();
+    await expect(
+      page.getByText(/How would you describe your personality/).first()
+    ).toBeVisible();
+    await expect(page.getByRole("button", { name: "Reveal card" })).toHaveCount(
+      0
+    );
   });
 });

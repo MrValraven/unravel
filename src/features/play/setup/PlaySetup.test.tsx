@@ -20,6 +20,18 @@ const renderSetup = (deck = makeDeck(), initialOptions?: PlayOptions) => {
   return { onStart, user: userEvent.setup() };
 };
 
+const typeNames = async (
+  user: ReturnType<typeof userEvent.setup>,
+  names: string[]
+) => {
+  for (const [index, name] of names.entries()) {
+    await user.type(
+      screen.getByRole("textbox", { name: `Player ${index + 1} name` }),
+      name
+    );
+  }
+};
+
 describe("PlaySetup", () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -58,8 +70,123 @@ describe("PlaySetup", () => {
       isShuffled: true,
       startLevel: 2,
       isTableMode: true,
+      isRandomTurns: false,
+      isPassThePhone: false,
       players: ["Ana", "Rui"],
     });
+  });
+
+  it("offers random turns only once three names are filled in", async () => {
+    const { onStart, user } = renderSetup();
+    const switchName = /Random turns/;
+    expect(
+      screen.queryByRole("switch", { name: switchName })
+    ).not.toBeInTheDocument();
+
+    await user.type(
+      screen.getByRole("textbox", { name: "Player 1 name" }),
+      "Ana"
+    );
+    await user.type(
+      screen.getByRole("textbox", { name: "Player 2 name" }),
+      "Rui"
+    );
+    await user.click(screen.getByRole("button", { name: "Add player" }));
+    // A third row with no name does not count yet.
+    expect(
+      screen.queryByRole("switch", { name: switchName })
+    ).not.toBeInTheDocument();
+
+    await user.type(
+      screen.getByRole("textbox", { name: "Player 3 name" }),
+      "Eva"
+    );
+    const randomTurns = screen.getByRole("switch", { name: switchName });
+    expect(randomTurns).not.toBeChecked();
+
+    await user.click(randomTurns);
+    await user.click(screen.getByRole("button", { name: "Start deck" }));
+    expect(onStart).toHaveBeenCalledWith(
+      expect.objectContaining({
+        isRandomTurns: true,
+        players: ["Ana", "Rui", "Eva"],
+      })
+    );
+  });
+
+  it("shows random turns switched on when the options already have it with three names", () => {
+    renderSetup(makeDeck(), {
+      isShuffled: false,
+      startLevel: 1,
+      isTableMode: false,
+      isRandomTurns: true,
+      isPassThePhone: false,
+      players: ["Ana", "Rui", "Eva"],
+    });
+    expect(screen.getByRole("switch", { name: /Random turns/ })).toBeChecked();
+  });
+
+  it("offers pass-the-phone only once three names are filled in", async () => {
+    const { onStart, user } = renderSetup();
+    const switchName = /Pass the phone/;
+    expect(
+      screen.queryByRole("switch", { name: switchName })
+    ).not.toBeInTheDocument();
+
+    await typeNames(user, ["Ana", "Rui"]);
+    await user.click(screen.getByRole("button", { name: "Add player" }));
+    expect(
+      screen.queryByRole("switch", { name: switchName })
+    ).not.toBeInTheDocument();
+
+    await user.type(
+      screen.getByRole("textbox", { name: "Player 3 name" }),
+      "Eva"
+    );
+    const passThePhone = screen.getByRole("switch", { name: switchName });
+    expect(passThePhone).not.toBeChecked();
+
+    await user.click(passThePhone);
+    await user.click(screen.getByRole("button", { name: "Start deck" }));
+    expect(onStart).toHaveBeenCalledWith(
+      expect.objectContaining({
+        isPassThePhone: true,
+        isTableMode: false,
+        players: ["Ana", "Rui", "Eva"],
+      })
+    );
+  });
+
+  it("turns table mode off when pass-the-phone goes on, and says why", async () => {
+    const { onStart, user } = renderSetup(makeDeck(), {
+      isShuffled: false,
+      startLevel: 1,
+      isTableMode: true,
+      isRandomTurns: false,
+      isPassThePhone: false,
+      players: ["Ana", "Rui", "Eva"],
+    });
+    const tableMode = screen.getByRole("switch", { name: /Table mode/ });
+    const passThePhone = screen.getByRole("switch", { name: /Pass the phone/ });
+    const note =
+      "Pass the phone and table mode can't both be on: table mode shows the card to the other side of the table.";
+    expect(tableMode).toBeChecked();
+    expect(screen.queryByText(note)).not.toBeInTheDocument();
+
+    await user.click(passThePhone);
+    expect(passThePhone).toBeChecked();
+    expect(tableMode).not.toBeChecked();
+    expect(screen.getByRole("status")).toHaveTextContent(note);
+
+    await user.click(tableMode);
+    expect(tableMode).toBeChecked();
+    expect(passThePhone).not.toBeChecked();
+    expect(screen.getByText(note)).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Start deck" }));
+    expect(onStart).toHaveBeenCalledWith(
+      expect.objectContaining({ isTableMode: true, isPassThePhone: false })
+    );
   });
 
   it("has one Start button and no quick start", () => {
@@ -75,6 +202,8 @@ describe("PlaySetup", () => {
       isShuffled: true,
       startLevel: 3,
       isTableMode: false,
+      isRandomTurns: false,
+      isPassThePhone: false,
       players: ["Ana", "Rui", "Inês"],
     });
     expect(screen.getByRole("radio", { name: /All in/ })).toBeChecked();
@@ -87,6 +216,8 @@ describe("PlaySetup", () => {
       isShuffled: true,
       startLevel: 3,
       isTableMode: false,
+      isRandomTurns: false,
+      isPassThePhone: false,
       players: ["Ana", "Rui", "Inês"],
     });
   });
@@ -142,6 +273,8 @@ describe("PlaySetup", () => {
       isShuffled: false,
       startLevel: 1,
       isTableMode: false,
+      isRandomTurns: false,
+      isPassThePhone: false,
       players: ["Ana"],
     });
     expect(screen.getAllByRole("textbox")).toHaveLength(2);
@@ -170,6 +303,8 @@ describe("PlaySetup", () => {
         isShuffled: false,
         startLevel: 1,
         isTableMode: false,
+        isRandomTurns: false,
+        isPassThePhone: false,
         players: [],
       },
       startedAt: 1,
@@ -194,6 +329,8 @@ describe("PlaySetup", () => {
         isShuffled: false,
         startLevel: 1,
         isTableMode: false,
+        isRandomTurns: false,
+        isPassThePhone: false,
         players: [],
       },
       startedAt: 1,

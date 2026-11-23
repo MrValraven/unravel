@@ -7,6 +7,12 @@ const en = {
     emptyDeck: "This deck has no cards yet. Add a few cards to play it.",
     replacesSavedGame: "Starting this deck replaces your saved game of {deck}.",
     replacesSavedGameUntitled: "Starting this deck replaces your saved game.",
+    replaceDialog: {
+      title: "Replace your {deck} game?",
+      body: "You are on card {current} of {total}.",
+      start: "Start {deck}",
+      keep: "Keep {deck}",
+    },
     playersTitle: "Players",
     playersHint: "Add names to see whose turn it is on each card.",
     playerNameLabel: "Player {number} name",
@@ -26,9 +32,17 @@ const en = {
     shuffleTitle: "Shuffle cards",
     shuffleHint:
       "Mixes the cards inside each level, so the questions still build up. Off keeps the curated order.",
+    randomTurnsTitle: "Random turns",
+    randomTurnsHint:
+      "Picks who answers at random instead of going round the table. Never the same person twice in a row.",
+    passThePhoneTitle: "Pass the phone",
+    passThePhoneHint:
+      "Covers a card meant for one player until they hold the phone and tap to read it first.",
     tableModeTitle: "Table mode",
     tableModeHint:
       "Shows the card twice, one copy turned to face the person across the table.",
+    exclusiveNote:
+      "Pass the phone and table mode can't both be on: table mode shows the card to the other side of the table.",
     startDeck: "Start deck",
   },
   checkIn: {
@@ -55,27 +69,46 @@ const en = {
     finished: "Time is up",
     remaining: "{time} left",
   },
+  vote: {
+    pointOnThree: "Point on 3",
+    point: "Point!",
+    /** Read out by the live region for each number of the count. */
+    counting: "Pointing in {number}",
+  },
   card: {
     position: "Card {current} of {total}",
     currentCard: "Current card",
     question: "Question",
     challenge: "Challenge",
     everyone: "Everyone answers",
+    vote: "Vote",
+    hotSeat: "Hot seat",
     turn: "{asker} asks, {answerer} answers",
     challengeTurn: "{answerer}'s turn, {asker} reads it out",
+    /** Pass-the-phone: the answerer reads the card first, so nobody else is named. */
+    soloTurn: "{answerer}'s turn",
     pairTurn: "{first} answers first, then {second}",
     pairChallengeTurn: "{first} goes first, then {second}",
     unnamedTurn: "Everyone answers, one at a time",
     unnamedChallengeTurn: "Everyone takes a turn",
+    voteTurn: "Everyone votes",
+    hotSeatTurn: "{player} is in the hot seat",
+    hotSeatUnnamedTurn: "Pick someone for the hot seat",
     /** Said and shown when the next card is a level higher than the last one. */
     levelUp: "Level {number}: {level}",
     /** Under the last card while it is dragged toward next. */
     lastCard: "Last card",
     saveFavourite: "Save card to favourites",
     shareCard: "Share card",
+    shareText: "A card from {deck} on Unravel",
     shared: "Shared",
     imageSaved: "Image saved",
     shareFailed: "The card image could not be made on this device.",
+  },
+  cover: {
+    passTo: "Pass the phone to {name}",
+    /** The reveal button, and what screen readers hear after the pass line. */
+    reveal: "Reveal card",
   },
   controls: {
     next: "Next card",
@@ -132,6 +165,12 @@ export const playCopy = defineCopy<typeof en>({
         "Começar este baralho substitui o teu jogo guardado de {deck}.",
       replacesSavedGameUntitled:
         "Começar este baralho substitui o teu jogo guardado.",
+      replaceDialog: {
+        title: "Substituir o teu jogo de {deck}?",
+        body: "Estás na carta {current} de {total}.",
+        start: "Começar {deck}",
+        keep: "Manter {deck}",
+      },
       playersTitle: "Jogadores",
       playersHint: "Junta nomes para verem de quem é a vez em cada carta.",
       playerNameLabel: "Nome do jogador {number}",
@@ -151,9 +190,17 @@ export const playCopy = defineCopy<typeof en>({
       shuffleTitle: "Baralhar cartas",
       shuffleHint:
         "Mistura as cartas dentro de cada nível, para que as perguntas continuem a subir de tom. Desligado mantém a ordem pensada para o baralho.",
+      randomTurnsTitle: "Vez aleatória",
+      randomTurnsHint:
+        "Escolhe ao acaso quem responde, em vez de seguir a ordem da mesa. Nunca a mesma pessoa duas vezes seguidas.",
+      passThePhoneTitle: "Passar o telemóvel",
+      passThePhoneHint:
+        "Tapa a carta de um só jogador até essa pessoa pegar no telemóvel e tocar para a ler primeiro.",
       tableModeTitle: "Modo mesa",
       tableModeHint:
         "Mostra a carta duas vezes, com uma cópia virada para quem está do outro lado da mesa.",
+      exclusiveNote:
+        "Passar o telemóvel e o modo mesa não podem estar ligados ao mesmo tempo: o modo mesa mostra a carta a quem está do outro lado da mesa.",
       startDeck: "Começar baralho",
     },
     checkIn: {
@@ -181,26 +228,42 @@ export const playCopy = defineCopy<typeof en>({
       finished: "Acabou o tempo",
       remaining: "Faltam {time}",
     },
+    vote: {
+      pointOnThree: "Apontar no 3",
+      point: "Apontem!",
+      counting: "Apontem em {number}",
+    },
     card: {
       position: "Carta {current} de {total}",
       currentCard: "Carta atual",
       question: "Pergunta",
       challenge: "Desafio",
       everyone: "Todos respondem",
+      vote: "Votação",
+      hotSeat: "Holofote",
       turn: "{asker} pergunta, {answerer} responde",
       challengeTurn: "Vez de {answerer}, {asker} lê em voz alta",
+      soloTurn: "Vez de {answerer}",
       pairTurn: "{first} responde primeiro, depois {second}",
       pairChallengeTurn: "{first} começa, depois {second}",
       unnamedTurn: "Toda a gente responde, à vez",
       unnamedChallengeTurn: "Toda a gente faz o desafio, à vez",
+      voteTurn: "Toda a gente vota",
+      hotSeatTurn: "{player} está no holofote",
+      hotSeatUnnamedTurn: "Escolham quem fica no holofote",
       levelUp: "Nível {number}: {level}",
       lastCard: "Última carta",
       saveFavourite: "Guardar carta nas favoritas",
       shareCard: "Partilhar carta",
+      shareText: "Uma carta de {deck} no Unravel",
       shared: "Partilhada",
       imageSaved: "Imagem guardada",
       shareFailed:
         "Não foi possível criar a imagem da carta neste dispositivo.",
+    },
+    cover: {
+      passTo: "Passa o telemóvel a {name}",
+      reveal: "Revelar carta",
     },
     controls: {
       next: "Carta seguinte",

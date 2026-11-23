@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 import { returningPlayerSettings, seedStorage } from "./helpers";
 
@@ -104,5 +105,47 @@ test.describe("settings", () => {
         .getByRole("group", { name: "Theme" })
         .getByRole("button", { name: "Dim", exact: true })
     ).toHaveAttribute("aria-pressed", "true");
+  });
+
+  test("a backup file restores a custom deck on a fresh page", async ({
+    browser,
+    page,
+  }) => {
+    const deck = {
+      id: "custom-e2e-backup",
+      title: "Backup crew",
+      cards: [{ id: "c1", type: "question", text: "What would you save?" }],
+      createdAt: 1_700_000_000_000,
+      updatedAt: 1_700_000_000_000,
+    };
+    await seedStorage(page, { extra: { customDecks: [deck] } });
+    await page.goto("/settings");
+
+    const downloadPromise = page.waitForEvent("download");
+    await page.getByRole("button", { name: "Export backup" }).click();
+    const download = await downloadPromise;
+    expect(download.suggestedFilename()).toMatch(/^unravel-backup-.*\.json$/);
+    const backupPath = await download.path();
+    expect(await readFile(backupPath, "utf8")).toContain("Backup crew");
+
+    const freshContext = await browser.newContext(test.info().project.use);
+    const freshPage = await freshContext.newPage();
+    await seedStorage(freshPage);
+    await freshPage.goto("/settings");
+    await freshPage.getByLabel("Backup file").setInputFiles(backupPath);
+
+    const preview = freshPage.getByRole("dialog", {
+      name: "Import this backup?",
+    });
+    await expect(preview).toBeVisible();
+    await expect(preview.getByText(/1 deck/)).toBeVisible();
+    await preview.getByRole("button", { name: "Import" }).click();
+    await expect(freshPage.getByText(/Imported 1 new deck/)).toBeVisible();
+
+    await freshPage.goto("/custom");
+    await expect(
+      freshPage.getByRole("heading", { level: 2, name: "Backup crew" })
+    ).toBeVisible();
+    await freshContext.close();
   });
 });

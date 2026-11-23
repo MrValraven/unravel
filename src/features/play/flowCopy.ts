@@ -31,8 +31,6 @@ const en = {
     recapUnderAMinute: "under a minute",
     shareRecap: "Share recap",
     recapCopied: "Recap copied",
-    recapShareFailed:
-      "This browser blocked both sharing and the clipboard, so the recap was not shared.",
     upNextTitle: "Up next",
     replayBody: "Same players and level, cards shuffled.",
   },
@@ -66,8 +64,6 @@ export const flowCopy = defineCopy<typeof en>({
       recapUnderAMinute: "menos de um minuto",
       shareRecap: "Partilhar resumo",
       recapCopied: "Resumo copiado",
-      recapShareFailed:
-        "Este navegador bloqueou a partilha e a área de transferência, por isso o resumo não foi partilhado.",
       upNextTitle: "A seguir",
       replayBody: "Os mesmos jogadores e nível, com as cartas baralhadas.",
     },

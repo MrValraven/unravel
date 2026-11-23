@@ -75,3 +75,20 @@ describe("releases", () => {
     }
   });
 });
+
+describe("release notes 2.1.0", () => {
+  it("lists 2.1.0 first", () => expect(releases[0]?.version).toBe("2.1.0"));
+
+  it("calls the dim theme Penumbra in Portuguese, as Settings does", () => {
+    const text = releases.flatMap((r) => r.items.map((i) => i.pt)).join(" ");
+    expect(text).not.toMatch(/modo noturno/i);
+    expect(text).toMatch(/Penumbra/);
+  });
+
+  it("keeps em dashes and Brazilian forms out of the notes", () => {
+    const items = releases.flatMap((r) => r.items);
+    for (const item of items) {
+      expect(`${item.en} ${item.pt}`).not.toMatch(/—|--|\bvocê(?!s)/i);
+    }
+  });
+});

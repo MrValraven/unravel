@@ -42,6 +42,8 @@ const cardTypeLabels: Record<CardType, string> = {
   question: "Question",
   challenge: "Challenge",
   everyone: "Everyone",
+  vote: "Vote",
+  "hot-seat": "Hot seat",
 };
 
 /** Matches window.renderOgImage in scripts/og-template.html. */

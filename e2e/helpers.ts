@@ -74,6 +74,8 @@ export const buildSavedProgress = (
     isShuffled: false,
     startLevel: 1,
     isTableMode: false,
+    isRandomTurns: false,
+    isPassThePhone: false,
     players: [] as string[],
   },
   startedAt: Date.now() - 60_000,

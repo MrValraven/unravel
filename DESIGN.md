@@ -134,6 +134,11 @@ Sizes in use, smallest to largest:
 - **Segmented control**: a track with a 4px inset and a `$color-accent-fill` highlight that slides under the selected option (`aria-pressed`). Used for language, theme and text size.
 - **Switch row**: the whole row is a `role="switch"` button; 48 by 28 track, 22px thumb. On: `$color-accent` border, `$color-accent-fill` track, on-accent thumb.
 - **Toasts and pills**: elevated panels with `border-strong` and `shadow()`. The status toast is a pill at the top, the update banner and offline-ready toast slide up from the bottom, the offline pill sits centred under the status bar. Icons sit in a round tile of 18% accent.
+- **Vote and hot-seat card marks**: the type chip names the type (Vote, Hot seat). A vote card carries a row of dots along its top edge, a hot-seat card a double rule inner frame, the same marks as the custom deck editor's type picker. Challenges keep their dashed frame and everyone cards their striped band.
+- **Vote countdown** (`VoteCountdown`): the footer of a vote card is a 44px outlined "Point on 3" pill built on `currentColor`. Once pressed it gives way to a large 3, 2, 1 (2rem, tabular figures) and then "Point!", read out by a polite live region, with a haptic buzz on "Point!". Hover sits behind `@media (hover: hover)`.
+- **Reveal cover** (`RevealCover`): pass-the-phone replaces the card text with a phone icon, "Pass the phone to {name}" in the card face and a solid ink "Reveal card" button, so the card keeps its size. Previews and the turned table copy show it as a still picture with no button.
+- **Season strip** (`SeasonStrip`): on Home and Decks, "In season now" shows the deck tiles in the same grid as the category shelves. When nothing is in season it is one quiet open pill line, "Coming up", naming the next seasonal deck and its start day.
+- **Share link dialog**: when both the share sheet and the clipboard are blocked, a `Dialog` titled "Copy this link" shows the link in a selectable field so it can be copied by hand.
 - **Install nudge**: a surface card with a 44px accent icon tile, title, one line and actions. It renders only where installing is possible, on Home and at the end of a deck, and each place remembers its own "Not now".
 - **QR code** (Home, wide screens): navy modules on a `#fffffe` ground with a hairline border in every theme, so any camera reads it.
 

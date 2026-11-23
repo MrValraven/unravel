@@ -1,3 +1,4 @@
+import type { MouseEvent } from "react";
 import { Link } from "react-router";
 import { FiEdit2, FiPlay, FiShare2, FiTrash2 } from "react-icons/fi";
 import { DeckIcon } from "../../components/DeckIcon";
@@ -13,6 +14,7 @@ interface CustomDeckListItemProps {
   /** True while the item animates out after a confirmed delete. */
   isLeaving: boolean;
   onLeft: (deck: CustomDeck) => void;
+  onStart: (deck: CustomDeck) => void;
   onShare: (deck: CustomDeck) => void;
   onDelete: (deck: CustomDeck) => void;
 }
@@ -21,6 +23,7 @@ export const CustomDeckListItem = ({
   deck,
   isLeaving,
   onLeft,
+  onStart,
   onShare,
   onDelete,
 }: CustomDeckListItemProps) => {
@@ -31,6 +34,20 @@ export const CustomDeckListItem = ({
     formatCopy(template, { title: deck.title });
   const hasCards = deck.cards.length > 0;
   const encodedDeckId = encodeURIComponent(deck.id);
+
+  // A plain click asks before replacing a saved game. Modified clicks keep the link's own behaviour.
+  const handleStartClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    )
+      return;
+    event.preventDefault();
+    onStart(deck);
+  };
 
   return (
     <li
@@ -55,6 +72,7 @@ export const CustomDeckListItem = ({
             to={`/play/${encodedDeckId}`}
             className="button button--primary"
             viewTransition
+            onClick={handleStartClick}
             aria-label={nameAction(listCopy.startDeckNamed)}
           >
             <FiPlay aria-hidden="true" size={18} />

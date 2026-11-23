@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, MouseEvent } from "react";
 import { Link } from "react-router";
 import { FiArrowRight } from "react-icons/fi";
 import { DeckIcon } from "../../components/DeckIcon";
@@ -6,6 +6,8 @@ import { getDailyCard } from "../../content/dailyCard";
 import { formatCopy, localize } from "../../i18n/localize";
 import { useLocale } from "../../i18n/LocaleContext";
 import { useCopy } from "../../i18n/useCopy";
+import { useDeckStart } from "../decks/useDeckStart";
+import { ReplaceSavedGameDialog } from "../play/setup/ReplaceSavedGameDialog";
 import { homeCopy } from "./copy";
 import "./DailyCard.scss";
 
@@ -16,6 +18,21 @@ export const DailyCard = ({ id }: { id?: string }) => {
   const { card, deck } = getDailyCard();
   const deckTitle = localize(deck.title, locale);
   const accentStyle = { "--deck-accent": deck.accent } as CSSProperties;
+  const { startDeck, replaceDialogProps } = useDeckStart();
+
+  // A plain click asks before replacing a saved game. Modified clicks keep the link's own behaviour.
+  const handlePlayClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    )
+      return;
+    event.preventDefault();
+    startDeck(deck);
+  };
 
   return (
     <section
@@ -42,6 +59,7 @@ export const DailyCard = ({ id }: { id?: string }) => {
             to={`/play/${encodeURIComponent(deck.id)}`}
             className="button daily-card__play"
             viewTransition
+            onClick={handlePlayClick}
             aria-label={formatCopy(copy.playDeckLabel, { deck: deckTitle })}
           >
             {copy.playDeck}
@@ -49,6 +67,7 @@ export const DailyCard = ({ id }: { id?: string }) => {
           </Link>
         </div>
       </div>
+      <ReplaceSavedGameDialog {...replaceDialogProps} />
     </section>
   );
 };

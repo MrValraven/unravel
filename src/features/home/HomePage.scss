@@ -75,6 +75,10 @@ $home-width: 1040px;
   }
 }
 
+.home__finder {
+  width: min(480px, 100%);
+}
+
 .home__deck-count {
   color: $color-text-dim;
   font-size: 0.875rem;
@@ -82,7 +86,6 @@ $home-width: 1040px;
 
 .home__resume {
   width: min(480px, 100%);
-  margin-top: $space-2;
 }
 
 .home__art {
@@ -91,6 +94,11 @@ $home-width: 1040px;
 
 .home__language {
   margin-top: -$space-2;
+}
+
+// Under the hero; collapses if no seasonal deck exists to point at.
+.home__season:empty {
+  display: none;
 }
 
 .home__today {
@@ -138,12 +146,16 @@ $home-width: 1040px;
     animation-delay: 120ms;
   }
 
+  .home__finder {
+    animation-delay: 150ms;
+  }
+
   .home__deck-count {
     animation-delay: 180ms;
   }
 
   .home__resume {
-    animation-delay: 210ms;
+    animation-delay: 90ms;
   }
 
   .home__today {

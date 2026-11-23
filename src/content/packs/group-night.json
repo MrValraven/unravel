@@ -1,0 +1,374 @@
+{
+  "id": "group-night",
+  "cards": [
+    {
+      "id": "group-night-001",
+      "type": "vote",
+      "level": 1,
+      "text": {
+        "en": "Who is most likely to take a photo of their food before anyone's allowed to eat?",
+        "pt": "Quem é mais capaz de fotografar a comida antes de alguém lhe poder tocar?"
+      }
+    },
+    {
+      "id": "group-night-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the best day out you've ever had with a group of friends?",
+        "pt": "Qual foi o melhor dia que já passaste com um grupo de amigos?"
+      }
+    },
+    {
+      "id": "group-night-003",
+      "type": "vote",
+      "level": 1,
+      "text": {
+        "en": "Who is most likely to make friends with the dog before saying hi to its owner?",
+        "pt": "Quem é mais capaz de fazer amizade com o cão antes de cumprimentar o dono?"
+      }
+    },
+    {
+      "id": "group-night-004",
+      "type": "hot-seat",
+      "level": 1,
+      "text": {
+        "en": "Rapid fire: until time runs out, the group asks the person in the hot seat this-or-that questions. No thinking allowed.",
+        "pt": "Resposta rápida: até o tempo acabar, o grupo dispara perguntas «isto ou aquilo» a quem está no holofote. Proibido pensar."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "group-night-005",
+      "type": "vote",
+      "level": 1,
+      "text": {
+        "en": "Who is most likely to reply to a message three days later with just “haha”?",
+        "pt": "Quem é mais capaz de responder a uma mensagem três dias depois só com «ahah»?"
+      }
+    },
+    {
+      "id": "group-night-006",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone shares the most useless fact they know. The group picks the best one.",
+        "pt": "Cada um partilha a curiosidade mais inútil que sabe. O grupo escolhe a melhor."
+      }
+    },
+    {
+      "id": "group-night-007",
+      "type": "vote",
+      "level": 1,
+      "text": {
+        "en": "Who is most likely to have twenty tabs open and swear they need every single one?",
+        "pt": "Quem é mais capaz de ter vinte separadores abertos e jurar que precisa de todos?"
+      }
+    },
+    {
+      "id": "group-night-008",
+      "type": "hot-seat",
+      "level": 1,
+      "text": {
+        "en": "Everyone asks the person in the hot seat one question about their first job.",
+        "pt": "Cada um faz uma pergunta a quem está no holofote sobre o seu primeiro emprego."
+      }
+    },
+    {
+      "id": "group-night-009",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Without speaking, line up in order of birthday, January to December, before time runs out.",
+        "pt": "Sem falar, ponham-se em fila por ordem de aniversário, de janeiro a dezembro, antes de o tempo acabar."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "group-night-010",
+      "type": "vote",
+      "level": 1,
+      "text": {
+        "en": "Who is most likely to get lost even with the map open on their phone?",
+        "pt": "Quem é mais capaz de se perder mesmo com o mapa aberto no telemóvel?"
+      }
+    },
+    {
+      "id": "group-night-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's a skill you have that would surprise everyone here?",
+        "pt": "Que habilidade tens que surpreenderia toda a gente aqui?"
+      }
+    },
+    {
+      "id": "group-night-012",
+      "type": "vote",
+      "level": 1,
+      "text": {
+        "en": "Who is most likely to start a sentence with “fun fact” and actually deliver?",
+        "pt": "Quem é mais capaz de começar uma frase com «sabiam que» e contar mesmo uma coisa interessante?"
+      }
+    },
+    {
+      "id": "group-night-013",
+      "type": "hot-seat",
+      "level": 1,
+      "text": {
+        "en": "Everyone asks the person in the hot seat one question about their perfect lazy Sunday.",
+        "pt": "Cada um faz uma pergunta a quem está no holofote sobre o seu domingo preguiçoso perfeito."
+      }
+    },
+    {
+      "id": "group-night-014",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone shows the third most recent photo on their phone and tells the story behind it.",
+        "pt": "Cada um mostra a terceira foto mais recente do telemóvel e conta a história por trás dela."
+      }
+    },
+    {
+      "id": "group-night-015",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Taking turns round the circle, name famous duos until time runs out. Whoever hesitates too long is out.",
+        "pt": "À vez, à volta da roda, digam duplas famosas até o tempo acabar. Quem hesitar demasiado sai."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "group-night-016",
+      "type": "vote",
+      "level": 1,
+      "text": {
+        "en": "Who is most likely to cry at a supermarket advert?",
+        "pt": "Quem é mais capaz de chorar com um anúncio de supermercado?"
+      }
+    },
+    {
+      "id": "group-night-017",
+      "type": "vote",
+      "level": 2,
+      "text": {
+        "en": "Who is most likely to send a voice note longer than a podcast episode?",
+        "pt": "Quem é mais capaz de mandar uma mensagem de voz mais comprida do que um episódio de podcast?"
+      }
+    },
+    {
+      "id": "group-night-018",
+      "type": "hot-seat",
+      "level": 2,
+      "text": {
+        "en": "Press conference: the person in the hot seat just won an award nobody saw coming. The group asks questions until time runs out.",
+        "pt": "Conferência de imprensa: quem está no holofote acabou de ganhar um prémio que ninguém esperava. O grupo faz perguntas até o tempo acabar."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "group-night-019",
+      "type": "vote",
+      "level": 2,
+      "text": {
+        "en": "Who is most likely to plan the whole trip and still forget their charger?",
+        "pt": "Quem é mais capaz de planear a viagem toda e mesmo assim esquecer-se do carregador?"
+      }
+    },
+    {
+      "id": "group-night-020",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone says their go-to karaoke song, then hums the first line.",
+        "pt": "Cada um diz qual é a sua música de karaoke e trauteia o primeiro verso."
+      }
+    },
+    {
+      "id": "group-night-021",
+      "type": "hot-seat",
+      "level": 2,
+      "text": {
+        "en": "The person in the hot seat tells the story of the oldest thing they own. The group asks follow-up questions.",
+        "pt": "Quem está no holofote conta a história da coisa mais antiga que tem. O grupo faz perguntas a seguir."
+      }
+    },
+    {
+      "id": "group-night-022",
+      "type": "vote",
+      "level": 2,
+      "text": {
+        "en": "Who is most likely to go viral for something they did by accident?",
+        "pt": "Quem é mais capaz de se tornar viral por algo que fez sem querer?"
+      }
+    },
+    {
+      "id": "group-night-023",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Until time runs out, plan the most ridiculous group holiday together. Every idea has to top the one before.",
+        "pt": "Até o tempo acabar, planeiem juntos as férias de grupo mais absurdas. Cada ideia tem de superar a anterior."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "group-night-024",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's the funniest misunderstanding you've ever been part of?",
+        "pt": "Qual foi o mal-entendido mais engraçado de que já fizeste parte?"
+      }
+    },
+    {
+      "id": "group-night-025",
+      "type": "vote",
+      "level": 2,
+      "text": {
+        "en": "Who is most likely to still be in touch with their primary school friends?",
+        "pt": "Quem é mais capaz de ainda falar com os amigos da escola primária?"
+      }
+    },
+    {
+      "id": "group-night-026",
+      "type": "hot-seat",
+      "level": 2,
+      "text": {
+        "en": "Until time runs out, the group asks the person in the hot seat about the best trip they've ever taken. Dig for details.",
+        "pt": "Até o tempo acabar, o grupo faz perguntas a quem está no holofote sobre a melhor viagem que já fez. Puxem pelos pormenores."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "group-night-027",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone shares the worst advice they ever followed, and how it turned out.",
+        "pt": "Cada um partilha o pior conselho que já seguiu e como é que correu."
+      }
+    },
+    {
+      "id": "group-night-028",
+      "type": "vote",
+      "level": 2,
+      "text": {
+        "en": "Who is most likely to talk their way into a place they weren't invited?",
+        "pt": "Quem é mais capaz de conseguir, só com conversa, entrar num sítio sem convite?"
+      }
+    },
+    {
+      "id": "group-night-029",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Before time runs out, agree on a name for this group, a motto and a secret handshake.",
+        "pt": "Antes de o tempo acabar, ponham-se de acordo num nome para este grupo, num lema e num aperto de mão secreto."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "group-night-030",
+      "type": "hot-seat",
+      "level": 2,
+      "text": {
+        "en": "Everyone asks the person in the hot seat one question about the best mistake they ever made.",
+        "pt": "Cada um faz uma pergunta a quem está no holofote sobre o melhor erro que já cometeu."
+      }
+    },
+    {
+      "id": "group-night-031",
+      "type": "hot-seat",
+      "level": 3,
+      "text": {
+        "en": "Questions for the person in the hot seat, all about who they were five years ago. Everyone asks one.",
+        "pt": "Perguntas para quem está no holofote, todas sobre a pessoa que era há cinco anos. Cada um faz uma."
+      }
+    },
+    {
+      "id": "group-night-032",
+      "type": "vote",
+      "level": 3,
+      "text": {
+        "en": "Who is most likely to remember a small thing you told them months ago?",
+        "pt": "Quem é mais capaz de se lembrar de uma coisa pequena que lhe contaste há meses?"
+      }
+    },
+    {
+      "id": "group-night-033",
+      "type": "hot-seat",
+      "level": 3,
+      "text": {
+        "en": "Until time runs out, the group asks the person in the hot seat about a moment that changed how they see something big.",
+        "pt": "Até o tempo acabar, o grupo faz perguntas a quem está no holofote sobre um momento que lhe mudou a forma de ver algo importante."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "group-night-034",
+      "type": "everyone",
+      "level": 3,
+      "text": {
+        "en": "Everyone says one thing they noticed about someone here tonight that made them smile.",
+        "pt": "Cada um diz uma coisa em que reparou em alguém aqui esta noite e que lhe arrancou um sorriso."
+      }
+    },
+    {
+      "id": "group-night-035",
+      "type": "hot-seat",
+      "level": 3,
+      "text": {
+        "en": "The group asks the person in the hot seat about a risk they took that paid off.",
+        "pt": "O grupo faz perguntas a quem está no holofote sobre um risco que correu e que valeu a pena."
+      }
+    },
+    {
+      "id": "group-night-036",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's something a friend once did for you that you still think about?",
+        "pt": "O que é que um amigo ou uma amiga já fez por ti e em que ainda pensas?"
+      }
+    },
+    {
+      "id": "group-night-037",
+      "type": "hot-seat",
+      "level": 3,
+      "text": {
+        "en": "Until time runs out, the group asks the person in the hot seat about something they're proud of but rarely talk about.",
+        "pt": "Até o tempo acabar, o grupo faz perguntas a quem está no holofote sobre algo de que se orgulha mas de que raramente fala."
+      },
+      "timerSeconds": 120
+    },
+    {
+      "id": "group-night-038",
+      "type": "vote",
+      "level": 3,
+      "text": {
+        "en": "If everything went wrong at 3am, who here would this group call first?",
+        "pt": "Se tudo corresse mal às três da manhã, a quem é que este grupo ligava primeiro?"
+      }
+    },
+    {
+      "id": "group-night-039",
+      "type": "everyone",
+      "level": 3,
+      "text": {
+        "en": "Everyone shares one thing they'd love to do together as a group before the year ends.",
+        "pt": "Cada um partilha uma coisa que gostava de fazer com este grupo antes de o ano acabar."
+      }
+    },
+    {
+      "id": "group-night-040",
+      "type": "hot-seat",
+      "level": 3,
+      "text": {
+        "en": "Everyone asks the person in the hot seat one question they've always wondered about but never asked.",
+        "pt": "Cada um faz a quem está no holofote uma pergunta que sempre quis fazer e nunca fez."
+      }
+    }
+  ]
+}

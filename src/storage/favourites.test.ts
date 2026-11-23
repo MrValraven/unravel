@@ -1,5 +1,6 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
+import * as persistence from "./persistence";
 import {
   MIN_FAVOURITES_FOR_DECK,
   getFavouriteIds,
@@ -9,6 +10,7 @@ import {
 
 describe("favourites", () => {
   beforeEach(() => localStorage.clear());
+  afterEach(() => vi.restoreAllMocks());
 
   it("exposes the minimum for a favourites deck", () => {
     expect(MIN_FAVOURITES_FOR_DECK).toBe(5);
@@ -35,5 +37,15 @@ describe("favourites", () => {
     const { result } = renderHook(() => useFavouriteIds());
     act(() => toggleFavourite("a-001"));
     expect(result.current).toEqual(["a-001"]);
+  });
+
+  it("asks to persist storage when a card is starred, not when it is unstarred", () => {
+    const requestSpy = vi
+      .spyOn(persistence, "requestPersistentStorage")
+      .mockImplementation(() => {});
+    toggleFavourite("a-001");
+    expect(requestSpy).toHaveBeenCalledTimes(1);
+    toggleFavourite("a-001");
+    expect(requestSpy).toHaveBeenCalledTimes(1);
   });
 });

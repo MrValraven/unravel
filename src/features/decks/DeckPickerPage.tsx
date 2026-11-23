@@ -18,6 +18,7 @@ import { DeckCategorySection } from "./components/DeckCategorySection";
 import { DeckPreviewSheet } from "./components/DeckPreviewSheet";
 import { FinderEntry } from "./components/FinderEntry";
 import { MakeOwnDeckRow } from "./components/MakeOwnDeckRow";
+import { SeasonStrip } from "./components/SeasonStrip";
 import { YourDecksSection } from "./components/YourDecksSection";
 import { deckCopy } from "./copy";
 import InstallPrompt from "./install/InstallPrompt";
@@ -90,6 +91,7 @@ const DeckPickerPage = () => {
         <main className="deck-picker__main">
           <p className="deck-picker__intro">{copy.intro}</p>
           <ResumeCard />
+          <SeasonStrip onSelectDeck={openPreview} />
           <FinderEntry />
           {hasOwnDecks && (
             <YourDecksSection sources={sources} onSelectDeck={openPreview} />

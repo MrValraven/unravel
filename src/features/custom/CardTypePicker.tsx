@@ -1,5 +1,11 @@
 import type { IconType } from "react-icons";
-import { FiMessageCircle, FiUsers, FiZap } from "react-icons/fi";
+import {
+  FiMessageCircle,
+  FiTarget,
+  FiThermometer,
+  FiUsers,
+  FiZap,
+} from "react-icons/fi";
 import type { CardType } from "../../content/types";
 import { useCopy } from "../../i18n/useCopy";
 import { customCopy } from "./copy";
@@ -10,10 +16,12 @@ const cardTypeIcons: Record<CardType, IconType> = {
   question: FiMessageCircle,
   challenge: FiZap,
   everyone: FiUsers,
+  vote: FiTarget,
+  "hot-seat": FiThermometer,
 };
 
 interface CardTypePickerProps {
-  /** Unique per card: groups the three radio buttons. */
+  /** Unique per card: groups the radio buttons. */
   name: string;
   /** Accessible name of the group, e.g. "Card 2 type". */
   legend: string;
@@ -22,8 +30,8 @@ interface CardTypePickerProps {
 }
 
 /**
- * A segmented row of native radio buttons: Tab enters the group on the chosen type, the
- * arrow keys move and choose, and screen readers announce "radio, 1 of 3, checked".
+ * A segmented set of native radio buttons: Tab enters the group on the chosen type, the
+ * arrow keys move and choose, and screen readers announce "radio, 1 of 5, checked".
  */
 export const CardTypePicker = ({
   name,

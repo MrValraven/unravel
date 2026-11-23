@@ -11,6 +11,44 @@ export interface Release {
 /** Newest release first. Add an entry here with every version bump that players should hear about. */
 export const releases: Release[] = [
   {
+    version: "2.1.0",
+    date: "2026-11-23",
+    items: [
+      {
+        en: "Group play: vote cards, where everyone points at once, and hot seat cards, where the group asks one person.",
+        pt: "Jogo em grupo: cartas de votação, em que todos apontam ao mesmo tempo, e cartas Holofote, em que o grupo faz perguntas a uma só pessoa.",
+      },
+      {
+        en: "With three or more names, turn on Random turns, or Pass the phone to keep each card hidden until its player taps Reveal card.",
+        pt: "Com três ou mais nomes, podes ligar a Vez aleatória ou Passar o telemóvel, para que cada carta fique tapada até a pessoa da vez tocar em Revelar carta.",
+      },
+      {
+        en: "Group Night is a new deck made for a full table.",
+        pt: "A Noite em Grupo é um baralho novo, feito para uma mesa cheia.",
+      },
+      {
+        en: "Summer Nights and Spring Reset are new seasonal decks, and Aftercare Glow, Safe Kink, Silly Goose and Guilty Pleasures have more cards.",
+        pt: "Noites de Verão e Primavera Nova são baralhos sazonais novos, e o Brilho do Aftercare, o Kink Seguro, o Ganso Pateta e os Prazeres Proibidos ganharam mais cartas.",
+      },
+      {
+        en: "Home and Decks show what is in season now and what is coming up.",
+        pt: "O ecrã inicial e os Baralhos mostram o que está na época e o que vem a seguir.",
+      },
+      {
+        en: "Back up your custom decks, favourites and stats to a file in Settings, and bring them back any time. The file stays on your device.",
+        pt: "Nas Definições, guarda os teus baralhos, favoritas e estatísticas num ficheiro e recupera-os quando quiseres. O ficheiro fica só no teu dispositivo.",
+      },
+      {
+        en: "Every share now links to the deck page, and deck pages have a Share deck button.",
+        pt: "Cada partilha leva agora à página do baralho, e as páginas dos baralhos têm um botão Partilhar baralho.",
+      },
+      {
+        en: "Unravel asks before a new deck replaces your saved game, and the deck editor keeps your unsaved edits safe.",
+        pt: "O Unravel pergunta antes de um baralho novo substituir o teu jogo guardado, e o editor de baralhos protege as edições por guardar.",
+      },
+    ],
+  },
+  {
     version: "2.0.0",
     date: "2026-11-14",
     items: [
@@ -52,7 +90,7 @@ export const releases: Release[] = [
       },
       {
         en: "Dim mode and text size settings make late nights easier on the eyes.",
-        pt: "O modo noturno e o tamanho do texto tornam as noites longas mais fáceis para os olhos.",
+        pt: "O tema Penumbra e o tamanho do texto tornam as noites longas mais fáceis para os olhos.",
       },
       {
         en: "Every deck has its own page with a preview of its cards.",

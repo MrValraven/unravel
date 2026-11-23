@@ -102,6 +102,11 @@
   font-size: 0.875rem;
 }
 
+// The live region for the table mode and pass-the-phone note. Empty, it takes back the section gap.
+.play-setup__switch-status:empty {
+  margin-top: -$space-2;
+}
+
 // A framed group inside the page gutter, like the note above it. The small
 // inner padding keeps each row's hover fill and focus ring off the frame.
 .play-setup__switches {

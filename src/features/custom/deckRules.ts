@@ -1,3 +1,4 @@
+import { cardTypes } from "../../content/cardRules";
 import type { CardType } from "../../content/types";
 import {
   MAX_CARDS_PER_CUSTOM_DECK,
@@ -9,15 +10,8 @@ export const TITLE_MAX_LENGTH = 60;
 export const CARD_TEXT_MAX_LENGTH = 280;
 export const MAX_CARDS = MAX_CARDS_PER_CUSTOM_DECK;
 export const DEFAULT_CARD_TYPE: CardType = "question";
-export const customCardTypes: readonly CardType[] = [
-  "question",
-  "challenge",
-  "everyone",
-];
-
-export const isCardType = (value: unknown): value is CardType =>
-  typeof value === "string" &&
-  (customCardTypes as readonly string[]).includes(value);
+/** Custom decks offer every card type, in picker order. */
+export const customCardTypes: readonly CardType[] = cardTypes;
 
 export type TextProblem = "empty" | "too-long";
 

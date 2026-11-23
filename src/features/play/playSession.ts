@@ -19,6 +19,8 @@ export const defaultPlayOptions: PlayOptions = {
   isShuffled: false,
   startLevel: 1,
   isTableMode: false,
+  isRandomTurns: false,
+  isPassThePhone: false,
   players: [],
 };
 
@@ -47,18 +49,32 @@ export const countCardsFromLevel = (
   startLevel: IntensityLevel
 ): number => deck.cards.filter((card) => card.level >= startLevel).length;
 
-/** Trims names, drops blank ones and caps the list. Custom decks only have level 1 cards. */
+/** Random turns and pass-the-phone need a group: with fewer names they are off. */
+const GROUP_PLAYERS_MINIMUM = 3;
+
+/**
+ * The one place options get cleaned: trims names, drops blank ones and caps the list.
+ * Custom decks only have level 1 cards. Random turns and pass-the-phone turn off with
+ * fewer than 3 names, so options saved from a bigger group never change a smaller game.
+ * Table mode wins over pass-the-phone: it shows the card to the other side of the table.
+ */
 export const normalizePlayOptions = (
   deck: Deck,
   options: PlayOptions
-): PlayOptions => ({
-  ...options,
-  startLevel: isCustomDeckId(deck.id) ? 1 : options.startLevel,
-  players: options.players
+): PlayOptions => {
+  const players = options.players
     .map((name) => name.trim())
     .filter((name) => name.length > 0)
-    .slice(0, MAX_PLAYERS),
-});
+    .slice(0, MAX_PLAYERS);
+  const isGroup = players.length >= GROUP_PLAYERS_MINIMUM;
+  return {
+    ...options,
+    startLevel: isCustomDeckId(deck.id) ? 1 : options.startLevel,
+    isRandomTurns: isGroup && options.isRandomTurns,
+    isPassThePhone: isGroup && !options.isTableMode && options.isPassThePhone,
+    players,
+  };
+};
 
 /**
  * The options a start without setup uses: the last ones chosen in Game options,

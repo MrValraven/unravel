@@ -9,8 +9,12 @@ const en = {
     intro: "Pick a deck for tonight. Tap one to see a few of its cards first.",
   },
   finderEntry: {
-    title: "Not sure? Find a deck",
+    title: "Not sure which deck? Find one",
     body: "Answer three quick questions and get a suggestion.",
+  },
+  season: {
+    inSeasonTitle: "In season now",
+    comingUp: "Coming up: {deck}, from {date}",
   },
   yourDecks: {
     title: "Your decks",
@@ -47,6 +51,8 @@ const en = {
     question: "Question",
     challenge: "Challenge",
     everyone: "Everyone answers",
+    vote: "Vote",
+    "hot-seat": "Hot seat",
   },
   samples: {
     title: "A taste of the deck",
@@ -62,6 +68,9 @@ const en = {
     backLabel: "All decks",
     startDeck: "Start deck",
     browseDecks: "Browse all decks",
+    shareDeck: "Share deck",
+    shareText: "{deck}, a conversation deck on Unravel",
+    linkCopied: "Link copied",
     eyebrow: "Unravel deck",
     seasonSameMonth: "In season {startDay} to {endDay} {month}.",
     seasonCrossMonth:
@@ -86,8 +95,12 @@ export const deckCopy = defineCopy<typeof en>({
         "Escolhe um baralho para esta noite. Toca num para veres algumas das cartas primeiro.",
     },
     finderEntry: {
-      title: "Na dúvida? Encontra um baralho",
+      title: "Não sabes que baralho escolher? Encontra um",
       body: "Responde a três perguntas rápidas e recebe uma sugestão.",
+    },
+    season: {
+      inSeasonTitle: "Em época agora",
+      comingUp: "Em breve: {deck}, a partir de {date}",
     },
     yourDecks: {
       title: "Os teus baralhos",
@@ -124,6 +137,8 @@ export const deckCopy = defineCopy<typeof en>({
       question: "Pergunta",
       challenge: "Desafio",
       everyone: "Todos respondem",
+      vote: "Votação",
+      "hot-seat": "Holofote",
     },
     samples: {
       title: "Um cheirinho do baralho",
@@ -139,6 +154,9 @@ export const deckCopy = defineCopy<typeof en>({
       backLabel: "Todos os baralhos",
       startDeck: "Começar baralho",
       browseDecks: "Ver todos os baralhos",
+      shareDeck: "Partilhar baralho",
+      shareText: "{deck}, um baralho de conversa no Unravel",
+      linkCopied: "Link copiado",
       eyebrow: "Baralho Unravel",
       seasonSameMonth: "Disponível de {startDay} a {endDay} de {month}.",
       seasonCrossMonth:
