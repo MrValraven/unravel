@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createMemoryRouter, RouterProvider } from "react-router";
 import { customDecksStore, listCustomDecks } from "../../storage/customDecks";
@@ -11,7 +11,7 @@ const sharedDeck = {
   cards: [{ type: "question" as const, text: "Where should we go next?" }],
 };
 
-const renderImport = () => {
+const renderImport = async () => {
   const shareUrl = new URL(buildShareUrl(sharedDeck, "https://unravel.test"));
   const router = createMemoryRouter(
     [
@@ -20,7 +20,9 @@ const renderImport = () => {
     ],
     { initialEntries: [`${shareUrl.pathname}${shareUrl.hash}`] }
   );
-  render(<RouterProvider router={router} />);
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
   return router;
 };
 
@@ -34,12 +36,12 @@ describe("CustomDeckImportPage saving", () => {
   afterEach(() => {
     vi.restoreAllMocks();
     // A blocked save leaves its deck in the store's memory; clear it for the next test.
-    customDecksStore.set([]);
+    act(() => customDecksStore.set([]));
   });
 
   it("saves the deck and goes to the list", async () => {
     const user = userEvent.setup();
-    renderImport();
+    await renderImport();
     await user.click(screen.getByRole("button", { name: /Save to my decks/ }));
     expect(await screen.findByText("Your decks list")).toBeVisible();
     expect(listCustomDecks()).toHaveLength(1);
@@ -47,7 +49,7 @@ describe("CustomDeckImportPage saving", () => {
 
   it("names the cause and keeps the import page when saving is blocked", async () => {
     const user = userEvent.setup();
-    const router = renderImport();
+    const router = await renderImport();
     blockStorageWrites();
     await user.click(screen.getByRole("button", { name: /Save to my decks/ }));
     expect(
