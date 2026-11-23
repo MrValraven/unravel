@@ -134,6 +134,18 @@ $landing-wide-width: 1120px;
   }
 }
 
+// Always rendered so screen readers hear the change. Empty, it stays in the
+// accessibility tree but takes no space: no height, and it cancels the hero gap.
+.deck-landing__status {
+  color: $color-text;
+  font-size: 0.875rem;
+
+  &:empty {
+    min-height: 0;
+    margin-top: -$space-3;
+  }
+}
+
 @keyframes deck-landing-in {
   from {
     opacity: 0;

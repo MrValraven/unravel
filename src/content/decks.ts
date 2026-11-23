@@ -20,13 +20,16 @@ import hedonisticSocietiesPack from "./packs/hedonistic-societies.json";
 import polyamorousPassionsPack from "./packs/polyamorous-passions.json";
 import sillyGoosePack from "./packs/silly-goose.json";
 import queerVibesPack from "./packs/queer-vibes.json";
+import groupNightPack from "./packs/group-night.json";
 import pridePack from "./packs/pride.json";
 import santosPopularesPack from "./packs/santos-populares.json";
+import summerNightsPack from "./packs/summer-nights.json";
 import halloweenPack from "./packs/halloween.json";
 import christmasTablePack from "./packs/christmas-table.json";
 import friendsmasPack from "./packs/friendsmas.json";
 import newYearPack from "./packs/new-year.json";
 import valentinesPack from "./packs/valentines.json";
+import springResetPack from "./packs/spring-reset.json";
 
 export interface DeckCategoryInfo {
   key: DeckCategory;
@@ -140,7 +143,7 @@ export const decks: BuiltinDeck[] = [
       icon: "moon",
       accent: categoryAccents.dating,
       audiences: ["date", "partner"],
-      moods: ["playful", "light"],
+      moods: ["playful", "light", "spicy"],
     },
     dateNightPack as DeckPackFile
   ),
@@ -184,7 +187,7 @@ export const decks: BuiltinDeck[] = [
       icon: "smile",
       accent: categoryAccents.dating,
       audiences: ["partner", "date"],
-      moods: ["playful", "light"],
+      moods: ["playful", "light", "spicy"],
     },
     sparkFlowPack as DeckPackFile
   ),
@@ -388,6 +391,28 @@ export const decks: BuiltinDeck[] = [
   ),
   buildDeck(
     {
+      id: "group-night",
+      title: { en: "Group Night", pt: "Noite em Grupo" },
+      description: {
+        en: "Votes, hot seats and quick group challenges for a full table of friends, old and new. It starts silly and ends a little closer.",
+        pt: "Votações, perguntas no holofote e desafios rápidos para uma mesa cheia de amigos, antigos e novos. Começa na brincadeira e acaba mais perto.",
+      },
+      tagline: {
+        en: "Votes and hot seats for a full table",
+        pt: "Votações e holofote para a mesa toda",
+      },
+      category: "friends",
+      tag: "new",
+      isAdult: false,
+      icon: "users",
+      accent: categoryAccents.friends,
+      audiences: ["group", "friends", "new-people"],
+      moods: ["playful", "light"],
+    },
+    groupNightPack as DeckPackFile
+  ),
+  buildDeck(
+    {
       id: "pride",
       title: { en: "Pride Month", pt: "Mês do Orgulho" },
       description: {
@@ -431,6 +456,29 @@ export const decks: BuiltinDeck[] = [
       season: { start: "06-01", end: "06-30" },
     },
     santosPopularesPack as DeckPackFile
+  ),
+  buildDeck(
+    {
+      id: "summer-nights",
+      title: { en: "Summer Nights", pt: "Noites de Verão" },
+      description: {
+        en: "Beach days, village festivals, road trips and long warm evenings: questions for summer with old friends and new ones.",
+        pt: "Dias de praia, arraiais, viagens de carro e noites quentes sem fim: perguntas para o verão com amigos de sempre e novos.",
+      },
+      tagline: {
+        en: "Beach days, road trips and warm nights",
+        pt: "Praia, estrada e noites quentes",
+      },
+      category: "friends",
+      tag: "seasonal",
+      isAdult: false,
+      icon: "sun",
+      accent: categoryAccents.friends,
+      audiences: ["friends", "group", "new-people"],
+      moods: ["light", "playful"],
+      season: { start: "07-01", end: "09-30" },
+    },
+    summerNightsPack as DeckPackFile
   ),
   buildDeck(
     {
@@ -542,10 +590,33 @@ export const decks: BuiltinDeck[] = [
       icon: "heart",
       accent: categoryAccents.dating,
       audiences: ["date", "partner"],
-      moods: ["playful", "deep"],
+      moods: ["playful", "deep", "spicy"],
       season: { start: "02-01", end: "02-14" },
     },
     valentinesPack as DeckPackFile
+  ),
+  buildDeck(
+    {
+      id: "spring-reset",
+      title: { en: "Spring Reset", pt: "Primavera Nova" },
+      description: {
+        en: "Fresh starts, small joys and what to let go of: questions for clearing space and making plans as the days get longer.",
+        pt: "Recomeços, pequenas alegrias e o que deixar ir: perguntas para arrumar espaço e fazer planos enquanto os dias crescem.",
+      },
+      tagline: {
+        en: "Fresh starts, small joys and new plans",
+        pt: "Recomeços, pequenas alegrias e planos",
+      },
+      category: "friends",
+      tag: "seasonal",
+      isAdult: false,
+      icon: "sunrise",
+      accent: categoryAccents.friends,
+      audiences: ["friends", "partner", "group"],
+      moods: ["light", "deep"],
+      season: { start: "03-01", end: "05-31" },
+    },
+    springResetPack as DeckPackFile
   ),
 ];
 
@@ -579,4 +650,48 @@ export function isDeckInSeason(
 
 export function getVisibleDecks(today: Date = new Date()): BuiltinDeck[] {
   return decks.filter((deck) => isDeckInSeason(deck, today));
+}
+
+/** Non-adult decks with a season that today falls inside, in registry order. */
+export function getInSeasonDecks(today: Date = new Date()): BuiltinDeck[] {
+  return decks.filter(
+    (deck) =>
+      deck.season !== undefined && !deck.isAdult && isDeckInSeason(deck, today)
+  );
+}
+
+/** The next occurrence of a "MM-DD" day after today, wrapping into next year. */
+const nextStartAfter = (monthDay: string, today: Date): Date => {
+  const [month = "1", day = "1"] = monthDay.split("-");
+  const thisYear = new Date(
+    today.getFullYear(),
+    Number(month) - 1,
+    Number(day)
+  );
+  const startOfToday = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
+  return thisYear > startOfToday
+    ? thisYear
+    : new Date(today.getFullYear() + 1, Number(month) - 1, Number(day));
+};
+
+/**
+ * The non-adult seasonal deck whose season starts soonest after today (wrapping
+ * the year end). Ties keep registry order.
+ */
+export function getNextSeasonalDeck(
+  today: Date = new Date()
+): { deck: BuiltinDeck; startsOn: Date } | undefined {
+  let next: { deck: BuiltinDeck; startsOn: Date } | undefined;
+  for (const deck of decks) {
+    if (deck.season === undefined || deck.isAdult) continue;
+    const startsOn = nextStartAfter(deck.season.start, today);
+    if (next === undefined || startsOn < next.startsOn) {
+      next = { deck, startsOn };
+    }
+  }
+  return next;
 }

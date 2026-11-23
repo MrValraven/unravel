@@ -1,0 +1,298 @@
+{
+  "id": "summer-nights",
+  "cards": [
+    {
+      "id": "summer-nights-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Beach snack of choice: a custard-filled bola de Berlim, an ice lolly or whatever's in the cool box?",
+        "pt": "Lanche de praia: bola de Berlim, um gelado ou o que houver na geleira?"
+      }
+    },
+    {
+      "id": "summer-nights-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Sea or swimming pool, and how do you get in: slowly and suffering, or all at once?",
+        "pt": "Mar ou piscina, e como é que entras: devagarinho e a sofrer ou de uma vez só?"
+      }
+    },
+    {
+      "id": "summer-nights-003",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which song has to play at least once on every road trip you take?",
+        "pt": "Que música tem de tocar pelo menos uma vez em todas as tuas viagens de carro?"
+      }
+    },
+    {
+      "id": "summer-nights-004",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "In one minute, list everything in your perfect beach bag. The table gets to veto one item.",
+        "pt": "Num minuto, enumera tudo o que leva o teu saco de praia ideal. A mesa pode vetar uma coisa."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "summer-nights-005",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone names the best place they've ever watched the sun go down.",
+        "pt": "Digam qual foi o melhor sítio onde já viram o pôr do sol."
+      }
+    },
+    {
+      "id": "summer-nights-006",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Sunburnt on day one or factor 50 every two hours: what kind of holidaymaker are you?",
+        "pt": "Escaldão logo no primeiro dia ou protetor 50 de duas em duas horas: que tipo de veraneante és?"
+      }
+    },
+    {
+      "id": "summer-nights-007",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the most overrated thing about summer?",
+        "pt": "Qual é a coisa mais sobrevalorizada do verão?"
+      }
+    },
+    {
+      "id": "summer-nights-008",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Without words, show how you cross burning hot sand to reach the water. You have 30 seconds.",
+        "pt": "Sem palavras, mostra como atravessas a areia a escaldar até chegares à água. Tens 30 segundos."
+      },
+      "timerSeconds": 30
+    },
+    {
+      "id": "summer-nights-009",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Café terrace, beach bar or someone's balcony: where do you want to be at seven on an August evening?",
+        "pt": "Esplanada, bar de praia ou a varanda de alguém: onde queres estar às sete da tarde em agosto?"
+      }
+    },
+    {
+      "id": "summer-nights-010",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone names the ice cream that tastes like the summers of their childhood.",
+        "pt": "Digam que gelado vos sabe aos verões de quando eram crianças."
+      }
+    },
+    {
+      "id": "summer-nights-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Camping, a shared house with friends or a hotel with breakfast included: what's your ideal holiday base?",
+        "pt": "Campismo, uma casa partilhada com amigos ou um hotel com pequeno-almoço incluído: qual é a tua base de férias ideal?"
+      }
+    },
+    {
+      "id": "summer-nights-012",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "In one minute, sell this group a road trip: where you're going, who drives and what plays on the way.",
+        "pt": "Num minuto, convence este grupo a fazer uma viagem de carro: para onde vão, quem conduz e o que se ouve pelo caminho."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "summer-nights-013",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone says which month is their summer: July, August or September, and why.",
+        "pt": "Digam qual é o vosso mês de verão: julho, agosto ou setembro, e porquê."
+      }
+    },
+    {
+      "id": "summer-nights-014",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "In August, half of Portugal heads back to the family village. Which place do you return to every summer, or wish you had?",
+        "pt": "Em agosto, meio Portugal volta à terra. A que sítio regressas todos os verões, ou gostavas de ter um?"
+      }
+    },
+    {
+      "id": "summer-nights-015",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Village festivals and arraiais: what's the best thing you've seen on a makeshift stage at two in the morning?",
+        "pt": "Festas de aldeia e arraiais: qual foi a melhor coisa que já viste num palco improvisado às duas da manhã?"
+      }
+    },
+    {
+      "id": "summer-nights-016",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Tell us about a holiday where everything went wrong. Which part makes the best story now?",
+        "pt": "Conta-nos umas férias em que correu tudo mal. Que parte dá a melhor história agora?"
+      }
+    },
+    {
+      "id": "summer-nights-017",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Be a tour guide for 60 seconds: sell the table your hometown as this year's summer destination.",
+        "pt": "Sê guia turístico durante 60 segundos: vende à mesa a tua terra como o destino de verão deste ano."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "summer-nights-018",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone shares a summer friendship that only existed on holiday. What happened to it?",
+        "pt": "Partilhem uma amizade de verão que só existia nas férias. O que lhe aconteceu?"
+      }
+    },
+    {
+      "id": "summer-nights-019",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's something you only ever do in summer and would never dream of doing the rest of the year?",
+        "pt": "O que é que só fazes no verão e nunca te passaria pela cabeça fazer no resto do ano?"
+      }
+    },
+    {
+      "id": "summer-nights-020",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Who would you want in the passenger seat on a ten-hour drive, and what would you talk about?",
+        "pt": "Quem querias no lugar do pendura numa viagem de dez horas, e sobre o que é que falavam?"
+      }
+    },
+    {
+      "id": "summer-nights-021",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "In 45 seconds, tell the story of your most chaotic summer night as if it were a film trailer.",
+        "pt": "Em 45 segundos, conta a tua noite de verão mais caótica como se fosse o trailer de um filme."
+      },
+      "timerSeconds": 45
+    },
+    {
+      "id": "summer-nights-022",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Summer romance: have you had one, and do you still think about it?",
+        "pt": "Amor de verão: já tiveste algum? Ainda pensas nisso?"
+      }
+    },
+    {
+      "id": "summer-nights-023",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone names one thing they still want to do before summer ends.",
+        "pt": "Digam uma coisa que ainda querem fazer antes de o verão acabar."
+      }
+    },
+    {
+      "id": "summer-nights-024",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "A whole summer with no plans at all: would that be bliss or torture for you?",
+        "pt": "Um verão inteiro sem planos nenhuns: para ti seria o paraíso ou uma tortura?"
+      }
+    },
+    {
+      "id": "summer-nights-025",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which summer of your life changed you the most, and how old were you?",
+        "pt": "Que verão da tua vida te mudou mais e que idade tinhas?"
+      }
+    },
+    {
+      "id": "summer-nights-026",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If you could sit on a beach tonight with your teenage self, what would you tell them?",
+        "pt": "Se pudesses sentar-te esta noite numa praia com a tua versão adolescente, o que lhe dirias?"
+      }
+    },
+    {
+      "id": "summer-nights-027",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which song takes you straight back to one particular summer, and who were you with?",
+        "pt": "Que música te leva logo de volta a um verão em particular? Com quem estavas?"
+      }
+    },
+    {
+      "id": "summer-nights-028",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Is there a place you visited once on holiday that you still dream of going back to? What's stopping you?",
+        "pt": "Há algum sítio onde passaste férias uma vez e ao qual ainda sonhas voltar? O que te impede?"
+      }
+    },
+    {
+      "id": "summer-nights-029",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Late at night, when the heat finally breaks, what do you catch yourself thinking about?",
+        "pt": "Já de madrugada, quando o calor finalmente dá tréguas, em que é que dás por ti a pensar?"
+      }
+    },
+    {
+      "id": "summer-nights-030",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Who did you meet on a holiday that you still think about, even if you never saw them again?",
+        "pt": "Quem conheceste numas férias e ainda te vem à memória, mesmo sem nunca mais se terem visto?"
+      }
+    },
+    {
+      "id": "summer-nights-031",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If you could keep one summer feeling going all year, which one would you choose?",
+        "pt": "Se pudesses guardar uma sensação de verão para o ano inteiro, qual escolhias?"
+      }
+    },
+    {
+      "id": "summer-nights-032",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What do you want to remember about this summer when the cold comes back?",
+        "pt": "O que queres lembrar deste verão quando voltar o frio?"
+      }
+    }
+  ]
+}

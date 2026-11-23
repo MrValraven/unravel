@@ -12,22 +12,13 @@
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
-import type {
-  Card,
-  CardType,
-  DeckPackFile,
-  IntensityLevel,
-} from "../src/content/types";
+import type { Card, DeckPackFile } from "../src/content/types";
+import { parseCardRow } from "./cardRow";
 import { CSV_COLUMNS, parseCsv, type CsvRow } from "./csv";
 
 const repoRoot = resolve(import.meta.dirname, "..");
 const packsDirectory = join(repoRoot, "src/content/packs");
 const exportDirectory = join(repoRoot, "content-export");
-
-const cardTypes: readonly CardType[] = ["question", "challenge", "everyone"];
-const MIN_TIMER_SECONDS = 30;
-const MAX_TIMER_SECONDS = 120;
-const emDash = "\u2014";
 
 interface ConvertedPack {
   pack: DeckPackFile;
@@ -37,12 +28,6 @@ interface ConvertedPack {
   /** CSV line of each card id; empty for packs read from JSON. */
   lineNumbers: Map<string, number>;
 }
-
-const isCardType = (value: string): value is CardType =>
-  (cardTypes as readonly string[]).includes(value);
-
-const parseLevel = (value: string): IntensityLevel | undefined =>
-  value === "1" ? 1 : value === "2" ? 2 : value === "3" ? 3 : undefined;
 
 const convertFile = (
   csvPath: string,
@@ -82,98 +67,29 @@ const convertFile = (
     report(2, "", "the deck has no cards");
   }
 
-  const idPattern = new RegExp(`^${deckId}-\\d{3}$`);
   const seenIds = new Set<string>();
   const cards: Card[] = [];
   const lineNumbers = new Map<string, number>();
 
   for (const { lineNumber, fields } of cardRows) {
-    if (fields.length !== CSV_COLUMNS.length) {
-      report(
-        lineNumber,
-        fields[0] ?? "",
-        `expected ${CSV_COLUMNS.length} columns, found ${fields.length}`
-      );
-      continue;
+    const { card, problems: rowProblems } = parseCardRow(
+      fields,
+      deckId,
+      lineNumber
+    );
+    for (const rowProblem of rowProblems) {
+      problems.push(`${csvPath} ${rowProblem}`);
     }
-    const [
-      id = "",
-      typeValue = "",
-      levelValue = "",
-      timerValue = "",
-      english = "",
-      portuguese = "",
-    ] = fields.map((field) => field.trim());
-    const rowProblemCount = problems.length;
-
-    if (!idPattern.test(id)) {
-      report(lineNumber, id, `id must look like ${deckId}-001`);
-    } else if (seenIds.has(id)) {
+    if (fields.length !== CSV_COLUMNS.length) continue;
+    const id = fields[0]?.trim() ?? "";
+    const isRepeatedId = seenIds.has(id);
+    if (isRepeatedId) {
       report(lineNumber, id, "id is used by an earlier row");
     }
     seenIds.add(id);
-
-    if (!isCardType(typeValue)) {
-      report(
-        lineNumber,
-        id,
-        `type "${typeValue}" must be one of ${cardTypes.join(", ")}`
-      );
-    }
-    const level = parseLevel(levelValue);
-    if (level === undefined) {
-      report(lineNumber, id, `level "${levelValue}" must be 1, 2 or 3`);
-    }
-
-    let timerSeconds: number | undefined;
-    if (timerValue !== "") {
-      timerSeconds = Number(timerValue);
-      if (
-        !Number.isInteger(timerSeconds) ||
-        timerSeconds < MIN_TIMER_SECONDS ||
-        timerSeconds > MAX_TIMER_SECONDS
-      ) {
-        report(
-          lineNumber,
-          id,
-          `timerSeconds "${timerValue}" must be a whole number from ${MIN_TIMER_SECONDS} to ${MAX_TIMER_SECONDS}`
-        );
-      } else if (typeValue !== "challenge") {
-        report(
-          lineNumber,
-          id,
-          "timerSeconds is only allowed on challenge cards"
-        );
-      }
-    }
-
-    if (english === "") {
-      report(lineNumber, id, "the en text is empty");
-    }
-    if (english.includes(emDash) || portuguese.includes(emDash)) {
-      report(
-        lineNumber,
-        id,
-        "card text contains an em dash; use a comma, colon or full stop"
-      );
-    }
-
-    if (
-      problems.length === rowProblemCount &&
-      isCardType(typeValue) &&
-      level !== undefined
-    ) {
-      const card: Card = {
-        id,
-        type: typeValue,
-        level,
-        text: { en: english, pt: portuguese },
-      };
-      if (timerSeconds !== undefined) {
-        card.timerSeconds = timerSeconds;
-      }
+    if (card && !isRepeatedId) {
       cards.push(card);
-      lineNumbers.set(id, lineNumber);
+      lineNumbers.set(card.id, lineNumber);
     }
   }
 

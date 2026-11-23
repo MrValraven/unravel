@@ -1,4 +1,5 @@
 import { FiShare2, FiStar } from "react-icons/fi";
+import { allowsTimer } from "../../../content/cardRules";
 import type { Card } from "../../../content/types";
 import { useHaptics } from "../../../hooks/useHaptics";
 import { useCopy } from "../../../i18n/useCopy";
@@ -6,6 +7,7 @@ import { toggleFavourite, useFavouriteIds } from "../../../storage/favourites";
 import { playCopy } from "../copy";
 import { canFavouriteCard } from "../playSession";
 import { CountdownTimer } from "./CountdownTimer";
+import { VoteCountdown } from "./VoteCountdown";
 
 interface CardFooterActionsProps {
   card: Card;
@@ -14,7 +16,7 @@ interface CardFooterActionsProps {
   onFavouriteAdded: (cardId: string) => void;
 }
 
-/** Challenge timer on the left; favourite star and share on the right. */
+/** Challenge or hot-seat timer (or the vote count) on the left; favourite star and share on the right. */
 export const CardFooterActions = ({
   card,
   isSharing,
@@ -26,7 +28,7 @@ export const CardFooterActions = ({
   const favouriteIds = useFavouriteIds();
   const isFavourite = favouriteIds.includes(card.id);
   const hasTimer =
-    card.type === "challenge" &&
+    allowsTimer(card.type) &&
     card.timerSeconds !== undefined &&
     card.timerSeconds > 0;
 
@@ -38,7 +40,9 @@ export const CardFooterActions = ({
 
   return (
     <>
-      {hasTimer ? (
+      {card.type === "vote" ? (
+        <VoteCountdown />
+      ) : hasTimer ? (
         <CountdownTimer
           totalSeconds={card.timerSeconds ?? 0}
           onFinish={haptics.success}

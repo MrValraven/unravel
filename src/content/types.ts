@@ -3,7 +3,8 @@ export const locales: readonly Locale[] = ["en", "pt"];
 
 export type LocalizedText = Record<Locale, string>;
 
-export type CardType = "question" | "challenge" | "everyone";
+export type CardType =
+  "question" | "challenge" | "everyone" | "vote" | "hot-seat";
 export type IntensityLevel = 1 | 2 | 3;
 
 export interface Card {
@@ -12,7 +13,7 @@ export interface Card {
   type: CardType;
   level: IntensityLevel;
   text: LocalizedText;
-  /** Challenges only: optional countdown in seconds. */
+  /** Challenge and hot-seat cards only: optional countdown, whole seconds from 30 to 120 (see cardRules.ts). */
   timerSeconds?: number;
 }
 
@@ -33,6 +34,7 @@ export type DeckIconName =
   | "moon"
   | "star"
   | "sun"
+  | "sunrise"
   | "music"
   | "map"
   | "flame"

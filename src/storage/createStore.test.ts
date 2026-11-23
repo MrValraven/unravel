@@ -26,6 +26,20 @@ describe("createStore", () => {
     expect(store.get()).toBe(3);
   });
 
+  it("reports a write that reached localStorage", () => {
+    const { store } = createCounterStore();
+    expect(store.set(3)).toBe(true);
+  });
+
+  it("reports a write kept only in memory when setItem throws", () => {
+    const { store } = createCounterStore();
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new DOMException("full", "QuotaExceededError");
+    });
+    expect(store.set(3)).toBe(false);
+    expect(store.get()).toBe(3);
+  });
+
   it("accepts an updater function", () => {
     const { store } = createCounterStore(1);
     store.set((previous) => previous + 4);

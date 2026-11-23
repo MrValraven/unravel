@@ -2,6 +2,7 @@ import { useState } from "react";
 import { formatCopy } from "../../i18n/localize";
 import { useCopy } from "../../i18n/useCopy";
 import type { CustomDeck } from "../../storage/customDecks";
+import { shareLink } from "../share/shareLink";
 import { LONG_LINK_WARNING_LENGTH, buildShareUrl } from "./codec";
 import { customCopy } from "./copy";
 
@@ -10,43 +11,24 @@ export interface PendingLongLink {
   url: string;
 }
 
-const isShareCancelled = (error: unknown): boolean =>
-  error instanceof DOMException && error.name === "AbortError";
-
 /**
  * Shares a deck as a link: the native share sheet when the browser has one, otherwise
- * the clipboard with a status notice. Links past LONG_LINK_WARNING_LENGTH wait for the
- * player to confirm in a dialog first.
+ * the clipboard with a status notice, otherwise `fallbackUrl` for the page to show in a
+ * field. Links past LONG_LINK_WARNING_LENGTH wait for the player to confirm in a dialog first.
  */
 export const useShareDeck = (showStatus: (text: string) => void) => {
   const copy = useCopy(customCopy).share;
   const [pendingLongLink, setPendingLongLink] =
     useState<PendingLongLink | null>(null);
+  const [fallbackUrl, setFallbackUrl] = useState<string | null>(null);
 
-  const copyLink = async ({ title, url }: PendingLongLink) => {
-    if (typeof navigator.clipboard?.writeText !== "function") {
-      showStatus(copy.clipboardUnavailable);
-      return;
-    }
-    try {
-      await navigator.clipboard.writeText(url);
+  const deliverLink = async ({ title, url }: PendingLongLink) => {
+    const outcome = await shareLink({ title, url });
+    if (outcome === "copied") {
       showStatus(formatCopy(copy.linkCopied, { title }));
-    } catch {
-      showStatus(copy.clipboardBlocked);
+    } else if (outcome === "unavailable") {
+      setFallbackUrl(url);
     }
-  };
-
-  const deliverLink = async (link: PendingLongLink) => {
-    if (typeof navigator.share === "function") {
-      try {
-        await navigator.share({ title: link.title, url: link.url });
-        return;
-      } catch (error) {
-        if (isShareCancelled(error)) return;
-        // The share sheet refused this link, so copying it is the next best thing.
-      }
-    }
-    await copyLink(link);
   };
 
   const requestShare = (deck: CustomDeck) => {
@@ -75,5 +57,14 @@ export const useShareDeck = (showStatus: (text: string) => void) => {
 
   const cancelLongLink = () => setPendingLongLink(null);
 
-  return { requestShare, pendingLongLink, confirmLongLink, cancelLongLink };
+  const closeFallback = () => setFallbackUrl(null);
+
+  return {
+    requestShare,
+    pendingLongLink,
+    confirmLongLink,
+    cancelLongLink,
+    fallbackUrl,
+    closeFallback,
+  };
 };

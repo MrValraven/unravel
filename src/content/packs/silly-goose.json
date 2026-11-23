@@ -20,15 +20,6 @@
       }
     },
     {
-      "id": "silly-goose-003",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "If you could choose, what would be your stripper name?",
-        "pt": "Se pudesses escolher, qual seria o teu nome de stripper?"
-      }
-    },
-    {
       "id": "silly-goose-004",
       "type": "question",
       "level": 1,
@@ -56,12 +47,76 @@
       }
     },
     {
-      "id": "silly-goose-007",
+      "id": "silly-goose-009",
       "type": "question",
-      "level": 3,
+      "level": 1,
       "text": {
-        "en": "If you were an addictive substance how would I be addicted to you? Would I inhale you, inject you, drink you? What are we doing here.",
-        "pt": "Se fosses uma substância viciante, como é que eu me viciava em ti? Inalava-te, injetava-te, bebia-te? Que conversa é esta."
+        "en": "Invent a gadget that translates pet language into human words. What's the first thing your pet says?",
+        "pt": "Inventa um aparelho que traduza a linguagem dos animais para palavras humanas. Qual é a primeira coisa que o teu bicho diz?"
+      }
+    },
+    {
+      "id": "silly-goose-011",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the most ridiculous movie or TV show you've ever watched, and why did you love it?",
+        "pt": "Qual foi o filme ou a série mais ridícula que já viste e porque é que adoraste?"
+      }
+    },
+    {
+      "id": "silly-goose-016",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you could have a robot sidekick with one absurd talent, what would it be?",
+        "pt": "Se pudesses ter um robô como fiel escudeiro com um único talento absurdo, qual seria?"
+      }
+    },
+    {
+      "id": "silly-goose-017",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Explain how to make toast as if it were a top-secret military operation.",
+        "pt": "Explica como se faz uma torrada como se fosse uma operação militar ultrassecreta."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "silly-goose-018",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which vegetable would make the worst superhero, and what's its catchphrase?",
+        "pt": "Que legume daria o pior super-herói, e qual seria o seu grito de guerra?"
+      }
+    },
+    {
+      "id": "silly-goose-019",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If geese ran the world, what would be the first law they pass?",
+        "pt": "Se os gansos mandassem no mundo, qual seria a primeira lei que aprovavam?"
+      }
+    },
+    {
+      "id": "silly-goose-020",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which object in your home are you convinced is plotting against you?",
+        "pt": "Que objeto lá de casa tens a certeza de que está a conspirar contra ti?"
+      }
+    },
+    {
+      "id": "silly-goose-003",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you could choose, what would be your stripper name?",
+        "pt": "Se pudesses escolher, qual seria o teu nome de stripper?"
       }
     },
     {
@@ -74,30 +129,12 @@
       }
     },
     {
-      "id": "silly-goose-009",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "Invent a gadget that translates pet language into human words. What's the first thing your pet says?",
-        "pt": "Inventa um aparelho que traduza a linguagem dos animais para palavras humanas. Qual é a primeira coisa que o teu bicho diz?"
-      }
-    },
-    {
       "id": "silly-goose-010",
       "type": "everyone",
       "level": 2,
       "text": {
         "en": "Share a made-up, ridiculous mantra that you'd repeat for good luck.",
         "pt": "Partilhem um mantra inventado e ridículo que repetiriam para dar sorte."
-      }
-    },
-    {
-      "id": "silly-goose-011",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What's the most ridiculous movie or TV show you've ever watched, and why did you love it?",
-        "pt": "Qual foi o filme ou a série mais ridícula que já viste e porque é que adoraste?"
       }
     },
     {
@@ -129,6 +166,62 @@
       "timerSeconds": 60
     },
     {
+      "id": "silly-goose-021",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Narrate what the person on your left is doing as if it's a nature documentary.",
+        "pt": "Narra o que a pessoa à tua esquerda está a fazer como se fosse um documentário sobre a vida selvagem."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "silly-goose-022",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "Pick any object within reach and sell it to the group as the greatest invention of the century.",
+        "pt": "Pega num objeto qualquer que tenhas à mão e vende-o ao grupo como a maior invenção do século."
+      },
+      "timerSeconds": 45
+    },
+    {
+      "id": "silly-goose-023",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If your fridge could leave you a review, how many stars would you get and what would it say?",
+        "pt": "Se o teu frigorífico te pudesse deixar uma avaliação, quantas estrelas te dava e o que é que escrevia?"
+      }
+    },
+    {
+      "id": "silly-goose-024",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "A very convincing pigeon has taken your place. How long until someone notices, and who's first?",
+        "pt": "Um pombo muito convincente ficou no teu lugar. Quanto tempo até alguém reparar, e quem é o primeiro?"
+      }
+    },
+    {
+      "id": "silly-goose-025",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's your most useless skill, and how would you turn it into an Olympic sport?",
+        "pt": "Qual é a tua habilidade mais inútil, e como é que a transformavas numa modalidade olímpica?"
+      }
+    },
+    {
+      "id": "silly-goose-007",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If you were a sound, which one would you be? Would people listen to you on repeat or cover their ears? What are we doing here.",
+        "pt": "Se fosses um som, qual eras? As pessoas ouviam-te sem parar ou tapavam os ouvidos? Que conversa é esta."
+      }
+    },
+    {
       "id": "silly-goose-015",
       "type": "challenge",
       "level": 3,
@@ -139,12 +232,50 @@
       "timerSeconds": 60
     },
     {
-      "id": "silly-goose-016",
-      "type": "question",
-      "level": 1,
+      "id": "silly-goose-026",
+      "type": "challenge",
+      "level": 3,
       "text": {
-        "en": "If you could have a robot sidekick with one absurd talent, what would it be?",
-        "pt": "Se pudesses ter um robô como fiel escudeiro com um único talento absurdo, qual seria?"
+        "en": "Until the timer runs out, everyone can only speak in questions. Whoever slips first has to honk like a goose.",
+        "pt": "Até o tempo acabar, só podem falar a fazer perguntas. Quem falhar primeiro tem de grasnar como um ganso."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "silly-goose-027",
+      "type": "challenge",
+      "level": 3,
+      "text": {
+        "en": "Together, invent the national anthem of the Republic of Geese and perform it with full honours.",
+        "pt": "Inventem juntos o hino nacional da República dos Gansos e cantem-no com todas as honras."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "silly-goose-028",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If your life had a laugh track, which moment from last week would get the biggest laugh?",
+        "pt": "Se a tua vida tivesse risadas enlatadas, que momento da semana passada arrancava a maior gargalhada?"
+      }
+    },
+    {
+      "id": "silly-goose-029",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which kitchen appliance matches your personality best, and why?",
+        "pt": "Com que eletrodoméstico da cozinha é que a tua personalidade mais se parece, e porquê?"
+      }
+    },
+    {
+      "id": "silly-goose-030",
+      "type": "everyone",
+      "level": 3,
+      "text": {
+        "en": "Everyone invents a word for something that has no name yet, like the cold side of the pillow. Best one wins.",
+        "pt": "Cada um inventa uma palavra para algo que ainda não tem nome, como o lado fresco da almofada. Ganha a melhor."
       }
     }
   ]

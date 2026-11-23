@@ -50,7 +50,7 @@ const keepValidTotal = (raw: unknown): number =>
   typeof raw === "number" && Number.isFinite(raw) ? raw : 0;
 
 /** Keeps every valid counter; an invalid counter drops to zero on its own. */
-const normalizePlayStats = (raw: unknown): PlayStats | undefined => {
+export const normalizePlayStats = (raw: unknown): PlayStats | undefined => {
   if (typeof raw !== "object" || raw === null || Array.isArray(raw)) {
     return undefined;
   }

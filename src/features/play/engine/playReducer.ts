@@ -1,7 +1,11 @@
-import type { Deck } from "../../../content/types";
+import type { Card, Deck } from "../../../content/types";
 import type { PlayOptions } from "../../../storage/progress";
 import { buildOrder } from "./buildOrder";
 import type { PlayAction, PlaySession } from "./types";
+
+/** A non-negative 31-bit integer, so it survives a save as a plain JSON number. */
+const pickTurnSeed = (random: () => number): number =>
+  Math.floor(random() * 2 ** 31);
 
 /** 0 or 1, so either of two named players can start the game. */
 const pickFirstStarterIndex = (random: () => number): number =>
@@ -13,19 +17,38 @@ export function createSession(
   now: number,
   random: () => number = Math.random
 ): PlaySession {
-  // The order draws from `random` first, so a seeded order stays the same as before.
+  // The order draws from `random` first, then the first starter, then the turn seed,
+  // so a seeded order and starter stay the same as before.
   const order = buildOrder(deck.cards, options, random);
+  const firstStarterIndex = pickFirstStarterIndex(random);
+  const turnSeed = pickTurnSeed(random);
   return {
     deckId: deck.id,
     order,
     position: 0,
     hiddenCardIds: [],
     turnIndex: 0,
-    firstStarterIndex: pickFirstStarterIndex(random),
+    firstStarterIndex,
+    turnSeed,
     options: { ...options, players: [...options.players] },
     startedAt: now,
     skippedCardIds: [],
   };
+}
+
+/**
+ * A restart is a new game: a new order, a new first starter and a new turn
+ * seed, drawn in the same sequence as `createSession`.
+ */
+export function createRestartAction(
+  cards: Card[],
+  options: PlayOptions,
+  random: () => number = Math.random
+): Extract<PlayAction, { type: "restart" }> {
+  const order = buildOrder(cards, options, random);
+  const firstStarterIndex = pickFirstStarterIndex(random);
+  const turnSeed = pickTurnSeed(random);
+  return { type: "restart", order, firstStarterIndex, turnSeed };
 }
 
 const removeItemAt = <Item>(items: Item[], itemIndex: number): Item[] => [
@@ -105,6 +128,8 @@ export function playReducer(
         position: 0,
         hiddenCardIds: [],
         turnIndex: 0,
+        firstStarterIndex: action.firstStarterIndex,
+        turnSeed: action.turnSeed,
         skippedCardIds: [],
       };
     default:

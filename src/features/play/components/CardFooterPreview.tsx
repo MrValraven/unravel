@@ -1,4 +1,5 @@
-import { FiPlay, FiShare2, FiStar } from "react-icons/fi";
+import { FiPlay, FiShare2, FiStar, FiTarget } from "react-icons/fi";
+import { allowsTimer } from "../../../content/cardRules";
 import type { Card } from "../../../content/types";
 import { useCopy } from "../../../i18n/useCopy";
 import { useFavouriteIds } from "../../../storage/favourites";
@@ -6,6 +7,7 @@ import { playCopy } from "../copy";
 import { canFavouriteCard } from "../playSession";
 import { formatClock } from "./useCountdown";
 import "./CountdownTimer.scss";
+import "./VoteCountdown.scss";
 
 interface CardFooterPreviewProps {
   card: Card;
@@ -17,14 +19,22 @@ interface CardFooterPreviewProps {
  * the current card, with no timer running and nothing to focus.
  */
 export const CardFooterPreview = ({ card }: CardFooterPreviewProps) => {
-  const timerCopy = useCopy(playCopy).timer;
+  const playText = useCopy(playCopy);
+  const timerCopy = playText.timer;
   const favouriteIds = useFavouriteIds();
   const isFavourite = favouriteIds.includes(card.id);
-  const timerSeconds = card.type === "challenge" ? (card.timerSeconds ?? 0) : 0;
+  const timerSeconds = allowsTimer(card.type) ? (card.timerSeconds ?? 0) : 0;
 
   return (
     <>
-      {timerSeconds > 0 ? (
+      {card.type === "vote" ? (
+        <div className="vote-countdown">
+          <span className="vote-countdown__button">
+            <FiTarget size={18} />
+            <span>{playText.vote.pointOnThree}</span>
+          </span>
+        </div>
+      ) : timerSeconds > 0 ? (
         <div className="countdown">
           <div className="countdown__ring">
             <svg viewBox="0 0 48 48">

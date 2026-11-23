@@ -1,5 +1,6 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
+import * as persistence from "./persistence";
 import {
   MAX_CARDS_PER_CUSTOM_DECK,
   MAX_CUSTOM_DECKS,
@@ -27,6 +28,7 @@ const buildDeck = (
 
 describe("customDecks", () => {
   beforeEach(() => localStorage.clear());
+  afterEach(() => vi.restoreAllMocks());
 
   it("starts empty", () => {
     expect(listCustomDecks()).toEqual([]);
@@ -81,6 +83,41 @@ describe("customDecks", () => {
     expect(getCustomDeck("custom-0000000000")?.title).toBe("Edited");
   });
 
+  it("reports saved, deck-limit and storage-blocked", () => {
+    expect(saveCustomDeck(buildDeck("custom-aaaaaaaaaa"))).toBe("saved");
+    for (let index = 1; index < MAX_CUSTOM_DECKS; index += 1) {
+      saveCustomDeck(buildDeck(`custom-${String(index).padStart(10, "0")}`));
+    }
+    expect(saveCustomDeck(buildDeck("custom-zzzzzzzzzz"))).toBe("deck-limit");
+    expect(getCustomDeck("custom-zzzzzzzzzz")).toBeUndefined();
+    expect(saveCustomDeck(buildDeck("custom-aaaaaaaaaa"))).toBe("saved");
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new DOMException("full", "QuotaExceededError");
+    });
+    expect(saveCustomDeck(buildDeck("custom-aaaaaaaaaa"))).toBe(
+      "storage-blocked"
+    );
+  });
+
+  it("asks to persist storage after a deck is saved", () => {
+    const requestSpy = vi
+      .spyOn(persistence, "requestPersistentStorage")
+      .mockImplementation(() => {});
+    saveCustomDeck(buildDeck("custom-aaaaaaaaaa"));
+    expect(requestSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not ask to persist storage when the save was blocked", () => {
+    const requestSpy = vi
+      .spyOn(persistence, "requestPersistentStorage")
+      .mockImplementation(() => {});
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new DOMException("full", "QuotaExceededError");
+    });
+    saveCustomDeck(buildDeck("custom-aaaaaaaaaa"));
+    expect(requestSpy).not.toHaveBeenCalled();
+  });
+
   it("keeps valid decks and drops only the malformed ones", () => {
     localStorage.setItem(
       "unravel:v2:customDecks",
@@ -112,6 +149,18 @@ describe("customDecks", () => {
     expect(
       getCustomDeck("custom-aaaaaaaaaa")?.cards.map((card) => card.id)
     ).toEqual(["c1"]);
+  });
+
+  it("keeps stored vote and hot-seat cards", () => {
+    const cards = [
+      { id: "c1", type: "vote", text: "Who would win a karaoke battle?" },
+      { id: "c2", type: "hot-seat", text: "Ask about their worst haircut" },
+    ] as const;
+    localStorage.setItem(
+      "unravel:v2:customDecks",
+      JSON.stringify([buildDeck("custom-aaaaaaaaaa", { cards: [...cards] })])
+    );
+    expect(getCustomDeck("custom-aaaaaaaaaa")?.cards).toEqual(cards);
   });
 
   it("drops a deck whose cards were all invalid", () => {

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import type { Card, Deck } from "../../../content/types";
-import { localize } from "../../../i18n/localize";
+import { formatCopy, localize } from "../../../i18n/localize";
 import { useLocale } from "../../../i18n/LocaleContext";
 import { useCopy } from "../../../i18n/useCopy";
+import { buildDeckShareUrl } from "../../share/deckShareUrl";
 import { shareCardImage } from "../../share/shareCard";
 import { playCopy } from "../copy";
 
@@ -32,12 +33,15 @@ export function useShareCard(deck: Deck) {
     setIsSharing(true);
     setStatusMessage(null);
     try {
+      const deckTitle = localize(deck.title, locale);
       const result = await shareCardImage({
         cardText: localize(card.text, locale),
-        deckTitle: localize(deck.title, locale),
+        deckTitle,
         deckId: deck.id,
         accent: deck.accent,
         locale,
+        shareText: formatCopy(copy.shareText, { deck: deckTitle }),
+        shareUrl: buildDeckShareUrl(deck.id, window.location.origin),
       });
       if (result === "shared") setStatusMessage(copy.shared);
       if (result === "downloaded") setStatusMessage(copy.imageSaved);

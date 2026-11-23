@@ -13,9 +13,14 @@ export interface PlaySession {
    * then swap who starts on every card. Ignored with any other player count.
    */
   firstStarterIndex: number;
+  /**
+   * Seeds the random answerer when `options.isRandomTurns` is on, so Previous, resume and
+   * restore show the same player. 0 for games saved before random turns existed.
+   */
+  turnSeed: number;
   options: PlayOptions;
   startedAt: number;
-  /** Card ids skipped once in this session. Session-only: it is not saved to storage. */
+  /** Card ids in `order` skipped once in this game: a second skip hides them. Saved with the game. */
   skippedCardIds: string[];
 }
 
@@ -28,4 +33,10 @@ export type PlayAction =
   | { type: "hide" }
   /** 18+ Pass: same effect as hide. */
   | { type: "pass" }
-  | { type: "restart"; order: string[] };
+  /** A new game: new order, new first starter and new turn seed. */
+  | {
+      type: "restart";
+      order: string[];
+      firstStarterIndex: number;
+      turnSeed: number;
+    };

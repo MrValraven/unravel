@@ -45,7 +45,7 @@ describe("DeckPickerPage sections", () => {
       screen.getByRole("heading", { name: "Adults · 18+" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /Not sure\? Find a deck/ })
+      screen.getByRole("link", { name: /Not sure which deck\? Find one/ })
     ).toHaveAttribute("href", "/finder");
   });
 
@@ -156,6 +156,8 @@ describe("DeckPickerPage sections", () => {
         isShuffled: false,
         startLevel: 1,
         isTableMode: false,
+        isRandomTurns: false,
+        isPassThePhone: false,
         players: [],
       },
       startedAt: 1,
@@ -193,6 +195,44 @@ describe("DeckPickerPage preview", () => {
     await user.click(screen.getByRole("button", { name: "First Date" }));
     await user.click(screen.getByRole("button", { name: "Start deck" }));
     expect(screen.getByText("Playing first-date")).toBeInTheDocument();
+  });
+
+  it("starts from the preview sheet without a second warning", async () => {
+    const user = userEvent.setup();
+    const savedDeck = requireDeck("unravel");
+    saveProgress({
+      deckId: savedDeck.id,
+      order: savedDeck.cards.map((card) => card.id),
+      position: 2,
+      hiddenCardIds: [],
+      turnIndex: 0,
+      options: {
+        isShuffled: false,
+        startLevel: 1,
+        isTableMode: false,
+        isRandomTurns: false,
+        isPassThePhone: false,
+        players: [],
+      },
+      startedAt: 1,
+      updatedAt: 2,
+    });
+    renderPicker();
+    await user.click(screen.getByRole("button", { name: "First Date" }));
+    const preview = screen.getByRole("dialog", { name: "First Date" });
+    // The sheet already says the save is replaced, so Start does not ask again.
+    expect(
+      within(preview).getByText(
+        "Starting this deck replaces your saved game of Unravel."
+      )
+    ).toBeInTheDocument();
+    await user.click(
+      within(preview).getByRole("button", { name: "Start deck" })
+    );
+    expect(screen.getByText("Playing first-date")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("dialog", { name: "Replace your Unravel game?" })
+    ).not.toBeInTheDocument();
   });
 
   it("hides adult sample cards until age is confirmed", async () => {
@@ -270,8 +310,68 @@ describe("DeckPickerPage seasonal decks", () => {
   it("lists a seasonal deck with its Seasonal tag during its season", () => {
     vi.setSystemTime(new Date("2026-06-15T12:00:00"));
     renderPicker();
+    // Once in the "In season now" strip, once in its own category.
+    const tiles = screen.getAllByRole("button", { name: "Pride Month" });
+    expect(tiles).toHaveLength(2);
+    for (const tile of tiles) {
+      expect(tile).toHaveAccessibleDescription(/Seasonal/);
+    }
+  });
+});
+
+describe("DeckPickerPage seasonal strip", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    vi.useFakeTimers({ toFake: ["Date"] });
+  });
+  afterEach(() => vi.useRealTimers());
+
+  it("shows decks in season now", async () => {
+    vi.setSystemTime(new Date("2026-11-23T12:00:00"));
+    renderPicker();
+    const strip = screen.getByRole("region", { name: "In season now" });
     expect(
-      screen.getByRole("button", { name: "Pride Month" })
-    ).toHaveAccessibleDescription(/Seasonal/);
+      within(strip).getByRole("button", { name: "Halloween" })
+    ).toBeInTheDocument();
+  });
+
+  it("puts the saved game above the seasonal strip", () => {
+    vi.setSystemTime(new Date("2026-11-23T12:00:00"));
+    const deck = requireDeck("first-date");
+    saveProgress({
+      deckId: deck.id,
+      order: deck.cards.map((card) => card.id),
+      position: 3,
+      hiddenCardIds: [],
+      turnIndex: 0,
+      options: {
+        isShuffled: false,
+        startLevel: 1,
+        isTableMode: false,
+        isRandomTurns: false,
+        isPassThePhone: false,
+        players: [],
+      },
+      startedAt: 1,
+      updatedAt: 2,
+    });
+    renderPicker();
+    const resume = screen.getByRole("region", {
+      name: "Pick up where you left off",
+    });
+    const strip = screen.getByRole("region", { name: "In season now" });
+    expect(
+      resume.compareDocumentPosition(strip) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+  });
+
+  it("shows the next seasonal deck and its start date when nothing is in season", () => {
+    vi.setSystemTime(new Date("2027-01-20T12:00:00"));
+    renderPicker();
+    expect(
+      screen.getByRole("link", {
+        name: "Coming up: Valentine's Day, from 1 Feb",
+      })
+    ).toHaveAttribute("href", "/decks/valentines");
   });
 });

@@ -23,6 +23,8 @@ import "./CardStage.scss";
 export interface CardPreview {
   card: Card;
   turn: TurnInfo;
+  /** Pass-the-phone: the card waits covered, so a drag never shows its text. */
+  cover?: { name: string };
 }
 
 interface CardStageProps {
@@ -41,6 +43,11 @@ interface CardStageProps {
   onPrevious: () => void;
   /** Called when focus sat on a control inside the card that just left the screen. */
   onCardFocusLost: () => void;
+  /**
+   * Pass-the-phone: the card waits behind "Pass the phone to {name}" until revealed.
+   * While covered, the announcement names the player instead of reading the card.
+   */
+  cover?: { name: string; onReveal: () => void };
 }
 
 /**
@@ -60,14 +67,18 @@ export const CardStage = ({
   onNext,
   onPrevious,
   onCardFocusLost,
+  cover,
 }: CardStageProps) => {
-  const copy = useCopy(playCopy).card;
+  const playText = useCopy(playCopy);
+  const copy = playText.card;
   const locale = useLocale();
   const gestures = useCardGestures({
     cardKey: card.id,
     canGoPrevious: cardNumber > 1,
     onNext,
     onPrevious,
+    // A covered card opens on a tap anywhere and never turns unread.
+    onTap: cover?.onReveal,
   });
   const announcementId = useId();
   const cardsBehind = getCardsBehind(cardNumber, totalCards);
@@ -76,8 +87,12 @@ export const CardStage = ({
   const announcement = [
     formatCopy(copy.position, { current: cardNumber, total: totalCards }),
     badgeLabel,
-    turnLine,
-    localize(card.text, locale),
+    ...(cover
+      ? [
+          formatCopy(playText.cover.passTo, { name: cover.name }),
+          playText.cover.reveal,
+        ]
+      : [turnLine, localize(card.text, locale)]),
   ]
     .filter(Boolean)
     .join(". ");
@@ -117,6 +132,17 @@ export const CardStage = ({
     }
   };
 
+  // The reveal button leaves with the cover, so focus moves to the card once the
+  // cover is gone: the card region is then described by the card, not the cover.
+  const isCovered = cover !== undefined;
+  const coveredCardIdRef = useRef<string | null>(isCovered ? card.id : null);
+  useEffect(() => {
+    const wasThisCardCovered = coveredCardIdRef.current === card.id;
+    coveredCardIdRef.current = isCovered ? card.id : null;
+    if (wasThisCardCovered && !isCovered)
+      gestures.ref.current?.focus({ preventScroll: true });
+  }, [card.id, isCovered, gestures.ref]);
+
   const renderUnderlay = (side: SwipeDirection) => {
     const preview = side === "next" ? nextPreview : previousPreview;
     if (preview) {
@@ -129,6 +155,7 @@ export const CardStage = ({
             isTableMode={isTableMode}
             isPreview
             footer={<CardFooterPreview card={preview.card} />}
+            cover={preview.cover}
           />
         </div>
       );
@@ -171,6 +198,7 @@ export const CardStage = ({
           isTableMode={isTableMode}
           motion={motion}
           footer={footer}
+          cover={cover}
         />
       </div>
       <p id={announcementId} className="visually-hidden" aria-live="polite">

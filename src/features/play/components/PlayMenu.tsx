@@ -4,6 +4,7 @@ import { FiGrid, FiRotateCcw, FiSliders } from "react-icons/fi";
 import { Dialog } from "../../../components/Dialog";
 import { useCopy } from "../../../i18n/useCopy";
 import { playCopy } from "../copy";
+import { OPENED_FROM_GAME_STATE } from "../setup/gameOptionsNavigation";
 import { PlayTextSize } from "./PlayTextSize";
 import "./PlayMenu.scss";
 
@@ -15,7 +16,7 @@ interface PlayMenuProps {
 }
 
 /**
- * Text size, game options (setup again, which starts the deck over), restart
+ * Text size, game options (change the running game or start it over), restart
  * (asked twice, since it clears the saved place) and the way back to the decks.
  */
 export const PlayMenu = ({
@@ -90,6 +91,8 @@ export const PlayMenu = ({
             to={`/play/${encodeURIComponent(deckId)}?setup=1`}
             className="button button--secondary play-menu__item"
             viewTransition
+            // Leaving Game options pops this entry instead of replacing it.
+            state={OPENED_FROM_GAME_STATE}
             // The note is the link's description, so its name stays short.
             aria-describedby={gameOptionsNoteId}
             onClick={handleClose}

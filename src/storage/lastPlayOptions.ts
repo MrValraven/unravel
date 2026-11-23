@@ -1,8 +1,12 @@
 import { createStore, useStore } from "./createStore";
-import { isPlayOptions, type PlayOptions } from "./progress";
+import { readPlayOptions, type PlayOptions } from "./progress";
+
+/** Null is a valid stored value (no game started yet); undefined means the stored options are unusable. */
+const readStoredOptions = (raw: unknown): PlayOptions | null | undefined =>
+  raw === null ? null : readPlayOptions(raw);
 
 const isStoredOptions = (raw: unknown): raw is PlayOptions | null =>
-  raw === null || isPlayOptions(raw);
+  readStoredOptions(raw) !== undefined;
 
 /**
  * The options of the last game started from Game options. Every other start
@@ -11,7 +15,8 @@ const isStoredOptions = (raw: unknown): raw is PlayOptions | null =>
 export const lastPlayOptionsStore = createStore<PlayOptions | null>(
   "lastPlayOptions",
   null,
-  isStoredOptions
+  isStoredOptions,
+  readStoredOptions
 );
 
 /** Null until a game has been started from Game options. */

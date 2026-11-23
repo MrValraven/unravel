@@ -207,8 +207,8 @@ export default defineConfig(({ mode }) => {
       globals: true,
       setupFiles: "./src/test/setup.ts",
       css: false,
-      // Playwright owns e2e/*.spec.ts, so Vitest only collects unit tests under src.
-      include: ["src/**/*.test.{ts,tsx}"],
+      // Playwright owns e2e/*.spec.ts, so Vitest only collects unit tests under src and scripts.
+      include: ["src/**/*.test.{ts,tsx}", "scripts/**/*.test.ts"],
     },
   };
 });

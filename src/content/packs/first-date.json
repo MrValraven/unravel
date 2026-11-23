@@ -29,15 +29,6 @@
       }
     },
     {
-      "id": "first-date-004",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What is something most people get wrong about you?",
-        "pt": "Em que é que a maioria das pessoas se engana a teu respeito?"
-      }
-    },
-    {
       "id": "first-date-005",
       "type": "question",
       "level": 1,
@@ -57,24 +48,6 @@
       "timerSeconds": 120
     },
     {
-      "id": "first-date-007",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What are your love languages? What are some gestures that make you feel seen and loved?",
-        "pt": "Quais são as tuas linguagens do amor? Que gestos te fazem sentir que te veem e te amam?"
-      }
-    },
-    {
-      "id": "first-date-008",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What made you interested in going on a date with me?",
-        "pt": "O que é que te fez querer ter um encontro comigo?"
-      }
-    },
-    {
       "id": "first-date-009",
       "type": "challenge",
       "level": 1,
@@ -83,15 +56,6 @@
         "pt": "Façam um jogo do galo rápido num guardanapo. À melhor de três!"
       },
       "timerSeconds": 60
-    },
-    {
-      "id": "first-date-010",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What’s something someone could say or do that would make you instantly swoon?",
-        "pt": "O que é que alguém podia dizer ou fazer que te deixasse logo a suspirar?"
-      }
     },
     {
       "id": "first-date-011",
@@ -127,15 +91,6 @@
       "text": {
         "en": "If a museum about you had a gift shop, what would the souvenirs be?",
         "pt": "Se houvesse um museu sobre ti com loja de recordações, que lembranças se vendiam lá?"
-      }
-    },
-    {
-      "id": "first-date-015",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What's your type? Describe in detail.",
-        "pt": "Qual é o teu tipo? Descreve ao pormenor."
       }
     },
     {
@@ -175,6 +130,98 @@
       }
     },
     {
+      "id": "first-date-023",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If we were to have a debate right now, what topics would you absolutely crush me in?",
+        "pt": "Se fizéssemos um debate agora, em que temas é que me davas uma abada?"
+      }
+    },
+    {
+      "id": "first-date-035",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Each draw a quick portrait of the other on a napkin, then swap",
+        "pt": "Desenhem um retrato rápido um do outro num guardanapo e depois troquem"
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "first-date-042",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Do you have any goals you'd like to accomplish this year?",
+        "pt": "Tens objetivos que gostavas de cumprir este ano?"
+      }
+    },
+    {
+      "id": "first-date-046",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Look through each other's social media and pick your favorite photo",
+        "pt": "Espreitem as redes sociais um do outro e escolham a foto do outro de que mais gostam"
+      },
+      "timerSeconds": 120
+    },
+    {
+      "id": "first-date-048",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What song should I listen to on my way home?",
+        "pt": "Que música devo ouvir a caminho de casa?"
+      }
+    },
+    {
+      "id": "first-date-004",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What is something most people get wrong about you?",
+        "pt": "Em que é que a maioria das pessoas se engana a teu respeito?"
+      }
+    },
+    {
+      "id": "first-date-007",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What are your love languages? What are some gestures that make you feel seen and loved?",
+        "pt": "Quais são as tuas linguagens do amor? Que gestos te fazem sentir que te veem e te amam?"
+      }
+    },
+    {
+      "id": "first-date-008",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What made you interested in going on a date with me?",
+        "pt": "O que é que te fez querer ter um encontro comigo?"
+      }
+    },
+    {
+      "id": "first-date-010",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What’s something someone could say or do that would make you instantly swoon?",
+        "pt": "O que é que alguém podia dizer ou fazer que te deixasse logo a suspirar?"
+      }
+    },
+    {
+      "id": "first-date-015",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's your type? Describe in detail.",
+        "pt": "Qual é o teu tipo? Descreve ao pormenor."
+      }
+    },
+    {
       "id": "first-date-020",
       "type": "question",
       "level": 2,
@@ -202,15 +249,6 @@
       }
     },
     {
-      "id": "first-date-023",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "If we were to have a debate right now, what topics would you absolutely crush me in?",
-        "pt": "Se fizéssemos um debate agora, em que temas é que me davas uma abada?"
-      }
-    },
-    {
       "id": "first-date-024",
       "type": "question",
       "level": 2,
@@ -220,39 +258,12 @@
       }
     },
     {
-      "id": "first-date-025",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "How did your last relationship end and what did it teach you about yourself?",
-        "pt": "Como é que acabou a tua última relação e o que é que te ensinou sobre ti?"
-      }
-    },
-    {
       "id": "first-date-026",
       "type": "question",
       "level": 2,
       "text": {
         "en": "When you have a crush on someone, what's one of the first things you notice about them?",
         "pt": "Quando tens uma paixoneta por alguém, qual é uma das primeiras coisas em que reparas?"
-      }
-    },
-    {
-      "id": "first-date-027",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "What's your idea of a perfect end to a first date?",
-        "pt": "Para ti, qual é o final perfeito para um primeiro encontro?"
-      }
-    },
-    {
-      "id": "first-date-028",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "What's your attachment style? How do you feel it has affected your present and past relationships?",
-        "pt": "Qual é o teu estilo de vinculação? Como achas que afetou as tuas relações, passadas e presentes?"
       }
     },
     {
@@ -310,16 +321,6 @@
       }
     },
     {
-      "id": "first-date-035",
-      "type": "challenge",
-      "level": 1,
-      "text": {
-        "en": "Each draw a quick portrait of the other on a napkin, then swap",
-        "pt": "Desenhem um retrato rápido um do outro num guardanapo e depois troquem"
-      },
-      "timerSeconds": 60
-    },
-    {
       "id": "first-date-036",
       "type": "question",
       "level": 2,
@@ -329,30 +330,12 @@
       }
     },
     {
-      "id": "first-date-037",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "If you could tell me one thing you’ve learned in your life from your mistakes, what would that be?",
-        "pt": "Se me pudesses contar uma coisa que aprendeste com os teus erros, qual seria?"
-      }
-    },
-    {
       "id": "first-date-038",
       "type": "question",
       "level": 2,
       "text": {
         "en": "What was the best first date you’ve ever had?",
         "pt": "Qual foi o melhor primeiro encontro que já tiveste?"
-      }
-    },
-    {
-      "id": "first-date-039",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "What does love look like to you?",
-        "pt": "Como é o amor, para ti?"
       }
     },
     {
@@ -374,12 +357,66 @@
       }
     },
     {
-      "id": "first-date-042",
+      "id": "first-date-045",
       "type": "question",
-      "level": 1,
+      "level": 2,
       "text": {
-        "en": "Do you have any goals you'd like to accomplish this year?",
-        "pt": "Tens objetivos que gostavas de cumprir este ano?"
+        "en": "What's your favorite moment from tonight so far?",
+        "pt": "Qual foi o teu momento preferido desta noite até agora?"
+      }
+    },
+    {
+      "id": "first-date-047",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How would you describe our date in one word?",
+        "pt": "Como descreverias o nosso encontro numa palavra?"
+      }
+    },
+    {
+      "id": "first-date-025",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "How did your last relationship end and what did it teach you about yourself?",
+        "pt": "Como é que acabou a tua última relação e o que é que te ensinou sobre ti?"
+      }
+    },
+    {
+      "id": "first-date-027",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's your idea of a perfect end to a first date?",
+        "pt": "Para ti, qual é o final perfeito para um primeiro encontro?"
+      }
+    },
+    {
+      "id": "first-date-028",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's your attachment style? How do you feel it has affected your present and past relationships?",
+        "pt": "Qual é o teu estilo de vinculação? Como achas que afetou as tuas relações, passadas e presentes?"
+      }
+    },
+    {
+      "id": "first-date-037",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If you could tell me one thing you’ve learned in your life from your mistakes, what would that be?",
+        "pt": "Se me pudesses contar uma coisa que aprendeste com os teus erros, qual seria?"
+      }
+    },
+    {
+      "id": "first-date-039",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What does love look like to you?",
+        "pt": "Como é o amor, para ti?"
       }
     },
     {
@@ -398,43 +435,6 @@
       "text": {
         "en": "What makes you who you are?",
         "pt": "O que é que faz de ti quem és?"
-      }
-    },
-    {
-      "id": "first-date-045",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What's your favorite moment from tonight so far?",
-        "pt": "Qual foi o teu momento preferido desta noite até agora?"
-      }
-    },
-    {
-      "id": "first-date-046",
-      "type": "challenge",
-      "level": 1,
-      "text": {
-        "en": "Look through each other's social media and pick your favorite photo",
-        "pt": "Espreitem as redes sociais um do outro e escolham a foto do outro de que mais gostam"
-      },
-      "timerSeconds": 120
-    },
-    {
-      "id": "first-date-047",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "How would you describe our date in one word?",
-        "pt": "Como descreverias o nosso encontro numa palavra?"
-      }
-    },
-    {
-      "id": "first-date-048",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What song should I listen to on my way home?",
-        "pt": "Que música devo ouvir a caminho de casa?"
       }
     }
   ]

@@ -12,6 +12,12 @@ const en = {
       "Choose who is playing and how. Unravel remembers these options for your next game.",
     restartsSavedGame:
       "Starting with these options begins this deck again from the first card.",
+    backToGame: "Back to game",
+    saveAndContinue: "Save and continue",
+    startOver: "Start over with these settings",
+    continuesSavedGame:
+      "Save and continue keeps your place. A new start level or shuffle changes only the cards still to come.",
+    pastLevel: "You're past this level. Start over to play it.",
   },
   checkIn: {
     gameOptions: "Game options",
@@ -31,8 +37,6 @@ const en = {
     recapUnderAMinute: "under a minute",
     shareRecap: "Share recap",
     recapCopied: "Recap copied",
-    recapShareFailed:
-      "This browser blocked both sharing and the clipboard, so the recap was not shared.",
     upNextTitle: "Up next",
     replayBody: "Same players and level, cards shuffled.",
   },
@@ -47,6 +51,12 @@ export const flowCopy = defineCopy<typeof en>({
         "Escolhe quem joga e como. O Unravel guarda estas opções para o próximo jogo.",
       restartsSavedGame:
         "Começar com estas opções recomeça este baralho a partir da primeira carta.",
+      backToGame: "Voltar ao jogo",
+      saveAndContinue: "Guardar e continuar",
+      startOver: "Recomeçar com estas opções",
+      continuesSavedGame:
+        "Guardar e continuar mantém o teu lugar. Mudar o nível inicial ou baralhar só altera as cartas que faltam.",
+      pastLevel: "Já passaste este nível. Recomeça para o jogar.",
     },
     checkIn: {
       gameOptions: "Opções de jogo",
@@ -66,8 +76,6 @@ export const flowCopy = defineCopy<typeof en>({
       recapUnderAMinute: "menos de um minuto",
       shareRecap: "Partilhar resumo",
       recapCopied: "Resumo copiado",
-      recapShareFailed:
-        "Este navegador bloqueou a partilha e a área de transferência, por isso o resumo não foi partilhado.",
       upNextTitle: "A seguir",
       replayBody: "Os mesmos jogadores e nível, com as cartas baralhadas.",
     },

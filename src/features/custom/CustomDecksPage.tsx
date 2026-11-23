@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FiFeather } from "react-icons/fi";
 import { PageHeader } from "../../components/PageHeader";
+import { resolveDeck } from "../../content/resolveDeck";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { formatCopy } from "../../i18n/localize";
 import { useCopy } from "../../i18n/useCopy";
@@ -11,6 +12,9 @@ import {
   type CustomDeck,
 } from "../../storage/customDecks";
 import { clearProgress, loadProgress } from "../../storage/progress";
+import { useDeckStart } from "../decks/useDeckStart";
+import { ReplaceSavedGameDialog } from "../play/setup/ReplaceSavedGameDialog";
+import { ShareLinkDialog } from "../share/ShareLinkDialog";
 import { CreateDeckAction } from "./CreateDeckAction";
 import { CustomDeckListItem } from "./CustomDeckListItem";
 import { DeleteDeckDialog } from "./DeleteDeckDialog";
@@ -39,9 +43,24 @@ const CustomDecksPage = () => {
   );
 
   const { notice, showStatus, dismissStatus } = useStatusMessage();
-  const { requestShare, pendingLongLink, confirmLongLink, cancelLongLink } =
-    useShareDeck(showStatus);
+  const {
+    requestShare,
+    pendingLongLink,
+    confirmLongLink,
+    cancelLongLink,
+    fallbackUrl,
+    closeFallback,
+  } = useShareDeck(showStatus);
   useSavedDeckNotice(showStatus);
+  const { startDeck, replaceDialogProps } = useDeckStart();
+
+  const startCustomDeck = (customDeck: CustomDeck) => {
+    const deck = resolveDeck(customDeck.id, {
+      favouriteIds: [],
+      customDecks: [customDeck],
+    });
+    if (deck) startDeck(deck);
+  };
 
   const [deckPendingDelete, setDeckPendingDelete] = useState<CustomDeck | null>(
     null
@@ -105,6 +124,7 @@ const CustomDecksPage = () => {
                 deck={deck}
                 isLeaving={deck.id === leavingDeckId}
                 onLeft={handleDeckLeft}
+                onStart={startCustomDeck}
                 onShare={requestShare}
                 onDelete={setDeckPendingDelete}
               />
@@ -131,6 +151,12 @@ const CustomDecksPage = () => {
         onConfirm={confirmLongLink}
         onCancel={cancelLongLink}
       />
+      <ShareLinkDialog
+        isOpen={fallbackUrl !== null}
+        url={fallbackUrl ?? ""}
+        onClose={closeFallback}
+      />
+      <ReplaceSavedGameDialog {...replaceDialogProps} />
       <StatusMessage notice={notice} onDismissed={dismissStatus} />
     </div>
   );

@@ -31,15 +31,21 @@ const getSpiceFit = (deck: DeckMeta, spice: SpiceLevel): number => {
   return 0;
 };
 
+const matchesAudience = (deck: DeckMeta, answers: FinderAnswers): boolean =>
+  deck.audiences.includes(answers.audience);
+
 export const scoreDeck = (deck: DeckMeta, answers: FinderAnswers): number =>
-  (deck.audiences.includes(answers.audience) ? AUDIENCE_WEIGHT : 0) +
+  (matchesAudience(deck, answers) ? AUDIENCE_WEIGHT : 0) +
   (deck.moods.includes(answers.mood) ? MOOD_WEIGHT : 0) +
   getSpiceFit(deck, answers.spice);
 
 /**
- * Up to three decks that fit the answers, best first. Decks with no matching
- * audience, mood or spice score zero and are left out. Equal scores keep the
- * order of `decks` (the registry order), so the result is deterministic.
+ * Up to three decks that fit the answers, best first. Decks made for the chosen
+ * audience always rank above decks that are not, so a group is never sent to a
+ * couples' deck while group decks remain. Within each side the score decides.
+ * Decks with no matching audience, mood or spice score zero and are left out.
+ * Equal scores keep the order of `decks` (the registry order), so the result
+ * is deterministic.
  */
 export function rankDecks<DeckType extends DeckMeta>(
   decks: readonly DeckType[],
@@ -51,12 +57,15 @@ export function rankDecks<DeckType extends DeckMeta>(
     .map((deck, registryIndex) => ({
       deck,
       registryIndex,
+      matchesAudience: matchesAudience(deck, answers),
       score: scoreDeck(deck, answers),
     }))
     .filter((entry) => entry.score > 0)
     .sort(
       (first, second) =>
-        second.score - first.score || first.registryIndex - second.registryIndex
+        Number(second.matchesAudience) - Number(first.matchesAudience) ||
+        second.score - first.score ||
+        first.registryIndex - second.registryIndex
     )
     .slice(0, limit)
     .map((entry) => entry.deck);

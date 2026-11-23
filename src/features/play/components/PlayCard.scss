@@ -183,6 +183,31 @@
   pointer-events: none;
 }
 
+// Vote cards carry a row of dots along the top edge, the same mark as the custom deck editor.
+.play-card--vote::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 10px;
+  background: radial-gradient(
+      circle,
+      color-mix(in srgb, currentColor 34%, transparent) 2.5px,
+      transparent 3px
+    )
+    center / 14px 10px repeat-x;
+  pointer-events: none;
+}
+
+// Hot-seat cards carry a double rule inner frame, the same mark as the custom deck editor.
+.play-card--hot-seat::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 3px double color-mix(in srgb, currentColor 34%, transparent);
+  border-radius: calc(#{$radius-lg} - 6px);
+  pointer-events: none;
+}
+
 @include motion-safe {
   .play-card--enter-forward {
     animation: play-card-deal-forward $duration-slow $ease-out both;

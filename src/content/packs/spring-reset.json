@@ -1,0 +1,296 @@
+{
+  "id": "spring-reset",
+  "cards": [
+    {
+      "id": "spring-reset-001",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's the first sign of spring you noticed this year?",
+        "pt": "Qual foi o primeiro sinal de primavera em que reparaste este ano?"
+      }
+    },
+    {
+      "id": "spring-reset-002",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Spring cleaning: what's one thing at home you've been meaning to throw out for ages?",
+        "pt": "Limpezas de primavera: que coisa lá de casa andas há séculos para deitar fora?"
+      }
+    },
+    {
+      "id": "spring-reset-003",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which small joy costs nothing and never gets old for you?",
+        "pt": "Que pequena alegria não custa nada e nunca perde a graça para ti?"
+      }
+    },
+    {
+      "id": "spring-reset-004",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone names something they're planting this spring, in a garden or in their life.",
+        "pt": "Digam uma coisa que estão a plantar nesta primavera, num jardim ou na vida."
+      }
+    },
+    {
+      "id": "spring-reset-005",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Are you a fresh-notebook person or a back-of-the-receipt planner?",
+        "pt": "És de caderno novo ou de fazer planos nas costas de um talão?"
+      }
+    },
+    {
+      "id": "spring-reset-006",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "In 60 seconds, list everything on your 'this spring' wish list. The table picks the one you have to actually do.",
+        "pt": "Em 60 segundos, diz tudo o que está na tua lista de desejos para esta primavera. A mesa escolhe o que tens mesmo de cumprir."
+      },
+      "timerSeconds": 60
+    },
+    {
+      "id": "spring-reset-007",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's a habit you dropped over the winter that you'd like to pick back up?",
+        "pt": "Que hábito deixaste cair no inverno e gostavas de retomar?"
+      }
+    },
+    {
+      "id": "spring-reset-008",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone shares their favourite way to spend the first warm Saturday of the year.",
+        "pt": "Partilhem a vossa maneira preferida de passar o primeiro sábado quente do ano."
+      }
+    },
+    {
+      "id": "spring-reset-009",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "If you could learn one new thing this spring just for fun, what would it be?",
+        "pt": "Se pudesses aprender uma coisa nova esta primavera só por diversão, o que seria?"
+      }
+    },
+    {
+      "id": "spring-reset-010",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Which app, group chat or subscription would you happily delete today?",
+        "pt": "Que aplicação, grupo de mensagens ou subscrição apagavas hoje sem pena nenhuma?"
+      }
+    },
+    {
+      "id": "spring-reset-011",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "In 45 seconds, convince the table that one tiny thing, like clean sheets or a ripe peach, is the best thing in the world.",
+        "pt": "Em 45 segundos, convence a mesa de que uma coisa pequenina, como lençóis lavados ou um pêssego maduro, é a melhor coisa do mundo."
+      },
+      "timerSeconds": 45
+    },
+    {
+      "id": "spring-reset-012",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "Morning person or night owl, and has that ever changed with the seasons?",
+        "pt": "Preferes as manhãs ou as noites, e isso alguma vez mudou com as estações?"
+      }
+    },
+    {
+      "id": "spring-reset-013",
+      "type": "everyone",
+      "level": 1,
+      "text": {
+        "en": "Everyone says which plant, flower or tree they'd be this spring, and why.",
+        "pt": "Digam que planta, flor ou árvore seriam nesta primavera, e porquê."
+      }
+    },
+    {
+      "id": "spring-reset-014",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's something you kept doing out of habit until you realised you don't actually enjoy it?",
+        "pt": "O que é que continuavas a fazer por hábito até perceberes que afinal não gostas?"
+      }
+    },
+    {
+      "id": "spring-reset-015",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "If you could start one part of your life from scratch this spring, which part would you pick?",
+        "pt": "Se pudesses recomeçar do zero uma parte da tua vida esta primavera, qual escolhias?"
+      }
+    },
+    {
+      "id": "spring-reset-016",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Who do you owe a message to that you keep putting off?",
+        "pt": "A quem deves uma mensagem que andas sempre a adiar?"
+      }
+    },
+    {
+      "id": "spring-reset-017",
+      "type": "challenge",
+      "level": 2,
+      "text": {
+        "en": "In 90 seconds, write yourself a permission slip: one thing you may stop doing and one you may start. Read it out.",
+        "pt": "Em 90 segundos, escreve uma autorização para ti: uma coisa que podes deixar de fazer e outra que podes começar. Lê-a em voz alta."
+      },
+      "timerSeconds": 90
+    },
+    {
+      "id": "spring-reset-018",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone shares a plan they made this year that's actually happening.",
+        "pt": "Partilhem um plano que fizeram este ano e que está mesmo a acontecer."
+      }
+    },
+    {
+      "id": "spring-reset-019",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's a compliment you got recently that you're still thinking about?",
+        "pt": "Que elogio recebeste há pouco tempo e ainda não te saiu da cabeça?"
+      }
+    },
+    {
+      "id": "spring-reset-020",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which opinion of yours has quietly changed over the past year?",
+        "pt": "Que opinião tua mudou sem dares por isso no último ano?"
+      }
+    },
+    {
+      "id": "spring-reset-021",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's been on your 'one day' list for years, and what would it take to do it by June?",
+        "pt": "O que está há anos na tua lista de 'um dia destes' e o que seria preciso para o fazeres até junho?"
+      }
+    },
+    {
+      "id": "spring-reset-022",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Everyone names one thing they'd like to let go of this season, big or small.",
+        "pt": "Digam uma coisa que gostavam de largar nesta estação, grande ou pequena."
+      }
+    },
+    {
+      "id": "spring-reset-023",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What does a good, ordinary day look like for you right now?",
+        "pt": "Como é, neste momento, um dia normal e bom para ti?"
+      }
+    },
+    {
+      "id": "spring-reset-024",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Who always makes you want to try new things?",
+        "pt": "Quem é que te dá sempre vontade de experimentar coisas novas?"
+      }
+    },
+    {
+      "id": "spring-reset-025",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What are you still carrying from last year that you feel ready to put down?",
+        "pt": "O que ainda trazes contigo do ano passado e sentes que já podes largar?"
+      }
+    },
+    {
+      "id": "spring-reset-026",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which version of yourself have you outgrown, and how do you feel about them now?",
+        "pt": "Que versão de ti já deixaste para trás e o que sentes por ela agora?"
+      }
+    },
+    {
+      "id": "spring-reset-027",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What would you try if you knew nobody would judge you for starting late?",
+        "pt": "O que experimentavas se soubesses que ninguém te ia julgar por começares tarde?"
+      }
+    },
+    {
+      "id": "spring-reset-028",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Who helped you get through the winter, maybe without realising it?",
+        "pt": "Quem te ajudou a atravessar o inverno, talvez sem se aperceber?"
+      }
+    },
+    {
+      "id": "spring-reset-029",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Which apology, to someone else or to yourself, would you like to make this spring?",
+        "pt": "Que pedido de desculpa, a outra pessoa ou a ti, gostavas de fazer esta primavera?"
+      }
+    },
+    {
+      "id": "spring-reset-030",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What does starting over mean to you: a clean slate, or building on what's already there?",
+        "pt": "O que significa para ti recomeçar: partir do zero ou construir sobre o que já existe?"
+      }
+    },
+    {
+      "id": "spring-reset-031",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What small promise could you make to yourself tonight and actually keep?",
+        "pt": "Que pequena promessa podias fazer-te esta noite e cumprir mesmo?"
+      }
+    },
+    {
+      "id": "spring-reset-032",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Looking around this table, what's one plan you'd love to make with someone here?",
+        "pt": "Olhando para esta mesa, que plano gostavas de fazer com alguém que está aqui?"
+      }
+    }
+  ]
+}

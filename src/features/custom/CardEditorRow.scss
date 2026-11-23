@@ -91,8 +91,9 @@
     border-color $duration-fast ease,
     box-shadow $duration-fast ease;
 
-  // The card's type marks, borrowed from the play card: a stitched frame for challenges,
-  // a striped band for everyone cards. Both fade as the type changes.
+  // The card's type marks: a band along the top edge (stripes for everyone cards, a row
+  // of dots for votes) or an inner frame (stitched for challenges, a double rule for the
+  // hot seat). Each fades as the type changes.
   &::before,
   &::after {
     content: "";
@@ -119,12 +120,28 @@
     border-radius: calc(#{$radius-lg} - 5px);
   }
 
+  &[data-card-type="vote"]::before {
+    background: radial-gradient(
+        circle,
+        color-mix(in srgb, $color-heading 22%, transparent) 2px,
+        transparent 2.5px
+      )
+      center / 12px 8px repeat-x;
+  }
+
+  &[data-card-type="hot-seat"]::after {
+    border: 3px double color-mix(in srgb, $color-heading 18%, transparent);
+  }
+
   &[data-card-type="everyone"]::before,
-  &[data-card-type="challenge"]::after {
+  &[data-card-type="vote"]::before,
+  &[data-card-type="challenge"]::after,
+  &[data-card-type="hot-seat"]::after {
     opacity: 1;
   }
 
-  &[data-card-type="everyone"] {
+  &[data-card-type="everyone"],
+  &[data-card-type="vote"] {
     padding-top: $space-4;
   }
 
@@ -146,7 +163,8 @@
     gap: $space-4;
     padding: $space-4 $space-5 $space-3;
 
-    &[data-card-type="everyone"] {
+    &[data-card-type="everyone"],
+    &[data-card-type="vote"] {
       padding-top: $space-5;
     }
   }

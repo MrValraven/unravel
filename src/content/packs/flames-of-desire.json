@@ -29,6 +29,53 @@
       }
     },
     {
+      "id": "flames-of-desire-006",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Give each other a gentle hand massage, focusing on the fingers and palms. Pay attention to how the other person responds to your touch.",
+        "pt": "Façam uma massagem suave às mãos um do outro, com atenção aos dedos e às palmas. Reparem em como a outra pessoa reage ao vosso toque."
+      },
+      "timerSeconds": 120
+    },
+    {
+      "id": "flames-of-desire-009",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What non-sexual forms of physical touch turn you on?",
+        "pt": "Que formas de toque físico não sexual te excitam?"
+      }
+    },
+    {
+      "id": "flames-of-desire-010",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Create a cozy space with blankets and pillows and cuddle together while talking.",
+        "pt": "Criem um cantinho aconchegante com mantas e almofadas e fiquem num abraço enquanto conversam."
+      }
+    },
+    {
+      "id": "flames-of-desire-014",
+      "type": "challenge",
+      "level": 1,
+      "text": {
+        "en": "Snuggle up and enjoy the warmth of each other's bodies in a cosy and soft cuddle",
+        "pt": "Aconcheguem-se e aproveitem o calor do corpo um do outro num abraço suave e quentinho"
+      },
+      "timerSeconds": 120
+    },
+    {
+      "id": "flames-of-desire-015",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What does being good at kissing mean to you? What does your ideal kiss look like?",
+        "pt": "O que é que significa para ti beijar bem? Como é o teu beijo ideal?"
+      }
+    },
+    {
       "id": "flames-of-desire-004",
       "type": "question",
       "level": 2,
@@ -47,16 +94,6 @@
       }
     },
     {
-      "id": "flames-of-desire-006",
-      "type": "challenge",
-      "level": 1,
-      "text": {
-        "en": "Give each other a gentle hand massage, focusing on the fingers and palms. Pay attention to how the other person responds to your touch.",
-        "pt": "Façam uma massagem suave às mãos um do outro, com atenção aos dedos e às palmas. Reparem em como a outra pessoa reage ao vosso toque."
-      },
-      "timerSeconds": 120
-    },
-    {
       "id": "flames-of-desire-007",
       "type": "question",
       "level": 2,
@@ -72,24 +109,6 @@
       "text": {
         "en": "What does being good in bed mean to you?",
         "pt": "O que é que significa para ti ter jeito na cama?"
-      }
-    },
-    {
-      "id": "flames-of-desire-009",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What non-sexual forms of physical touch turn you on?",
-        "pt": "Que formas de toque físico não sexual te excitam?"
-      }
-    },
-    {
-      "id": "flames-of-desire-010",
-      "type": "challenge",
-      "level": 1,
-      "text": {
-        "en": "Create a cozy space with blankets and pillows and cuddle together while talking.",
-        "pt": "Criem um cantinho aconchegante com mantas e almofadas e fiquem num abraço enquanto conversam."
       }
     },
     {
@@ -120,49 +139,12 @@
       }
     },
     {
-      "id": "flames-of-desire-014",
-      "type": "challenge",
-      "level": 1,
-      "text": {
-        "en": "Snuggle up and enjoy the warmth of each other's bodies in a cosy and soft cuddle",
-        "pt": "Aconcheguem-se e aproveitem o calor do corpo um do outro num abraço suave e quentinho"
-      },
-      "timerSeconds": 120
-    },
-    {
-      "id": "flames-of-desire-015",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What does being good at kissing mean to you? What does your ideal kiss look like?",
-        "pt": "O que é que significa para ti beijar bem? Como é o teu beijo ideal?"
-      }
-    },
-    {
       "id": "flames-of-desire-016",
       "type": "question",
       "level": 2,
       "text": {
         "en": "If you could take a course to learn about any sexual topic, what would it be on?",
         "pt": "Se pudesses fazer um curso sobre qualquer tema sexual, qual escolhias?"
-      }
-    },
-    {
-      "id": "flames-of-desire-017",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "What's something that someone did to you in bed that you still think about sometimes?",
-        "pt": "O que é que alguém já te fez na cama e em que ainda pensas de vez em quando?"
-      }
-    },
-    {
-      "id": "flames-of-desire-018",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "What are your most sensitive erogenous zones that don't always get attention?",
-        "pt": "Quais são as tuas zonas erógenas mais sensíveis que nem sempre recebem atenção?"
       }
     },
     {
@@ -203,6 +185,51 @@
       }
     },
     {
+      "id": "flames-of-desire-025",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What kind of aftercare makes you feel loved and cherished?",
+        "pt": "Que tipo de aftercare te faz sentir que gostam de ti e que cuidam de ti?"
+      }
+    },
+    {
+      "id": "flames-of-desire-029",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What is the sexiest quality or feature you find irresistible in a partner?",
+        "pt": "Qual é a qualidade ou característica mais sexy a que não consegues resistir numa pessoa?"
+      }
+    },
+    {
+      "id": "flames-of-desire-031",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Have you ever explored the world of tantric or sacred sexuality? If not, would you be open to it and what parts of it spark your curiosity?",
+        "pt": "Já exploraste o mundo do sexo tântrico ou da sexualidade sagrada? Se não, terias abertura para isso, e que partes te despertam a curiosidade?"
+      }
+    },
+    {
+      "id": "flames-of-desire-017",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's something that someone did to you in bed that you still think about sometimes?",
+        "pt": "O que é que alguém já te fez na cama e em que ainda pensas de vez em quando?"
+      }
+    },
+    {
+      "id": "flames-of-desire-018",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What are your most sensitive erogenous zones that don't always get attention?",
+        "pt": "Quais são as tuas zonas erógenas mais sensíveis que nem sempre recebem atenção?"
+      }
+    },
+    {
       "id": "flames-of-desire-023",
       "type": "question",
       "level": 3,
@@ -218,15 +245,6 @@
       "text": {
         "en": "What sexual fantasy would you like to experience one day?",
         "pt": "Que fantasia sexual gostavas de viver um dia?"
-      }
-    },
-    {
-      "id": "flames-of-desire-025",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What kind of aftercare makes you feel loved and cherished?",
-        "pt": "Que tipo de aftercare te faz sentir que gostam de ti e que cuidam de ti?"
       }
     },
     {
@@ -258,30 +276,12 @@
       }
     },
     {
-      "id": "flames-of-desire-029",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What is the sexiest quality or feature you find irresistible in a partner?",
-        "pt": "Qual é a qualidade ou característica mais sexy a que não consegues resistir numa pessoa?"
-      }
-    },
-    {
       "id": "flames-of-desire-030",
       "type": "question",
       "level": 3,
       "text": {
         "en": "If you could enact a scene from an erotic novel, movie or video, what would it be?",
         "pt": "Se pudesses recriar uma cena de um romance erótico, de um filme ou de um vídeo, qual seria?"
-      }
-    },
-    {
-      "id": "flames-of-desire-031",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "Have you ever explored the world of tantric or sacred sexuality? If not, would you be open to it and what parts of it spark your curiosity?",
-        "pt": "Já exploraste o mundo do sexo tântrico ou da sexualidade sagrada? Se não, terias abertura para isso, e que partes te despertam a curiosidade?"
       }
     },
     {
@@ -316,17 +316,17 @@
       "type": "question",
       "level": 3,
       "text": {
-        "en": "What's your opinion on engaging in sexual encounters that involve consensual non-consent or role-playing scenarios like kidnapping or interrogation?",
-        "pt": "O que pensas de encontros sexuais que envolvam não consentimento consensual ou role-play com cenários como rapto ou interrogatório?"
+        "en": "How do you feel about consensual non-consent role-play? If we ever tried it, what limits and safe word would we need to agree on?",
+        "pt": "O que achas de role-play com não consentimento consensual? Se algum dia experimentássemos, que limites e palavra de segurança tínhamos de combinar?"
       }
     },
     {
       "id": "flames-of-desire-036",
-      "type": "challenge",
+      "type": "question",
       "level": 3,
       "text": {
-        "en": "Show me the way you like to be choked.",
-        "pt": "Mostra-me como gostas que te apertem o pescoço."
+        "en": "Is rougher play something you're curious about? Where are your limits, and what would you need from me to feel safe?",
+        "pt": "Tens curiosidade por brincadeiras mais brutas na cama? Onde estão os teus limites e de que é que precisavas da minha parte para te sentires em segurança?"
       }
     }
   ]

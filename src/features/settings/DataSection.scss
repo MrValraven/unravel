@@ -1,0 +1,53 @@
+@use "../../styles/tokens" as *;
+
+.data-section__description,
+.data-section__note {
+  color: $color-text-dim;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.data-section__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+}
+
+// Both live regions stay rendered so screen readers hear what lands in them.
+// Empty, they take no space: no box, and they cancel the section gap.
+.data-section__status {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.data-section__status:empty,
+.data-section__problem:empty {
+  min-height: 0;
+  margin-top: -$space-4;
+  padding: 0;
+  border: 0;
+  animation: none;
+}
+
+.data-section__message {
+  padding: $space-3 $space-4;
+  border: 1px solid var(--color-border-strong);
+  border-radius: $radius-sm;
+  background: var(--color-surface);
+  color: var(--color-heading);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+
+  @include motion-safe {
+    animation: data-section-appear $duration $ease-out both;
+  }
+}
+
+@keyframes data-section-appear {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}

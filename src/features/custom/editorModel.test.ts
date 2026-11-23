@@ -14,6 +14,7 @@ import {
   draftReducer,
   draftToCustomDeck,
   isDraftChanged,
+  rekeyRestoredDraft,
   validateDraft,
   type DeckDraft,
   type DraftCard,
@@ -327,5 +328,37 @@ describe("stable card ids across edits", () => {
         { id: "custom-abc-004" },
       ])
     ).toBe(true);
+  });
+});
+
+describe("restoring a draft", () => {
+  it("replaces the whole draft", () => {
+    const restored = validDraft();
+    expect(
+      draftReducer(createEmptyDraft(), { type: "restore", draft: restored })
+    ).toBe(restored);
+  });
+
+  it("gives restored new cards fresh keys so they never collide with cards added after", () => {
+    const newCard = createDraftCard();
+    const restored = rekeyRestoredDraft(
+      { title: "Road trip", cards: [newCard, card("custom-abc-002", "Kept")] },
+      ["custom-abc-002"]
+    );
+    expect(restored.cards[1]?.key).toBe("custom-abc-002");
+    expect(restored.cards[0]?.key).not.toBe(newCard.key);
+    const added = createDraftCard();
+    const keys = [...restored.cards.map((entry) => entry.key), added.key];
+    expect(new Set(keys).size).toBe(keys.length);
+    expect(restored.cards[0]?.text).toBe(newCard.text);
+  });
+
+  it("re-keys a repeated key so two cards never share one", () => {
+    const restored = rekeyRestoredDraft(
+      { title: "Twice", cards: [card("a", "One"), card("a", "Two")] },
+      ["a"]
+    );
+    expect(restored.cards[0]?.key).toBe("a");
+    expect(restored.cards[1]?.key).not.toBe("a");
   });
 });

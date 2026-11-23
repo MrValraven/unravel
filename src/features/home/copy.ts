@@ -6,7 +6,7 @@ const en = {
   documentTitle: "Unravel · Good questions for friends, dates and partners",
   tagline: "Good questions for friends, dates and partners.",
   getStarted: "Get started",
-  howItWorks: "How Unravel works",
+  whatIsUnravel: "What is Unravel?",
   openSettings: "Open settings",
   deckCount: {
     one: "{count} deck ready to play",
@@ -70,7 +70,7 @@ export const homeCopy = defineCopy<typeof en>({
     documentTitle: "Unravel · Boas perguntas para amigos, encontros e casais",
     tagline: "Boas perguntas para amigos, encontros e casais.",
     getStarted: "Começar",
-    howItWorks: "Como funciona o Unravel",
+    whatIsUnravel: "O que é o Unravel?",
     openSettings: "Abrir definições",
     deckCount: {
       one: "{count} baralho pronto a jogar",

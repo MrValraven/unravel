@@ -9,6 +9,10 @@ export interface PlayOptions {
   isShuffled: boolean;
   startLevel: IntensityLevel;
   isTableMode: boolean;
+  /** Three or more names: the answerer is drawn from a saved seed instead of going round. */
+  isRandomTurns: boolean;
+  /** Three or more names: the phone is passed to whoever answers. Read as off when missing. */
+  isPassThePhone: boolean;
   /** 0 to 10 names. */
   players: string[];
 }
@@ -26,6 +30,16 @@ export interface SavedProgress {
    * Optional because games saved before it existed have none; they start with player 1.
    */
   firstStarterIndex?: number;
+  /**
+   * Seeds the random answerer sequence. Optional because games saved before random
+   * turns existed have none; they read it as 0 and play as a rotation.
+   */
+  turnSeed?: number;
+  /**
+   * Ids in `order` of cards skipped once, so a second skip hides them. Optional because
+   * games saved before it was kept have none; they read it as an empty list.
+   */
+  skippedCardIds?: string[];
   options: PlayOptions;
   /** Epoch milliseconds. */
   startedAt: number;
@@ -38,43 +52,87 @@ const isStringList = (raw: unknown): raw is string[] =>
 const isNonNegativeInteger = (raw: unknown): raw is number =>
   typeof raw === "number" && Number.isInteger(raw) && raw >= 0;
 
-/** Shared by every store that keeps play options: the saved game and the last-used options. */
-export const isPlayOptions = (raw: unknown): raw is PlayOptions => {
-  if (typeof raw !== "object" || raw === null) return false;
+/** A flag saved before it existed reads as off; a flag that is present must be a boolean. */
+const readFlag = (raw: unknown): boolean | undefined =>
+  raw === undefined ? false : typeof raw === "boolean" ? raw : undefined;
+
+/**
+ * The one validator for play options: the saved game, the last-used options and the
+ * deck-end state all read through it. Flags added later read as off when missing,
+ * and undefined means the options are unusable.
+ */
+export const readPlayOptions = (raw: unknown): PlayOptions | undefined => {
+  if (typeof raw !== "object" || raw === null) return undefined;
   const candidate = raw as Record<string, unknown>;
-  return (
-    typeof candidate.isShuffled === "boolean" &&
-    (candidate.startLevel === 1 ||
-      candidate.startLevel === 2 ||
-      candidate.startLevel === 3) &&
-    typeof candidate.isTableMode === "boolean" &&
-    isStringList(candidate.players) &&
-    candidate.players.length <= MAX_PLAYERS
-  );
+  const isRandomTurns = readFlag(candidate.isRandomTurns);
+  const isPassThePhone = readFlag(candidate.isPassThePhone);
+  if (
+    typeof candidate.isShuffled !== "boolean" ||
+    (candidate.startLevel !== 1 &&
+      candidate.startLevel !== 2 &&
+      candidate.startLevel !== 3) ||
+    typeof candidate.isTableMode !== "boolean" ||
+    isRandomTurns === undefined ||
+    isPassThePhone === undefined ||
+    !isStringList(candidate.players) ||
+    candidate.players.length > MAX_PLAYERS
+  ) {
+    return undefined;
+  }
+  return {
+    isShuffled: candidate.isShuffled,
+    startLevel: candidate.startLevel,
+    isTableMode: candidate.isTableMode,
+    isRandomTurns,
+    isPassThePhone,
+    players: [...candidate.players],
+  };
 };
 
-const isSavedProgress = (raw: unknown): raw is SavedProgress | null => {
-  if (raw === null) return true;
-  if (typeof raw !== "object") return false;
+/** Null is a valid saved value (no game). Undefined means the stored game is unusable. */
+const readSavedProgress = (raw: unknown): SavedProgress | null | undefined => {
+  if (raw === null) return null;
+  if (typeof raw !== "object") return undefined;
   const candidate = raw as Record<string, unknown>;
-  return (
-    typeof candidate.deckId === "string" &&
-    isStringList(candidate.order) &&
-    isNonNegativeInteger(candidate.position) &&
-    isStringList(candidate.hiddenCardIds) &&
-    isNonNegativeInteger(candidate.turnIndex) &&
-    (candidate.firstStarterIndex === undefined ||
-      isNonNegativeInteger(candidate.firstStarterIndex)) &&
-    isPlayOptions(candidate.options) &&
-    typeof candidate.startedAt === "number" &&
-    typeof candidate.updatedAt === "number"
+  const options = readPlayOptions(candidate.options);
+  const { order, skippedCardIds: storedSkippedIds } = candidate;
+  if (
+    options === undefined ||
+    typeof candidate.deckId !== "string" ||
+    !isStringList(order) ||
+    !isNonNegativeInteger(candidate.position) ||
+    !isStringList(candidate.hiddenCardIds) ||
+    !isNonNegativeInteger(candidate.turnIndex) ||
+    (candidate.firstStarterIndex !== undefined &&
+      !isNonNegativeInteger(candidate.firstStarterIndex)) ||
+    (candidate.turnSeed !== undefined &&
+      !isNonNegativeInteger(candidate.turnSeed)) ||
+    (storedSkippedIds !== undefined && !isStringList(storedSkippedIds)) ||
+    typeof candidate.startedAt !== "number" ||
+    typeof candidate.updatedAt !== "number"
+  ) {
+    return undefined;
+  }
+  // Games saved before skips were kept have none; ids outside the order drop out.
+  const orderIds = new Set(order);
+  const skippedCardIds = (storedSkippedIds ?? []).filter((cardId) =>
+    orderIds.has(cardId)
   );
+  return {
+    ...(candidate as unknown as SavedProgress),
+    skippedCardIds,
+    options,
+  };
 };
+
+const isSavedProgress = (raw: unknown): raw is SavedProgress | null =>
+  readSavedProgress(raw) !== undefined;
 
 export const progressStore = createStore<SavedProgress | null>(
   "progress",
   null,
-  isSavedProgress
+  isSavedProgress,
+  readSavedProgress
 );
 
 /** Null when absent, invalid, empty or finished. Keeps the stored reference, so it stays stable. */
@@ -226,6 +284,8 @@ export function migrateLegacyStorage(decks: Deck[]): void {
             isShuffled: false,
             startLevel: 1,
             isTableMode: false,
+            isRandomTurns: false,
+            isPassThePhone: false,
             players: [],
           },
           startedAt: now,

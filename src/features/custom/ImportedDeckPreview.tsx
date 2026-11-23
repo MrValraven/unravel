@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { FiPlay, FiPlus } from "react-icons/fi";
 import { PageHeader } from "../../components/PageHeader";
@@ -8,6 +8,7 @@ import {
   MAX_CUSTOM_DECKS,
   canCreateCustomDeck,
   createCustomDeckId,
+  getCustomDeck,
   saveCustomDeck,
   useCustomDecks,
 } from "../../storage/customDecks";
@@ -27,6 +28,8 @@ export const ImportedDeckPreview = ({ deck }: { deck: SharedDeck }) => {
   const limitNoteId = useId();
   const [hasSaved, setHasSaved] = useState(false);
   const { notice, showStatus, dismissStatus } = useStatusMessage();
+  // One id per import page, so saving again after a block never makes a second deck.
+  const deckIdRef = useRef<string | null>(null);
   useCustomDecks();
   // Read after subscribing above, so deleting a deck in another tab frees the buttons.
   const canCreate = canCreateCustomDeck();
@@ -35,20 +38,31 @@ export const ImportedDeckPreview = ({ deck }: { deck: SharedDeck }) => {
   /** Every save makes a new deck with a fresh id, so importing twice gives two decks. */
   const saveDeck = (shouldPlay: boolean) => {
     if (hasSaved) return;
-    if (!canCreateCustomDeck()) {
+    const isRetry =
+      deckIdRef.current !== null &&
+      getCustomDeck(deckIdRef.current) !== undefined;
+    if (!isRetry && !canCreateCustomDeck()) {
       showStatus(limitReason);
       return;
     }
     setHasSaved(true);
-    const deckId = createCustomDeckId();
+    deckIdRef.current ??= createCustomDeckId();
+    const deckId = deckIdRef.current;
     const now = Date.now();
-    saveCustomDeck({
+    const saveResult = saveCustomDeck({
       id: deckId,
       title: deck.title,
       cards: numberCustomCards(deckId, deck.cards),
       createdAt: now,
       updatedAt: now,
     });
+    if (saveResult !== "saved") {
+      setHasSaved(false);
+      showStatus(
+        saveResult === "deck-limit" ? limitReason : copy.status.saveBlocked
+      );
+      return;
+    }
     // Replace the import entry so Back never lands on this page and offers a second save.
     if (shouldPlay)
       void navigate(`/play/${encodeURIComponent(deckId)}`, {

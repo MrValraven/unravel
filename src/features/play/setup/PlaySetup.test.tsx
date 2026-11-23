@@ -1,9 +1,10 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
+import type { IntensityLevel } from "../../../content/types";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { saveProgress, type PlayOptions } from "../../../storage/progress";
-import { makeDeck, mixedCards } from "../engine/engine.testUtils";
+import { makeDeck, makeOptions, mixedCards } from "../engine/engine.testUtils";
 import { PlaySetup } from "./PlaySetup";
 
 const renderSetup = (deck = makeDeck(), initialOptions?: PlayOptions) => {
@@ -18,6 +19,44 @@ const renderSetup = (deck = makeDeck(), initialOptions?: PlayOptions) => {
     </MemoryRouter>
   );
   return { onStart, user: userEvent.setup() };
+};
+
+/** Game options opened from a running game of this deck. */
+const renderMidGameSetup = (
+  initialOptions?: PlayOptions,
+  onBack?: () => void,
+  lowestContinueLevel?: IntensityLevel
+) => {
+  const onStart = vi.fn();
+  const onContinue = vi.fn();
+  render(
+    <MemoryRouter>
+      <PlaySetup
+        deck={makeDeck()}
+        initialOptions={initialOptions}
+        onStart={onStart}
+        runningGame={{
+          backTo: "/play/a",
+          onContinue,
+          onBack,
+          lowestContinueLevel,
+        }}
+      />
+    </MemoryRouter>
+  );
+  return { onStart, onContinue, user: userEvent.setup() };
+};
+
+const typeNames = async (
+  user: ReturnType<typeof userEvent.setup>,
+  names: string[]
+) => {
+  for (const [index, name] of names.entries()) {
+    await user.type(
+      screen.getByRole("textbox", { name: `Player ${index + 1} name` }),
+      name
+    );
+  }
 };
 
 describe("PlaySetup", () => {
@@ -58,8 +97,123 @@ describe("PlaySetup", () => {
       isShuffled: true,
       startLevel: 2,
       isTableMode: true,
+      isRandomTurns: false,
+      isPassThePhone: false,
       players: ["Ana", "Rui"],
     });
+  });
+
+  it("offers random turns only once three names are filled in", async () => {
+    const { onStart, user } = renderSetup();
+    const switchName = /Random turns/;
+    expect(
+      screen.queryByRole("switch", { name: switchName })
+    ).not.toBeInTheDocument();
+
+    await user.type(
+      screen.getByRole("textbox", { name: "Player 1 name" }),
+      "Ana"
+    );
+    await user.type(
+      screen.getByRole("textbox", { name: "Player 2 name" }),
+      "Rui"
+    );
+    await user.click(screen.getByRole("button", { name: "Add player" }));
+    // A third row with no name does not count yet.
+    expect(
+      screen.queryByRole("switch", { name: switchName })
+    ).not.toBeInTheDocument();
+
+    await user.type(
+      screen.getByRole("textbox", { name: "Player 3 name" }),
+      "Eva"
+    );
+    const randomTurns = screen.getByRole("switch", { name: switchName });
+    expect(randomTurns).not.toBeChecked();
+
+    await user.click(randomTurns);
+    await user.click(screen.getByRole("button", { name: "Start deck" }));
+    expect(onStart).toHaveBeenCalledWith(
+      expect.objectContaining({
+        isRandomTurns: true,
+        players: ["Ana", "Rui", "Eva"],
+      })
+    );
+  });
+
+  it("shows random turns switched on when the options already have it with three names", () => {
+    renderSetup(makeDeck(), {
+      isShuffled: false,
+      startLevel: 1,
+      isTableMode: false,
+      isRandomTurns: true,
+      isPassThePhone: false,
+      players: ["Ana", "Rui", "Eva"],
+    });
+    expect(screen.getByRole("switch", { name: /Random turns/ })).toBeChecked();
+  });
+
+  it("offers pass-the-phone only once three names are filled in", async () => {
+    const { onStart, user } = renderSetup();
+    const switchName = /Pass the phone/;
+    expect(
+      screen.queryByRole("switch", { name: switchName })
+    ).not.toBeInTheDocument();
+
+    await typeNames(user, ["Ana", "Rui"]);
+    await user.click(screen.getByRole("button", { name: "Add player" }));
+    expect(
+      screen.queryByRole("switch", { name: switchName })
+    ).not.toBeInTheDocument();
+
+    await user.type(
+      screen.getByRole("textbox", { name: "Player 3 name" }),
+      "Eva"
+    );
+    const passThePhone = screen.getByRole("switch", { name: switchName });
+    expect(passThePhone).not.toBeChecked();
+
+    await user.click(passThePhone);
+    await user.click(screen.getByRole("button", { name: "Start deck" }));
+    expect(onStart).toHaveBeenCalledWith(
+      expect.objectContaining({
+        isPassThePhone: true,
+        isTableMode: false,
+        players: ["Ana", "Rui", "Eva"],
+      })
+    );
+  });
+
+  it("turns table mode off when pass-the-phone goes on, and says why", async () => {
+    const { onStart, user } = renderSetup(makeDeck(), {
+      isShuffled: false,
+      startLevel: 1,
+      isTableMode: true,
+      isRandomTurns: false,
+      isPassThePhone: false,
+      players: ["Ana", "Rui", "Eva"],
+    });
+    const tableMode = screen.getByRole("switch", { name: /Table mode/ });
+    const passThePhone = screen.getByRole("switch", { name: /Pass the phone/ });
+    const note =
+      "Pass the phone and table mode can't both be on: table mode shows the card to the other side of the table.";
+    expect(tableMode).toBeChecked();
+    expect(screen.queryByText(note)).not.toBeInTheDocument();
+
+    await user.click(passThePhone);
+    expect(passThePhone).toBeChecked();
+    expect(tableMode).not.toBeChecked();
+    expect(screen.getByRole("status")).toHaveTextContent(note);
+
+    await user.click(tableMode);
+    expect(tableMode).toBeChecked();
+    expect(passThePhone).not.toBeChecked();
+    expect(screen.getByText(note)).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Start deck" }));
+    expect(onStart).toHaveBeenCalledWith(
+      expect.objectContaining({ isTableMode: true, isPassThePhone: false })
+    );
   });
 
   it("has one Start button and no quick start", () => {
@@ -75,6 +229,8 @@ describe("PlaySetup", () => {
       isShuffled: true,
       startLevel: 3,
       isTableMode: false,
+      isRandomTurns: false,
+      isPassThePhone: false,
       players: ["Ana", "Rui", "Inês"],
     });
     expect(screen.getByRole("radio", { name: /All in/ })).toBeChecked();
@@ -87,6 +243,8 @@ describe("PlaySetup", () => {
       isShuffled: true,
       startLevel: 3,
       isTableMode: false,
+      isRandomTurns: false,
+      isPassThePhone: false,
       players: ["Ana", "Rui", "Inês"],
     });
   });
@@ -142,6 +300,8 @@ describe("PlaySetup", () => {
       isShuffled: false,
       startLevel: 1,
       isTableMode: false,
+      isRandomTurns: false,
+      isPassThePhone: false,
       players: ["Ana"],
     });
     expect(screen.getAllByRole("textbox")).toHaveLength(2);
@@ -170,6 +330,8 @@ describe("PlaySetup", () => {
         isShuffled: false,
         startLevel: 1,
         isTableMode: false,
+        isRandomTurns: false,
+        isPassThePhone: false,
         players: [],
       },
       startedAt: 1,
@@ -194,6 +356,8 @@ describe("PlaySetup", () => {
         isShuffled: false,
         startLevel: 1,
         isTableMode: false,
+        isRandomTurns: false,
+        isPassThePhone: false,
         players: [],
       },
       startedAt: 1,
@@ -205,5 +369,143 @@ describe("PlaySetup", () => {
         "Starting with these options begins this deck again from the first card."
       )
     ).toBeInTheDocument();
+  });
+
+  describe("opened during a game of this deck", () => {
+    it("offers Save and continue first, Start over second, and a way back to the game", () => {
+      renderMidGameSetup();
+      const buttons = screen.getAllByRole("button", {
+        name: /Save and continue|Start over with these settings/,
+      });
+      expect(buttons.map((button) => button.textContent)).toEqual([
+        "Save and continue",
+        "Start over with these settings",
+      ]);
+      expect(
+        screen.queryByRole("button", { name: "Start deck" })
+      ).not.toBeInTheDocument();
+      expect(
+        screen.getByRole("link", { name: "Back to game" })
+      ).toHaveAttribute("href", "/play/a");
+      expect(
+        screen.queryByRole("link", { name: "Back to decks" })
+      ).not.toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "Save and continue keeps your place. A new start level or shuffle changes only the cards still to come."
+        )
+      ).toBeInTheDocument();
+    });
+
+    it("hands Back to game to onBack when the game is one entry back, without following the link", async () => {
+      const onBack = vi.fn();
+      const { user } = renderMidGameSetup(undefined, onBack);
+      await user.click(screen.getByRole("link", { name: "Back to game" }));
+      expect(onBack).toHaveBeenCalledOnce();
+    });
+
+    it("saves the edited options and continues", async () => {
+      const { onContinue, onStart, user } = renderMidGameSetup();
+      await typeNames(user, ["Ana", "Rui"]);
+      await user.click(
+        screen.getByRole("button", { name: "Save and continue" })
+      );
+      expect(onContinue).toHaveBeenCalledWith(
+        expect.objectContaining({ players: ["Ana", "Rui"] })
+      );
+      expect(onStart).not.toHaveBeenCalled();
+    });
+
+    it("still starts over with the edited options", async () => {
+      const { onContinue, onStart, user } = renderMidGameSetup();
+      await user.click(screen.getByRole("radio", { name: /Deeper/ }));
+      await user.click(
+        screen.getByRole("button", { name: "Start over with these settings" })
+      );
+      expect(onStart).toHaveBeenCalledWith(
+        expect.objectContaining({ startLevel: 2 })
+      );
+      expect(onContinue).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("start levels below the current card during a game", () => {
+    const pastNote = "You're past this level. Start over to play it.";
+
+    it("marks them as past and, when one is picked, blocks Save and continue with a note", async () => {
+      const { onContinue, user } = renderMidGameSetup(
+        makeOptions({ startLevel: 3 }),
+        undefined,
+        3
+      );
+      const warm = screen.getByRole("radio", { name: /Warm/ });
+      const deeper = screen.getByRole("radio", { name: /Deeper/ });
+      expect(warm.closest("label")).toHaveClass("level-picker__option--past");
+      expect(deeper.closest("label")).toHaveClass("level-picker__option--past");
+      expect(
+        screen.getByRole("radio", { name: /All in/ }).closest("label")
+      ).not.toHaveClass("level-picker__option--past");
+      expect(screen.queryByText(pastNote)).not.toBeInTheDocument();
+
+      await user.click(deeper);
+      expect(screen.getByText(pastNote)).toBeInTheDocument();
+      const saveButton = screen.getByRole("button", {
+        name: "Save and continue",
+      });
+      expect(saveButton).toBeDisabled();
+      // Enter in a name field submits the form: it must not continue either.
+      await user.type(
+        screen.getByRole("textbox", { name: "Player 1 name" }),
+        "Ana{Enter}"
+      );
+      expect(onContinue).not.toHaveBeenCalled();
+
+      await user.click(screen.getByRole("radio", { name: /All in/ }));
+      expect(screen.queryByText(pastNote)).not.toBeInTheDocument();
+      expect(saveButton).toBeEnabled();
+    });
+
+    it("still starts over from a past level", async () => {
+      const { onStart, user } = renderMidGameSetup(
+        makeOptions({ startLevel: 3 }),
+        undefined,
+        3
+      );
+      await user.click(screen.getByRole("radio", { name: /Warm/ }));
+      const startOver = screen.getByRole("button", {
+        name: "Start over with these settings",
+      });
+      expect(startOver).toBeEnabled();
+      await user.click(startOver);
+      expect(onStart).toHaveBeenCalledWith(
+        expect.objectContaining({ startLevel: 1 })
+      );
+    });
+
+    it("marks nothing as past in a fresh setup", async () => {
+      const { user } = renderSetup(makeDeck(), makeOptions({ startLevel: 3 }));
+      await user.click(screen.getByRole("radio", { name: /Warm/ }));
+      expect(
+        screen.queryByText("You're past this level. Start over to play it.")
+      ).not.toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Start deck" })).toBeEnabled();
+      expect(
+        document.querySelector(".level-picker__option--past")
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it("without a running game keeps Start deck and the way back to the decks", () => {
+    renderSetup();
+    expect(
+      screen.getByRole("button", { name: "Start deck" })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Save and continue" })
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Back to decks" })).toHaveAttribute(
+      "href",
+      "/decks"
+    );
   });
 });

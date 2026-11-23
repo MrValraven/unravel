@@ -51,6 +51,15 @@
   opacity: 0.55;
 }
 
+// Past the current card during a game: still a choice for Start over, so it keeps its pointer.
+.level-picker__option--past {
+  opacity: 0.55;
+
+  &:has(.level-picker__input:checked) {
+    opacity: 1;
+  }
+}
+
 // The native radio covers the option so taps, arrow keys and screen readers all work.
 .level-picker__input {
   position: absolute;

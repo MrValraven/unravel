@@ -6,6 +6,7 @@ import { themes, useSettings, type Theme } from "../../storage/settings";
 import { AboutSection } from "./AboutSection";
 import { settingsCopy } from "./copy";
 import { DailyReminderSetting } from "./DailyReminderSetting";
+import { DataSection } from "./DataSection";
 import { SegmentedControl, type SegmentedOption } from "./SegmentedControl";
 import { StatsPanel } from "./StatsPanel";
 import { SwitchRow } from "./SwitchRow";
@@ -84,6 +85,7 @@ const SettingsPage = () => {
         </div>
       </section>
 
+      <DataSection />
       <StatsPanel />
       <AboutSection />
     </main>

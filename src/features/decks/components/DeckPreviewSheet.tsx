@@ -47,7 +47,7 @@ export const DeckPreviewSheet = ({
   const startButtonRef = useRef<HTMLButtonElement>(null);
   const { startDeck, openGameOptions, runAfterAgeGate, ageGateProps } =
     useDeckStart();
-  // Starting replaces the one saved game, and no setup screen warns any more.
+  // Starting replaces the one saved game. The note below warns about it, so Start does not ask again.
   const otherSavedGame = useOtherSavedGame(deck?.id ?? "");
 
   if (!deck) return null;
@@ -92,7 +92,7 @@ export const DeckPreviewSheet = ({
               type="button"
               className="button button--primary"
               disabled={!canStart}
-              onClick={() => startDeck(deck)}
+              onClick={() => startDeck(deck, { isReplaceAcknowledged: true })}
             >
               <FiPlay aria-hidden="true" size={18} />
               {copy.preview.startDeck}

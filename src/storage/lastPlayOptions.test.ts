@@ -5,6 +5,8 @@ const options = {
   isShuffled: true,
   startLevel: 2 as const,
   isTableMode: false,
+  isRandomTurns: false,
+  isPassThePhone: false,
   players: ["Ana", "Rui"],
 };
 
@@ -23,6 +25,33 @@ describe("last play options", () => {
         window.localStorage.getItem("unravel:v2:lastPlayOptions") ?? "null"
       )
     ).toEqual(options);
+  });
+
+  it("loads options saved before random turns and pass-the-phone as off", () => {
+    const { isRandomTurns: _r, isPassThePhone: _p, ...oldOptions } = options;
+    window.localStorage.setItem(
+      "unravel:v2:lastPlayOptions",
+      JSON.stringify(oldOptions)
+    );
+    expect(loadLastPlayOptions()).toEqual(options);
+  });
+
+  it("keeps random turns saved with four names", () => {
+    const fourNames = {
+      ...options,
+      isRandomTurns: true,
+      players: ["Ana", "Rui", "Eva", "Leo"],
+    };
+    saveLastPlayOptions(fourNames);
+    expect(loadLastPlayOptions()).toEqual(fourNames);
+  });
+
+  it("rejects options whose new flags are not booleans", () => {
+    window.localStorage.setItem(
+      "unravel:v2:lastPlayOptions",
+      JSON.stringify({ ...options, isRandomTurns: "on" })
+    );
+    expect(loadLastPlayOptions()).toBeNull();
   });
 
   it("reads damaged options as none", () => {

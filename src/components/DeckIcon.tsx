@@ -15,6 +15,7 @@ import {
   FiSmile,
   FiStar,
   FiSun,
+  FiSunrise,
   FiUsers,
   FiZap,
 } from "react-icons/fi";
@@ -42,6 +43,7 @@ const deckIcons: Record<DeckIconName, IconType> = {
   moon: FiMoon,
   star: FiStar,
   sun: FiSun,
+  sunrise: FiSunrise,
   music: FiMusic,
   map: FiMap,
   flame: LuFlame,

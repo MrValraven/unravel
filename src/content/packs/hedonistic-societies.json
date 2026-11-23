@@ -47,15 +47,6 @@
       }
     },
     {
-      "id": "hedonistic-societies-006",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "Do you believe that pleasure and pain are two sides of the same coin? Why or why not?",
-        "pt": "Achas que o prazer e a dor são duas faces da mesma moeda? Porquê?"
-      }
-    },
-    {
       "id": "hedonistic-societies-007",
       "type": "question",
       "level": 1,
@@ -83,21 +74,30 @@
       }
     },
     {
+      "id": "hedonistic-societies-024",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's a guilty pleasure you'd only admit to after midnight?",
+        "pt": "Qual é o prazer proibido que só admitias depois da meia-noite?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-006",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Do you believe that pleasure and pain are two sides of the same coin? Why or why not?",
+        "pt": "Achas que o prazer e a dor são duas faces da mesma moeda? Porquê?"
+      }
+    },
+    {
       "id": "hedonistic-societies-010",
       "type": "question",
       "level": 2,
       "text": {
         "en": "What's your opinion on the intersection of hedonism and sexuality? How do they complement or conflict with each other?",
         "pt": "O que pensas do cruzamento entre hedonismo e sexualidade? Em que é que se complementam ou entram em conflito?"
-      }
-    },
-    {
-      "id": "hedonistic-societies-011",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "What's the most daring or risqué thing you've ever done in pursuit of pleasure?",
-        "pt": "Qual foi a coisa mais ousada ou atrevida que já fizeste em busca de prazer?"
       }
     },
     {
@@ -119,15 +119,6 @@
       }
     },
     {
-      "id": "hedonistic-societies-014",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "Describe your most memorable experience with aphrodisiacs or other substances known for enhancing pleasure.",
-        "pt": "Descreve a tua experiência mais memorável com afrodisíacos ou outras substâncias conhecidas por intensificar o prazer."
-      }
-    },
-    {
       "id": "hedonistic-societies-015",
       "type": "question",
       "level": 2,
@@ -137,30 +128,12 @@
       }
     },
     {
-      "id": "hedonistic-societies-016",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "What's the most spontaneous or impulsive sexual encounter you've ever had? What made it memorable?",
-        "pt": "Qual foi o encontro sexual mais espontâneo ou impulsivo que já tiveste? O que é que o tornou memorável?"
-      }
-    },
-    {
       "id": "hedonistic-societies-017",
       "type": "question",
       "level": 2,
       "text": {
         "en": "If you could design your own erotic party or event, what would it look like and what activities would take place?",
         "pt": "Se pudesses organizar a tua própria festa ou evento erótico, como seria e que atividades iam acontecer?"
-      }
-    },
-    {
-      "id": "hedonistic-societies-018",
-      "type": "everyone",
-      "level": 3,
-      "text": {
-        "en": "Share a sensual or erotic experience that awakened a new level of pleasure or desire within you.",
-        "pt": "Partilhem uma experiência sensual ou erótica que vos despertou um novo nível de prazer ou de desejo."
       }
     },
     {
@@ -182,12 +155,120 @@
       }
     },
     {
+      "id": "hedonistic-societies-025",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which of your senses gets you into the most trouble: taste, touch, smell, sight or sound?",
+        "pt": "Qual dos teus sentidos te mete em mais sarilhos: paladar, tato, olfato, visão ou audição?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-026",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What scent instantly reminds you of someone you were drawn to?",
+        "pt": "Que cheiro te faz lembrar logo alguém que te atraiu?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-027",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Share the most seductive thing someone can do without touching you at all.",
+        "pt": "Partilhem a coisa mais sedutora que alguém pode fazer sem sequer vos tocar."
+      }
+    },
+    {
+      "id": "hedonistic-societies-028",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's your secret move when you're flirting, and has it ever backfired?",
+        "pt": "Qual é o teu trunfo quando estás a seduzir alguém, e alguma vez te saiu pela culatra?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-029",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's something completely non-sexual that feels almost indecently good, like a head massage or fresh sheets?",
+        "pt": "Que coisa nada sexual te sabe quase indecentemente bem, como uma massagem na cabeça ou lençóis acabados de lavar?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-030",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's the most indulgent way you've ever spent a whole day in bed, with or without company?",
+        "pt": "Qual foi a forma mais indulgente como já passaste um dia inteiro na cama, com ou sem companhia?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-011",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's the most daring or risqué thing you've ever done in pursuit of pleasure?",
+        "pt": "Qual foi a coisa mais ousada ou atrevida que já fizeste em busca de prazer?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-014",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "Describe your most memorable experience with aphrodisiacs or other substances known for enhancing pleasure.",
+        "pt": "Descreve a tua experiência mais memorável com afrodisíacos ou outras substâncias conhecidas por intensificar o prazer."
+      }
+    },
+    {
+      "id": "hedonistic-societies-016",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's the most spontaneous or impulsive sexual encounter you've ever had? What made it memorable?",
+        "pt": "Qual foi o encontro sexual mais espontâneo ou impulsivo que já tiveste? O que é que o tornou memorável?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-018",
+      "type": "everyone",
+      "level": 3,
+      "text": {
+        "en": "Share a sensual or erotic experience that awakened a new level of pleasure or desire within you.",
+        "pt": "Partilhem uma experiência sensual ou erótica que vos despertou um novo nível de prazer ou de desejo."
+      }
+    },
+    {
       "id": "hedonistic-societies-021",
       "type": "question",
       "level": 3,
       "text": {
         "en": "Describe your most intense or mind-blowing sexual experience. What made it so unforgettable?",
         "pt": "Descreve a tua experiência sexual mais intensa ou alucinante. O que é que a tornou tão inesquecível?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-022",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "If your sex life was an ice cream flavour, which one would it be and why?",
+        "pt": "Se a tua vida sexual fosse um sabor de gelado, qual seria e porquê?"
+      }
+    },
+    {
+      "id": "hedonistic-societies-023",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's the most shocking thing someone has ever said to you during sex?",
+        "pt": "Qual foi a coisa mais chocante que alguém já te disse durante o sexo?"
       }
     }
   ]

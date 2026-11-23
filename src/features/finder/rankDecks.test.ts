@@ -1,7 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { decks } from "../../content/decks";
+import { decks, getVisibleDecks } from "../../content/decks";
 import type { Audience, DeckMeta, Mood } from "../../content/types";
-import { rankDecks, scoreDeck, type FinderAnswers } from "./rankDecks";
+import {
+  rankDecks,
+  scoreDeck,
+  type FinderAnswers,
+  type SpiceLevel,
+} from "./rankDecks";
 
 const buildDeck = (
   id: string,
@@ -82,12 +87,13 @@ describe("rankDecks", () => {
     ]);
   });
 
-  it("includes adult decks when the player is all in", () => {
+  it("includes adult decks when the player is all in, audience matches first", () => {
+    // group-heat scores 4 on mood and spice alone; deep-talk scores 3 but is for partners.
     expect(
       rankedIds(
         answers({ audience: "partner", mood: "spicy", spice: "all-in" })
       )
-    ).toEqual(["after-dark", "group-heat", "deep-talk"]);
+    ).toEqual(["after-dark", "deep-talk", "group-heat"]);
   });
 
   it("returns at most three decks", () => {
@@ -115,6 +121,18 @@ describe("rankDecks", () => {
     ).toEqual(["deep-talk"]);
   });
 
+  it("ranks real decks differently for a little spice than for keeping it clean", () => {
+    const clean = rankDecks(
+      decks,
+      answers({ audience: "date", mood: "light", spice: "none" })
+    ).map((deck) => deck.id);
+    const spicy = rankDecks(
+      decks,
+      answers({ audience: "date", mood: "light", spice: "a-little" })
+    ).map((deck) => deck.id);
+    expect(clean).not.toEqual(spicy);
+  });
+
   it("never suggests an adult live deck unless the player is all in", () => {
     for (const spice of ["none", "a-little"] as const) {
       const suggestions = rankDecks(
@@ -122,6 +140,52 @@ describe("rankDecks", () => {
         answers({ audience: "partner", mood: "spicy", spice })
       );
       expect(suggestions.every((deck) => !deck.isAdult)).toBe(true);
+    }
+  });
+
+  describe("against the real registry", () => {
+    const audiences: Audience[] = [
+      "new-people",
+      "friends",
+      "date",
+      "partner",
+      "group",
+    ];
+    const moods: Mood[] = ["light", "deep", "playful", "spicy"];
+    const spices: SpiceLevel[] = ["none", "a-little", "all-in"];
+    const pinnedDays = [
+      ["mid November", new Date(2026, 10, 16)],
+      ["midsummer", new Date(2026, 6, 15)],
+    ] as const;
+
+    for (const [label, today] of pinnedDays) {
+      it(`only suggests decks for the chosen audience when three exist (${label})`, () => {
+        const visibleDecks = getVisibleDecks(today);
+        for (const audience of audiences) {
+          for (const mood of moods) {
+            for (const spice of spices) {
+              const matchingCount = visibleDecks.filter(
+                (deck) =>
+                  deck.audiences.includes(audience) &&
+                  (spice === "all-in" || !deck.isAdult)
+              ).length;
+              if (matchingCount < 3) continue;
+              const suggestions = rankDecks(visibleDecks, {
+                audience,
+                mood,
+                spice,
+              });
+              const strays = suggestions
+                .filter((deck) => !deck.audiences.includes(audience))
+                .map((deck) => deck.id);
+              expect(
+                strays,
+                `${audience} / ${mood} / ${spice} suggested ${strays.join(", ")}`
+              ).toEqual([]);
+            }
+          }
+        }
+      });
     }
   });
 });

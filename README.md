@@ -10,14 +10,15 @@ Unravel is a frontend-only app. It has no backend, no accounts and no server cal
 
 ## Features
 
-- **21 decks** in three groups: Make Friends and Socialize, Dating and Romance, and Adults (18+). Seven of them are seasonal.
+- **24 decks** in three groups: Make Friends and Socialize, Dating and Romance, and Adults (18+). Nine of them are seasonal.
 - **Three levels in every deck.** Cards rise from light to deep. Players can start at level 1, 2 or 3.
-- **Three card types.** Questions for one player, challenges (some with a countdown timer) and cards for everyone.
+- **Five card types.** Questions for one player, challenges (some with a countdown timer), cards for everyone, votes where everyone points at once, and the hot seat, where the group asks one player. Group Night is built around votes and hot seats, and Mingling at Bairro Alto and Unravel mix them in.
 - **Game setup.** Add player names and the app tracks whose turn it is, shuffle inside each level (levels stay in rising order), or turn on table mode to lay the card out for landscape.
+- **Group play.** With three or more names, turn on random turns (never the same person twice in a row) or pass-the-phone, which covers a card meant for one player until they tap Reveal card. Vote cards run a "Point on 3" countdown. Both are off by default, so couples see no change.
 - **Skip, Not tonight and Pass.** Skip moves a card to the end of the deck, Not tonight removes it for the session, and 18+ decks offer Pass without asking why.
 - **Resume where you stopped.** Your place in a game is saved on the device.
 - **Favourites.** Save the cards you love. With five or more, they become a deck of their own.
-- **Custom decks.** Write your own questions and challenges, then share the deck with a link.
+- **Custom decks.** Write your own questions and challenges, then share the deck with a link. The editor asks before it drops unsaved edits and offers to restore a draft you left.
 - **Deck finder.** A short quiz about who you are playing with and the mood you want, then a ranked list of decks.
 - **End-of-deck recap.** The game in one line (deck, level, cards and minutes) ready to share, plus a suggestion for the next deck.
 - **Card of the day.** One easy card, the same for everyone, that changes at midnight.
@@ -25,8 +26,9 @@ Unravel is a frontend-only app. It has no backend, no accounts and no server cal
 - **Share a card as an image.** A 1080 by 1920 picture of the card for stories and chats.
 - **English and European Portuguese.** English is the default. Portuguese (pt-PT) is used only when a player picks it in Settings.
 - **Three themes and text size.** Night (the navy default), Dim (warmer and softer for low light) and Day (a light theme for daylight and outdoor play), plus three text sizes.
-- **Seasonal decks.** Pride, Santos Populares, Halloween, Christmas at the Table, Friendsmas, New Year and Valentine's Day appear in their own time of year.
-- **Deck pages for search.** Every deck has its own page with a title, description and link preview image.
+- **Seasonal decks.** Spring Reset, Pride, Santos Populares, Summer Nights, Halloween, Christmas at the Table, Friendsmas, New Year and Valentine's Day appear in their own time of year.
+- **Deck pages for search.** Every deck has its own page with a title, description and link preview image. A Share deck button copies the link, and every share points at the deck page.
+- **Backup and restore.** In Settings, "Your data" exports custom decks, favourites and stats to a JSON file and imports one back. It is a file on your device, not a sync.
 - **Installable and offline.** A progressive web app that works without a connection once it is installed. An install card on Home and at the end of a deck offers to add it to the home screen, and a small notice says when you are offline.
 - **Your nights.** A local stats panel with decks started and finished, cards seen and time played.
 
@@ -34,6 +36,7 @@ Unravel is a frontend-only app. It has no backend, no accounts and no server cal
 
 - Everything the app saves goes to `localStorage` in this browser. That covers settings, your place in a game, favourites, custom decks and stats.
 - There are no accounts, no analytics and no tracking.
+- A backup is a file you download and keep. Nothing is uploaded: the app reads a backup only when you pick the file yourself.
 - Share links for custom decks carry the deck in the URL hash (the part after `#`). Browsers keep the hash on the device and send it to no server.
 - All storage access goes through `src/storage/`, and every read and write is wrapped in a try/catch, so the app keeps working when storage is blocked.
 - Saved keys start with `unravel:v2:`.
@@ -162,10 +165,10 @@ Each deck has a pack at `src/content/packs/<deck-id>.json`. The deck id is a keb
 Card rules:
 
 - **`id`** is `<deck-id>-NNN` with three digits, for example `first-date-007`. Ids are unique and never reused, because favourites and saved games point at them.
-- **`type`** is `question`, `challenge` or `everyone`.
+- **`type`** is `question`, `challenge`, `everyone`, `vote` or `hot-seat`. Vote and hot-seat text never names a player or holds a placeholder: the hot-seat player's name shows only in the turn line.
 - **`level`** is `1`, `2` or `3`. Curated order puts lower levels first.
 - **`text`** needs both `en` and `pt`. Portuguese is European Portuguese (pt-PT).
-- **`timerSeconds`** is optional, only for challenges, in whole seconds from 30 to 120.
+- **`timerSeconds`** is optional, only for `challenge` and `hot-seat` cards, in whole seconds from 30 to 120.
 
 ### 2. The registry entry
 
@@ -188,7 +191,7 @@ Import the pack in `src/content/decks.ts` and add a `buildDeck` call to the `dec
 
 ### 3. Content lint
 
-`src/content/content.test.ts` checks every pack against the contract: unique deck and card ids, a pack file for each registered deck, ids that match `<deck-id>-NNN`, English and Portuguese text on every card, levels from 1 to 3, known card types, timers only on challenges, no draft decks in the registry and no em dashes in any text. Run `npm run test:run` after editing a pack.
+`src/content/content.test.ts` checks every pack against the contract: unique deck and card ids, a pack file for each registered deck, ids that match `<deck-id>-NNN`, English and Portuguese text on every card, levels from 1 to 3, known card types, timers only on challenge and hot-seat cards, no placeholders (`{`, `}`, `[`, `]`, `__`) and no word "name" or "nome" in vote and hot-seat text (it cannot tell a real first name, so that stays a review check), no draft decks in the registry and no em dashes in any text. Run `npm run test:run` after editing a pack.
 
 ### 4. Link preview image
 
@@ -216,11 +219,13 @@ A deck with a `season` window shows up in the picker, the finder, the home page 
 | ---------------------- | ------------------ |
 | Pride Month            | `06-01` to `06-30` |
 | Santos Populares       | `06-01` to `06-30` |
+| Summer Nights          | `07-01` to `09-30` |
 | Halloween              | `10-01` to `12-01` |
 | Christmas at the Table | `12-01` to `01-06` |
 | Friendsmas             | `12-01` to `01-06` |
 | New Year               | `12-26` to `01-07` |
 | Valentine's Day        | `02-01` to `02-14` |
+| Spring Reset           | `03-01` to `05-31` |
 
 The deck pages stay in the build and in `sitemap.xml` all year, so a direct link always works. Give a seasonal deck `tag: "seasonal"` together with its `season` window.
 

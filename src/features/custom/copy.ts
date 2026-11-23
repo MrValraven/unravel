@@ -5,12 +5,16 @@ const en = {
     question: "Question",
     challenge: "Challenge",
     everyone: "Everyone answers",
+    vote: "Vote",
+    "hot-seat": "Hot seat",
   },
   cardCount: { one: "{count} card", other: "{count} cards" },
   deckLimit:
     "You have {max} decks, the most Unravel keeps on one device. Delete a deck to make room for a new one.",
   status: {
     savedDeck: "Saved {title} to your decks",
+    saveBlocked:
+      "Your browser blocked saving: storage is full or turned off. This deck lasts only until you close this tab.",
     deletedDeck: "Deleted {title}",
   },
   list: {
@@ -41,10 +45,6 @@ const en = {
   },
   share: {
     linkCopied: "Link copied. Paste it anywhere to share {title}",
-    clipboardUnavailable:
-      "This browser gives Unravel no clipboard access here, so the link could not be copied.",
-    clipboardBlocked:
-      "Your browser blocked copying to the clipboard, so the link was not copied.",
     longLinkTitle: "This link is long",
     longLinkDescription:
       "The link to {title} is {length} characters. Some messaging apps cut links past {limit} characters, and a cut link opens no deck. Fewer or shorter cards make the link shorter.",
@@ -68,6 +68,8 @@ const en = {
       question: "Question",
       challenge: "Challenge",
       everyone: "Everyone",
+      vote: "Vote",
+      "hot-seat": "Hot seat",
     },
     cardPlaceholder: "What would you ask?",
     moveUp: "Move card {number} up",
@@ -97,6 +99,13 @@ const en = {
         "Your edits to this deck are unsaved. Leaving now drops them.",
       confirm: "Discard changes",
       cancel: "Keep editing",
+    },
+    restoreDialog: {
+      title: "Restore your unsaved changes?",
+      description:
+        "You left this deck with edits that were never saved. Restore them to carry on where you stopped, or discard them.",
+      restore: "Restore",
+      discard: "Discard",
     },
   },
   importer: {
@@ -140,12 +149,16 @@ export const customCopy = defineCopy<typeof en>({
       question: "Pergunta",
       challenge: "Desafio",
       everyone: "Todos respondem",
+      vote: "Votação",
+      "hot-seat": "Holofote",
     },
     cardCount: { one: "{count} carta", other: "{count} cartas" },
     deckLimit:
       "Tens {max} baralhos, o máximo que o Unravel guarda num dispositivo. Apaga um baralho para criares outro.",
     status: {
       savedDeck: "{title} guardado nos teus baralhos",
+      saveBlocked:
+        "O teu navegador bloqueou o guardar: o armazenamento está cheio ou desligado. Este baralho dura só até fechares este separador.",
       deletedDeck: "{title} apagado",
     },
     list: {
@@ -176,10 +189,6 @@ export const customCopy = defineCopy<typeof en>({
     },
     share: {
       linkCopied: "Link copiado. Cola-o onde quiseres para partilhar {title}",
-      clipboardUnavailable:
-        "Este navegador não dá ao Unravel acesso à área de transferência aqui, por isso o link não foi copiado.",
-      clipboardBlocked:
-        "O teu navegador bloqueou a cópia para a área de transferência, por isso o link não foi copiado.",
       longLinkTitle: "Este link é longo",
       longLinkDescription:
         "O link para {title} tem {length} caracteres. Algumas apps de mensagens cortam links com mais de {limit} caracteres, e um link cortado não abre nenhum baralho. Menos cartas, ou cartas mais curtas, encurtam o link.",
@@ -203,6 +212,8 @@ export const customCopy = defineCopy<typeof en>({
         question: "Pergunta",
         challenge: "Desafio",
         everyone: "Todos",
+        vote: "Votação",
+        "hot-seat": "Holofote",
       },
       cardPlaceholder: "O que perguntarias?",
       moveUp: "Subir a carta {number}",
@@ -232,6 +243,13 @@ export const customCopy = defineCopy<typeof en>({
           "As tuas alterações a este baralho ainda não estão guardadas. Se saíres agora, perdes estas alterações.",
         confirm: "Descartar alterações",
         cancel: "Continuar a editar",
+      },
+      restoreDialog: {
+        title: "Restaurar as alterações por guardar?",
+        description:
+          "Saíste deste baralho com alterações que nunca foram guardadas. Restaura-as para continuares onde ficaste, ou descarta-as.",
+        restore: "Restaurar",
+        discard: "Descartar",
       },
     },
     importer: {

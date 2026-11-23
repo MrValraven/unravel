@@ -1,6 +1,6 @@
-import type { CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Link, useParams } from "react-router";
-import { FiCalendar, FiGrid, FiPlay } from "react-icons/fi";
+import { FiCalendar, FiGrid, FiPlay, FiShare2 } from "react-icons/fi";
 import { AgeGateDialog } from "../../components/AgeGateDialog";
 import { DeckIcon } from "../../components/DeckIcon";
 import NotFoundPage from "../../components/NotFoundPage";
@@ -8,9 +8,13 @@ import { PageHeader } from "../../components/PageHeader";
 import { getBuiltinDeck, isDeckInSeason } from "../../content/decks";
 import type { Deck } from "../../content/types";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
-import { localize } from "../../i18n/localize";
+import { formatCopy, localize } from "../../i18n/localize";
 import { useLocale } from "../../i18n/LocaleContext";
 import { useCopy } from "../../i18n/useCopy";
+import { buildDeckShareUrl } from "../share/deckShareUrl";
+import { ShareLinkDialog } from "../share/ShareLinkDialog";
+import { shareLink, type ShareLinkOutcome } from "../share/shareLink";
+import { ReplaceSavedGameDialog } from "../play/setup/ReplaceSavedGameDialog";
 import { DeckBadges } from "./components/DeckBadges";
 import { DeckBreadcrumbs } from "./components/DeckBreadcrumbs";
 import { LevelBreakdown } from "./components/LevelBreakdown";
@@ -23,13 +27,49 @@ import "./DeckLandingPage.scss";
 import { SiteFooter } from "../../components/SiteFooter";
 
 const LANDING_SAMPLE_COUNT = 5;
+const STATUS_VISIBLE_MILLISECONDS = 4000;
 
 const DeckLanding = ({ deck }: { deck: Deck }) => {
   const copy = useCopy(deckCopy).landing;
   const locale = useLocale();
   const title = localize(deck.title, locale);
   useDocumentTitle(title);
-  const { startDeck, runAfterAgeGate, ageGateProps } = useDeckStart();
+  const { startDeck, runAfterAgeGate, ageGateProps, replaceDialogProps } =
+    useDeckStart();
+  const [shareOutcome, setShareOutcome] = useState<ShareLinkOutcome | null>(
+    null
+  );
+  const shareUrl = buildDeckShareUrl(deck.id, window.location.origin);
+
+  useEffect(() => {
+    if (shareOutcome !== "copied") return;
+    const timer = window.setTimeout(
+      () => setShareOutcome(null),
+      STATUS_VISIBLE_MILLISECONDS
+    );
+    return () => window.clearTimeout(timer);
+  }, [shareOutcome]);
+
+  // A second tap while the share sheet is open would be refused and fall to the
+  // clipboard, so it is ignored until the first share settles.
+  const isSharingRef = useRef(false);
+  const handleShare = async () => {
+    if (isSharingRef.current) return;
+    isSharingRef.current = true;
+    setShareOutcome(null);
+    try {
+      setShareOutcome(
+        await shareLink({
+          title,
+          text: formatCopy(copy.shareText, { deck: title }),
+          url: shareUrl,
+        })
+      );
+    } finally {
+      isSharingRef.current = false;
+    }
+  };
+
   const accentStyle = { "--deck-accent": deck.accent } as CSSProperties;
   // A shared link can arrive out of season, when the picker leaves the deck out.
   const seasonLine =
@@ -72,6 +112,14 @@ const DeckLanding = ({ deck }: { deck: Deck }) => {
                     <FiPlay aria-hidden="true" size={18} />
                     {copy.startDeck}
                   </button>
+                  <button
+                    type="button"
+                    className="button button--secondary"
+                    onClick={() => void handleShare()}
+                  >
+                    <FiShare2 aria-hidden="true" size={18} />
+                    {copy.shareDeck}
+                  </button>
                   <Link
                     to="/decks"
                     viewTransition
@@ -81,6 +129,9 @@ const DeckLanding = ({ deck }: { deck: Deck }) => {
                     {copy.browseDecks}
                   </Link>
                 </div>
+                <p className="deck-landing__status" role="status">
+                  {shareOutcome === "copied" ? copy.linkCopied : ""}
+                </p>
               </header>
               <LevelBreakdown cards={deck.cards} />
             </div>
@@ -96,6 +147,12 @@ const DeckLanding = ({ deck }: { deck: Deck }) => {
           <RelatedDecks deck={deck} />
         </main>
         <AgeGateDialog {...ageGateProps} />
+        <ReplaceSavedGameDialog {...replaceDialogProps} />
+        <ShareLinkDialog
+          isOpen={shareOutcome === "unavailable"}
+          url={shareUrl}
+          onClose={() => setShareOutcome(null)}
+        />
       </div>
       <SiteFooter />
     </>

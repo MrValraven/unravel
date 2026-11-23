@@ -1,5 +1,10 @@
 import { expect, test } from "@playwright/test";
-import { readCopiedLinks, recordSharedLinks, seedStorage } from "./helpers";
+import {
+  readCopiedLinks,
+  readStoredText,
+  recordSharedLinks,
+  seedStorage,
+} from "./helpers";
 
 const DECK_TITLE = "Friday crew";
 const CARD_TEXT = "What made you laugh this week?";
@@ -107,5 +112,49 @@ test.describe("custom decks", () => {
     await expect(
       page.getByRole("heading", { name: "This link did not open a deck" })
     ).toBeVisible();
+  });
+
+  test("leaving with unsaved edits asks first, and a reload offers to restore them", async ({
+    page,
+  }) => {
+    await seedStorage(page);
+    // Reached from the list inside the app, so Back is an in-app move the editor can guard.
+    await page.goto("/custom");
+    await page
+      .getByRole("main")
+      .getByRole("link", { name: "Create a deck" })
+      .first()
+      .click();
+    await expect(page).toHaveURL(/\/custom\/new$/);
+    const titleField = page.getByLabel("Deck title");
+    await titleField.fill(DECK_TITLE);
+
+    await page.goBack();
+    const discardDialog = page.getByRole("dialog", {
+      name: "Discard your changes?",
+    });
+    await expect(discardDialog).toBeVisible();
+    await discardDialog.getByRole("button", { name: "Keep editing" }).click();
+    await expect(discardDialog).toBeHidden();
+    await expect(page).toHaveURL(/\/custom\/new$/);
+    await expect(titleField).toHaveValue(DECK_TITLE);
+
+    // The draft is written shortly after typing stops, so wait for it before reloading.
+    await page.getByLabel("Card 1", { exact: true }).fill(CARD_TEXT);
+    await expect
+      .poll(async () => readStoredText(page, "customDeckDraft"))
+      .toContain(CARD_TEXT);
+    await page.reload();
+
+    const restoreDialog = page.getByRole("dialog", {
+      name: "Restore your unsaved changes?",
+    });
+    await expect(restoreDialog).toBeVisible();
+    await restoreDialog.getByRole("button", { name: "Restore" }).click();
+    await expect(restoreDialog).toBeHidden();
+    await expect(page.getByLabel("Deck title")).toHaveValue(DECK_TITLE);
+    await expect(page.getByLabel("Card 1", { exact: true })).toHaveValue(
+      CARD_TEXT
+    );
   });
 });

@@ -1,8 +1,8 @@
 import { useState, type CSSProperties, type FormEvent } from "react";
-import { FiInfo, FiPlay } from "react-icons/fi";
+import { FiCheck, FiInfo, FiPlay, FiRotateCcw } from "react-icons/fi";
 import { DeckIcon } from "../../../components/DeckIcon";
 import { PageHeader } from "../../../components/PageHeader";
-import type { Deck } from "../../../content/types";
+import type { Deck, IntensityLevel } from "../../../content/types";
 import { formatCopy, localize, pluralize } from "../../../i18n/localize";
 import { useLocale } from "../../../i18n/LocaleContext";
 import { useCopy } from "../../../i18n/useCopy";
@@ -22,18 +22,48 @@ import { useOtherSavedGame } from "./useOtherSavedGame";
 import { useStickyFooterHeight } from "./useStickyFooterHeight";
 import "./PlaySetup.scss";
 
+/** Random turns and pass-the-phone need a group: their switches show with this many names. */
+const GROUP_OPTIONS_MINIMUM_NAMES = 3;
+
+/** A saved game of this deck that Game options can change without starting over. */
+export interface RunningGameSetup {
+  /** Where "Back to game" goes: the game, on the same card. */
+  backTo: string;
+  /** Save and continue: apply the options to the running game. */
+  onContinue: (options: PlayOptions) => void;
+  /**
+   * Set when Game options was pushed on top of the game: "Back to game" calls this
+   * to pop that entry. Without it the link replaces the entry with `backTo`.
+   */
+  onBack?: () => void;
+  /**
+   * Save and continue never deals cards easier than the current one, so a start level
+   * below this one blocks it, with a note; Start over can still use it. 1 when missing.
+   */
+  lowestContinueLevel?: IntensityLevel;
+}
+
 interface PlaySetupProps {
   deck: Deck;
   /** The running game's or the last-used options; the defaults when missing. */
   initialOptions?: PlayOptions;
   onStart: (options: PlayOptions) => void;
+  /**
+   * Set when a game of this deck is running: Save and continue leads, Start over
+   * follows, and the back link returns to the game instead of the decks.
+   */
+  runningGame?: RunningGameSetup;
 }
 
-/** Game options: optional names, start level, shuffle and table mode. Starting saves them for next time. */
+/**
+ * Game options: optional names, start level, shuffle and table mode, plus random turns and
+ * pass-the-phone once three names are in. Starting saves them for next time.
+ */
 export const PlaySetup = ({
   deck,
   initialOptions,
   onStart,
+  runningGame,
 }: PlaySetupProps) => {
   const copy = useCopy(playCopy);
   const flow = useCopy(flowCopy).setup;
@@ -41,6 +71,9 @@ export const PlaySetup = ({
   const otherSavedGame = useOtherSavedGame(deck.id);
   const savedProgress = useProgress();
   const hasSavedGameOfThisDeck = savedProgress?.deckId === deck.id;
+  const hasSavedGameNote =
+    runningGame !== undefined ||
+    (hasSavedGameOfThisDeck && deck.cards.length > 0);
   const titleRef = useFocusOnMount<HTMLHeadingElement>();
   const actionsRef = useStickyFooterHeight<HTMLDivElement>();
   const [options, setOptions] = useState<PlayOptions>(
@@ -49,13 +82,44 @@ export const PlaySetup = ({
   const isCustomDeck = isCustomDeckId(deck.id);
   const playableCardCount = countCardsFromLevel(deck, options.startLevel);
   const canStart = playableCardCount > 0;
+  const lowestContinueLevel = runningGame?.lowestContinueLevel ?? 1;
+  const isPastLevel = !isCustomDeck && options.startLevel < lowestContinueLevel;
+  const canUseGroupOptions =
+    options.players.filter((name) => name.trim().length > 0).length >=
+    GROUP_OPTIONS_MINIMUM_NAMES;
+  const [hasSwitchedOtherOff, setHasSwitchedOtherOff] = useState(false);
 
   const updateOptions = (patch: Partial<PlayOptions>) =>
     setOptions((previous) => ({ ...previous, ...patch }));
 
+  // Table mode shows the card across the table, which pass-the-phone keeps private:
+  // turning one on turns the other off, and the note says why.
+  const handlePassThePhoneChange = (isPassThePhone: boolean) => {
+    const turnsTableModeOff = isPassThePhone && options.isTableMode;
+    updateOptions(
+      turnsTableModeOff
+        ? { isPassThePhone, isTableMode: false }
+        : { isPassThePhone }
+    );
+    if (turnsTableModeOff) setHasSwitchedOtherOff(true);
+  };
+  const handleTableModeChange = (isTableMode: boolean) => {
+    const turnsPassThePhoneOff = isTableMode && options.isPassThePhone;
+    updateOptions(
+      turnsPassThePhoneOff
+        ? { isTableMode, isPassThePhone: false }
+        : { isTableMode }
+    );
+    if (turnsPassThePhoneOff && canUseGroupOptions)
+      setHasSwitchedOtherOff(true);
+  };
+
+  // The submit button is the primary one: Save and continue during a game.
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (canStart) onStart(options);
+    if (runningGame) {
+      if (!isPastLevel) runningGame.onContinue(options);
+    } else if (canStart) onStart(options);
   };
 
   return (
@@ -63,7 +127,23 @@ export const PlaySetup = ({
       className="page play-setup"
       style={{ "--deck-accent": deck.accent } as CSSProperties}
     >
-      <PageHeader backTo="/decks" backLabel={copy.backToDecks} />
+      {runningGame ? (
+        <PageHeader
+          backTo={runningGame.backTo}
+          backLabel={flow.backToGame}
+          isBackReplace
+          onBackClick={
+            runningGame.onBack
+              ? (event) => {
+                  event.preventDefault();
+                  runningGame.onBack?.();
+                }
+              : undefined
+          }
+        />
+      ) : (
+        <PageHeader backTo="/decks" backLabel={copy.backToDecks} />
+      )}
       <header className="play-setup__hero">
         <span className="play-setup__icon" aria-hidden="true">
           <DeckIcon name={deck.icon} size={30} />
@@ -94,10 +174,10 @@ export const PlaySetup = ({
             : copy.setup.replacesSavedGameUntitled}
         </p>
       )}
-      {hasSavedGameOfThisDeck && deck.cards.length > 0 && (
+      {hasSavedGameNote && (
         <p className="play-setup__note">
           <FiInfo aria-hidden="true" size={18} />
-          {flow.restartsSavedGame}
+          {runningGame ? flow.continuesSavedGame : flow.restartsSavedGame}
         </p>
       )}
 
@@ -114,7 +194,19 @@ export const PlaySetup = ({
               deck={deck}
               startLevel={options.startLevel}
               onChange={(startLevel) => updateOptions({ startLevel })}
+              lowestContinueLevel={lowestContinueLevel}
             />
+            {runningGame && (
+              // Present before the note fills it, so screen readers announce the change.
+              <div className="play-setup__level-status" role="status">
+                {isPastLevel && (
+                  <p className="play-setup__note">
+                    <FiInfo aria-hidden="true" size={18} />
+                    {flow.pastLevel}
+                  </p>
+                )}
+              </div>
+            )}
           </section>
         )}
         <section className="play-setup__section">
@@ -128,23 +220,72 @@ export const PlaySetup = ({
               isOn={options.isShuffled}
               onChange={(isShuffled) => updateOptions({ isShuffled })}
             />
+            {canUseGroupOptions && (
+              <SetupSwitch
+                title={copy.setup.randomTurnsTitle}
+                hint={copy.setup.randomTurnsHint}
+                isOn={options.isRandomTurns}
+                onChange={(isRandomTurns) => updateOptions({ isRandomTurns })}
+              />
+            )}
+            {canUseGroupOptions && (
+              <SetupSwitch
+                title={copy.setup.passThePhoneTitle}
+                hint={copy.setup.passThePhoneHint}
+                isOn={options.isPassThePhone}
+                onChange={handlePassThePhoneChange}
+              />
+            )}
             <SetupSwitch
               title={copy.setup.tableModeTitle}
               hint={copy.setup.tableModeHint}
               isOn={options.isTableMode}
-              onChange={(isTableMode) => updateOptions({ isTableMode })}
+              onChange={handleTableModeChange}
             />
           </div>
+          {canUseGroupOptions && (
+            // Present before the note fills it, so screen readers announce the change.
+            <div className="play-setup__switch-status" role="status">
+              {hasSwitchedOtherOff && (
+                <p className="play-setup__note">
+                  <FiInfo aria-hidden="true" size={18} />
+                  {copy.setup.exclusiveNote}
+                </p>
+              )}
+            </div>
+          )}
         </section>
         <div ref={actionsRef} className="play-setup__actions">
-          <button
-            type="submit"
-            className="button button--primary"
-            disabled={!canStart}
-          >
-            <FiPlay aria-hidden="true" size={20} />
-            {copy.setup.startDeck}
-          </button>
+          {runningGame ? (
+            <>
+              <button
+                type="submit"
+                className="button button--primary"
+                disabled={isPastLevel}
+              >
+                <FiCheck aria-hidden="true" size={20} />
+                {flow.saveAndContinue}
+              </button>
+              <button
+                type="button"
+                className="button button--quiet"
+                disabled={!canStart}
+                onClick={() => onStart(options)}
+              >
+                <FiRotateCcw aria-hidden="true" size={20} />
+                {flow.startOver}
+              </button>
+            </>
+          ) : (
+            <button
+              type="submit"
+              className="button button--primary"
+              disabled={!canStart}
+            >
+              <FiPlay aria-hidden="true" size={20} />
+              {copy.setup.startDeck}
+            </button>
+          )}
         </div>
       </form>
     </main>

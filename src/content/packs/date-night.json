@@ -47,15 +47,6 @@
       }
     },
     {
-      "id": "date-night-006",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What's something about you that took me a while to understand?",
-        "pt": "Que coisa em ti é que eu demorei algum tempo a perceber?"
-      }
-    },
-    {
       "id": "date-night-007",
       "type": "question",
       "level": 1,
@@ -74,39 +65,12 @@
       }
     },
     {
-      "id": "date-night-009",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "When did you last feel really looked after by me, and what did I do?",
-        "pt": "Quando foi a última vez que sentiste que eu cuidava mesmo de ti, e o que é que eu fiz?"
-      }
-    },
-    {
-      "id": "date-night-010",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What's a moment from our early dates that you still replay in your head?",
-        "pt": "Que momento dos nossos primeiros encontros ainda revives na cabeça?"
-      }
-    },
-    {
       "id": "date-night-011",
       "type": "challenge",
       "level": 1,
       "text": {
         "en": "Arm wrestle across the table. Best of three wins!",
         "pt": "Façam braço de ferro em cima da mesa. À melhor de três!"
-      }
-    },
-    {
-      "id": "date-night-012",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What's something I could do tonight that would make you melt?",
-        "pt": "O que é que eu podia fazer esta noite que te deixasse a derreter?"
       }
     },
     {
@@ -125,15 +89,6 @@
       "text": {
         "en": "If our relationship had its own museum, what would the star exhibit be?",
         "pt": "Se a nossa relação tivesse um museu, qual seria a peça estrela?"
-      }
-    },
-    {
-      "id": "date-night-015",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "Which of my quirks have you secretly grown to love?",
-        "pt": "Que manias minhas acabaste por adorar em segredo?"
       }
     },
     {
@@ -174,60 +129,6 @@
       }
     },
     {
-      "id": "date-night-020",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What's a green flag of mine that you appreciate more now than at the start?",
-        "pt": "Que green flag minha valorizas mais agora do que no início?"
-      }
-    },
-    {
-      "id": "date-night-021",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What do you find most attractive about me that isn't physical?",
-        "pt": "O que é que achas mais atraente em mim que não seja físico?"
-      }
-    },
-    {
-      "id": "date-night-022",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "What have you learned about yourself since we got together?",
-        "pt": "O que é que aprendeste sobre ti desde que começámos a namorar?"
-      }
-    },
-    {
-      "id": "date-night-023",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What do your past crushes tend to have in common?",
-        "pt": "O que é que as tuas antigas paixonetas costumam ter em comum?"
-      }
-    },
-    {
-      "id": "date-night-024",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "How would you describe a good kiss?",
-        "pt": "Como descreverias um bom beijo?"
-      }
-    },
-    {
-      "id": "date-night-025",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What's something about us that you're excited to see grow?",
-        "pt": "O que é que há em nós que te entusiasma ver crescer?"
-      }
-    },
-    {
       "id": "date-night-026",
       "type": "question",
       "level": 1,
@@ -255,12 +156,93 @@
       }
     },
     {
-      "id": "date-night-029",
+      "id": "date-night-032",
       "type": "question",
-      "level": 3,
+      "level": 1,
       "text": {
-        "en": "What's the hardest thing you’ve done in your life and what did you learn from that?",
-        "pt": "Qual foi a coisa mais difícil que já fizeste na vida e o que é que aprendeste com isso?"
+        "en": "If you could plan our next date with no budget and no limits, what would we do?",
+        "pt": "Se pudesses planear o nosso próximo encontro sem orçamento nem limites, o que é que faríamos?"
+      }
+    },
+    {
+      "id": "date-night-006",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's something about you that took me a while to understand?",
+        "pt": "Que coisa em ti é que eu demorei algum tempo a perceber?"
+      }
+    },
+    {
+      "id": "date-night-009",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "When did you last feel really looked after by me, and what did I do?",
+        "pt": "Quando foi a última vez que sentiste que eu cuidava mesmo de ti, e o que é que eu fiz?"
+      }
+    },
+    {
+      "id": "date-night-010",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's a moment from our early dates that you still replay in your head?",
+        "pt": "Que momento dos nossos primeiros encontros ainda revives na cabeça?"
+      }
+    },
+    {
+      "id": "date-night-012",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's something I could do tonight that would make you melt?",
+        "pt": "O que é que eu podia fazer esta noite que te deixasse a derreter?"
+      }
+    },
+    {
+      "id": "date-night-015",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "Which of my quirks have you secretly grown to love?",
+        "pt": "Que manias minhas acabaste por adorar em segredo?"
+      }
+    },
+    {
+      "id": "date-night-020",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's a green flag of mine that you appreciate more now than at the start?",
+        "pt": "Que green flag minha valorizas mais agora do que no início?"
+      }
+    },
+    {
+      "id": "date-night-021",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What do you find most attractive about me that isn't physical?",
+        "pt": "O que é que achas mais atraente em mim que não seja físico?"
+      }
+    },
+    {
+      "id": "date-night-023",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What do your past crushes tend to have in common?",
+        "pt": "O que é que as tuas antigas paixonetas costumam ter em comum?"
+      }
+    },
+    {
+      "id": "date-night-025",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's something about us that you're excited to see grow?",
+        "pt": "O que é que há em nós que te entusiasma ver crescer?"
       }
     },
     {
@@ -282,21 +264,39 @@
       }
     },
     {
-      "id": "date-night-032",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "If you could plan our next date with no budget and no limits, what would we do?",
-        "pt": "Se pudesses planear o nosso próximo encontro sem orçamento nem limites, o que é que faríamos?"
-      }
-    },
-    {
       "id": "date-night-033",
       "type": "question",
       "level": 2,
       "text": {
         "en": "What's a habit of mine that has slowly rubbed off on you?",
         "pt": "Que hábito meu é que, aos poucos, passou a ser teu também?"
+      }
+    },
+    {
+      "id": "date-night-022",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What have you learned about yourself since we got together?",
+        "pt": "O que é que aprendeste sobre ti desde que começámos a namorar?"
+      }
+    },
+    {
+      "id": "date-night-024",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "How would you describe a good kiss?",
+        "pt": "Como descreverias um bom beijo?"
+      }
+    },
+    {
+      "id": "date-night-029",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What's the hardest thing you’ve done in your life and what did you learn from that?",
+        "pt": "Qual foi a coisa mais difícil que já fizeste na vida e o que é que aprendeste com isso?"
       }
     },
     {

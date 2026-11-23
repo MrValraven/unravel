@@ -5,23 +5,34 @@ import type { TurnInfo } from "../engine/selectors";
 interface BadgeCopy {
   challenge: string;
   everyone: string;
+  vote: string;
+  hotSeat: string;
 }
 
-/** The badge label for challenge and everyone cards. Plain questions have none. */
+/** The badge label for every card type but the plain question, which has none. */
 export const getCardBadgeLabel = (
   cardType: CardType,
   copy: BadgeCopy
 ): string | undefined => {
-  if (cardType === "challenge") return copy.challenge;
-  if (cardType === "everyone") return copy.everyone;
-  return undefined;
+  switch (cardType) {
+    case "challenge":
+      return copy.challenge;
+    case "everyone":
+      return copy.everyone;
+    case "vote":
+      return copy.vote;
+    case "hot-seat":
+      return copy.hotSeat;
+    case "question":
+      return undefined;
+  }
 };
 
 interface TypeCopy extends BadgeCopy {
   question: string;
 }
 
-/** The chip label every card wears: question, challenge or everyone. */
+/** The chip label every card wears, questions included. */
 export const getCardTypeLabel = (cardType: CardType, copy: TypeCopy): string =>
   getCardBadgeLabel(cardType, copy) ?? copy.question;
 
@@ -48,10 +59,14 @@ export const getLevelLabel = (
 interface TurnCopy {
   turn: string;
   challengeTurn: string;
+  soloTurn: string;
   pairTurn: string;
   pairChallengeTurn: string;
   unnamedTurn: string;
   unnamedChallengeTurn: string;
+  voteTurn: string;
+  hotSeatTurn: string;
+  hotSeatUnnamedTurn: string;
 }
 
 const assertUnreachableTurn = (turn: never): never => {
@@ -60,7 +75,9 @@ const assertUnreachableTurn = (turn: never): never => {
 
 /**
  * Whose turn it is on this card. A challenge is done, so its line names who takes it on.
- * Everyone cards have no line: their badge already says everyone answers.
+ * With pass-the-phone the answerer reads the card first, so the line names only them.
+ * Everyone cards have no line: their badge already says everyone answers. Vote cards say
+ * everyone votes, and hot-seat cards name who sits in it (the card text never does).
  */
 export const getTurnLine = (
   cardType: CardType,
@@ -74,6 +91,8 @@ export const getTurnLine = (
         asker: turn.asker,
         answerer: turn.answerer,
       });
+    case "solo":
+      return formatCopy(copy.soloTurn, { answerer: turn.answerer });
     case "pair":
       return formatCopy(isChallenge ? copy.pairChallengeTurn : copy.pairTurn, {
         first: turn.first,
@@ -83,6 +102,12 @@ export const getTurnLine = (
       return isChallenge ? copy.unnamedChallengeTurn : copy.unnamedTurn;
     case "everyone":
       return undefined;
+    case "vote":
+      return copy.voteTurn;
+    case "hot-seat":
+      return formatCopy(copy.hotSeatTurn, { player: turn.player });
+    case "hot-seat-unnamed":
+      return copy.hotSeatUnnamedTurn;
     default:
       return assertUnreachableTurn(turn);
   }

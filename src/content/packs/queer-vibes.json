@@ -2,24 +2,6 @@
   "id": "queer-vibes",
   "cards": [
     {
-      "id": "queer-vibes-001",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "What's a piece of advice you'd give to someone exploring their gender or sexual identity?",
-        "pt": "Que conselho darias a alguém que está a explorar a sua identidade de género ou orientação sexual?"
-      }
-    },
-    {
-      "id": "queer-vibes-002",
-      "type": "everyone",
-      "level": 2,
-      "text": {
-        "en": "Share a piece of advice you'd give to someone who is considering coming out.",
-        "pt": "Partilhem um conselho que dariam a alguém que está a pensar sair do armário."
-      }
-    },
-    {
       "id": "queer-vibes-003",
       "type": "question",
       "level": 1,
@@ -47,15 +29,6 @@
       }
     },
     {
-      "id": "queer-vibes-006",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "How do you handle situations where you encounter misconceptions or stereotypes about the LGBTQ+ community?",
-        "pt": "Como lidas com situações em que te deparas com ideias erradas ou estereótipos sobre a comunidade LGBTQ+?"
-      }
-    },
-    {
       "id": "queer-vibes-007",
       "type": "question",
       "level": 1,
@@ -74,39 +47,12 @@
       }
     },
     {
-      "id": "queer-vibes-009",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "What was your coming-out experience like, and how did it shape your relationship with your family?",
-        "pt": "Como foi sair do armário e de que forma é que isso marcou a tua relação com a família?"
-      }
-    },
-    {
       "id": "queer-vibes-010",
       "type": "question",
       "level": 1,
       "text": {
         "en": "What's a memorable moment from a queer-focused event you attended?",
         "pt": "Que momento memorável guardas de um evento queer a que foste?"
-      }
-    },
-    {
-      "id": "queer-vibes-011",
-      "type": "everyone",
-      "level": 2,
-      "text": {
-        "en": "Share a positive coming-out experience that you've had.",
-        "pt": "Partilhem uma experiência positiva de quando saíram do armário."
-      }
-    },
-    {
-      "id": "queer-vibes-012",
-      "type": "question",
-      "level": 2,
-      "text": {
-        "en": "How do you approach dating within the queer community?",
-        "pt": "Como encaras os encontros e o namoro dentro da comunidade queer?"
       }
     },
     {
@@ -137,6 +83,69 @@
       }
     },
     {
+      "id": "queer-vibes-018",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's a book, podcast, or resource you'd recommend to someone looking to learn more about queer history?",
+        "pt": "Que livro, podcast ou recurso recomendarias a alguém que quer saber mais sobre a história queer?"
+      }
+    },
+    {
+      "id": "queer-vibes-021",
+      "type": "question",
+      "level": 1,
+      "text": {
+        "en": "What's your go-to self-care activity when you need a boost?",
+        "pt": "Qual é o teu ritual de autocuidado quando precisas de recarregar energias?"
+      }
+    },
+    {
+      "id": "queer-vibes-001",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "What's a piece of advice you'd give to someone exploring their gender or sexual identity?",
+        "pt": "Que conselho darias a alguém que está a explorar a sua identidade de género ou orientação sexual?"
+      }
+    },
+    {
+      "id": "queer-vibes-002",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Share a piece of advice you'd give to someone who is considering coming out.",
+        "pt": "Partilhem um conselho que dariam a alguém que está a pensar sair do armário."
+      }
+    },
+    {
+      "id": "queer-vibes-006",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How do you handle situations where you encounter misconceptions or stereotypes about the LGBTQ+ community?",
+        "pt": "Como lidas com situações em que te deparas com ideias erradas ou estereótipos sobre a comunidade LGBTQ+?"
+      }
+    },
+    {
+      "id": "queer-vibes-011",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Share a positive coming-out experience that you've had.",
+        "pt": "Partilhem uma experiência positiva de quando saíram do armário."
+      }
+    },
+    {
+      "id": "queer-vibes-012",
+      "type": "question",
+      "level": 2,
+      "text": {
+        "en": "How do you approach dating within the queer community?",
+        "pt": "Como encaras os encontros e o namoro dentro da comunidade queer?"
+      }
+    },
+    {
       "id": "queer-vibes-016",
       "type": "question",
       "level": 2,
@@ -155,39 +164,12 @@
       }
     },
     {
-      "id": "queer-vibes-018",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What's a book, podcast, or resource you'd recommend to someone looking to learn more about queer history?",
-        "pt": "Que livro, podcast ou recurso recomendarias a alguém que quer saber mais sobre a história queer?"
-      }
-    },
-    {
-      "id": "queer-vibes-019",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "How do you navigate and find support in the queer community during challenging times?",
-        "pt": "Como atravessas os tempos difíceis e encontras apoio na comunidade queer?"
-      }
-    },
-    {
       "id": "queer-vibes-020",
       "type": "everyone",
       "level": 2,
       "text": {
         "en": "Share a piece of LGBTQ+ media (book, movie, TV show, etc.) that had a significant impact on you.",
         "pt": "Partilhem uma obra LGBTQ+ (livro, filme, série, etc.) que vos tenha marcado muito."
-      }
-    },
-    {
-      "id": "queer-vibes-021",
-      "type": "question",
-      "level": 1,
-      "text": {
-        "en": "What's your go-to self-care activity when you need a boost?",
-        "pt": "Qual é o teu ritual de autocuidado quando precisas de recarregar energias?"
       }
     },
     {
@@ -200,21 +182,48 @@
       }
     },
     {
-      "id": "queer-vibes-023",
-      "type": "question",
-      "level": 3,
-      "text": {
-        "en": "How do you balance and celebrate the intersectionality of your identity?",
-        "pt": "Como equilibras e celebras a intersecionalidade da tua identidade?"
-      }
-    },
-    {
       "id": "queer-vibes-024",
       "type": "everyone",
       "level": 2,
       "text": {
         "en": "Share a goal or dream you have for the broader LGBTQ+ community.",
         "pt": "Partilhem um objetivo ou sonho que tenham para a comunidade LGBTQ+ no seu todo."
+      }
+    },
+    {
+      "id": "queer-vibes-029",
+      "type": "everyone",
+      "level": 2,
+      "text": {
+        "en": "Share a piece of advice for someone wanting to learn more about and engage with queer cultural history.",
+        "pt": "Partilhem um conselho para quem quer conhecer melhor a história e a cultura queer e envolver-se nelas."
+      }
+    },
+    {
+      "id": "queer-vibes-009",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "What was your coming-out experience like, and how did it shape your relationship with your family?",
+        "pt": "Como foi sair do armário e de que forma é que isso marcou a tua relação com a família?"
+      }
+    },
+    {
+      "id": "queer-vibes-019",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "How do you navigate and find support in the queer community during challenging times?",
+        "pt": "Como atravessas os tempos difíceis e encontras apoio na comunidade queer?"
+      }
+    },
+    {
+      "id": "queer-vibes-023",
+      "type": "question",
+      "level": 3,
+      "text": {
+        "en": "How do you balance and celebrate the intersectionality of your identity?",
+        "pt": "Como equilibras e celebras a intersecionalidade da tua identidade?"
       }
     },
     {
@@ -251,15 +260,6 @@
       "text": {
         "en": "How do you balance being an ally to other marginalized communities within the queer spectrum?",
         "pt": "Como consegues ser uma pessoa aliada de outras comunidades marginalizadas dentro do espectro queer?"
-      }
-    },
-    {
-      "id": "queer-vibes-029",
-      "type": "everyone",
-      "level": 2,
-      "text": {
-        "en": "Share a piece of advice for someone wanting to learn more about and engage with queer cultural history.",
-        "pt": "Partilhem um conselho para quem quer conhecer melhor a história e a cultura queer e envolver-se nelas."
       }
     }
   ]

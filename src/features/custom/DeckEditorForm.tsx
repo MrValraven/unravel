@@ -1,11 +1,4 @@
-import {
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-  type FormEvent,
-  type MouseEvent,
-} from "react";
+import { useEffect, useReducer, useRef, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 import { FiCheck } from "react-icons/fi";
 import { PageHeader } from "../../components/PageHeader";
@@ -19,10 +12,17 @@ import {
   saveCustomDeck,
   type CustomDeck,
 } from "../../storage/customDecks";
+import {
+  NEW_DECK_DRAFT_KEY,
+  clearCustomDeckDraft,
+  loadCustomDeckDraft,
+  saveCustomDeckDraft,
+} from "../../storage/customDeckDraft";
 import { clearProgress, loadProgress } from "../../storage/progress";
 import { CardListEditor } from "./CardListEditor";
 import { DeckTitleField } from "./DeckTitleField";
 import { DiscardChangesDialog } from "./DiscardChangesDialog";
+import { RestoreDraftDialog } from "./RestoreDraftDialog";
 import { StatusMessage } from "./StatusMessage";
 import { customCopy } from "./copy";
 import { MAX_CARDS, hasCardListChanged, type TextProblem } from "./deckRules";
@@ -35,6 +35,26 @@ import "./DeckEditorForm.scss";
 
 const DECKS_PATH = "/custom";
 const noProblems: Record<string, TextProblem> = {};
+/** Typing pauses this long before the draft is written, so each keystroke does not hit storage. */
+const DRAFT_SAVE_DELAY_MILLISECONDS = 600;
+
+/** The autosaved draft of this deck when it differs from the deck as it was opened. */
+const findOfferedDraft = (
+  deckKey: string,
+  initialDraft: model.DeckDraft
+): model.DeckDraft | undefined => {
+  const storedDraft = loadCustomDeckDraft(deckKey);
+  if (!storedDraft) return undefined;
+  const offeredDraft = { title: storedDraft.title, cards: storedDraft.cards };
+  return model.isDraftChanged(initialDraft, offeredDraft)
+    ? offeredDraft
+    : undefined;
+};
+
+/** Clears the stored draft only when it is this deck's, so another deck's edits stay. */
+const clearDraftOf = (deckKey: string) => {
+  if (loadCustomDeckDraft(deckKey)) clearCustomDeckDraft();
+};
 
 export const DeckEditorForm = ({
   existingDeck,
@@ -49,14 +69,57 @@ export const DeckEditorForm = ({
   );
   const [draft, dispatch] = useReducer(model.draftReducer, initialDraft);
   const [hasTriedSave, setHasTriedSave] = useState(false);
-  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = useState(false);
+  const deckKey = existingDeck?.id ?? NEW_DECK_DRAFT_KEY;
+  const [offeredDraft, setOfferedDraft] = useState(() =>
+    findOfferedDraft(deckKey, initialDraft)
+  );
+  // Set once the editor is on its way out, so a pending autosave cannot bring the draft back.
+  const isAutosaveStoppedRef = useRef(false);
   const titleInputRef = useRef<HTMLInputElement>(null);
   const { cardListRef, addCardButtonRef, requestFocus } = useEditorFocus();
   const { notice, showStatus, dismissStatus } = useStatusMessage();
+  // A new deck keeps one id across retries, so saving again after a block never makes a second deck.
+  const newDeckIdRef = useRef<string | null>(null);
 
   const validation = model.validateDraft(draft);
   const isChanged = model.isDraftChanged(initialDraft, draft);
-  useUnsavedChangesGuard(isChanged);
+  const guard = useUnsavedChangesGuard(isChanged);
+
+  useEffect(() => {
+    // While the restore offer is open the stored draft is the player's to decide on.
+    if (offeredDraft || isAutosaveStoppedRef.current) return;
+    if (!isChanged) {
+      clearDraftOf(deckKey);
+      return;
+    }
+    let isPending = true;
+    const writeDraft = () => {
+      if (!isPending || isAutosaveStoppedRef.current) return;
+      isPending = false;
+      window.clearTimeout(timeout);
+      saveCustomDeckDraft({
+        deckKey,
+        title: draft.title,
+        cards: draft.cards,
+        savedAt: Date.now(),
+      });
+    };
+    const timeout = window.setTimeout(
+      writeDraft,
+      DRAFT_SAVE_DELAY_MILLISECONDS
+    );
+    // A phone may close a hidden tab before the timer fires, so the pending draft is written now.
+    const writeDraftWhenHidden = () => {
+      if (document.visibilityState === "hidden") writeDraft();
+    };
+    document.addEventListener("visibilitychange", writeDraftWhenHidden);
+    window.addEventListener("pagehide", writeDraft);
+    return () => {
+      window.clearTimeout(timeout);
+      document.removeEventListener("visibilitychange", writeDraftWhenHidden);
+      window.removeEventListener("pagehide", writeDraft);
+    };
+  }, [draft, isChanged, deckKey, offeredDraft]);
 
   useEffect(() => {
     if (!existingDeck) titleInputRef.current?.focus();
@@ -87,22 +150,31 @@ export const DeckEditorForm = ({
       focusFirstProblem();
       return;
     }
-    const storedDeck = existingDeck
-      ? getCustomDeck(existingDeck.id)
-      : undefined;
+    // After a blocked save the new deck sits in memory under its kept id, so a retry replaces it.
+    const knownDeckId = existingDeck?.id ?? newDeckIdRef.current;
+    const storedDeck = knownDeckId ? getCustomDeck(knownDeckId) : undefined;
     if (!storedDeck && !canCreateCustomDeck()) {
       showStatus(formatCopy(copy.deckLimit, { max: MAX_CUSTOM_DECKS }));
       return;
     }
     const previousDeck = storedDeck ?? existingDeck;
     const now = Date.now();
+    newDeckIdRef.current ??= createCustomDeckId();
     const savedDeck = model.draftToCustomDeck(draft, {
-      deckId: existingDeck?.id ?? createCustomDeckId(),
+      deckId: existingDeck?.id ?? newDeckIdRef.current,
       createdAt: existingDeck?.createdAt ?? now,
       updatedAt: now,
       previousCardIds: previousDeck?.cards.map((card) => card.id),
     });
-    saveCustomDeck(savedDeck);
+    const saveResult = saveCustomDeck(savedDeck);
+    if (saveResult === "deck-limit") {
+      showStatus(formatCopy(copy.deckLimit, { max: MAX_CUSTOM_DECKS }));
+      return;
+    }
+    if (saveResult === "storage-blocked") {
+      showStatus(copy.status.saveBlocked);
+      return;
+    }
     // A saved game of this deck no longer matches once cards were added or removed.
     const isSavedGameOfThisDeck = loadProgress()?.deckId === savedDeck.id;
     if (
@@ -112,35 +184,37 @@ export const DeckEditorForm = ({
     ) {
       clearProgress();
     }
+    // The deck is saved, so these edits are no longer unsaved: leave without asking.
+    isAutosaveStoppedRef.current = true;
+    clearDraftOf(deckKey);
+    guard.allowNextNavigation();
     void navigate(DECKS_PATH, {
       state: createSavedDeckState(savedDeck.title),
       viewTransition: true,
     });
   };
 
-  const requestLeave = () => {
-    if (isChanged) setIsDiscardDialogOpen(true);
-    else void navigate(DECKS_PATH, { viewTransition: true });
+  const restoreOfferedDraft = () => {
+    if (!offeredDraft) return;
+    dispatch({
+      type: "restore",
+      draft: model.rekeyRestoredDraft(
+        offeredDraft,
+        existingDeck?.cards.map((card) => card.id) ?? []
+      ),
+    });
+    setOfferedDraft(undefined);
   };
 
-  // The header back link is a router Link; cancelling its click keeps the edits on screen.
-  const handleHeaderClickCapture = (event: MouseEvent<HTMLDivElement>) => {
-    if (
-      !isChanged ||
-      !(event.target instanceof Element) ||
-      !event.target.closest("a")
-    )
-      return;
-    // Modified or non-primary clicks open a new tab and leave this draft open, so let them through.
-    const isPlainClick =
-      event.button === 0 &&
-      !event.metaKey &&
-      !event.ctrlKey &&
-      !event.shiftKey &&
-      !event.altKey;
-    if (!isPlainClick) return;
-    event.preventDefault();
-    setIsDiscardDialogOpen(true);
+  const discardOfferedDraft = () => {
+    clearDraftOf(deckKey);
+    setOfferedDraft(undefined);
+  };
+
+  const discardChangesAndLeave = () => {
+    isAutosaveStoppedRef.current = true;
+    clearDraftOf(deckKey);
+    guard.leave();
   };
 
   let deckProblemMessage: string | undefined;
@@ -154,13 +228,11 @@ export const DeckEditorForm = ({
 
   return (
     <div className="page deck-editor">
-      <div onClickCapture={handleHeaderClickCapture}>
-        <PageHeader
-          backTo={DECKS_PATH}
-          backLabel={editorCopy.backLabel}
-          title={existingDeck ? editorCopy.editTitle : editorCopy.newTitle}
-        />
-      </div>
+      <PageHeader
+        backTo={DECKS_PATH}
+        backLabel={editorCopy.backLabel}
+        title={existingDeck ? editorCopy.editTitle : editorCopy.newTitle}
+      />
       <main className="deck-editor__main">
         <form className="deck-editor__form" noValidate onSubmit={handleSubmit}>
           <p className="deck-editor__intro">{editorCopy.intro}</p>
@@ -185,7 +257,9 @@ export const DeckEditorForm = ({
             <button
               type="button"
               className="button button--quiet deck-editor__cancel"
-              onClick={requestLeave}
+              onClick={() =>
+                void navigate(DECKS_PATH, { viewTransition: true })
+              }
             >
               {editorCopy.cancel}
             </button>
@@ -201,9 +275,14 @@ export const DeckEditorForm = ({
       </main>
 
       <DiscardChangesDialog
-        isOpen={isDiscardDialogOpen}
-        onKeepEditing={() => setIsDiscardDialogOpen(false)}
-        onDiscard={() => void navigate(DECKS_PATH, { viewTransition: true })}
+        isOpen={guard.isBlocked}
+        onKeepEditing={guard.stay}
+        onDiscard={discardChangesAndLeave}
+      />
+      <RestoreDraftDialog
+        isOpen={offeredDraft !== undefined}
+        onRestore={restoreOfferedDraft}
+        onDiscard={discardOfferedDraft}
       />
       <StatusMessage notice={notice} onDismissed={dismissStatus} />
     </div>
