@@ -29,6 +29,7 @@ import {
   startNewSession,
 } from "../playSession";
 import { BoundariesCheckIn } from "../setup/BoundariesCheckIn";
+import { isOpenedFromGame } from "../setup/gameOptionsNavigation";
 import { PlaySetup } from "../setup/PlaySetup";
 import { ReplaceSavedGameDialog } from "../setup/ReplaceSavedGameDialog";
 import { isReplaceConfirmed } from "../setup/replaceConfirmation";
@@ -168,6 +169,12 @@ export const PlayFlow = ({ deck }: { deck: Deck }) => {
     window.scrollTo(0, 0);
   };
 
+  // The play menu pushed this ?setup=1 entry on top of the game's own entry, so
+  // Back to game and Save and continue pop it. Replacing it instead would leave
+  // the same card twice in history, and the first Back would seem to do nothing.
+  // Any other way here (a link, a reload, a fresh setup) has no entry to return to.
+  const isPoppedOnLeave = isSetupRequested && isOpenedFromGame(location.state);
+
   // The play screen pauses its ?card=N sync while setup=1 is in the URL,
   // so a game leaving Game options drops it, replacing the Game options entry.
   const leaveSetupUrl = () => {
@@ -213,12 +220,14 @@ export const PlayFlow = ({ deck }: { deck: Deck }) => {
     options: PlayOptions
   ) => {
     rememberOptions(options);
+    // Saved before the entry is popped, so the game restored there has the new options.
     showPhase({
       kind: "playing",
       session: continueWithOptions(deck, runningSession, options, Date.now()),
       isUncommitted: false,
     });
-    leaveSetupUrl();
+    if (isPoppedOnLeave) void navigate(-1);
+    else leaveSetupUrl();
   };
 
   const runningSession =
@@ -250,6 +259,7 @@ export const PlayFlow = ({ deck }: { deck: Deck }) => {
             runningSession
               ? {
                   backTo: buildPlayPath(deck.id),
+                  onBack: isPoppedOnLeave ? () => void navigate(-1) : undefined,
                   onContinue: (options) =>
                     handleSetupContinue(runningSession, options),
                 }

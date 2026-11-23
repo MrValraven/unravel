@@ -192,6 +192,30 @@ test.describe("playing a deck", () => {
     expect(progress?.options.players).toEqual(["Ana", "Rui", "Bea"]);
   });
 
+  test("Game options mid-game leaves no duplicate history entry: one Back after Save and continue leaves the game", async ({
+    page,
+  }) => {
+    await page.goto("/decks");
+    await page.goto("/play/unravel");
+    await expect(page.getByText(/^Card 1 of \d+$/)).toBeVisible();
+    await page.getByRole("button", { name: "Next card" }).click();
+    await expect(page.getByText(/^Card 2 of \d+$/)).toBeVisible();
+    await expect(page).toHaveURL(/\/play\/unravel\?card=2$/);
+
+    await page.getByRole("button", { name: "Open game menu" }).click();
+    await page.getByRole("link", { name: "Game options" }).click();
+    await expect(page).toHaveURL(/\/play\/unravel\?setup=1$/);
+    await page.getByRole("textbox", { name: "Player 1 name" }).fill("Ana");
+    await page.getByRole("button", { name: "Save and continue" }).click();
+
+    await expect(page.getByText(/^Card 2 of \d+$/)).toBeVisible();
+    await expect(page).toHaveURL(/\/play\/unravel\?card=2$/);
+
+    // The Game options entry was popped, not replaced, so the game has one entry.
+    await page.goBack();
+    await expect(page).toHaveURL(/\/decks$/);
+  });
+
   test("finishing the last card opens the end screen and clears the saved game", async ({
     page,
   }) => {

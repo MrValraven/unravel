@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
 import { Link } from "react-router";
 import { FiArrowLeft } from "react-icons/fi";
 import { useCopy } from "../i18n/useCopy";
@@ -12,6 +12,8 @@ export interface PageHeaderProps {
   backLabel?: string;
   /** The back link replaces the current history entry instead of adding one. */
   isBackReplace?: boolean;
+  /** Runs on a click of the back link; it can preventDefault to handle the way back itself. */
+  onBackClick?: MouseEventHandler<HTMLAnchorElement>;
   /** Page title, rendered as the page's h1. */
   title?: string;
   /** Buttons shown at the end of the bar. */
@@ -22,6 +24,7 @@ export const PageHeader = ({
   backTo,
   backLabel,
   isBackReplace = false,
+  onBackClick,
   title,
   actions,
 }: PageHeaderProps) => {
@@ -37,6 +40,7 @@ export const PageHeader = ({
           <Link
             to={backTo}
             replace={isBackReplace}
+            onClick={onBackClick}
             viewTransition
             className={`page-header__back${isBackLabelVisible ? " page-header__back--labelled" : ""}`}
             aria-label={isBackLabelVisible ? undefined : label}

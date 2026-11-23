@@ -31,6 +31,11 @@ export interface RunningGameSetup {
   backTo: string;
   /** Save and continue: apply the options to the running game. */
   onContinue: (options: PlayOptions) => void;
+  /**
+   * Set when Game options was pushed on top of the game: "Back to game" calls this
+   * to pop that entry. Without it the link replaces the entry with `backTo`.
+   */
+  onBack?: () => void;
 }
 
 interface PlaySetupProps {
@@ -119,6 +124,14 @@ export const PlaySetup = ({
           backTo={runningGame.backTo}
           backLabel={flow.backToGame}
           isBackReplace
+          onBackClick={
+            runningGame.onBack
+              ? (event) => {
+                  event.preventDefault();
+                  runningGame.onBack?.();
+                }
+              : undefined
+          }
         />
       ) : (
         <PageHeader backTo="/decks" backLabel={copy.backToDecks} />

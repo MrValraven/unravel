@@ -4,6 +4,7 @@ import { FiGrid, FiRotateCcw, FiSliders } from "react-icons/fi";
 import { Dialog } from "../../../components/Dialog";
 import { useCopy } from "../../../i18n/useCopy";
 import { playCopy } from "../copy";
+import { OPENED_FROM_GAME_STATE } from "../setup/gameOptionsNavigation";
 import { PlayTextSize } from "./PlayTextSize";
 import "./PlayMenu.scss";
 
@@ -90,6 +91,8 @@ export const PlayMenu = ({
             to={`/play/${encodeURIComponent(deckId)}?setup=1`}
             className="button button--secondary play-menu__item"
             viewTransition
+            // Leaving Game options pops this entry instead of replacing it.
+            state={OPENED_FROM_GAME_STATE}
             // The note is the link's description, so its name stays short.
             aria-describedby={gameOptionsNoteId}
             onClick={handleClose}

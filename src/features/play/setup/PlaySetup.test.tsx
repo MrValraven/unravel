@@ -21,7 +21,10 @@ const renderSetup = (deck = makeDeck(), initialOptions?: PlayOptions) => {
 };
 
 /** Game options opened from a running game of this deck. */
-const renderMidGameSetup = (initialOptions?: PlayOptions) => {
+const renderMidGameSetup = (
+  initialOptions?: PlayOptions,
+  onBack?: () => void
+) => {
   const onStart = vi.fn();
   const onContinue = vi.fn();
   render(
@@ -30,7 +33,7 @@ const renderMidGameSetup = (initialOptions?: PlayOptions) => {
         deck={makeDeck()}
         initialOptions={initialOptions}
         onStart={onStart}
-        runningGame={{ backTo: "/play/a", onContinue }}
+        runningGame={{ backTo: "/play/a", onContinue, onBack }}
       />
     </MemoryRouter>
   );
@@ -385,6 +388,13 @@ describe("PlaySetup", () => {
           "Save and continue keeps your place. A new start level or shuffle changes only the cards still to come."
         )
       ).toBeInTheDocument();
+    });
+
+    it("hands Back to game to onBack when the game is one entry back, without following the link", async () => {
+      const onBack = vi.fn();
+      const { user } = renderMidGameSetup(undefined, onBack);
+      await user.click(screen.getByRole("link", { name: "Back to game" }));
+      expect(onBack).toHaveBeenCalledOnce();
     });
 
     it("saves the edited options and continues", async () => {

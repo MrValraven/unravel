@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
+  createMemoryRouter,
   MemoryRouter,
   Route,
+  RouterProvider,
   Routes,
   useLocation,
   useNavigate,
@@ -105,6 +107,39 @@ const renderFlow = (
     </MemoryRouter>
   );
   return userEvent.setup();
+};
+
+/**
+ * A data router with a page before the game, so the history can be checked:
+ * one Back from the game must leave it, not land on the same card again.
+ */
+const renderGameWithHistory = (entry: string) => {
+  const deck = makeDeck();
+  const router = createMemoryRouter(
+    [
+      { path: "/decks", element: <p>Page before the game</p> },
+      {
+        path: "/play/:deckId",
+        element: (
+          <>
+            <PlayFlow deck={deck} />
+            <LeaveAndReturn />
+            <LocationProbe />
+          </>
+        ),
+      },
+    ],
+    { initialEntries: ["/decks", entry], initialIndex: 1 }
+  );
+  render(<RouterProvider router={router} />);
+  return userEvent.setup();
+};
+
+const openGameOptionsFromMenu = async (
+  user: ReturnType<typeof userEvent.setup>
+) => {
+  await user.click(screen.getByRole("button", { name: "Open game menu" }));
+  await user.click(screen.getByRole("link", { name: "Game options" }));
 };
 
 const saveGame = (deckId: string, order: string[], position: number) =>
@@ -297,6 +332,85 @@ describe("PlayFlow", () => {
       expect(
         screen.getByRole("button", { name: "Save and continue" })
       ).toBeInTheDocument();
+    });
+  });
+
+  describe("history around Game options opened from the play menu", () => {
+    const saveRunningGame = () => saveGame("a", ["a-002", "a-004", "a-007"], 1);
+
+    const expectBackLeavesTheGame = async (
+      user: ReturnType<typeof userEvent.setup>
+    ) => {
+      expect(screen.getByTestId("location-search")).toHaveTextContent(
+        /^\?card=2$/
+      );
+      await user.click(screen.getByRole("button", { name: "Go back" }));
+      expect(screen.getByText("Page before the game")).toBeInTheDocument();
+    };
+
+    it("Back to game pops the Game options entry, so one Back leaves the game", async () => {
+      saveRunningGame();
+      const user = renderGameWithHistory("/play/a?card=2");
+      await openGameOptionsFromMenu(user);
+      expect(screen.getByTestId("location-search")).toHaveTextContent(
+        /^\?setup=1$/
+      );
+
+      await user.click(screen.getByRole("link", { name: "Back to game" }));
+      expect(screen.getByText("Card 2 of 3")).toBeInTheDocument();
+      await expectBackLeavesTheGame(user);
+    });
+
+    it("Save and continue pops the Game options entry and shows the new options on the same card", async () => {
+      saveRunningGame();
+      const user = renderGameWithHistory("/play/a?card=2");
+      await openGameOptionsFromMenu(user);
+      const player1 = screen.getByRole("textbox", {
+        name: "Player 1 name",
+      });
+      await user.clear(player1);
+      await user.type(player1, "Ana");
+      const player2 = screen.getByRole("textbox", {
+        name: "Player 2 name",
+      });
+      await user.clear(player2);
+      await user.type(player2, "Rui");
+      await user.click(screen.getByRole("button", { name: "Add player" }));
+      const player3 = screen.getByRole("textbox", { name: "Player 3 name" });
+      await user.clear(player3);
+      await user.type(player3, "Eva");
+      await user.click(
+        screen.getByRole("button", { name: "Save and continue" })
+      );
+
+      expect(screen.getByText("Card 2 of 3")).toBeInTheDocument();
+      expect(loadProgress()).toMatchObject({
+        position: 1,
+        options: makeOptions({ players: ["Ana", "Rui", "Eva"] }),
+      });
+      await expectBackLeavesTheGame(user);
+    });
+
+    it("keeps replacing when ?setup=1 was opened by URL, so Back leaves the game as before", async () => {
+      saveRunningGame();
+      const user = renderGameWithHistory("/play/a?setup=1");
+      await user.click(screen.getByRole("link", { name: "Back to game" }));
+      expect(screen.getByText("Card 2 of 3")).toBeInTheDocument();
+      expect(screen.getByTestId("location-search")).toHaveTextContent(
+        /^\?card=2$/
+      );
+      await user.click(screen.getByRole("button", { name: "Go back" }));
+      expect(screen.getByText("Page before the game")).toBeInTheDocument();
+    });
+
+    it("keeps replacing on Save and continue when ?setup=1 was opened by URL", async () => {
+      saveRunningGame();
+      const user = renderGameWithHistory("/play/a?setup=1");
+      await user.click(
+        screen.getByRole("button", { name: "Save and continue" })
+      );
+      expect(screen.getByText("Card 2 of 3")).toBeInTheDocument();
+      await expectBackLeavesTheGame(user);
     });
   });
 
