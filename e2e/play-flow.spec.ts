@@ -152,6 +152,46 @@ test.describe("playing a deck", () => {
     expect(progress?.options.startLevel).toBe(2);
   });
 
+  test("Game options mid-game saves new names and continues on the same card", async ({
+    page,
+  }) => {
+    await page.goto("/play/unravel");
+    await expect(page.getByText(/^Card 1 of \d+$/)).toBeVisible();
+    await page.getByRole("button", { name: "Next card" }).click();
+    await expect(page.getByText(/^Card 2 of \d+$/)).toBeVisible();
+    const cardCount = (await page.getByText(/^Card 2 of \d+$/).textContent())
+      ?.split(" of ")
+      .at(1);
+
+    await page.getByRole("button", { name: "Open game menu" }).click();
+    await page.getByRole("link", { name: "Game options" }).click();
+    await expect(page).toHaveURL(/\/play\/unravel\?setup=1$/);
+    await expect(
+      page.getByRole("link", { name: "Back to game" })
+    ).toBeVisible();
+    await page.getByRole("textbox", { name: "Player 1 name" }).fill("Ana");
+    await page.getByRole("textbox", { name: "Player 2 name" }).fill("Rui");
+    await page.getByRole("button", { name: "Add player" }).click();
+    await page.getByRole("textbox", { name: "Player 3 name" }).fill("Bea");
+    await expect(
+      page.getByRole("button", { name: "Start over with these settings" })
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Save and continue" }).click();
+
+    await expect(
+      page.getByText(`Card 2 of ${cardCount}`, { exact: true })
+    ).toBeVisible();
+    await expect(page).toHaveURL(/\/play\/unravel\?card=2$/);
+    await expect(
+      page.getByText("Ana asks, Rui answers", { exact: true })
+    ).toBeVisible();
+    const progress = JSON.parse(
+      (await readStoredText(page, "progress")) ?? "null"
+    ) as { position: number; options: { players: string[] } } | null;
+    expect(progress?.position).toBe(1);
+    expect(progress?.options.players).toEqual(["Ana", "Rui", "Bea"]);
+  });
+
   test("finishing the last card opens the end screen and clears the saved game", async ({
     page,
   }) => {

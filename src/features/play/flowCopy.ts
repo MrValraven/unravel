@@ -12,6 +12,11 @@ const en = {
       "Choose who is playing and how. Unravel remembers these options for your next game.",
     restartsSavedGame:
       "Starting with these options begins this deck again from the first card.",
+    backToGame: "Back to game",
+    saveAndContinue: "Save and continue",
+    startOver: "Start over with these settings",
+    continuesSavedGame:
+      "Save and continue keeps your place. A new start level or shuffle changes only the cards still to come.",
   },
   checkIn: {
     gameOptions: "Game options",
@@ -45,6 +50,11 @@ export const flowCopy = defineCopy<typeof en>({
         "Escolhe quem joga e como. O Unravel guarda estas opções para o próximo jogo.",
       restartsSavedGame:
         "Começar com estas opções recomeça este baralho a partir da primeira carta.",
+      backToGame: "Voltar ao jogo",
+      saveAndContinue: "Guardar e continuar",
+      startOver: "Recomeçar com estas opções",
+      continuesSavedGame:
+        "Guardar e continuar mantém o teu lugar. Mudar o nível inicial ou baralhar só altera as cartas que faltam.",
     },
     checkIn: {
       gameOptions: "Opções de jogo",

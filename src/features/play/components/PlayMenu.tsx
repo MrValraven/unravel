@@ -15,7 +15,7 @@ interface PlayMenuProps {
 }
 
 /**
- * Text size, game options (setup again, which starts the deck over), restart
+ * Text size, game options (change the running game or start it over), restart
  * (asked twice, since it clears the saved place) and the way back to the decks.
  */
 export const PlayMenu = ({

@@ -20,6 +20,23 @@ const renderSetup = (deck = makeDeck(), initialOptions?: PlayOptions) => {
   return { onStart, user: userEvent.setup() };
 };
 
+/** Game options opened from a running game of this deck. */
+const renderMidGameSetup = (initialOptions?: PlayOptions) => {
+  const onStart = vi.fn();
+  const onContinue = vi.fn();
+  render(
+    <MemoryRouter>
+      <PlaySetup
+        deck={makeDeck()}
+        initialOptions={initialOptions}
+        onStart={onStart}
+        runningGame={{ backTo: "/play/a", onContinue }}
+      />
+    </MemoryRouter>
+  );
+  return { onStart, onContinue, user: userEvent.setup() };
+};
+
 const typeNames = async (
   user: ReturnType<typeof userEvent.setup>,
   names: string[]
@@ -342,5 +359,70 @@ describe("PlaySetup", () => {
         "Starting with these options begins this deck again from the first card."
       )
     ).toBeInTheDocument();
+  });
+
+  describe("opened during a game of this deck", () => {
+    it("offers Save and continue first, Start over second, and a way back to the game", () => {
+      renderMidGameSetup();
+      const buttons = screen.getAllByRole("button", {
+        name: /Save and continue|Start over with these settings/,
+      });
+      expect(buttons.map((button) => button.textContent)).toEqual([
+        "Save and continue",
+        "Start over with these settings",
+      ]);
+      expect(
+        screen.queryByRole("button", { name: "Start deck" })
+      ).not.toBeInTheDocument();
+      expect(
+        screen.getByRole("link", { name: "Back to game" })
+      ).toHaveAttribute("href", "/play/a");
+      expect(
+        screen.queryByRole("link", { name: "Back to decks" })
+      ).not.toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "Save and continue keeps your place. A new start level or shuffle changes only the cards still to come."
+        )
+      ).toBeInTheDocument();
+    });
+
+    it("saves the edited options and continues", async () => {
+      const { onContinue, onStart, user } = renderMidGameSetup();
+      await typeNames(user, ["Ana", "Rui"]);
+      await user.click(
+        screen.getByRole("button", { name: "Save and continue" })
+      );
+      expect(onContinue).toHaveBeenCalledWith(
+        expect.objectContaining({ players: ["Ana", "Rui"] })
+      );
+      expect(onStart).not.toHaveBeenCalled();
+    });
+
+    it("still starts over with the edited options", async () => {
+      const { onContinue, onStart, user } = renderMidGameSetup();
+      await user.click(screen.getByRole("radio", { name: /Deeper/ }));
+      await user.click(
+        screen.getByRole("button", { name: "Start over with these settings" })
+      );
+      expect(onStart).toHaveBeenCalledWith(
+        expect.objectContaining({ startLevel: 2 })
+      );
+      expect(onContinue).not.toHaveBeenCalled();
+    });
+  });
+
+  it("without a running game keeps Start deck and the way back to the decks", () => {
+    renderSetup();
+    expect(
+      screen.getByRole("button", { name: "Start deck" })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Save and continue" })
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Back to decks" })).toHaveAttribute(
+      "href",
+      "/decks"
+    );
   });
 });

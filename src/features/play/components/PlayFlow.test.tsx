@@ -172,7 +172,7 @@ describe("PlayFlow", () => {
     expect(statsStore.get().decksStarted).toEqual({});
   });
 
-  it("opens Game options for ?setup=1, then starts fresh and remembers the options", async () => {
+  it("opens Game options for ?setup=1, then starts over and remembers the options", async () => {
     saveGame("a", ["a-002", "a-004", "a-007"], 1);
     const user = renderFlow(makeDeck(), "/play/a?setup=1");
     expect(screen.getByText("Game options")).toBeInTheDocument();
@@ -182,7 +182,9 @@ describe("PlayFlow", () => {
     );
 
     await user.click(screen.getByRole("radio", { name: /Deeper/ }));
-    await user.click(screen.getByRole("button", { name: "Start deck" }));
+    await user.click(
+      screen.getByRole("button", { name: "Start over with these settings" })
+    );
 
     expect(screen.getByText("Card 1 of 6")).toBeInTheDocument();
     expect(loadLastPlayOptions()).toEqual(
@@ -200,8 +202,102 @@ describe("PlayFlow", () => {
     expect(screen.getByText("Card 1 of 9")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Open game options" }));
     expect(
-      screen.getByRole("button", { name: "Start deck" })
+      screen.getByRole("button", { name: "Save and continue" })
     ).toBeInTheDocument();
+  });
+
+  describe("Game options during a game of this deck", () => {
+    const saveUnnamedGame = (options = makeOptions()) =>
+      saveProgress({
+        deckId: "a",
+        order: ["a-002", "a-004", "a-007"],
+        position: 1,
+        hiddenCardIds: [],
+        turnIndex: 0,
+        firstStarterIndex: 0,
+        turnSeed: 42,
+        options,
+        startedAt: 1,
+        updatedAt: 2,
+      });
+
+    it("goes back to the same card", async () => {
+      saveUnnamedGame();
+      const user = renderFlow(makeDeck(), "/play/a?setup=1");
+      await user.click(screen.getByRole("link", { name: "Back to game" }));
+      expect(screen.getByText("Card 2 of 3")).toBeInTheDocument();
+      expect(screen.getByTestId("location-search")).not.toHaveTextContent(
+        "setup"
+      );
+      expect(statsStore.get().decksStarted).toEqual({});
+    });
+
+    it("saves new names and continues on the same card with their turn line", async () => {
+      saveUnnamedGame();
+      const user = renderFlow(makeDeck(), "/play/a?setup=1");
+      await user.type(
+        screen.getByRole("textbox", { name: "Player 1 name" }),
+        "Ana"
+      );
+      await user.type(
+        screen.getByRole("textbox", { name: "Player 2 name" }),
+        "Rui"
+      );
+      await user.click(screen.getByRole("button", { name: "Add player" }));
+      await user.type(
+        screen.getByRole("textbox", { name: "Player 3 name" }),
+        "Eva"
+      );
+      await user.click(
+        screen.getByRole("button", { name: "Save and continue" })
+      );
+
+      expect(screen.getByText("Card 2 of 3")).toBeInTheDocument();
+      expect(screen.getByText("Eva asks, Ana answers")).toBeInTheDocument();
+      expect(loadProgress()).toMatchObject({
+        order: ["a-002", "a-004", "a-007"],
+        position: 1,
+        turnSeed: 42,
+        startedAt: 1,
+        options: makeOptions({ players: ["Ana", "Rui", "Eva"] }),
+      });
+      expect(loadLastPlayOptions()?.players).toEqual(["Ana", "Rui", "Eva"]);
+      // Not a new game: no start is counted.
+      expect(statsStore.get().decksStarted).toEqual({});
+      expect(screen.getByTestId("location-search")).not.toHaveTextContent(
+        "setup"
+      );
+    });
+
+    it("continues an adult deck without the check-in again", async () => {
+      saveUnnamedGame();
+      const user = renderFlow(
+        { ...makeDeck(), isAdult: true },
+        "/play/a?setup=1"
+      );
+      await user.click(
+        screen.getByRole("button", { name: "Save and continue" })
+      );
+      expect(
+        screen.queryByRole("heading", { name: "Before you start" })
+      ).not.toBeInTheDocument();
+      expect(screen.getByText("Card 2 of 3")).toBeInTheDocument();
+    });
+
+    it("keeps the running game's buttons when the check-in goes back to Game options", async () => {
+      saveUnnamedGame();
+      const user = renderFlow(
+        { ...makeDeck(), isAdult: true },
+        "/play/a?setup=1"
+      );
+      await user.click(
+        screen.getByRole("button", { name: "Start over with these settings" })
+      );
+      await user.click(screen.getByRole("button", { name: "Back to setup" }));
+      expect(
+        screen.getByRole("button", { name: "Save and continue" })
+      ).toBeInTheDocument();
+    });
   });
 
   it("shows Game options when the deck has no cards", () => {

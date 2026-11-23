@@ -1,5 +1,5 @@
 import { useState, type CSSProperties, type FormEvent } from "react";
-import { FiInfo, FiPlay } from "react-icons/fi";
+import { FiCheck, FiInfo, FiPlay, FiRotateCcw } from "react-icons/fi";
 import { DeckIcon } from "../../../components/DeckIcon";
 import { PageHeader } from "../../../components/PageHeader";
 import type { Deck } from "../../../content/types";
@@ -25,11 +25,24 @@ import "./PlaySetup.scss";
 /** Random turns and pass-the-phone need a group: their switches show with this many names. */
 const GROUP_OPTIONS_MINIMUM_NAMES = 3;
 
+/** A saved game of this deck that Game options can change without starting over. */
+export interface RunningGameSetup {
+  /** Where "Back to game" goes: the game, on the same card. */
+  backTo: string;
+  /** Save and continue: apply the options to the running game. */
+  onContinue: (options: PlayOptions) => void;
+}
+
 interface PlaySetupProps {
   deck: Deck;
   /** The running game's or the last-used options; the defaults when missing. */
   initialOptions?: PlayOptions;
   onStart: (options: PlayOptions) => void;
+  /**
+   * Set when a game of this deck is running: Save and continue leads, Start over
+   * follows, and the back link returns to the game instead of the decks.
+   */
+  runningGame?: RunningGameSetup;
 }
 
 /**
@@ -40,6 +53,7 @@ export const PlaySetup = ({
   deck,
   initialOptions,
   onStart,
+  runningGame,
 }: PlaySetupProps) => {
   const copy = useCopy(playCopy);
   const flow = useCopy(flowCopy).setup;
@@ -47,6 +61,9 @@ export const PlaySetup = ({
   const otherSavedGame = useOtherSavedGame(deck.id);
   const savedProgress = useProgress();
   const hasSavedGameOfThisDeck = savedProgress?.deckId === deck.id;
+  const hasSavedGameNote =
+    runningGame !== undefined ||
+    (hasSavedGameOfThisDeck && deck.cards.length > 0);
   const titleRef = useFocusOnMount<HTMLHeadingElement>();
   const actionsRef = useStickyFooterHeight<HTMLDivElement>();
   const [options, setOptions] = useState<PlayOptions>(
@@ -85,9 +102,11 @@ export const PlaySetup = ({
       setHasSwitchedOtherOff(true);
   };
 
+  // The submit button is the primary one: Save and continue during a game.
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (canStart) onStart(options);
+    if (runningGame) runningGame.onContinue(options);
+    else if (canStart) onStart(options);
   };
 
   return (
@@ -95,7 +114,15 @@ export const PlaySetup = ({
       className="page play-setup"
       style={{ "--deck-accent": deck.accent } as CSSProperties}
     >
-      <PageHeader backTo="/decks" backLabel={copy.backToDecks} />
+      {runningGame ? (
+        <PageHeader
+          backTo={runningGame.backTo}
+          backLabel={flow.backToGame}
+          isBackReplace
+        />
+      ) : (
+        <PageHeader backTo="/decks" backLabel={copy.backToDecks} />
+      )}
       <header className="play-setup__hero">
         <span className="play-setup__icon" aria-hidden="true">
           <DeckIcon name={deck.icon} size={30} />
@@ -126,10 +153,10 @@ export const PlaySetup = ({
             : copy.setup.replacesSavedGameUntitled}
         </p>
       )}
-      {hasSavedGameOfThisDeck && deck.cards.length > 0 && (
+      {hasSavedGameNote && (
         <p className="play-setup__note">
           <FiInfo aria-hidden="true" size={18} />
-          {flow.restartsSavedGame}
+          {runningGame ? flow.continuesSavedGame : flow.restartsSavedGame}
         </p>
       )}
 
@@ -196,14 +223,32 @@ export const PlaySetup = ({
           )}
         </section>
         <div ref={actionsRef} className="play-setup__actions">
-          <button
-            type="submit"
-            className="button button--primary"
-            disabled={!canStart}
-          >
-            <FiPlay aria-hidden="true" size={20} />
-            {copy.setup.startDeck}
-          </button>
+          {runningGame ? (
+            <>
+              <button type="submit" className="button button--primary">
+                <FiCheck aria-hidden="true" size={20} />
+                {flow.saveAndContinue}
+              </button>
+              <button
+                type="button"
+                className="button button--quiet"
+                disabled={!canStart}
+                onClick={() => onStart(options)}
+              >
+                <FiRotateCcw aria-hidden="true" size={20} />
+                {flow.startOver}
+              </button>
+            </>
+          ) : (
+            <button
+              type="submit"
+              className="button button--primary"
+              disabled={!canStart}
+            >
+              <FiPlay aria-hidden="true" size={20} />
+              {copy.setup.startDeck}
+            </button>
+          )}
         </div>
       </form>
     </main>

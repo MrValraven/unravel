@@ -317,13 +317,13 @@ describe("PlayScreen game menu", () => {
     expect(settingsStore.get().textScale).toBe(1);
   });
 
-  it("offers game options, which set the deck up again", async () => {
+  it("offers game options, which change players, level or mode", async () => {
     const user = renderPlayScreen();
     await user.click(screen.getByRole("button", { name: "Open game menu" }));
     const gameOptions = screen.getByRole("link", { name: "Game options" });
     expect(gameOptions).toHaveAttribute("href", "/play/a?setup=1");
     expect(gameOptions).toHaveAccessibleDescription(
-      "Start the deck again with new players, level or mode"
+      "Change players, level or mode"
     );
   });
 });

@@ -11,6 +11,7 @@ import {
   type SavedProgress,
 } from "../../storage/progress";
 import { recordDeckStart } from "../../storage/stats";
+import { buildOrder } from "./engine/buildOrder";
 import { createSession } from "./engine/playReducer";
 import { progressToSession, sessionToProgress } from "./engine/selectors";
 import type { PlaySession } from "./engine/types";
@@ -117,6 +118,61 @@ export const startNewSession = (
   const session = createNewSession(deck, options, now);
   commitNewSession(deck, session, now);
   return session;
+};
+
+/**
+ * Game options saved during a game: the same game with the new options, so the
+ * place, the played cards, the turn count, the turn seed and the clock stay.
+ * Shuffle and start level change only the cards still to come: when either
+ * changes, the cards after the current one are dealt again by the `buildOrder`
+ * rules from every deck card not yet played and not hidden. If the new start
+ * level leaves none, the current card is the last. `random` is injectable for tests.
+ */
+export const applyOptionsToSession = (
+  deck: Deck,
+  session: PlaySession,
+  options: PlayOptions,
+  random: () => number = Math.random
+): PlaySession => {
+  const nextOptions = normalizePlayOptions(deck, options);
+  const isOrderChanged =
+    nextOptions.isShuffled !== session.options.isShuffled ||
+    nextOptions.startLevel !== session.options.startLevel;
+  const base: PlaySession = {
+    ...session,
+    order: [...session.order],
+    hiddenCardIds: [...session.hiddenCardIds],
+    skippedCardIds: [...session.skippedCardIds],
+    options: { ...nextOptions, players: [...nextOptions.players] },
+  };
+  if (!isOrderChanged) return base;
+  const playedCardIds = session.order.slice(0, session.position + 1);
+  const dealtCardIds = new Set([...playedCardIds, ...session.hiddenCardIds]);
+  const cardsToCome = deck.cards.filter((card) => !dealtCardIds.has(card.id));
+  const order = [
+    ...playedCardIds,
+    ...buildOrder(cardsToCome, nextOptions, random),
+  ];
+  const orderIds = new Set(order);
+  return {
+    ...base,
+    order,
+    skippedCardIds: base.skippedCardIds.filter((cardId) =>
+      orderIds.has(cardId)
+    ),
+  };
+};
+
+/** Applies Game options to the running game and saves it. Not a new game, so no start is counted. */
+export const continueWithOptions = (
+  deck: Deck,
+  session: PlaySession,
+  options: PlayOptions,
+  now: number
+): PlaySession => {
+  const nextSession = applyOptionsToSession(deck, session, options);
+  saveProgress(sessionToProgress(nextSession, now));
+  return nextSession;
 };
 
 /**

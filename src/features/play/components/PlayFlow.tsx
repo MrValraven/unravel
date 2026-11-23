@@ -18,7 +18,9 @@ import type { PlaySession } from "../engine/types";
 import { playCopy } from "../copy";
 import { flowCopy } from "../flowCopy";
 import {
+  buildPlayPath,
   commitNewSession,
+  continueWithOptions,
   createNewSession,
   normalizePlayOptions,
   resolveStartOptions,
@@ -34,7 +36,8 @@ import { PlayScreen } from "./PlayScreen";
 import "./PlayFlow.scss";
 
 type PlayPhase =
-  | { kind: "setup"; options: PlayOptions }
+  /** `runningSession`: the saved game of this deck, which Save and continue changes. */
+  | { kind: "setup"; options: PlayOptions; runningSession?: PlaySession }
   | { kind: "check-in"; options: PlayOptions; isFromSetup: boolean }
   /** Another deck has the saved game: nothing is saved or counted until the player agrees. */
   | { kind: "confirm-replace" }
@@ -49,6 +52,18 @@ const getSetupOptions = (deck: Deck): PlayOptions => {
     : resolveStartOptions(deck, loadLastPlayOptions());
 };
 
+/** The saved game of this deck, still in progress, else undefined. */
+const getRunningSession = (deck: Deck): PlaySession | undefined => {
+  const savedProgress = loadProgress();
+  return savedProgress ? restoreSession(deck, savedProgress) : undefined;
+};
+
+const getSetupPhase = (deck: Deck, options?: PlayOptions): PlayPhase => ({
+  kind: "setup",
+  options: options ?? getSetupOptions(deck),
+  runningSession: getRunningSession(deck),
+});
+
 /**
  * Where a visit lands: Game options when asked for (or when the deck has no
  * cards, so the empty note shows), else the question about replacing another
@@ -61,13 +76,10 @@ const getEntryPhase = (
   shouldConfirmReplace: boolean
 ): PlayPhase => {
   if (isSetupRequested || deck.cards.length === 0) {
-    return { kind: "setup", options: getSetupOptions(deck) };
+    return getSetupPhase(deck);
   }
   if (shouldConfirmReplace) return { kind: "confirm-replace" };
-  const savedProgress = loadProgress();
-  const restoredSession = savedProgress
-    ? restoreSession(deck, savedProgress)
-    : undefined;
+  const restoredSession = getRunningSession(deck);
   if (restoredSession) {
     return { kind: "playing", session: restoredSession, isUncommitted: false };
   }
@@ -136,7 +148,7 @@ export const PlayFlow = ({ deck }: { deck: Deck }) => {
   if (isSetupRequested !== handledSetupRequest) {
     setHandledSetupRequest(isSetupRequested);
     if (isSetupRequested) {
-      setPhase({ kind: "setup", options: getSetupOptions(deck) });
+      setPhase(getSetupPhase(deck));
     } else if (phase.kind !== "playing") {
       setPhase(getEntryPhase(deck, false, false));
     }
@@ -156,14 +168,9 @@ export const PlayFlow = ({ deck }: { deck: Deck }) => {
     window.scrollTo(0, 0);
   };
 
-  const beginGame = (options: PlayOptions) => {
-    showPhase({
-      kind: "playing",
-      session: startNewSession(deck, options, Date.now()),
-      isUncommitted: false,
-    });
-    // The play screen pauses its ?card=N sync while setup=1 is in the URL,
-    // so the started game drops it, replacing the Game options entry.
+  // The play screen pauses its ?card=N sync while setup=1 is in the URL,
+  // so a game leaving Game options drops it, replacing the Game options entry.
+  const leaveSetupUrl = () => {
     if (isSetupRequested) {
       setSearchParams(
         (previous) => {
@@ -176,17 +183,46 @@ export const PlayFlow = ({ deck }: { deck: Deck }) => {
     }
   };
 
-  const handleSetupStart = (options: PlayOptions) => {
-    // Names are tidied, but the chosen level is kept as chosen: a custom deck
-    // plays from level 1 without changing what the next builtin deck uses.
+  const beginGame = (options: PlayOptions) => {
+    showPhase({
+      kind: "playing",
+      session: startNewSession(deck, options, Date.now()),
+      isUncommitted: false,
+    });
+    leaveSetupUrl();
+  };
+
+  // Names are tidied, but the chosen level is kept as chosen: a custom deck
+  // plays from level 1 without changing what the next builtin deck uses.
+  const rememberOptions = (options: PlayOptions) =>
     saveLastPlayOptions({
       ...options,
       players: normalizePlayOptions(deck, options).players,
     });
+
+  const handleSetupStart = (options: PlayOptions) => {
+    rememberOptions(options);
     if (deck.isAdult)
       showPhase({ kind: "check-in", options, isFromSetup: true });
     else beginGame(options);
   };
+
+  // The same game goes on, so an 18+ deck skips the check-in it already passed.
+  const handleSetupContinue = (
+    runningSession: PlaySession,
+    options: PlayOptions
+  ) => {
+    rememberOptions(options);
+    showPhase({
+      kind: "playing",
+      session: continueWithOptions(deck, runningSession, options, Date.now()),
+      isUncommitted: false,
+    });
+    leaveSetupUrl();
+  };
+
+  const runningSession =
+    phase.kind === "setup" ? phase.runningSession : undefined;
 
   return (
     <div className="play-phase" key={phase.kind}>
@@ -210,6 +246,15 @@ export const PlayFlow = ({ deck }: { deck: Deck }) => {
           deck={deck}
           initialOptions={phase.options}
           onStart={handleSetupStart}
+          runningGame={
+            runningSession
+              ? {
+                  backTo: buildPlayPath(deck.id),
+                  onContinue: (options) =>
+                    handleSetupContinue(runningSession, options),
+                }
+              : undefined
+          }
         />
       )}
       {phase.kind === "check-in" && (
@@ -221,7 +266,7 @@ export const PlayFlow = ({ deck }: { deck: Deck }) => {
               : flow.checkIn.gameOptions
           }
           onContinue={() => beginGame(phase.options)}
-          onBack={() => showPhase({ kind: "setup", options: phase.options })}
+          onBack={() => showPhase(getSetupPhase(deck, phase.options))}
         />
       )}
       {phase.kind === "playing" && (

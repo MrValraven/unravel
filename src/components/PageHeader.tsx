@@ -10,6 +10,8 @@ export interface PageHeaderProps {
   backTo?: string;
   /** Accessible name of the back link, e.g. "Back to decks". Defaults to "Back". */
   backLabel?: string;
+  /** The back link replaces the current history entry instead of adding one. */
+  isBackReplace?: boolean;
   /** Page title, rendered as the page's h1. */
   title?: string;
   /** Buttons shown at the end of the bar. */
@@ -19,6 +21,7 @@ export interface PageHeaderProps {
 export const PageHeader = ({
   backTo,
   backLabel,
+  isBackReplace = false,
   title,
   actions,
 }: PageHeaderProps) => {
@@ -33,6 +36,7 @@ export const PageHeader = ({
         {backTo && (
           <Link
             to={backTo}
+            replace={isBackReplace}
             viewTransition
             className={`page-header__back${isBackLabelVisible ? " page-header__back--labelled" : ""}`}
             aria-label={isBackLabelVisible ? undefined : label}

@@ -131,7 +131,7 @@ const en = {
     restartQuestion:
       "Start again from the first card? Your place in this deck will be cleared.",
     gameOptions: "Game options",
-    gameOptionsNote: "Start the deck again with new players, level or mode",
+    gameOptionsNote: "Change players, level or mode",
     keepPlaying: "Keep playing",
   },
   end: {
@@ -286,7 +286,7 @@ export const playCopy = defineCopy<typeof en>({
       restartQuestion:
         "Voltar à primeira carta? O teu lugar neste baralho vai ser apagado.",
       gameOptions: "Opções de jogo",
-      gameOptionsNote: "Recomeça o baralho com outros jogadores, nível ou modo",
+      gameOptionsNote: "Muda os jogadores, o nível ou o modo",
       keepPlaying: "Continuar a jogar",
     },
     end: {
